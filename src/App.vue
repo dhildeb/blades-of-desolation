@@ -1,25 +1,26 @@
 <template>
-  <nav>
-    <router-link to="/">Battle</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/shop" class="nav-link" v-slot="{navigate}">
-      <button class="btn btn-dark" @click="navigate">Shop</button>
-    </router-link>
-  </nav>
+<div class="d-flex">
+  <PlayerStatsSideWindow />
   <router-view></router-view>
-<CurrentPlayer />
+</div>
 </template>
 
 <script>
 import { reactive } from "@vue/reactivity"
-import CurrentPlayer from './components/Player.vue'
+import { computed } from "@vue/runtime-core"
+import $store from '@/store/index'
+import PlayerStatsSideWindow from "./components/PlayerStatsSideWindow.vue"
 export default {
-  components: {CurrentPlayer},
+  components: { PlayerStatsSideWindow },
   setup() {
     const state = reactive({
+      character: computed(()=> $store.state.selected)
     })
   return state
   },
+  methods: {
+
+  }
 }
 </script>
 
@@ -38,10 +39,14 @@ nav {
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: #f8f9fa;
 }
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.click{
+  cursor: pointer;
 }
 </style>

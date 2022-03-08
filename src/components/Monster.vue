@@ -1,9 +1,13 @@
 <template>
-  <p @click="monsterAttacked(monster)">{{ monster.name }}</p>
+<div class="col-2 click">
+  <p class="mb-0" @click="attackMonster(monster)">{{ monster.name }}</p>
+  <sup>{{monster.hp}}/HP</sup>
+</div>
 </template>
 
 <script>
 import { reactive } from "@vue/reactivity"
+import { gameService } from "@/services/GameService"
 export default {
   name: 'EnemyMonster',
   props: {
@@ -16,12 +20,8 @@ export default {
     return state
   },
   methods: {
-    monsterAttacked(monster){
-      console.log(this.$store.state.selected)
-      if(this.$store.state.selected){
-        monster.hp -= this.$store.state.selected.power
-        console.log(monster)
-      }
+    attackMonster(monster){
+      gameService.determineAttackOn(monster)
     }
   }
 }

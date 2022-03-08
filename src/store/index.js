@@ -1,28 +1,40 @@
 import { createStore } from 'vuex'
-
+import Notify from "@/utils/Notify"
 const store = createStore({
   state: {
-      monsters: [{name: 'Goblin', power: 1, hp: 5, id: 1, goldPrize: 5, maxPrize: ''}, {name: 'Dragon', power: 10, hp: 500, id: 100, goldPrize: 500, maxPrize: 'dragon'}],
+      monsters: {
+        1: [{name: 'Goblin', actions: 1, baseActions: 1, strength: 1, hp: 5, id: 1, loot: {gold: 5, items: ''}, maxPrize: ''}], 
+        20: [{name: 'Dragon',actions: 3, baseActions: 3, strength: 10, hp: 500, id: 100, goldPrize: 500, maxPrize: 'dragon'}]
+      },
       cards: [{name: 'Assassin', cost: 50, power: 2, ability: 'dodge', abilityBoost: .1, type: 'human'}, {name: 'Barbarian', cost: 60, power: 3, ability: 'crit', abilityBoost: .1, type: 'human'}],
+      characters: {
+        classes: ['rogue', 'ranger', 'barbarian', 'wizard', 'cleric', 'fighter', 'monk', 'paladin', 'warlock'],
+        races: ['dragonborn', 'human', 'elf', 'dwarf', 'halfling', 'unknown' ]
+      },
       player: {
-        cards: [{name: 'Assassin', id: 1, cost: 50, power: 2, ability: 'dodge', abilityBoost: .1, type: 'human'}, {name: 'Barbarian', id: 2, cost: 60, power: 3, ability: 'crit', abilityBoost: .1, type: 'human'}],
+        characters: [],
         hp: 10,
         abilities: {dodge: 0, crit: 0},
-        gold: 0
+        gold: 0,
+        items: []
       },
-      selected: ''
+      selected: '',
   },
   getters: {
 
   },
   mutations: {
-    selectCard(state, card){
-      state.selected = card
-      console.log(state.selected)
+    selectCharacter(state, char){
+      state.selected = char
     },
     monsterAttacked(state, monster){
-      monster.hp -= state.selected.power
-      console.log(monster)
+      if(state.selected.actions > 0){
+        state.selected.actions -= 1
+        console.log(state.selected.actions)
+        monster.hp -= state.selected.power
+      }else{
+        Notify.toast(state.selected.name+' is out of actions', 'warning')
+      }
     }
   },
   actions: {

@@ -1,0 +1,37 @@
+<template>
+<div class="col-2">
+  <p class="border-bottom">{{ monster.name }}'s Loot!</p>
+  <p class="">Gold: {{ monster.loot.gold }}</p>
+  <p class="" v-if="monster.loot.items">Items: {{ monster.loot.items }}</p>
+</div>
+</template>
+
+<script>
+import { reactive } from "@vue/reactivity"
+import { onMounted } from "@vue/runtime-core"
+import $store from '@/store/index.js'
+export default {
+  name: 'LootMonster',
+  props: {
+    monster: {type: Object}
+  },
+  setup(props){
+    onMounted(()=>{
+      $store.state.player.gold += props.monster.loot.gold
+      if(props.monster.items){
+        $store.state.player.push(props.monster.items)
+      }
+    })
+    const state = reactive({
+
+    })
+    return state
+  },
+  methods: {
+  }
+}
+</script>
+
+<style scoped>
+
+</style>

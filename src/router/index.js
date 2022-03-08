@@ -1,12 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BattleField from '../views/BattleField.vue'
 import BadPageDefault from '../views/BadPageDefault.vue'
+import CharacterForm from '@/views/CharacterForm.vue'
 
 const routes = [
   {
     path: '/',
     name: 'battleField',
     component: BattleField
+  },
+  {
+    path: '/create/character',
+    name: 'CharacterForm',
+    component: CharacterForm
   },
   {
     path: '/about',
