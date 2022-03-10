@@ -11,6 +11,7 @@ const store = createStore({
         classes: ['rogue', 'ranger', 'barbarian', 'wizard', 'cleric', 'fighter', 'monk', 'paladin', 'warlock'],
         races: ['dragonborn', 'human', 'elf', 'dwarf', 'halfling', 'unknown' ]
       },
+      combatMonsters: [],
       player: {
         characters: [],
         hp: 10,
@@ -35,6 +36,9 @@ const store = createStore({
       }else{
         Notify.toast(state.selected.name+' is out of actions', 'warning')
       }
+    },
+    bringOutYourDead(state){
+      state.combatMonsters = []
     }
   },
   actions: {

@@ -1,6 +1,6 @@
 <template>
-<h1>Create Your Character</h1>
 <div class="container">
+<h1>Create Your Character</h1>
   <div class="row justify-content-center">
     <div class="col-6">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">

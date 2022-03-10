@@ -1,27 +1,19 @@
 <template>
-  <CharacterDetailsModal />
   <div v-if="character.hp < 1">
-      <p class="d-flex dead" title="dead">{{character.name}}
-    <a class="click" id="toggle-btn" data-toggle="modal" data-target="#characterDetailsModal" title="stats">*</a>
-  </p>
+      <strong class="d-flex dead" title="dead">{{character.name}}</strong>
   </div>
-<div v-else :class="selected.id == character.id ? 'selected' : '' ">
-  <p class="d-flex click" @click="selectCharacter(character)">{{character.name}}
-    <a class="click" id="toggle-btn" data-toggle="modal" data-target="#characterDetailsModal" title="stats">*</a>
-  </p>
-</div>
+  <div v-else 
+       :class="selected.id == character.id ? 'selected' : character.actions < 1 ? 'exhausted' : ''  ">
+    <strong class="d-flex click" @click="selectCharacter(character)">{{character.name}}</strong>
+  </div>
 </template>
 
 <script>
 import { reactive } from "@vue/reactivity"
-import CharacterDetailsModal from '@/components/CharacterDetailsModal'
 import { computed } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 export default {
   name: 'CombatCharacter',
-  components: {
-    CharacterDetailsModal
-  },
   props: {
     character: {type: Object}
   },
@@ -32,8 +24,10 @@ export default {
     return state
   },
   methods: {
-    selectCharacter(card){
-      this.$store.commit('selectCharacter', card)
+    selectCharacter(character){
+      if(character.actions > 0){
+        this.$store.commit('selectCharacter', character)
+      }
     },
   }
 }
@@ -41,7 +35,10 @@ export default {
 
 <style>
 .selected{
-  color: gold;
+  color: green;
+}
+.exhausted{
+  color: yellow
 }
 .dead{
   color: red;

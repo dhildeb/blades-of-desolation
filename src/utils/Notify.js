@@ -40,7 +40,7 @@ export default class Notify {
  * -----------------------------------
  * {@link https://sweetalert2.github.io/#configuration|Check out Sweet Alerts}
  */
-  static toast(title = 'Warning!', display = 'warning', position = 'bottom-start', timer = 5000, progressBar = true) {
+  static toast(title = 'Warning!', display = 'warning', position = 'bottom-end', timer = 5000, progressBar = true) {
     Swal.fire({
       title: title,
       icon: display,

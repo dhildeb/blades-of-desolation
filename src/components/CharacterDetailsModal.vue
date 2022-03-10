@@ -1,5 +1,5 @@
 <template>
-<div class="modal fade" id="characterDetailsModal" tabindex="-1" role="dialog" aria-labelledby="characterDetailsModalLabel" aria-hidden="true">
+<div class="modal fade text-dark" id="characterDetailsModal" tabindex="-1" role="dialog" aria-labelledby="characterDetailsModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content" v-if="character">
       <div class="modal-header">
@@ -57,13 +57,13 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { computed } from "@vue/runtime-core"
-import $store from '@/store/index'
 export default {
   name: 'CharacterDetailsModal',
+  props:{
+    character: {require: true, type: Object}
+  },
   setup(){
     const state = reactive({
-      character: computed(()=> $store.state.selected)
     })
     return state
   },

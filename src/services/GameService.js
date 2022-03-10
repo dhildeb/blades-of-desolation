@@ -11,6 +11,10 @@ class GameService{
         monster.hp -= $store.state.selected.strength
     }
   }
+  spawnMonsters(){
+    let newMonsters = [...$store.state.monsters[1]]
+    $store.state.combatMonsters.push(newMonsters[0])
+  }
 }
 
 export const gameService = new GameService()

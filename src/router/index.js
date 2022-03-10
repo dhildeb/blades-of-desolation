@@ -5,12 +5,12 @@ import CharacterForm from '@/views/CharacterForm.vue'
 
 const routes = [
   {
-    path: '/',
+    path: '/battle',
     name: 'battleField',
     component: BattleField
   },
   {
-    path: '/create/character',
+    path: '/',
     name: 'CharacterForm',
     component: CharacterForm
   },

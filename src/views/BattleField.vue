@@ -2,7 +2,7 @@
   <div class="container vh-75">
     <div class="row justify-content-center h-50">
       <div class="col-2" v-for="monster in monsters" :key="monster.id">
-        <div v-if="loot">
+        <div v-if="monstersWithHp < 1">
           <LootMonster :monster="monster" />
         </div>
         <div v-else>
@@ -37,19 +37,18 @@ export default {
   },
   watch: {
     charactersWithActions: function(){
-      if(this.charactersWithActions == 0){
+      if(this.charactersWithActions < 1){
         gameService.determineTurn()
       }
     },
     charactersWithHp: function(){
-      if(this.charactersWithHp == 0){
-        router.push({name: 'shop'})
+      if(this.charactersWithHp < 1){
+        router.push({name: 'CharacterForm'})
         Notify.toast('Your party is dead, revive or start over', 'error', 'top-center')
       }
     },
     monstersWithHp: function(){
-      if(this.monstersWithHp == 0){
-        this.loot = true
+      if(this.monstersWithHp < 1){
         Notify.toast('Victory!', 'success')
       }
     }
@@ -58,19 +57,26 @@ export default {
     onMounted(()=>{
         if(state.charactersWithHp == 0){
           Notify.toast('You cannot battle without a party.', 'warning')
-          router.push({name: 'shop'})
+          router.push({name: 'CharacterForm'})
+        }else{
+          gameService.spawnMonsters()
         }
     })
     const state = reactive({
-      monsters: computed(()=> $store.state.monsters[1]),
-      monstersWithHp: computed(()=> $store.state.monsters[1].filter(m => m.hp > 1)),
+      monsters: computed(()=> $store.state.combatMonsters),
       characters: computed(()=> $store.state.player.characters),
-      charactersWithActions: computed(()=> $store.state.player.characters.filter(c => c.actions > 0 ).length),
-      charactersWithHp: computed(()=> $store.state.player.characters.filter(c => c.hp > 1)),
-      loot: false
+      monstersWithHp: computed(()=> state.monsters.filter(m => m.hp > 0).length),
+      charactersWithActions: computed(()=> state.characters.filter(c => c.actions > 0 ).length),
+      charactersWithHp: computed(()=> state.characters.filter(c => c.hp > 0).length),
     })
     return state
-  }
+  },
+    beforeRouteLeave(){
+      if(this.charactersWithHp < 1){
+          return this.monstersWithHp < 1
+      }
+        this.$store.commit('bringOutYourDead')
+    }
 }
 </script>
 
