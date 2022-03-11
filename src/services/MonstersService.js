@@ -13,7 +13,6 @@ class MonstersService{
   attackPhase(){
     let numTargets = $store.state.player.characters.length
     $store.state.combatMonsters.forEach(m => {
-      console.log(m)
       if(m.actions && m.hp > 0){
         for(m.actions; m.actions > 0; m.actions--){
         let target = $store.state.player.characters[Math.floor(Math.random()*numTargets)]

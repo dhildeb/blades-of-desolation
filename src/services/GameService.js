@@ -15,7 +15,6 @@ class GameService{
   }
   spawnMonsters(){
     let quantity = Math.ceil(Math.random()*3)
-    console.log(quantity)
     let lvl = characterService.getAverageCharacterLvl()
     let monstersList = $store.state.monsters[lvl]
     for(let i=0; i<quantity; i++){
