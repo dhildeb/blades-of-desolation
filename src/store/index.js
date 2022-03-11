@@ -31,7 +31,6 @@ const store = createStore({
     monsterAttacked(state, monster){
       if(state.selected.actions > 0){
         state.selected.actions -= 1
-        console.log(state.selected.actions)
         monster.hp -= state.selected.power
       }else{
         Notify.toast(state.selected.name+' is out of actions', 'warning')
