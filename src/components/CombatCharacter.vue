@@ -4,6 +4,7 @@
   </div>
   <div v-else 
        :class="selected.id == character.id ? 'selected' : character.actions < 1 ? 'exhausted' : ''  ">
+      <HpBar :hp="character.hp" :baseHp="character.baseHp" />
     <strong class="d-flex click" @click="selectCharacter(character)">{{character.name}}</strong>
   </div>
 </template>
@@ -12,7 +13,9 @@
 import { reactive } from "@vue/reactivity"
 import { computed } from "@vue/runtime-core"
 import $store from '@/store/index.js'
+import HpBar from "./HpBar.vue"
 export default {
+  components: { HpBar },
   name: 'CombatCharacter',
   props: {
     character: {type: Object}
