@@ -1,7 +1,8 @@
 <template>
   <HpBar :hp="monster.hp" :baseHp="monster.baseHp" />
 <div class="col-2 click">
-  <p class="mb-0" @click="attackMonster(monster)">{{ monster.name }}</p>
+  <p v-if="monster.hp > 0" class="mb-0" @click="attackMonster(monster)">{{ monster.name }}</p>
+  <del v-else class="mb-0" >{{ monster.name }}</del>
 </div>
 </template>
 

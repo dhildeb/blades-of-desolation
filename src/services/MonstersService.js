@@ -2,14 +2,6 @@ import $store from '@/store/index.js'
 import { useToast } from "vue-toastification"
 import { characterService } from "./CharacterService"
 class MonstersService{
-  getRandomMonsters(num){
-    let monsters = []
-    for(let i=0; i<num; i++){
-      let index = Math.floor(Math.random()*_monsters.length)
-      monsters.push(_monsters[index])
-    }
-    this.$store.commit('getMonsters', monsters)
-  }
   takeTurn(){
     this.prepPhase()
     this.attackPhase()
@@ -20,8 +12,9 @@ class MonstersService{
   }
   attackPhase(){
     let numTargets = $store.state.player.characters.length
-    $store.state.monsters[1].forEach(m => {
-      if(m.actions){
+    $store.state.combatMonsters.forEach(m => {
+      console.log(m)
+      if(m.actions && m.hp > 0){
         for(m.actions; m.actions > 0; m.actions--){
         let target = $store.state.player.characters[Math.floor(Math.random()*numTargets)]
         target.hp -= m.strength
@@ -31,7 +24,7 @@ class MonstersService{
     })
   }
   endPhase(){
-    characterService.newTurn()
+    characterService.resetActions()
   }
   resetActions(){
     $store.state.monsters[1].forEach(m => {
@@ -41,6 +34,5 @@ class MonstersService{
     })
   }
 }
-const _monsters = [{name: 'Goblin', id: 1}, {name: 'Dragon', id: 100}]
 const _toast = useToast()
 export const monstersService = new MonstersService()

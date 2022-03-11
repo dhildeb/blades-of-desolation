@@ -28,6 +28,7 @@ import { computed, onMounted } from "@vue/runtime-core"
 import { gameService } from "@/services/GameService"
 import router from "@/router"
 import Notify from "@/utils/Notify"
+import { characterService } from "@/services/CharacterService"
 
 
 export default {
@@ -49,6 +50,7 @@ export default {
     },
     monstersWithHp: function(){
       if(this.monstersWithHp < 1){
+        characterService.resetActions()
         Notify.toast('Victory!', 'success')
       }
     }

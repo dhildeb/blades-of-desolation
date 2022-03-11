@@ -1,4 +1,6 @@
+import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
+import { characterService } from "./CharacterService"
 import { monstersService } from "./MonstersService"
 class GameService{
   determineTurn(){
@@ -12,8 +14,14 @@ class GameService{
     }
   }
   spawnMonsters(){
-    let newMonsters = [...$store.state.monsters[1]]
-    $store.state.combatMonsters.push(newMonsters[0])
+    let quantity = Math.ceil(Math.random()*3)
+    console.log(quantity)
+    let lvl = characterService.getAverageCharacterLvl()
+    let monstersList = $store.state.monsters[lvl]
+    for(let i=0; i<quantity; i++){
+      let index = Math.floor(Math.random()*monstersList.length)
+      $store.state.combatMonsters.push(new MonsterFactory(monstersList[index]))
+    }
   }
 }
 
