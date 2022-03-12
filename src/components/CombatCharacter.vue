@@ -2,10 +2,10 @@
   <div v-if="character.hp < 1">
       <strong class="d-flex dead" title="dead">{{character.name}}</strong>
   </div>
-  <div v-else 
-       :class="selected.id == character.id ? 'selected' : character.actions < 1 ? 'exhausted' : ''  ">
+  <div v-else>
       <HpBar :hp="character.hp" :baseHp="character.baseHp" />
-    <strong class="d-flex click" @click="selectCharacter(character)">{{character.name}}</strong>
+    <strong class="d-flex">{{character.name}}</strong>
+    <img :class="'img-fluid w-75 click '+(selected.id == character.id ? 'border-bottom border-success' : character.actions < 1 ? 'border border-danger' : '')" :src="character.img" @click="selectCharacter(character)">
   </div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
 
 <style>
 .selected{
-  color: green;
+  border: green;
 }
 .exhausted{
   color: yellow

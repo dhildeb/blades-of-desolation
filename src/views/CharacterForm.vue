@@ -28,6 +28,9 @@
         <option value="elf">Elf</option>
         <option value="halfling">Halfling</option>
       </select>
+      <div id="imgSelect" class="scrollable">
+        <img :class="selectedImg == img ? 'border border-warning img-fluid w-25 click' : 'img-fluid w-25 click'" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
+      </div>
       <button class="btn btn-primary float-left" type="submit">Create</button>
       </form>
       <p v-else>Your Party is Full!</p>
@@ -39,34 +42,47 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { CharacterFactory } from '@/models/CharacterFactory.js'
-import { computed } from "@vue/runtime-core"
+import { computed, onMounted } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
+import {getCharacterImgs} from '@/utils/imgLoader.js'
 export default {
   name: 'CharacterForm',
   setup(){
+    onMounted(()=>{
+      state.imgs = getCharacterImgs()
+    })
     const state = reactive({
       name: '',
       classType: '',
       race: '',
+      selectedImg: '',
+      imgs: [],
       characterCount: computed(()=> $store.state.player.characters.length)
     })
     return state
   },
   methods: {
     createCharacter(){
-      let charData = {name: this.name, classType: this.classType, race: this.race}
+      let charData = {name: this.name, classType: this.classType, race: this.race, img: this.selectedImg}
       characterService.addCharacter(new CharacterFactory(charData))
       Notify.toast(charData.name+' was created!', 'success')
       this.name = ''
       this.classType = ''
       this.race = ''
+      this.selectedImg = ''
+    },
+    selectImg(img){
+        this.selectedImg = img
     }
   }
 }
 </script>
 
 <style scoped>
-
+.scrollable{
+  max-height: 70vh;
+  overflow-y: auto;
+}
 </style>

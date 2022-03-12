@@ -6,7 +6,10 @@ export class CharacterFactory{
     this.name = characterData.name ?? 'unknown'
     this.classType = characterData.classType ?? 'unknown'
     this.race = characterData.race ?? 'unknown'
-    this.img = characterData.img ?? this.randomCharacterImg()
+    this.img = characterData.img
+    if(!this.img){
+      this.randomCharacterImg()
+    }
     this.spells = characterData.spells ?? []
     this.equipment = characterData.equipment ?? []
     this.dmgType = characterData.dmgType ?? ''
@@ -101,12 +104,21 @@ export class CharacterFactory{
   }
   randomCharacterImg(){
     let folder = "assets/characters/"
-    // let random = Math.floor(Math.random())
+    let characterImgList = []
+    let img = ''
     $.ajax({
       url: folder,
+      async: false,
       success: function(data){
-        console.log(data)
-      }
-    })
+        $(data).find("a").attr("href", function (i, val) {
+          if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+              characterImgList.push(val)
+          } 
+      })
+      let random = Math.floor(Math.random()*characterImgList.length)
+      img = characterImgList[random]
+    }
+  })
+  this.img = img
   }
 }
