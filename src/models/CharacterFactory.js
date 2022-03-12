@@ -1,11 +1,12 @@
 import { generateId } from "@/utils/generateId"
-
+import $ from 'jquery'
 export class CharacterFactory{
   constructor(characterData){
     this.id = generateId()
     this.name = characterData.name ?? 'unknown'
     this.classType = characterData.classType ?? 'unknown'
     this.race = characterData.race ?? 'unknown'
+    this.img = characterData.img ?? this.randomCharacterImg()
     this.spells = characterData.spells ?? []
     this.equipment = characterData.equipment ?? []
     this.dmgType = characterData.dmgType ?? ''
@@ -97,5 +98,15 @@ export class CharacterFactory{
     let random = Math.floor(Math.random()*9)
     let stats = ['hp', 'strength', 'dodge', 'thorns', 'dodge', 'thorns', 'actions', 'lifeDrain', 'luck', 'magic']
     return stats[random]
+  }
+  randomCharacterImg(){
+    let folder = "assets/characters/"
+    // let random = Math.floor(Math.random())
+    $.ajax({
+      url: folder,
+      success: function(data){
+        console.log(data)
+      }
+    })
   }
 }
