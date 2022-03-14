@@ -2,6 +2,7 @@
 node_modules
 /dist
 rootkey.csv
+/aws
 
 # local env files
 .env.local
