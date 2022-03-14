@@ -3,8 +3,8 @@ import Notify from "@/utils/Notify"
 const store = createStore({
   state: {
       monsters: {
-        1: [{name: 'goblin', actions: 1, baseActions: 1, strength: 1, hp: 5, baseHp: 5, id: 1, loot: {gold: 5, items: ''}, maxPrize: ''}], 
-        20: [{name: 'dragon',actions: 3, baseActions: 3, strength: 10, hp: 500, id: 100, goldPrize: 500, maxPrize: 'dragon'}]
+        1: [{name: 'goblin', actions: 1, baseActions: 1, strength: 1, hp: 5, baseHp: 5, id: 1, loot: {gold: 5, items: ''}, maxPrize: '', exp: 50}], 
+        20: [{name: 'dragon',actions: 3, baseActions: 3, strength: 10, hp: 500, id: 100, goldPrize: 500, maxPrize: 'dragon', exp: 2000}]
       },
       cards: [{name: 'Assassin', cost: 50, power: 2, ability: 'dodge', abilityBoost: .1, type: 'human'}, {name: 'Barbarian', cost: 60, power: 3, ability: 'crit', abilityBoost: .1, type: 'human'}],
       characters: {

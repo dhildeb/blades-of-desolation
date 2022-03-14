@@ -22,6 +22,17 @@ class GameService{
       $store.state.combatMonsters.push(new MonsterFactory(monstersList[index]))
     }
   }
+  victory(){
+    characterService.resetActions()
+    this.handleExpGain()
+  }
+  handleExpGain(){
+    console.log($store.state.combatMonsters)
+    let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
+    console.log(totalExp)
+    let charNum = $store.state.player.characters.length
+    $store.state.player.characters.forEach(c => c.exp += totalExp/charNum)
+  }
 }
 
 export const gameService = new GameService()
