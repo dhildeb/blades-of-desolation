@@ -1,5 +1,25 @@
 import $store from '@/store/index.js'
+import Notify from "@/utils/Notify"
 class CharacterService{
+  takeTurn(){
+    this.prepPhase()
+    this.attackPhase()
+    this.endPhase()
+  }
+  prepPhase(){
+    this.resetActions()
+  }
+  attackPhase(){
+
+  }
+  endPhase(){
+    $store.state.player.characters.forEach(c => {
+      if(c.hp < (c.baseHp*-2)){
+        $store.commit('destroyCharacter', c.id)
+        Notify.toast(c.name+' was destroyed', 'error')
+      }
+    })
+  }
   addCharacter(character){
     $store.state.player.characters.push(character)
   }

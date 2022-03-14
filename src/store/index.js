@@ -3,8 +3,8 @@ import Notify from "@/utils/Notify"
 const store = createStore({
   state: {
       monsters: {
-        1: [{name: 'Goblin', actions: 1, baseActions: 1, strength: 1, hp: 5, baseHp: 5, id: 1, loot: {gold: 5, items: ''}, maxPrize: ''}], 
-        20: [{name: 'Dragon',actions: 3, baseActions: 3, strength: 10, hp: 500, id: 100, goldPrize: 500, maxPrize: 'dragon'}]
+        1: [{name: 'goblin', actions: 1, baseActions: 1, strength: 1, hp: 5, baseHp: 5, id: 1, loot: {gold: 5, items: ''}, maxPrize: ''}], 
+        20: [{name: 'dragon',actions: 3, baseActions: 3, strength: 10, hp: 500, id: 100, goldPrize: 500, maxPrize: 'dragon'}]
       },
       cards: [{name: 'Assassin', cost: 50, power: 2, ability: 'dodge', abilityBoost: .1, type: 'human'}, {name: 'Barbarian', cost: 60, power: 3, ability: 'crit', abilityBoost: .1, type: 'human'}],
       characters: {
@@ -38,9 +38,26 @@ const store = createStore({
     },
     bringOutYourDead(state){
       state.combatMonsters = []
+    },
+    destroyCharacter(state, characterId){
+      console.log(state.player.characters)
+      state.player.characters.filter(c => c.id != characterId)
+      console.log(state.player.characters)
+    },
+    unselect(state){
+      state.selected = ''
+    },
+    reducePlayerGold(state, cost){
+      console.log(cost)
+      state.player.gold -= cost
     }
   },
   actions: {
+    unselect(context){
+      if(this.state.selected.actions < 1){
+        context.commit('unselect')
+      }
+    }
   },
   modules: {
   }

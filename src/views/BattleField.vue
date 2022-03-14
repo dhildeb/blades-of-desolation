@@ -45,11 +45,11 @@ export default {
     charactersWithHp: function(){
       if(this.charactersWithHp < 1){
         router.push({name: 'CharacterForm'})
-        Notify.toast('Your party is dead, revive or start over', 'error', 'top-center')
+        Notify.toast('Your party is dead, revive or start over', 'error', 'top-end')
       }
     },
     monstersWithHp: function(){
-      if(this.monstersWithHp < 1){
+      if(this.monstersWithHp < 1 && this.charactersWithHp > 0){
         characterService.resetActions()
         Notify.toast('Victory!', 'success')
       }
@@ -74,8 +74,11 @@ export default {
     return state
   },
     beforeRouteLeave(){
-      if(this.charactersWithHp < 1){
-          return this.monstersWithHp < 1
+      if(this.charactersWithHp > 0){
+        if(this.monstersWithHp > 0){
+          Notify.toast('Can\'t flee from battle.', 'info')
+          return false
+        }
       }
         this.$store.commit('bringOutYourDead')
     }

@@ -3,6 +3,7 @@
 <h1>Create Your Character</h1>
   <div class="row justify-content-center">
     <div class="col-6">
+      <img src="gs://game-pics.appspot.com/characters/" alt="">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">
           <div class="form-group">
           <label for="name">Character Name</label>
@@ -47,10 +48,13 @@ import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
 import {getCharacterImgs} from '@/utils/imgLoader.js'
+// import $ from 'jquery'
+// import {parseString} from 'xml2js'
 export default {
   name: 'CharacterForm',
   setup(){
     onMounted(()=>{
+
       state.imgs = getCharacterImgs()
     })
     const state = reactive({

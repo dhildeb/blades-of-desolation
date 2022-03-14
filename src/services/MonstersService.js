@@ -1,5 +1,5 @@
 import $store from '@/store/index.js'
-import { useToast } from "vue-toastification"
+// import { useToast } from "vue-toastification"
 import { characterService } from "./CharacterService"
 class MonstersService{
   takeTurn(){
@@ -17,21 +17,21 @@ class MonstersService{
         for(m.actions; m.actions > 0; m.actions--){
         let target = $store.state.player.characters[Math.floor(Math.random()*numTargets)]
         target.hp -= m.strength
-        _toast.warning(target.name+' was attacked by '+m.name+' for '+m.strength+'DMG', {timeout: 5000})
+        // _toast.warning(target.name+' was attacked by '+m.name+' for '+m.strength+'DMG', {timeout: 5000})
         }
       }
     })
   }
   endPhase(){
-    characterService.resetActions()
+    characterService.takeTurn()
   }
   resetActions(){
-    $store.state.monsters[1].forEach(m => {
+    $store.state.combatMonsters.forEach(m => {
       if(m.hp > 0){
         m.actions = m.baseActions
       }
     })
   }
 }
-const _toast = useToast()
+// const _toast = useToast()
 export const monstersService = new MonstersService()

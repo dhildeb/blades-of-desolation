@@ -15,3 +15,19 @@ export function getCharacterImgs(){
   })
   return characterImgPaths
 }
+export function getMonsterImgs(){
+  let folder = "assets/monsters/"
+  let monsterImgPaths = []
+  $.ajax({
+    url: folder,
+    async: false,
+    success: function(data){
+      $(data).find("a").attr("href", function (i, val) {
+        if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+            monsterImgPaths.push(val)
+        } 
+    })
+    }
+  })
+  return monsterImgPaths
+}
