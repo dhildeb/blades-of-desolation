@@ -14,7 +14,7 @@ class CharacterService{
   }
   endPhase(){
     $store.state.player.characters.forEach(c => {
-      if(c.hp < (c.baseHp*-2)){
+      if(c.hp < c.baseHp*-2){
         $store.commit('destroyCharacter', c.id)
         Notify.toast(c.name+' was destroyed', 'error')
       }

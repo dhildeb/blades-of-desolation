@@ -40,15 +40,12 @@ const store = createStore({
       state.combatMonsters = []
     },
     destroyCharacter(state, characterId){
-      console.log(state.player.characters)
-      state.player.characters.filter(c => c.id != characterId)
-      console.log(state.player.characters)
+      state.player.characters = state.player.characters.filter(c => c.id != characterId)
     },
     unselect(state){
       state.selected = ''
     },
     reducePlayerGold(state, cost){
-      console.log(cost)
       state.player.gold -= cost
     }
   },

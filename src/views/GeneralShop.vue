@@ -6,7 +6,6 @@
     <router-link to="/shop/abilities">Spells / Abilities</router-link>
   </div>
   <div class="row pt-5">
-    {{revive}}
     <button v-if="healPartyCost" class="btn btn-success" @click="healParty()" :disabled="playersGold < healPartyCost">Heal Party ({{healPartyCost}} gold)</button>
     <div v-for="character in revive" :key="character.id">
       <button class="btn btn-secondary" @click="reviveCharacter(character.id)" :disabled="playersGold <
@@ -38,7 +37,6 @@ methods: {
   reviveCharacter(id){
     let deadCharacter = this.revive.find(dc => dc.id = id)
     let cost = (deadCharacter.hp - deadCharacter.baseHp)*-10
-    console.log(cost)
     this.$store.commit('reducePlayerGold', cost)
     this.$store.state.player.characters.forEach(c => c.id == id ? c.hp = c.baseHp : '')
   },
