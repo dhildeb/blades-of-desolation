@@ -27,9 +27,8 @@ class GameService{
     this.handleExpGain()
   }
   handleExpGain(){
-    console.log($store.state.combatMonsters)
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
-    console.log(totalExp)
+    //NOTE even dead characters get exp, maybe refactor
     let charNum = $store.state.player.characters.length
     $store.state.player.characters.forEach(c => c.exp += totalExp/charNum)
   }
