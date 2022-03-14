@@ -1,14 +1,15 @@
 <template>
   <HpBar :hp="monster.hp" :baseHp="monster.baseHp" />
-<div class="col-2 click">
-  <p v-if="monster.hp > 0" class="mb-0" @click="attackMonster(monster)">{{ monster.name }}</p>
-  <del v-else class="mb-0" >{{ monster.name }}</del>
+<div>
+  <img v-if="monster.hp > 0" class="img-fluid monster-img" @click="attackMonster(monster)" :src="monster.img" />
+  <img v-else class="img-fluid monster-img" :src="deadImg" />
 </div>
 </template>
 
 <script>
 import { reactive } from "@vue/reactivity"
 import { gameService } from "@/services/GameService"
+import {getMonsterImgs } from '@/utils/imgLoader.js'
 import HpBar from "./HpBar.vue"
 export default {
   components: { HpBar },
@@ -18,12 +19,13 @@ export default {
   },
   setup(){
     const state = reactive({
-
+      deadImg: getMonsterImgs().find(i => i.includes('dead'))
     })
     return state
   },
   methods: {
     attackMonster(monster){
+      this.$store.dispatch('unselect')
       gameService.determineAttackOn(monster)
     }
   }
@@ -31,5 +33,7 @@ export default {
 </script>
 
 <style scoped>
-
+.monster-img{
+  height: 20vh;
+}
 </style>

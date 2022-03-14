@@ -22,7 +22,7 @@ export default {
   },
   setup(){
     const state = reactive({
-      selected: computed(() => $store.state.selected)
+      selected: computed(() => $store.state.selected),
     })
     return state
   },

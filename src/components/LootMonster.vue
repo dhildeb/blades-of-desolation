@@ -1,5 +1,5 @@
 <template>
-<div class="col-2">
+<div>
   <p class="border-bottom">{{ monster.name }}'s Loot!</p>
   <p class="">Gold: {{ monster.loot.gold }}</p>
   <p class="" v-if="monster.loot.items">Items: {{ monster.loot.items }}</p>
