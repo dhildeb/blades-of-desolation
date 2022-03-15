@@ -5,16 +5,24 @@ import store from './store'
 import Toast from 'vue-toastification'
 import 'jquery'
 import "vue-toastification/dist/index.css";
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// // Get a database reference to our posts
-// const db = getDatabase()
-// const ref = db.ref('gs://game-pics.appspot.com/characters/')
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC83i8pGROHwcHAp1Ecivxl7NyCtJxfWX4",
+  authDomain: "game-pics.firebaseapp.com",
+  projectId: "game-pics",
+  storageBucket: "game-pics.appspot.com",
+  messagingSenderId: "105661301499",
+  appId: "1:105661301499:web:5e3588750185de5833e65e",
+  measurementId: "G-QE7VMGPJB9"
+};
 
-// // Attach an asynchronous callback to read the data at our posts reference
-// ref.on('value', (snapshot) => {
-//   console.log(snapshot.val())
-// }, (errorObject) => {
-//   console.log('The read failed: ' + errorObject.name)
-// })
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
 
-createApp(App).use(store).use(router).use(Toast).mount('#app')
+createApp(App).use(store).use(router).use(Toast).use(firebaseApp).mount('#app')

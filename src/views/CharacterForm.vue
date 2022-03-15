@@ -3,7 +3,6 @@
 <h1>Create Your Character</h1>
   <div class="row justify-content-center">
     <div class="col-6">
-      <img src="gs://game-pics.appspot.com/characters/" alt="">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">
           <div class="form-group">
           <label for="name">Character Name</label>
@@ -47,15 +46,27 @@ import { computed, onMounted } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
-import {getCharacterImgs} from '@/utils/imgLoader.js'
 // import $ from 'jquery'
+// import axios from 'axios'
+import firebaseApp from 'firebase/app'
+import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
 // import {parseString} from 'xml2js'
 export default {
   name: 'CharacterForm',
   setup(){
     onMounted(()=>{
-
-      state.imgs = getCharacterImgs()
+      const storage = getStorage(firebaseApp)
+      const charactersRef = ref(storage, 'characters/')
+      console.log(charactersRef)
+      listAll(charactersRef).then((res) => {
+        res.items.forEach((itemRef)=>{
+          getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url) => {
+          state.imgs.push(url)
+      })
+        })
+      }).catch((error) => {
+        console.log(error)
+      })
     })
     const state = reactive({
       name: '',
