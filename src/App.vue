@@ -1,5 +1,5 @@
 <template>
-<div class="d-flex">
+<div class="d-md-flex">
   <PlayerStatsSideWindow />
   <router-view></router-view>
 </div>

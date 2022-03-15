@@ -1,35 +1,38 @@
 <template>
 <div class="container">
-<h1>Create Your Character</h1>
+<h5>Create Your Character</h5>
   <div class="row justify-content-center">
-    <div class="col-6">
+    <div class="col-10 col-md-8">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">
-          <div class="form-group">
-          <label for="name">Character Name</label>
-          <input type="text" class="form-control" id="name" placeholder="Lorn Dargwell" v-model="name">
+        <div class="form-group">
+          <input type="text" class="form-control" id="name" placeholder="Name" v-model="name">
         </div>
-        <select class="custom-select" id="classType" v-model="classType">
-        <option disabled value="">Select a Class</option>
-        <option value="rogue">Rogue</option>
-        <option value="ranger">Ranger</option>
-        <option value="barbarian">Barbarian</option>
-        <option value="wizard">Wizard</option>
-        <option value="cleric">Cleric</option>
-        <option value="fighter">Fighter</option>
-        <option value="monk">Monk</option>
-        <option value="paladin">Paladin</option>
-        <option value="warlock">Warlock</option>
-      </select>
-      <select class="custom-select" id="race" v-model="race">
-        <option disabled value="">Select a Race</option>
-        <option value="dragonborn">Dragonborn</option>
-        <option value="human">Human</option>
-        <option value="elf">dwarf</option>
-        <option value="elf">Elf</option>
-        <option value="halfling">Halfling</option>
-      </select>
-      <div id="imgSelect" class="scrollable">
-        <img :class="selectedImg == img ? 'border border-warning img-fluid w-25 click' : 'img-fluid w-25 click'" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
+        <div class="form-group">
+          <select class="custom-select" id="classType" v-model="classType">
+            <option disabled value="">Select a Class</option>
+            <option value="rogue">Rogue</option>
+            <option value="ranger">Ranger</option>
+            <option value="barbarian">Barbarian</option>
+            <option value="wizard">Wizard</option>
+            <option value="cleric">Cleric</option>
+            <option value="fighter">Fighter</option>
+            <option value="monk">Monk</option>
+            <option value="paladin">Paladin</option>
+            <option value="warlock">Warlock</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <select class="custom-select" id="race" v-model="race">
+            <option disabled value="">Select a Race</option>
+            <option value="dragonborn">Dragonborn</option>
+            <option value="human">Human</option>
+            <option value="elf">dwarf</option>
+            <option value="elf">Elf</option>
+            <option value="halfling">Halfling</option>
+          </select>
+        </div>
+      <div id="imgSelect" class="scrollable row">
+        <img class="img-fluid col-lg-3 col-md-6 col-12 click " :class="selectedImg == img ? 'border border-warning ' : ''" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
       </div>
       <button class="btn btn-primary float-left" type="submit">Create</button>
       </form>
@@ -92,7 +95,7 @@ export default {
 
 <style scoped>
 .scrollable{
-  max-height: 70vh;
+  max-height: 56vh;
   overflow-y: auto;
 }
 </style>

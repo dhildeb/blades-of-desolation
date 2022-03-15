@@ -47,4 +47,11 @@ export default {
   color: red;
   cursor: not-allowed;
 }
+strong{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: auto;
+  display: block;
+  overflow: hidden
+}
 </style>

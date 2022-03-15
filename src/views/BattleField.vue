@@ -1,7 +1,7 @@
 <template>
   <div class="container vh-75">
     <div class="row justify-content-center h-50">
-      <div class="col-2" v-for="monster in monsters" :key="monster.id">
+      <div class="col-4 col-md-2" v-for="monster in monsters" :key="monster.id">
         <div v-if="monstersWithHp < 1">
           <LootMonster :monster="monster" />
         </div>
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="row justify-content-center h-50">
-      <div class="col-2" v-for="character in characters" :key="character.id">
+      <div class="col-4 col-md-2" v-for="character in characters" :key="character.id">
         <CombatCharacter :character="character" />
       </div>
     </div>
