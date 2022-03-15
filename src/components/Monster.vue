@@ -9,7 +9,6 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { gameService } from "@/services/GameService"
-import {getMonsterImgs } from '@/utils/imgLoader.js'
 import HpBar from "./HpBar.vue"
 export default {
   components: { HpBar },
@@ -19,7 +18,7 @@ export default {
   },
   setup(){
     const state = reactive({
-      deadImg: getMonsterImgs().find(i => i.includes('dead'))
+      deadImg: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904'
     })
     return state
   },

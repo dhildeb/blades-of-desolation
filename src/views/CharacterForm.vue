@@ -46,19 +46,14 @@ import { computed, onMounted } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
-// import $ from 'jquery'
-// import axios from 'axios'
 import firebaseApp from 'firebase/app'
 import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
-// import {parseString} from 'xml2js'
 export default {
   name: 'CharacterForm',
   setup(){
     onMounted(()=>{
       const storage = getStorage(firebaseApp)
-      const charactersRef = ref(storage, 'characters/')
-      console.log(charactersRef)
-      listAll(charactersRef).then((res) => {
+      listAll(ref(storage, 'characters/')).then((res) => {
         res.items.forEach((itemRef)=>{
           getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url) => {
           state.imgs.push(url)

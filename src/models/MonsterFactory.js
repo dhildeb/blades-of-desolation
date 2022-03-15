@@ -1,5 +1,4 @@
 import { generateId } from "@/utils/generateId"
-import { getMonsterImgs } from "@/utils/imgLoader.js"
 
 export class MonsterFactory {
   constructor(monsterData) {
@@ -7,7 +6,7 @@ export class MonsterFactory {
     this.name = monsterData.name ?? 'unknown'
     this.classType = monsterData.classType ?? 'unknown'
     this.race = monsterData.race ?? 'unknown'
-    this.img =  this._monsterImgs.find(m => m.includes(this.name))
+    this.img = monsterData.img
     this.spells = monsterData.spells ?? []
     this.equipment = monsterData.equipment ?? []
     this.dmgType = monsterData.dmgType ?? ''
@@ -37,5 +36,4 @@ export class MonsterFactory {
     let stats = ['hp', 'strength', 'dodge', 'thorns', 'dodge', 'thorns', 'actions', 'lifeDrain', 'luck', 'magic']
     return stats[random]
   }
-  _monsterImgs = getMonsterImgs()
 }
