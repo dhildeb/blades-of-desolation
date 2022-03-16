@@ -8,8 +8,8 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { gameService } from "@/services/GameService"
 import HpBar from "./HpBar.vue"
+import { battleService } from "@/services/BattleService"
 export default {
   components: { HpBar },
   name: 'EnemyMonster',
@@ -25,7 +25,7 @@ export default {
   methods: {
     attackMonster(monster){
       this.$store.dispatch('unselect')
-      gameService.determineAttackOn(monster)
+      battleService.handleAttack(this.$store.state.selected, monster)
     }
   }
 }

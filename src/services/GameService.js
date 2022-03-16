@@ -1,17 +1,11 @@
 import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
+import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
 import { characterService } from "./CharacterService"
 import { monstersService } from "./MonstersService"
 class GameService{
   determineTurn(){
       monstersService.takeTurn()
-  }
-  determineAttackOn(monster){
-    let attacker = $store.state.selected
-    if(attacker.actions > 0){
-        attacker.actions--
-        monster.hp -= $store.state.selected.strength
-    }
   }
   spawnMonsters(){
     let quantity = Math.ceil(Math.random()*3)
@@ -30,7 +24,24 @@ class GameService{
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
     //NOTE even dead characters get exp, maybe refactor
     let charNum = $store.state.player.characters.length
-    $store.state.player.characters.forEach(c => c.exp += totalExp/charNum)
+    $store.state.player.characters.forEach(c => {
+      c.exp += totalExp/charNum
+      if(c.exp >= $store.state.levelUpChart[c.level]){
+        this.levelUp(c)
+      }
+    })
+  }
+
+  levelUp(character){
+    character.level++
+    let lvlUpBoosts = characterLvlUpStatHelper(character.classType, character.race)
+    lvlUpBoosts.classBoost.forEach(b => character[b] += character.level)
+    lvlUpBoosts.classBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)] += character.level)
+    lvlUpBoosts.raceBoost.forEach(b => character[b] += character.level)
+    lvlUpBoosts.raceBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)] += character.level)
+    
+    character.hp += character.baseHp
+    character.baseHp += character.baseHp
   }
 }
 

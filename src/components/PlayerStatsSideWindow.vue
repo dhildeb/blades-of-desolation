@@ -7,10 +7,10 @@
       <router-link to="/shop">Shop</router-link>
     </nav>
     <div class="pb-2">
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapsePouch" aria-expanded="false" aria-controls="collapsePouch">
+      <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapsePouch" aria-expanded="false" aria-controls="collapsePouch">
         Pouch
       </button>
-      <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseParty" aria-expanded="false" aria-controls="collapseParty">
+      <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseParty" aria-expanded="false" aria-controls="collapseParty">
         Party
       </button>
     </div>

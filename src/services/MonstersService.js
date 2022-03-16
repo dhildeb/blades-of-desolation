@@ -1,4 +1,5 @@
 import $store from '@/store/index.js'
+import { battleService } from "./BattleService"
 // import { useToast } from "vue-toastification"
 import { characterService } from "./CharacterService"
 class MonstersService{
@@ -16,7 +17,7 @@ class MonstersService{
       if(m.actions && m.hp > 0){
         for(m.actions; m.actions > 0; m.actions--){
         let target = $store.state.player.characters[Math.floor(Math.random()*numTargets)]
-        target.hp -= m.strength
+        battleService.handleAttack(m, target)
         // _toast.warning(target.name+' was attacked by '+m.name+' for '+m.strength+'DMG', {timeout: 5000})
         }
       }

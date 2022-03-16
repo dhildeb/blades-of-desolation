@@ -17,7 +17,9 @@ export class MonsterFactory {
     this.dodge = monsterData.dodge ?? 0
     this.thorns = monsterData.thorns ?? 0
     this.actions = monsterData.actions ?? 1
-    this.lifeDrain = monsterData.lifeDrain ?? 0
+    this.physicalResistance = monsterData.physicalResistance ?? 0
+    this.magicResistance = monsterData.magicResistance ?? 0
+    this.lifeSteal = monsterData.lifeSteal ?? 0
     this.absorb = monsterData.absorb ?? ''
     this.level = monsterData.level ?? 1
     this.loot = monsterData.loot ?? {gold: 0, items: []}
@@ -27,13 +29,10 @@ export class MonsterFactory {
     this.baseDodge = this.dodge
     this.baseThorns = this.thorns
     this.baseActions = this.actions
-    this.baseLifeDrain = this.lifeDrain
+    this.baseLifeSteal = this.lifeSteal
     this.baseLuck = this.luck
     this.baseMagic = this.magic
-  }
-  getRandomAbility() {
-    let random = Math.floor(Math.random() * 9)
-    let stats = ['hp', 'strength', 'dodge', 'thorns', 'dodge', 'thorns', 'actions', 'lifeDrain', 'luck', 'magic']
-    return stats[random]
+    this.basePhysicalResistance = this.physicalResistance
+    this.baseMagicResistance = this.magicResistance
   }
 }

@@ -1,4 +1,5 @@
 import { generateId } from "@/utils/generateId"
+import { getRandomAbility } from "@/utils/getRandomAbility"
 import $ from 'jquery'
 export class CharacterFactory{
   constructor(characterData){
@@ -20,7 +21,9 @@ export class CharacterFactory{
     this.dodge = characterData.dodge ?? 0
     this.thorns = characterData.thorns ?? 0
     this.actions = characterData.actions ?? 1
-    this.lifeDrain = characterData.lifeDrain ?? 0
+    this.physicalResistance = characterData.physicalResistance ?? 0
+    this.magicResistance = characterData.magicResistance ?? 0
+    this.lifeSteal = characterData.lifeSteal ?? 0
     this.absorb = characterData.absorb ?? ''
     this.level = characterData.level ?? 1
     this.exp = characterData.exp ?? 0
@@ -56,12 +59,12 @@ export class CharacterFactory{
         break
       case 'warlock':
         this.magic += 1
-        this.lifeDrain += 1
+        this.lifeSteal += 1
         break
       default:
         this.classType = 'unknown'
-        this[this.getRandomAbility()] += 1
-        this[this.getRandomAbility()] += 1
+        this[getRandomAbility()] += 1
+        this[getRandomAbility()] += 1
         break
     }
     switch(this.race){
@@ -84,8 +87,8 @@ export class CharacterFactory{
         break
       default:
         this.race = 'unknown'
-        this[this.getRandomAbility()] += 1
-        this[this.getRandomAbility()] += 1
+        this[getRandomAbility()] += 1
+        this[getRandomAbility()] += 1
         break
     }
     this.baseHp = this.hp
@@ -93,16 +96,14 @@ export class CharacterFactory{
     this.baseDodge = this.dodge
     this.baseThorns = this.thorns
     this.baseActions = this.actions
-    this.baseLifeDrain = this.lifeDrain
+    this.baseLifeSteal = this.lifeSteal
     this.baseLuck = this.luck
     this.baseMagic = this.magic
-  }
-  getRandomAbility(){
-    let random = Math.floor(Math.random()*9)
-    let stats = ['hp', 'strength', 'dodge', 'thorns', 'dodge', 'thorns', 'actions', 'lifeDrain', 'luck', 'magic']
-    return stats[random]
+    this.basePhysicalResistance = this.physicalResistance
+    this.baseMagicResistance = this.magicResistance
   }
   randomCharacterImg(){
+    // FIXME deperecated
     let folder = "assets/characters/"
     let characterImgList = []
     let img = ''

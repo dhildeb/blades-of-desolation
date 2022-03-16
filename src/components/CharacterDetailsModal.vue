@@ -25,10 +25,10 @@
             <li>Speed: {{character.actions}}</li>
             <li>STR: {{character.strength}}</li>
             <li v-if="character.magic">Magic: {{character.magic+' / '+character.baseMagic}}</li>
-            <li v-if="character.dodge">Dodge: {{character.dodge/10}}%</li>
-            <li v-if="character.thorns">Thorns: {{character.thorns/10}}%</li>
-            <li v-if="character.lifeDrain">Life Drain: {{character.lifeDrain/10}}%</li>
-            <li v-if="character.luck">Luck: {{character.luck/10}}%</li>
+            <li v-if="character.dodge">Dodge: {{character.dodge}}%</li>
+            <li v-if="character.thorns">Thorns: {{character.thorns}}%</li>
+            <li v-if="character.lifeSteal">Life Drain: {{character.lifeSteal}}%</li>
+            <li v-if="character.luck">Luck: {{character.luck}}%</li>
             <li v-if="character.absorb">Absorb: {{character.absorb}}</li>
             <li v-if="character.dmgType">DMG Type: {{character.dmgType}}</li>
           </ul>
