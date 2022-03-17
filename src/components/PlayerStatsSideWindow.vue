@@ -27,6 +27,8 @@
         </p>
       </div>
     </div>
+    <button class="btn btn-success float-bottom" @click="saveGame">Save</button>
+    <button class="btn btn-success float-bottom" @click="loadGame">Load Game</button>
   </div>
 </template>
 
@@ -35,6 +37,7 @@ import { reactive } from "@vue/reactivity"
 import { computed } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 import CharacterDetailsModal from "./CharacterDetailsModal.vue"
+import Notify from "@/utils/Notify"
 export default {
   components: { CharacterDetailsModal },
   setup(){
@@ -47,6 +50,14 @@ export default {
   methods: {
     selectCharacter(character){
       this.selectedCharacter = character
+    },
+    saveGame(){
+      window.localStorage.setItem("player", JSON.stringify(this.$store.state.player))
+      Notify.toast('Game Saved!', 'success')
+    },
+    loadGame(){
+        this.$store.state.player = JSON.parse(window.localStorage.getItem("player"))
+        Notify.toast('Game Loaded!', 'success')
     }
   }
 }

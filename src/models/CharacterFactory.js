@@ -91,16 +91,16 @@ export class CharacterFactory{
         this[getRandomAbility()] += 3
         break
     }
-    this.baseHp = this.hp
-    this.baseStrength = this.strength
-    this.baseDodge = this.dodge
-    this.baseThorns = this.thorns
-    this.baseActions = this.actions
-    this.baseLifeSteal = this.lifeSteal
-    this.baseLuck = this.luck
-    this.baseMagic = this.magic
-    this.basePhysicalResistance = this.physicalResistance
-    this.baseMagicResistance = this.magicResistance
+    this.baseHp = characterData.baseHp ?? this.hp
+    this.baseStrength = characterData.baseStrength ?? this.strength
+    this.baseDodge = characterData.baseDodge ?? this.dodge
+    this.baseThorns = characterData.baseThorns ?? this.thorns
+    this.baseActions = characterData.baseActions ?? this.actions
+    this.baseLifeSteal = characterData.baseLifeSteal ?? this.lifeSteal
+    this.baseLuck = characterData.baseLuck ?? this.luck
+    this.baseMagic = characterData.baseMagic ?? this.magic
+    this.basePhysicalResistance = characterData.basePhysicalResistance ?? this.physicalResistance
+    this.baseMagicResistance = characterData.baseMagicResistance ?? this.magicResistance
   }
   randomCharacterImg(){
     let img = ''
