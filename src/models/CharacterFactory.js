@@ -1,10 +1,10 @@
 import { generateId } from "@/utils/generateId"
 import { getRandomAbility } from "@/utils/getRandomAbility"
-import $ from 'jquery'
+import $store from '@/store/index'
 export class CharacterFactory{
   constructor(characterData){
     this.id = generateId()
-    this.name = characterData.name ?? 'unknown'
+    this.name = characterData.name == '' ? 'unknown' : characterData.name
     this.classType = characterData.classType ?? 'unknown'
     this.race = characterData.race ?? 'unknown'
     this.img = characterData.img
@@ -25,26 +25,26 @@ export class CharacterFactory{
     this.magicResistance = characterData.magicResistance ?? 0
     this.lifeSteal = characterData.lifeSteal ?? 0
     this.absorb = characterData.absorb ?? ''
-    this.level = characterData.level ?? 1
+    this.level = characterData.level ?? 0
     this.exp = characterData.exp ?? 0
     switch(this.classType){
       case 'rogue':
         this.actions += 1
-        this.dodge += 1
+        this.dodge += 5
         break
       case 'ranger':
         this.actions += 1
-        this.hp += 1
+        this.hp += 5
         break
       case 'barbarian':
-        this.strength += 2
+        this.strength += 3
         break
       case 'wizard':
-        this.magic += 2
+        this.magic += 3
         break
       case 'cleric':
         this.magic += 1
-        this.hp += 1
+        this.hp += 5
         break
       case 'fighter':
         this.strength += 1
@@ -59,36 +59,36 @@ export class CharacterFactory{
         break
       case 'warlock':
         this.magic += 1
-        this.lifeSteal += 1
+        this.lifeSteal += 5
         break
       default:
         this.classType = 'unknown'
-        this[getRandomAbility()] += 1
-        this[getRandomAbility()] += 1
+        this[getRandomAbility()] += 3
+        this[getRandomAbility()] += 3
         break
     }
     switch(this.race){
       case 'dragonborn':
-        this.strength += 2
+        this.strength += 3
         break
       case 'human':
         this.strength += 1
-        this.hp += 1
+        this.hp += 5
         break
       case 'elf':
-        this.hp += 1
+        this.hp += 5
         this.actions += 1
         break
       case 'dwarf':
-        this.hp += 2
+        this.hp += 10
         break
       case 'halfling':
-        this.luck += 2
+        this.luck += 3
         break
       default:
         this.race = 'unknown'
-        this[getRandomAbility()] += 1
-        this[getRandomAbility()] += 1
+        this[getRandomAbility()] += 3
+        this[getRandomAbility()] += 3
         break
     }
     this.baseHp = this.hp
@@ -103,23 +103,10 @@ export class CharacterFactory{
     this.baseMagicResistance = this.magicResistance
   }
   randomCharacterImg(){
-    // FIXME deperecated
-    let folder = "assets/characters/"
-    let characterImgList = []
     let img = ''
-    $.ajax({
-      url: folder,
-      async: false,
-      success: function(data){
-        $(data).find("a").attr("href", function (i, val) {
-          if( val.match(/\.(jpe?g|png|gif)$/) ) { 
-              characterImgList.push(val)
-          } 
-      })
-      let random = Math.floor(Math.random()*characterImgList.length)
-      img = characterImgList[random]
-    }
-  })
-  this.img = img
+    console.log($store.state.characterImgList)
+    let random = Math.floor(Math.random()*$store.state.characterImgList.length)
+    img = $store.state.characterImgList[random]
+    this.img = img
   }
 }

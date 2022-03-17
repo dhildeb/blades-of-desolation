@@ -59,7 +59,7 @@ export default {
       listAll(ref(storage, 'characters/')).then((res) => {
         res.items.forEach((itemRef)=>{
           getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url) => {
-          state.imgs.push(url)
+          $store.state.characterImgList.push(url)
       })
         })
       }).catch((error) => {
@@ -71,7 +71,7 @@ export default {
       classType: '',
       race: '',
       selectedImg: '',
-      imgs: [],
+      imgs: computed(() => $store.state.characterImgList),
       characterCount: computed(()=> $store.state.player.characters.length)
     })
     return state

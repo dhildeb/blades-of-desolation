@@ -29,7 +29,10 @@ class CharacterService{
   getAverageCharacterLvl(){
     let totalLvl = 0
     $store.state.player.characters.forEach(c => totalLvl += c.level)
-    return Math.floor(totalLvl/$store.state.player.characters.length)
+    if(totalLvl){
+      return Math.floor(totalLvl/$store.state.player.characters.length)
+    }
+    return totalLvl
   }
   removeDestroyedCharacters(){
     $store.state.player.characters.forEach(c => {

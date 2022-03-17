@@ -21,7 +21,7 @@ export class MonsterFactory {
     this.magicResistance = monsterData.magicResistance ?? 0
     this.lifeSteal = monsterData.lifeSteal ?? 0
     this.absorb = monsterData.absorb ?? ''
-    this.level = monsterData.level ?? 1
+    this.level = monsterData.level ?? 0
     this.loot = monsterData.loot ?? {gold: 0, items: []}
     this.exp = monsterData.exp ?? 50
     this.baseHp = this.hp
