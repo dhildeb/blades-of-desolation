@@ -5,17 +5,17 @@ const store = createStore({
     // all monster stats: {name: 'any', classType: '', race: '', img: '', spells: [], equipment: [], dmgType: '', hp: 5, magic: 0, luck: 0, strength: 1, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal:  0, absorb: '', level: 1, loot: {gold: 0, items: []}, exp: 50}
       monsters: [
         //0
-        [{name: 'goblin', actions: 1, strength: 5, hp: 7, loot: {gold: 5, items: ['']}, exp: 50, dodge: 10, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgoblin.png?alt=media&token=92f9a971-2733-42a9-b616-563ffcbe86dc'}, 
-        {name: 'bullywug', actions: 2, strength: 3, hp: 11, loot: {gold: 5, items: ['spear']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbullywug.png?alt=media&token=b29b3455-f4ca-4c97-918c-fd20fb8946d0'}, 
-        {name: 'giant bat', actions: 1, strength: 5, hp: 22, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-bat.png?alt=media&token=09a1bbb5-aea2-42ff-afbd-34c420a23b52'}, 
-        {name: 'giant rat', actions: 1, strength: 4, hp: 7, loot: {gold: 2, items: []}, exp: 25, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-rat.png?alt=media&token=c09b17a6-58da-4efc-b5e0-77f8ff3d5323'}, 
-        {name: 'kuo toa', actions: 1, strength: 4, hp: 18, loot: {gold: 5, items: ['spear', 'sticky shield']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fimp.png?alt=media&token=f2938d88-c399-4e6a-a6a4-1a99555bef25'}, 
-        {name: 'seedling', actions: 1, strength: 4, hp: 15, thorns: 1, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fseedling.png?alt=media&token=4e357d83-5c08-45d2-940e-7ae302b26366'}, 
-        {name: 'skeleton', actions: 1, strength: 5, hp: 13, loot: {gold: 5, items: ['shortsword', 'shortbow']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fundead-barbarian.png?alt=media&token=8f7d9113-6d7f-4c60-b74e-a30cf4cb9ed5'}, 
+        [{name: 'goblin', actions: 1, strength: 5, hp: 7, loot: {gold: 5, items: ['']}, exp: 50, dodge: 10, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgoblin.png?alt=media&token=92f9a971-2733-42a9-b616-563ffcbe86dc'},
+        {name: 'bullywug', actions: 2, strength: 3, hp: 11, loot: {gold: 5, items: ['spear']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbullywug.png?alt=media&token=b29b3455-f4ca-4c97-918c-fd20fb8946d0'},
+        {name: 'giant bat', actions: 1, strength: 5, hp: 22, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-bat.png?alt=media&token=09a1bbb5-aea2-42ff-afbd-34c420a23b52'},
+        {name: 'giant rat', actions: 1, strength: 4, hp: 7, loot: {gold: 2, items: []}, exp: 25, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-rat.png?alt=media&token=c09b17a6-58da-4efc-b5e0-77f8ff3d5323'},
+        {name: 'kuo toa', actions: 1, strength: 4, hp: 18, loot: {gold: 5, items: ['spear', 'sticky shield']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fimp.png?alt=media&token=f2938d88-c399-4e6a-a6a4-1a99555bef25'},
+        {name: 'seedling', actions: 1, strength: 4, hp: 15, thorns: 1, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fseedling.png?alt=media&token=4e357d83-5c08-45d2-940e-7ae302b26366'},
+        {name: 'skeleton', actions: 1, strength: 5, hp: 13, loot: {gold: 5, items: ['shortsword', 'shortbow']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fundead-barbarian.png?alt=media&token=8f7d9113-6d7f-4c60-b74e-a30cf4cb9ed5'},
         ],
         //1
-        [{name: 'fire snake', actions: 2, strength: 3, hp: 22, loot: {gold: 20, items: ['fire snake hide']}, absorb: 'fire', thorns: 5, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ffiresnake.png?alt=media&token=7a25d2f1-6c6d-4508-a200-57f324e360ba'}, 
-        {name: 'ghoul', actions: 1, strength: 8, hp: 22, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fghoul.png?alt=media&token=c5ac81a3-433a-4890-8272-5a4daa4d1b4d'}, 
+        [{name: 'fire snake', actions: 2, strength: 3, hp: 22, loot: {gold: 20, items: ['fire snake hide']}, absorb: 'fire', thorns: 5, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ffiresnake.png?alt=media&token=7a25d2f1-6c6d-4508-a200-57f324e360ba'},
+        {name: 'ghoul', actions: 1, strength: 8, hp: 22, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fghoul.png?alt=media&token=c5ac81a3-433a-4890-8272-5a4daa4d1b4d'},
         {name: 'bugbear', actions: 1, strength: 9, hp: 27, loot: {gold: 20, items: ['javelin', 'morningstar']}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbugbear.png?alt=media&token=811edeb1-3376-4259-a175-089015c51cb9'},
         {name: 'giant spider', actions: 1, strength: 16, hp: 26, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-spider.png?alt=media&token=944f50cb-b41b-4865-9a28-9078cd65540c'},
         {name: 'imp', actions: 1, strength: 15, magicResistance: 25, physicalResistance: 25, hp: 10, absorb: 'fire', loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fimp.png?alt=media&token=f2938d88-c399-4e6a-a6a4-1a99555bef25'},
@@ -25,7 +25,7 @@ const store = createStore({
         {name: 'orc', actions: 1, strength: 7, hp: 15, loot: {gold: 10, items: ['greataxe', 'javelin']}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Forc.png?alt=media&token=f011fcb1-d057-490c-b599-350229676f87'},
         {name: 'shadow', actions: 1, strength: 9, lifeSteal: 50, physicalResistance: 50, absorb: 'necrotic', hp: 16, loot: {gold: 10, items: []}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fshadow.png?alt=media&token=9442e3ed-56f0-4782-b2ce-62d14975eeda'},
         {name: 'scarecrow', actions: 2, strength: 6, physicalResistance: 20, hp: 36, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fscarecrow.png?alt=media&token=b005ab31-b378-4cef-b1af-10fdf8ba91c2'},
-        ], 
+        ],
         //2
         [{name: 'gelatinous cube', classType: '', race: 'ooze', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgelatinous-cube.png?alt=media&token=c6d9255b-de4f-4fe8-9e5d-66464bd29119', spells: [], equipment: [], dmgType: 'acid', hp: 84, magic: 0, luck: 0, strength: 10, dodge: 0, thorns: 10, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 25, absorb: '', level: 2, loot: {gold: 45, items: []}, exp: 450},
         {name: 'gibbering mouther', classType: '', race: 'aberration', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fmouther.png?alt=media&token=7927b7ad-4059-410c-b21f-fc57a5485955', spells: [], equipment: [], dmgType: 'acid', hp: 67, magic: 0, luck: 0, strength: 17, dodge: 25, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 0, absorb: '', level: 2, loot: {gold: 45, items: []}, exp: 450},
@@ -39,7 +39,7 @@ const store = createStore({
         {name: 'werewolf', actions: 2, strength: 7, hp: 58, absorb: 'melee', loot: {gold: 70, items: ['handaxe', 'shortsword']}, exp: 700, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fwolfman.png?alt=media&token=fde92071-b1ab-4372-bb41-cfdd574aa1ec'},
         ],
         //4
-        [{name: 'ettin', actions: 2, strength: 14, hp: 85, loot: {gold: 110, items: ['battleaxe', 'morningstar']}, exp: 1100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fettin.png?alt=media&token=d08052f2-8965-460f-b745-2a3d04890b0a'}, 
+        [{name: 'ettin', actions: 2, strength: 14, hp: 85, loot: {gold: 110, items: ['battleaxe', 'morningstar']}, exp: 1100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fettin.png?alt=media&token=d08052f2-8965-460f-b745-2a3d04890b0a'},
         {name: 'flameskull', actions: 2, strength: 10, hp: 40, loot: {gold: 110, items: []}, exp: 1100, absorb: 'magic', dmgType: 'magic', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fflameskull.png?alt=media&token=c580f87e-37a5-426f-868d-2283d230adf5'},
         {name: 'young phoenix', actions: 1, strength: 26, hp: 45, loot: {gold: 110, items: ['']}, exp: 1100, absorb: 'fire', physicalResistance: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpheonix.png?alt=media&token=a8d21857-1c00-4c11-ad1b-6bb5456a5220'},
         ],
@@ -95,18 +95,24 @@ const store = createStore({
         [{name: 'death', actions: 10, strength: 100, hp: 5000, loot: {gold: 2500, items: ['']}, exp: 25000, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpngwing.com%20(79).png?alt=media&token=aa71a739-6b17-42d9-83fc-5d470623a567'}
         ]
     ],
-      combatMonsters: [],
-      player: {
-        characters: [],
-        hp: 10,
-        abilities: {dodge: 0, crit: 0},
-        gold: 0,
-        items: []
-      },
-      selected: '',
-      characterImgList: [],
-      // max exp til next lvl
-      levelUpChart: [300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]
+    items: [
+      {name: 'shortsword', effect: 'strength', value: 1},
+      {name: 'spear', effect: 'strength', value: 1},
+      {name: 'shortbow', effect: 'strength', value: 1},
+      {name: 'sticky shield', effect: 'hp', value: 3},
+    ],
+    combatMonsters: [],
+    player: {
+      characters: [],
+      hp: 10,
+      abilities: {dodge: 0, crit: 0},
+      gold: 0,
+      items: []
+    },
+    selected: '',
+    characterImgList: [],
+    // max exp til next lvl
+    levelUpChart: [300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]
   },
   getters: {
 
