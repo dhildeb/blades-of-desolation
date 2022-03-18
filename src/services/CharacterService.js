@@ -46,7 +46,7 @@ class CharacterService{
       return
     }
     $store.state.player.characters.forEach(c => {
-      if(c.actions){
+      if(c.actions && c.hp > 0){
         $store.state.selected = c
         return
       }

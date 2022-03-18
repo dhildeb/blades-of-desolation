@@ -70,7 +70,7 @@ export default {
       monsters: computed(()=> $store.state.combatMonsters),
       characters: computed(()=> $store.state.player.characters),
       monstersWithHp: computed(()=> state.monsters.filter(m => m.hp > 0).length),
-      charactersWithActions: computed(()=> state.characters.filter(c => c.actions > 0 ).length),
+      charactersWithActions: computed(()=> state.characters.filter(c => c.actions > 0 && c.hp > 0 ).length),
       charactersWithHp: computed(()=> state.characters.filter(c => c.hp > 0).length),
     })
     return state

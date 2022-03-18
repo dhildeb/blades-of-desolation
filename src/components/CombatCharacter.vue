@@ -5,7 +5,7 @@
   <div v-else>
       <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected.id == character.id" />
     <strong class="d-flex" :class="character.actions < 1 ? 'text-danger' : ''">{{character.name}}</strong>
-    <img class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
+    <img :id="'charImg'+character.id" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
   </div>
 </template>
 
@@ -20,9 +20,10 @@ export default {
   props: {
     character: {type: Object}
   },
-  setup(){
+  setup(props){
     const state = reactive({
       selected: computed(() => $store.state.selected),
+      hp: computed(() => props.character.hp)
     })
     return state
   },

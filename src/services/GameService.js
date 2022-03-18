@@ -5,7 +5,7 @@ import { characterService } from "./CharacterService"
 import { monstersService } from "./MonstersService"
 class GameService{
   determineTurn(){
-      monstersService.takeTurn()
+    monstersService.takeTurn()
   }
   spawnMonsters(){
     $store.state.combatMonsters = []
@@ -41,7 +41,7 @@ class GameService{
     lvlUpBoosts.classBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)] += character.level)
     lvlUpBoosts.raceBoost.forEach(b => character[b] += character.level)
     lvlUpBoosts.raceBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)] += character.level)
-    
+
     character.hp += character.baseHp
     character.baseHp += character.baseHp
   }
