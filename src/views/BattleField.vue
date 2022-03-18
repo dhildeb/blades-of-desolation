@@ -9,6 +9,9 @@
           <EnemyMonster :monster="monster" />
         </div>
       </div>
+      <div v-if="monstersWithHp < 1">
+        <button class="btn btn-primary" @click="spawnMonsters">Battle on!</button>
+      </div>
     </div>
     <div class="row justify-content-center h-50">
       <div class="col-4 col-md-2" v-for="character in characters" :key="character.id">
@@ -71,6 +74,11 @@ export default {
       charactersWithHp: computed(()=> state.characters.filter(c => c.hp > 0).length),
     })
     return state
+  },
+  methods:{
+    spawnMonsters(){
+      gameService.spawnMonsters()
+    }
   },
     beforeRouteLeave(){
       if(this.charactersWithHp > 0){

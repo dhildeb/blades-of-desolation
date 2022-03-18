@@ -10,6 +10,8 @@
 import { reactive } from "@vue/reactivity"
 import HpBar from "./HpBar.vue"
 import { battleService } from "@/services/BattleService"
+import { characterService } from "@/services/CharacterService"
+import { onMounted } from "@vue/runtime-core"
 export default {
   components: { HpBar },
   name: 'EnemyMonster',
@@ -17,6 +19,7 @@ export default {
     monster: {type: Object}
   },
   setup(){
+    onMounted(()=> characterService.autoSelect())
     const state = reactive({
       deadImg: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904'
     })
@@ -24,8 +27,8 @@ export default {
   },
   methods: {
     attackMonster(monster){
-      this.$store.dispatch('unselect')
       battleService.handleAttack(this.$store.state.selected, monster)
+      characterService.autoSelect()
     }
   }
 }

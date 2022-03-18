@@ -104,7 +104,6 @@ export class CharacterFactory{
   }
   randomCharacterImg(){
     let img = ''
-    console.log($store.state.characterImgList)
     let random = Math.floor(Math.random()*$store.state.characterImgList.length)
     img = $store.state.characterImgList[random]
     this.img = img

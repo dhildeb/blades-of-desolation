@@ -1,12 +1,13 @@
 <template>
-  <div class="bg-danger w-100 hp-bar rounded-pill"><div class="bg-success hp-bar rounded-pill" :style="'width: '+(hp > 0 ? (hp/baseHp)*100 : 0)+'%'"></div></div>
+  <div class="bg-danger w-100 hp-bar rounded-pill"><div class="hp-bar rounded-pill" :class="selected ? 'bg-warning' : 'bg-success'" :style="'width: '+(hp > 0 ? (hp/baseHp)*100 : 0)+'%'"></div></div>
 </template>
 
 <script>
 export default {
 props: {
   hp: {require: true, type: Number},
-  baseHp: {require: true, type: Number}
+  baseHp: {require: true, type: Number},
+  selected: {type: Boolean, default: false}
 }
 }
 </script>

@@ -3,9 +3,9 @@
       <strong class="d-flex dead" title="dead">{{character.name}}</strong>
   </div>
   <div v-else>
-      <HpBar :hp="character.hp" :baseHp="character.baseHp" />
-    <strong class="d-flex">{{character.name}}</strong>
-    <img :class="'img-fluid w-75 click '+(selected.id == character.id ? 'border-bottom border-success' : character.actions < 1 ? 'border border-danger' : '')" :src="character.img" @click="selectCharacter(character)">
+      <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected.id == character.id" />
+    <strong class="d-flex" :class="character.actions < 1 ? 'text-danger' : ''">{{character.name}}</strong>
+    <img class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
   </div>
 </template>
 

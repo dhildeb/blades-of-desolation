@@ -27,8 +27,8 @@
         </p>
       </div>
     </div>
-    <button class="btn btn-success float-bottom" @click="saveGame">Save</button>
-    <button class="btn btn-success float-bottom" @click="loadGame">Load Game</button>
+    <button class="btn btn-success float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="saveGame">Save</button>
+    <button class="btn btn-success float-bottom" :class="player.characters.length < 0 ? '' : 'd-none'" @click="loadGame">Load Game</button>
   </div>
 </template>
 

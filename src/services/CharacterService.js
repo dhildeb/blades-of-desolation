@@ -9,6 +9,7 @@ class CharacterService{
   prepPhase(){
     this.removeDestroyedCharacters()
     this.resetActions()
+    this.autoSelect()
   }
   attackPhase(){
 
@@ -39,6 +40,17 @@ class CharacterService{
       if(c.hp < c.baseHp*-2){
         $store.commit('destroyCharacter', c.id)
         Notify.toast(c.name+' was destroyed', 'error')
+      }
+    })
+  }
+  autoSelect(){
+    if($store.state.selected?.actions > 0){
+      return
+    }
+    $store.state.player.characters.forEach(c => {
+      if(c.actions){
+        $store.state.selected = c
+        return
       }
     })
   }
