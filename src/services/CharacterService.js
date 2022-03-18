@@ -22,9 +22,7 @@ class CharacterService{
   }
   resetActions(){
     $store.state.player.characters.forEach(c => {
-      if(c.hp > 0){
-        c.actions += c.baseActions
-      }
+      c.actions = c.baseActions
     })
   }
   getAverageCharacterLvl(){

@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import Notify from "@/utils/Notify"
+
 const store = createStore({
   state: {
     // all monster stats: {name: 'any', classType: '', race: '', img: '', spells: [], equipment: [], dmgType: '', hp: 5, magic: 0, luck: 0, strength: 1, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal:  0, absorb: '', level: 1, loot: {gold: 0, items: []}, exp: 50}
@@ -15,7 +15,7 @@ const store = createStore({
         ],
         //1
         [{name: 'fire snake', actions: 2, strength: 3, hp: 22, loot: {gold: 20, items: ['fire snake hide']}, absorb: 'fire', thorns: 5, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ffiresnake.png?alt=media&token=7a25d2f1-6c6d-4508-a200-57f324e360ba'}, 
-        {name: 'ghoul', actions: 1, strength: 8, hp: 22, loot: {gold: 20, items: ['fire snake hide']}, absorb: 'fire', thorns: 5, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fghoul.png?alt=media&token=c5ac81a3-433a-4890-8272-5a4daa4d1b4d'}, 
+        {name: 'ghoul', actions: 1, strength: 8, hp: 22, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fghoul.png?alt=media&token=c5ac81a3-433a-4890-8272-5a4daa4d1b4d'}, 
         {name: 'bugbear', actions: 1, strength: 9, hp: 27, loot: {gold: 20, items: ['javelin', 'morningstar']}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbugbear.png?alt=media&token=811edeb1-3376-4259-a175-089015c51cb9'},
         {name: 'giant spider', actions: 1, strength: 16, hp: 26, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-spider.png?alt=media&token=944f50cb-b41b-4865-9a28-9078cd65540c'},
         {name: 'imp', actions: 1, strength: 15, magicResistance: 25, physicalResistance: 25, hp: 10, absorb: 'fire', loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fimp.png?alt=media&token=f2938d88-c399-4e6a-a6a4-1a99555bef25'},
@@ -95,11 +95,6 @@ const store = createStore({
         [{name: 'death', actions: 10, strength: 100, hp: 5000, loot: {gold: 2500, items: ['']}, exp: 25000, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpngwing.com%20(79).png?alt=media&token=aa71a739-6b17-42d9-83fc-5d470623a567'}
         ]
     ],
-      cards: [{name: 'Assassin', cost: 50, power: 2, ability: 'dodge', abilityBoost: .1, type: 'human'}, {name: 'Barbarian', cost: 60, power: 3, ability: 'crit', abilityBoost: .1, type: 'human'}],
-      characters: {
-        classes: ['rogue', 'ranger', 'barbarian', 'wizard', 'cleric', 'fighter', 'monk', 'paladin', 'warlock'],
-        races: ['dragonborn', 'human', 'elf', 'dwarf', 'halfling', 'unknown' ]
-      },
       combatMonsters: [],
       player: {
         characters: [],
@@ -120,33 +115,18 @@ const store = createStore({
     selectCharacter(state, char){
       state.selected = char
     },
-    monsterAttacked(state, monster){
-      if(state.selected.actions > 0){
-        state.selected.actions -= 1
-        monster.hp -= state.selected.power
-      }else{
-        Notify.toast(state.selected.name+' is out of actions', 'warning')
-      }
-    },
     bringOutYourDead(state){
       state.combatMonsters = []
     },
     destroyCharacter(state, characterId){
       state.player.characters = state.player.characters.filter(c => c.id != characterId)
     },
-    unselect(state){
-      state.selected = ''
-    },
     reducePlayerGold(state, cost){
       state.player.gold -= cost
     }
   },
   actions: {
-    unselect(context){
-      if(this.state.selected.actions < 1){
-        context.commit('unselect')
-      }
-    }
+
   },
   modules: {
   }

@@ -11,6 +11,7 @@ class BattleService{
       }
 
       this.thorns(attacker, target)
+
       if(target.absorb == attacker.dmgType && target.absorb != ''){
         target.hp += attacker.strength
         Notify.toast(target.name+' absorbed the attack', 'info')
@@ -25,12 +26,9 @@ class BattleService{
     }
   }
   thorns(attacker, target){
-    if(target.thorns > 0){
-      let dmg = Math.round(attacker.strength*(target.thorns/100))
-      if(dmg > 0){
-        attacker.hp -= dmg
-        Notify.toast(attacker.name+' took thorn DMG '+dmg)
-      }
+      if(target.thorns > 0){
+        attacker.hp -= target.thorns
+        Notify.toast(attacker.name+' took thorn DMG '+target.thorns)
     }
   }
   dodge(target){
@@ -55,6 +53,16 @@ class BattleService{
       if(lifeSteal > 0){
         Notify.toast(attacker.name+' recovers some HP', 'info')
         attacker.hp += lifeSteal
+      }
+    }
+  }
+
+  reflect(attacker, target){
+    if(target.reflect > 0){
+      let dmg = Math.round(attacker.strength*(target.reflect))
+      if(dmg > 0){
+        attacker.hp -= dmg
+        Notify.toast(attacker.name+' took DMG '+dmg)
       }
     }
   }

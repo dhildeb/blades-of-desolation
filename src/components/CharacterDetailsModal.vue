@@ -22,7 +22,7 @@
             <li>HP: {{character.hp+' / '+character.baseHp}}</li>
             <li>LVL: {{character.level}}</li>
             <li>EXP: {{character.exp}}</li>
-            <li>Speed: {{character.actions}}</li>
+            <li>Speed: {{character.actions}}/{{character.baseActions}}</li>
             <li>STR: {{character.strength}}</li>
             <li v-if="character.magic">Magic: {{character.magic+' / '+character.baseMagic}}</li>
             <li v-if="character.dodge">Dodge: {{character.dodge}}%</li>
