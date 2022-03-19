@@ -1,5 +1,6 @@
 <template>
   <CharacterDetailsModal :character="selectedCharacter" />
+  <ItemPouchModal />
   <div class="bg-dark text-light side-window">
     <nav class="pb-2">
       <router-link to="/battle">Battle</router-link> |
@@ -8,7 +9,7 @@
     </nav>
     <div class="pb-2">
       <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapsePouch" aria-expanded="false" aria-controls="collapsePouch">
-        Pounch
+        Pouch
       </button>
       <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseParty" aria-expanded="false" aria-controls="collapseParty">
         Party
@@ -17,7 +18,9 @@
     <div class="collapse" id="collapsePouch">
       <div class="d-flex d-md-block justify-content-around h-100">
         <span>Gold: {{player.gold}}</span>
-        <span>Items: {{player.items}}</span>
+        <p class="click" data-toggle="modal" data-target="#itemPouchModal" title="items">
+          Items
+        </p>
       </div>
     </div>
     <div class="collapse" id="collapseParty">
@@ -36,10 +39,12 @@
 import { reactive } from "@vue/reactivity"
 import { computed } from "@vue/runtime-core"
 import $store from '@/store/index.js'
-import CharacterDetailsModal from "./CharacterDetailsModal.vue"
 import Notify from "@/utils/Notify"
+import ItemPouchModal from "./ItemPouchModal.vue"
+import CharacterDetailsModal from "./CharacterDetailsModal.vue"
+
 export default {
-  components: { CharacterDetailsModal },
+  components: { CharacterDetailsModal, ItemPouchModal },
   setup(){
     const state = reactive({
       player: computed(()=> $store.state.player),

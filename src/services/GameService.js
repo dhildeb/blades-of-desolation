@@ -1,3 +1,4 @@
+import { Item } from "@/models/Item"
 import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
 import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
@@ -21,6 +22,7 @@ class GameService{
   victory(){
     characterService.resetActions()
     this.handleExpGain()
+    this.loot()
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
@@ -31,6 +33,16 @@ class GameService{
       if(c.exp >= $store.state.levelUpChart[c.level]){
         this.levelUp(c)
       }
+    })
+  }
+
+  loot(){
+    $store.state.combatMonsters.forEach(c => {
+      $store.state.player.gold += c.loot.gold
+      c.loot.items.forEach(li => {
+        let item = $store.state.items.filter(i => i.name == li)
+        $store.state.player.items.push(new Item(item[0]))
+      })
     })
   }
 

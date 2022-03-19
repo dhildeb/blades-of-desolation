@@ -1,5 +1,4 @@
 import Notify from "@/utils/Notify"
-
 class BattleService{
   handleAttack(attacker, target){
     if(attacker.actions > 0){
