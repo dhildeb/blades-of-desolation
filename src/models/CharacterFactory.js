@@ -36,6 +36,10 @@ export class CharacterFactory{
         this.actions += 1
         this.hp += 5
         break
+      case 'bard':
+        this.luck += 3
+        this.dodge += 2
+        break
       case 'barbarian':
         this.strength += 3
         break
@@ -59,7 +63,7 @@ export class CharacterFactory{
         break
       case 'warlock':
         this.magic += 1
-        this.lifeSteal += 5
+        this.lifeSteal += 10
         break
       default:
         this.classType = 'unknown'

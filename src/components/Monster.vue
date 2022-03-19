@@ -1,7 +1,7 @@
 <template>
   <HpBar :hp="monster.hp" :baseHp="monster.baseHp" />
 <div>
-  <img v-if="monster.hp > 0" class="img-fluid monster-img" @click="attackMonster(monster)" :src="monster.img" />
+  <img :id="'monster'+monster.id" v-if="monster.hp > 0" class="img-fluid monster-img" @click="attackMonster(monster)" :src="monster.img" />
   <img v-else class="img-fluid monster-img" :src="deadImg" />
 </div>
 </template>
@@ -12,6 +12,9 @@ import HpBar from "./HpBar.vue"
 import { battleService } from "@/services/BattleService"
 import { characterService } from "@/services/CharacterService"
 import { onMounted } from "@vue/runtime-core"
+import 'animate.css'
+import { animationsSErvice } from "@/services/AnimationsService"
+
 export default {
   components: { HpBar },
   name: 'EnemyMonster',
@@ -27,6 +30,7 @@ export default {
   },
   methods: {
     attackMonster(monster){
+      animationsSErvice.shake('monster'+monster.id)
       battleService.handleAttack(this.$store.state.selected, monster)
       characterService.autoSelect()
     }

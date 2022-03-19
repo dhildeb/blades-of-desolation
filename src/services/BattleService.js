@@ -5,6 +5,9 @@ class BattleService{
     if(attacker.actions > 0){
       attacker.actions--
       let dmg = attacker.strength
+
+      dmg = this.crit(attacker, dmg)
+
       if(this.dodge(target)){
         Notify.toast(target.name+' dodged the attack', 'info')
         return
@@ -17,7 +20,7 @@ class BattleService{
         Notify.toast(target.name+' absorbed the attack', 'info')
         return
       }
-      
+
       dmg = this.resistance(attacker, target)
 
       this.lifeSteal(attacker, dmg)
@@ -49,10 +52,10 @@ class BattleService{
   }
   lifeSteal(attacker, dmg){
     if(attacker.lifeSteal > 0){
-      let lifeSteal = Math.round(dmg*(attacker.lifeSteal/100))
+      let lifeSteal = Math.round(dmg*(attacker.lifeSteal/100)*10)/10
       if(lifeSteal > 0){
         Notify.toast(attacker.name+' recovers some HP', 'info')
-        attacker.hp += lifeSteal
+        attacker.hp = Math.round((lifeSteal + attacker.hp)*10)/10
       }
     }
   }
@@ -65,6 +68,16 @@ class BattleService{
         Notify.toast(attacker.name+' took DMG '+dmg)
       }
     }
+  }
+
+  crit(attacker, dmg){
+    let crit = Math.ceil(Math.random()*400)
+    let chance = 1+Math.round(attacker.luck)
+    if(chance >= crit){
+      dmg*2
+      Notify.toast(attacker.name+' CRIT HIT', 'info')
+    }
+    return dmg
   }
 }
 

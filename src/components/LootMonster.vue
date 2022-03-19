@@ -18,8 +18,8 @@ export default {
   setup(props){
     onMounted(()=>{
       $store.state.player.gold += props.monster.loot.gold
-      if(props.monster.items){
-        $store.state.player.push(props.monster.items)
+      if(props.monster.loot.items.length > 0){
+        $store.state.player.items.push(...props.monster.loot.items)
       }
     })
     const state = reactive({
