@@ -8,7 +8,7 @@
     </nav>
     <div class="pb-2">
       <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapsePouch" aria-expanded="false" aria-controls="collapsePouch">
-        Pouch
+        Pounch
       </button>
       <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseParty" aria-expanded="false" aria-controls="collapseParty">
         Party
