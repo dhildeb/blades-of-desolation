@@ -59,12 +59,7 @@ export default {
   },
   setup(){
     onMounted(()=>{
-        if(state.charactersWithHp == 0){
-          Notify.toast('You cannot battle without a party.', 'warning')
-          router.push({name: 'CharacterForm'})
-        }else{
-          gameService.spawnMonsters()
-        }
+      gameService.spawnMonsters()
     })
     const state = reactive({
       monsters: computed(()=> $store.state.combatMonsters),

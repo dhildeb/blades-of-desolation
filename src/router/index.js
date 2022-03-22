@@ -2,12 +2,20 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BattleField from '../views/BattleField.vue'
 import BadPageDefault from '../views/BadPageDefault.vue'
 import CharacterForm from '@/views/CharacterForm.vue'
+import $store from '@/store/index.js'
+import Notify from "@/utils/Notify"
 
 const routes = [
   {
     path: '/battle',
     name: 'battleField',
-    component: BattleField
+    component: BattleField,
+    beforeEnter: function(){
+      if($store.state.player.characters.length == 0){
+        Notify.toast('You cannot battle without a party.', 'warning')
+        router.push({name: 'CharacterForm'})
+      }
+    }
   },
   {
     path: '/',
@@ -29,7 +37,13 @@ const routes = [
     children: [
       {path: 'cards', component: () => import(/* webpackChunkName: "cards" */ '../components/CardShop.vue')},
       {path: 'abilities', component: () => import(/* webpackChunkName: "abilities" */ '../components/AbilitiesShop.vue')}
-    ]
+    ],
+    beforeEnter: function(){
+      if($store.state.player.characters.length == 0){
+        Notify.toast('You cannot shop without a party.', 'warning')
+        router.push({name: 'CharacterForm'})
+      }
+    }
   },
   {
     path: '/:any(.*)',

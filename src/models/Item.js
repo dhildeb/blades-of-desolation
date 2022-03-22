@@ -8,5 +8,6 @@ export class Item{
     this.effect = itemData.effect
     this.value = itemData.value
     this.type = itemData.type
+    this.price = itemData.price
   }
 }

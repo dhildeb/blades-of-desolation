@@ -32,6 +32,11 @@ class ItemsService{
     $store.state.player.items.push(item)
     characterService.removeItemStats(character, item)
   }
+  sellItem(item){
+    let index = $store.state.player.items.indexOf(item)
+    $store.state.player.items.splice(index, 1)
+    $store.state.player.gold += item.price/10
+  }
 }
 
 export const itemsService = new ItemsService()
