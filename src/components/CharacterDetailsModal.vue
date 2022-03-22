@@ -21,7 +21,7 @@
           <ul class="col-4 d-flex flex-column">
             <li>HP: {{character.hp+' / '+character.baseHp}}</li>
             <li>LVL: {{character.level}}</li>
-            <li>EXP: {{character.exp}}</li>
+            <li>EXP: {{Math.round(character.exp)}}</li>
             <li>Speed: {{character.actions}}/{{character.baseActions}}</li>
             <li>STR: {{character.strength}}</li>
             <li v-if="character.magic">Magic: {{character.magic+' / '+character.baseMagic}}</li>
@@ -35,8 +35,8 @@
           <div class="col-8 d-flex flex-column">
             <strong>Equipment</strong>
             <ul class="h-50 border-rounded border" v-if="character.equipment.length > 0">
-              <li v-for="equipment in character.equipment" :key="equipment.id">
-                {{equipment.name}}
+              <li v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value">
+                {{equipment.name}} <span class="text-danger" title="unequip" @click="unequip(character, equipment)">-</span>
               </li>
             </ul>
             <div class="h-50" v-else></div>
@@ -57,6 +57,7 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
+import { itemsService } from "@/services/ItemsService"
 export default {
   name: 'CharacterDetailsModal',
   props:{
@@ -67,6 +68,11 @@ export default {
     })
     return state
   },
+  methods: {
+    unequip(character, equipment){
+      itemsService.unequipItem(character, equipment)
+    }
+  }
 }
 </script>
 

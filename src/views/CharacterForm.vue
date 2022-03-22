@@ -52,20 +52,37 @@ import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
 import firebaseApp from 'firebase/app'
 import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
+import $ from 'jquery'
+
 export default {
   name: 'CharacterForm',
   setup(){
     onMounted(()=>{
-      const storage = getStorage(firebaseApp)
-      listAll(ref(storage, 'characters/')).then((res) => {
-        res.items.forEach((itemRef)=>{
-          getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url) => {
-          $store.state.characterImgList.push(url)
-      })
+      if(window.location.origin.includes('localhost')){
+        let folder = "assets/characters/"
+        $.ajax({
+          url: folder,
+          async: false,
+          success: function(data){
+            $(data).find("a").attr("href", function (i, val) {
+              if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+                $store.state.characterImgList.push(val)
+              }
+            })
+          }
         })
-      }).catch((error) => {
-        console.log(error)
-      })
+      }else{
+          const storage = getStorage(firebaseApp)
+          listAll(ref(storage, 'characters/')).then((res) => {
+            res.items.forEach((itemRef)=>{
+              getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url) => {
+                $store.state.characterImgList.push(url)
+          })
+            })
+          }).catch((error) => {
+            console.log(error)
+          })
+        }
     })
     const state = reactive({
       name: '',

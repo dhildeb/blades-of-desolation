@@ -55,5 +55,8 @@ class CharacterService{
   addItemStats(character, item){
     $store.commit('equipItem', {characterId: character.id, item: item})
   }
+  removeItemStats(character, item){
+    $store.commit('unequipItem', {characterId: character.id, item: item})
+  }
 }
 export const characterService = new CharacterService()

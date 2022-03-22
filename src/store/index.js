@@ -96,21 +96,22 @@ const store = createStore({
         ]
     ],
     items: [
-      {name: 'shortsword', effect: 'strength', value: 2},
-      {name: 'dagger', effect: 'strength', value: 1},
-      {name: 'spear', effect: 'strength', value: 1},
-      {name: 'shortbow', effect: 'strength', value: 1},
-      {name: 'sticky shield', effect: 'baseHp', value: 3},
-      {name: 'battleaxe', effect: 'strength', value: 3},
-      {name: 'scimitar', effect: 'strength', value: 2},
-      {name: 'handaxe', effect: 'strength', value: 1},
-      {name: 'greatclub', effect: 'strength', value: 2},
-      {name: 'morningstar', effect: 'strength', value: 2},
-      {name: 'javelin', effect: 'strength', value: 1},
-      {name: 'fire snake hide', effect: 'magicResistance', value: 20},
-      {name: 'displacer cloak', effect: 'dodge', value: 25},
-      {name: 'purple dragon scalemail', effect: 'baseHp', value: 50},
-      {name: 'red dragon scalemail', effect: 'baseHp', value: 50},
+      {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', requirements: [{stat: 'strength', req: 2}]},
+      {name: 'dagger', effect: 'strength', value: 1, type: 'offHand'},
+      {name: 'spear', effect: 'strength', value: 1, type: 'mainHand'},
+      {name: 'shortbow', effect: 'strength', value: 1, type: 'mainHand'},
+      {name: 'sticky shield', effect: 'baseHp', value: 3, type: 'offHand'},
+      {name: 'battleaxe', effect: 'strength', value: 3, type: 'mainHand'},
+      {name: 'greataxe', effect: 'strength', value: 6, requirements: [{stat: 'strength', req: 4}]},
+      {name: 'scimitar', effect: 'strength', value: 2, type: 'mainHand'},
+      {name: 'handaxe', effect: 'strength', value: 1, type: 'mainHand'},
+      {name: 'greatclub', effect: 'strength', value: 2, type: 'mainHand'},
+      {name: 'morningstar', effect: 'strength', value: 2, type: 'mainHand'},
+      {name: 'javelin', effect: 'strength', value: 1, type: 'mainHand'},
+      {name: 'fire snake hide', effect: 'magicResistance', value: 20, type: 'armor'},
+      {name: 'displacer cloak', effect: 'dodge', value: 25, type: 'cloak'},
+      {name: 'purple dragon scalemail', effect: 'baseHp', value: 50, type: 'armor'},
+      {name: 'red dragon scalemail', effect: 'baseHp', value: 50, type: 'armor'},
     ],
     combatMonsters: [],
     player: {
@@ -144,6 +145,11 @@ const store = createStore({
     equipItem(state, data){
       let char = state.player.characters.find(c => c.id == data.characterId)
       char[data.item.effect] += data.item.value
+      char[data.item.type] = data.item.id
+    },
+    unequipItem(state, data){
+      let char = state.player.characters.find(c => c.id == data.characterId)
+      char[data.item.effect] -= data.item.value
     }
   },
   actions: {

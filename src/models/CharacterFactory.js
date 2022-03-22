@@ -13,6 +13,11 @@ export class CharacterFactory{
     }
     this.spells = characterData.spells ?? []
     this.equipment = characterData.equipment ?? []
+    this.mainHand = characterData.mainHand
+    this.offHand = characterData.offHand
+    this.armor = characterData.armor
+    this.cloak = characterData.cloak
+    this.accessory = characterData.accessory
     this.dmgType = characterData.dmgType ?? ''
     this.hp = characterData.hp ?? 5
     this.magic = characterData.magic ?? 0
@@ -96,15 +101,8 @@ export class CharacterFactory{
         break
     }
     this.baseHp = characterData.baseHp ?? this.hp
-    this.baseStrength = characterData.baseStrength ?? this.strength
-    this.baseDodge = characterData.baseDodge ?? this.dodge
-    this.baseThorns = characterData.baseThorns ?? this.thorns
     this.baseActions = characterData.baseActions ?? this.actions
-    this.baseLifeSteal = characterData.baseLifeSteal ?? this.lifeSteal
-    this.baseLuck = characterData.baseLuck ?? this.luck
     this.baseMagic = characterData.baseMagic ?? this.magic
-    this.basePhysicalResistance = characterData.basePhysicalResistance ?? this.physicalResistance
-    this.baseMagicResistance = characterData.baseMagicResistance ?? this.magicResistance
   }
   randomCharacterImg(){
     let img = ''
