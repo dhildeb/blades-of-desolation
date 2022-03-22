@@ -9,5 +9,6 @@ export class Item{
     this.value = itemData.value
     this.type = itemData.type
     this.price = itemData.price
+    this.rarity = itemData.rarity
   }
 }

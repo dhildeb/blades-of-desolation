@@ -3,6 +3,7 @@ import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
 import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
 import { characterService } from "./CharacterService"
+import { itemsService } from "./ItemsService"
 import { monstersService } from "./MonstersService"
 class GameService{
   determineTurn(){
@@ -23,6 +24,7 @@ class GameService{
     characterService.resetActions()
     this.handleExpGain()
     this.loot()
+    itemsService.randomItemDrop()
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
