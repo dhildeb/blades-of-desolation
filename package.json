@@ -22,6 +22,9 @@
     "vuex": "^4.0.2",
     "xml2js": "^0.4.23"
   },
+  "optionalDependencies": {
+    "fsevents": "2.1.2"
+  },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
