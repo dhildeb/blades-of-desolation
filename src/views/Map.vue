@@ -1,6 +1,6 @@
 <template>
 <div class="container map">
-<img class="" :src="require('../../public/assets/Map.png')" width="1000" height="840" usemap="#world-map" />
+<img class="" src="../assets/Map.png" width="1000" height="840" usemap="#world-map" />
 <map name="world-map" id="world-map">
   <area id="area-1" shape="circle" coords="708,238,10" alt="1" title="Area 1" @click="locationChange(0)" />
   <area id="area-2" shape="circle" coords="733,336,10" alt="2" title="Area 2" @click="locationChange(1)" />
