@@ -10,11 +10,11 @@ class GameService{
     monstersService.takeTurn()
   }
 
-  spawnMonsters(lvl){
+  spawnMonsters(){
     $store.state.combatMonsters = []
     let quantity = Math.ceil(Math.random()*3)
     for(let i=0; i<quantity; i++){
-      let monstersList = $store.state.monsters[lvl]
+      let monstersList = $store.state.monsters[$store.state.location]
       let index = Math.floor(Math.random()*monstersList.length)
       $store.state.combatMonsters.push(new MonsterFactory(monstersList[index]))
     }
