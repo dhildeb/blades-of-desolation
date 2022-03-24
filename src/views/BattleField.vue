@@ -59,7 +59,7 @@ export default {
   },
   setup(){
     onMounted(()=>{
-      gameService.spawnMonsters()
+      gameService.spawnMonsters($store.state.location)
     })
     const state = reactive({
       monsters: computed(()=> $store.state.combatMonsters),

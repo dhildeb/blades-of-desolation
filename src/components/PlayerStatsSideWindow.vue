@@ -2,10 +2,16 @@
   <CharacterDetailsModal :character="selectedCharacter" />
   <ItemPouchModal />
   <div class="bg-dark text-light side-window">
-    <nav class="pb-2">
-      <router-link to="/battle">Battle</router-link> |
-      <router-link to="/">Create</router-link> |
-      <router-link to="/shop">Shop</router-link>
+    <nav class="pb-2 d-flex justify-content-center">
+      <div v-if="player.characters.length > 0">
+        <router-link to="/battle">Battle</router-link> | 
+        <router-link to="/map">Map</router-link> | 
+        <router-link to="/shop">Shop</router-link>
+      </div>
+      <span class="px-1" v-if="player.characters.length < 5 && player.characters.length > 0"> | </span>
+      <div v-if="player.characters.length < 5">
+        <router-link to="/">Create</router-link>
+      </div>
     </nav>
     <div class="pb-2">
       <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapsePouch" aria-expanded="false" aria-controls="collapsePouch">

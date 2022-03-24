@@ -121,6 +121,7 @@ const store = createStore({
       gold: 0,
       items: []
     },
+    location: 1,
     selected: '',
     characterImgList: [],
     // max exp til next lvl
