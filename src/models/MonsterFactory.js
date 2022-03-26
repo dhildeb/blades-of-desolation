@@ -9,7 +9,7 @@ export class MonsterFactory {
     this.img = monsterData.img
     this.spells = monsterData.spells ?? []
     this.equipment = monsterData.equipment ?? []
-    this.dmgType = monsterData.dmgType ?? ''
+    this.dmgType = monsterData.dmgType ?? 'melee'
     this.hp = monsterData.hp ?? 5
     this.magic = monsterData.magic ?? 0
     this.luck = monsterData.luck ?? 0
@@ -20,6 +20,7 @@ export class MonsterFactory {
     this.physicalResistance = monsterData.physicalResistance ?? 0
     this.magicResistance = monsterData.magicResistance ?? 0
     this.immunities = monsterData.immunities ?? []
+    this.resistances = monsterData.resistances ?? []
     this.lifeSteal = monsterData.lifeSteal ?? 0
     this.absorb = monsterData.absorb ?? ''
     this.level = monsterData.level ?? 0

@@ -42,7 +42,7 @@ export function characterLvlUpStatHelper(classType, race){
       boosts['raceBoost'] = ['strength', 'hp']
       break
     case 'elf':
-      boosts['raceBoost'] = ['hp', 'actions']
+      boosts['raceBoost'] = ['magic', 'actions']
       break
     case 'dwarf':
       boosts['raceBoost'] = ['hp', 'hp']

@@ -3,7 +3,7 @@ class BattleService{
   handleAttack(attacker, target){
     if(attacker.actions > 0){
       attacker.actions--
-      let dmg = attacker.strength
+      let dmg = attacker.strength+attacker.magic
       if(target.immunities.filter(i => i == 'crit').length < 1){
         dmg = this.crit(attacker, dmg)
       }

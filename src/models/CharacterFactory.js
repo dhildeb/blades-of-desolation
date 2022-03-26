@@ -18,7 +18,7 @@ export class CharacterFactory{
     this.armor = characterData.armor
     this.cloak = characterData.cloak
     this.accessory = characterData.accessory
-    this.dmgType = characterData.dmgType ?? ''
+    this.dmgType = characterData.dmgType ?? 'melee'
     this.hp = characterData.hp ?? 5
     this.magic = characterData.magic ?? 0
     this.luck = characterData.luck ?? 0
@@ -52,10 +52,12 @@ export class CharacterFactory{
         break
       case 'wizard':
         this.magic += 3
+        this.dmgType = 'magic'
         break
       case 'cleric':
         this.magic += 1
         this.hp += 5
+        this.dmgType = 'magic'
         break
       case 'fighter':
         this.strength += 1
@@ -71,6 +73,7 @@ export class CharacterFactory{
       case 'warlock':
         this.magic += 1
         this.lifeSteal += 10
+        this.dmgType = 'magic'
         break
       default:
         this.classType = 'unknown'
@@ -87,7 +90,7 @@ export class CharacterFactory{
         this.hp += 5
         break
       case 'elf':
-        this.hp += 5
+        this.magic += 1
         this.actions += 1
         break
       case 'dwarf':
