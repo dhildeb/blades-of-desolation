@@ -28,6 +28,8 @@ export class CharacterFactory{
     this.actions = characterData.actions ?? 1
     this.physicalResistance = characterData.physicalResistance ?? 0
     this.magicResistance = characterData.magicResistance ?? 0
+    this.immunities = characterData.immunities ?? []
+    this.resistances = characterData.resistances ?? []
     this.lifeSteal = characterData.lifeSteal ?? 0
     this.absorb = characterData.absorb ?? ''
     this.level = characterData.level ?? 0

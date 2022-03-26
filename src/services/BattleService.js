@@ -4,8 +4,9 @@ class BattleService{
     if(attacker.actions > 0){
       attacker.actions--
       let dmg = attacker.strength
-
-      dmg = this.crit(attacker, dmg)
+      if(target.immunities.filter(i => i == 'crit').length < 1){
+        dmg = this.crit(attacker, dmg)
+      }
 
       if(this.dodge(target)){
         Notify.toast(target.name+' dodged the attack', 'info')
@@ -24,6 +25,10 @@ class BattleService{
 
       this.lifeSteal(attacker, dmg)
 
+      if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
+        console.log(target.name+' is immune to '+attacker.dmgType)
+        dmg = 0
+      }
       target.hp -= dmg
     }
   }
@@ -39,15 +44,20 @@ class BattleService{
     return dodge >= chance
   }
   resistance(attacker, target){
+    let dmg = attacker.strength
+    if(target.resistances.filter(r => r == attacker.dmgType).length > 0){
+      console.log(target.name+' is resistant to '+attacker.dmgType)
+      dmg = Math.round(dmg/2)
+    }
     if(target.physicalResistance > 0 && attacker.dmgType == 'melee'){
       Notify.toast(target.name+' is resistant to the attack', 'info')
-      return attacker.strength - Math.round(attacker.strength * (target.physicalResistance/100))
+      dmg = dmg - Math.round(dmg * (target.physicalResistance/100))
     }
     if(target.magicResistance > 0 && attacker.dmgType == 'magic'){
       Notify.toast(target.name+' is resistant to the attack', 'info')
-      return attacker.strength - Math.round(attacker.strength * (target.magicResistance/100))
+      dmg = dmg - Math.round(dmg * (target.magicResistance/100))
     }
-    return attacker.strength
+    return dmg
   }
   lifeSteal(attacker, dmg){
     if(attacker.lifeSteal > 0){

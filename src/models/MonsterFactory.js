@@ -19,6 +19,7 @@ export class MonsterFactory {
     this.actions = monsterData.actions ?? 1
     this.physicalResistance = monsterData.physicalResistance ?? 0
     this.magicResistance = monsterData.magicResistance ?? 0
+    this.immunities = monsterData.immunities ?? []
     this.lifeSteal = monsterData.lifeSteal ?? 0
     this.absorb = monsterData.absorb ?? ''
     this.level = monsterData.level ?? 0

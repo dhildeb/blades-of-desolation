@@ -27,14 +27,15 @@ class GameService{
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
-    //NOTE even dead characters get exp, maybe refactor
-    let charNum = $store.state.player.characters.length
+    let charNum = $store.state.player.characters.filter(c => c.hp > 0).length
     $store.state.player.characters.forEach(c => {
-      c.exp += totalExp/charNum
-      if(c.exp >= $store.state.levelUpChart[c.level]){
-        this.levelUp(c)
+      if(c.hp > 0){
+        c.exp += totalExp/charNum
+        if(c.exp >= $store.state.levelUpChart[c.level]){
+          this.levelUp(c)
+        }
       }
-    })
+      })
   }
 
   loot(){
@@ -55,8 +56,9 @@ class GameService{
     lvlUpBoosts.raceBoost.forEach(b => character[b] += character.level)
     lvlUpBoosts.raceBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)] += character.level)
 
-    character.hp += character.baseHp
-    character.baseHp += character.baseHp
+    character.hp += character.level*(character.level > 1 ? character.level : 3)
+    character.baseHp += character.level*(character.level > 1 ? character.level : 3)
+    // TODO add custom stat bonus
   }
 }
 
