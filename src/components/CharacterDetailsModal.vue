@@ -17,8 +17,9 @@
         </div>
       </div>
       <div class="modal-body container">
-        <div class="row px-3">
-          <ul class="col-4 d-flex flex-column">
+          <label for="stats">Stats</label>
+        <div class="row mt-3">
+          <ul class="col-6 pl-5">
             <li>HP: {{character.hp+' / '+character.baseHp}}</li>
             <li>LVL: {{character.level}}</li>
             <li>EXP: {{Math.round(character.exp)}}</li>
@@ -32,21 +33,28 @@
             <li v-if="character.absorb">Absorb: {{character.absorb}}</li>
             <li v-if="character.dmgType">DMG Type: {{character.dmgType}}</li>
           </ul>
-          <div class="col-8 d-flex flex-column">
+          <ul class="col-6" v-if="character.resistances.length > 0">
+            <label class="text-left w-100" for="resistances">Resistances: </label>
+            <li class="ml-4" v-for="resistance in character.resistances" :key="resistance">{{resistance}}</li>
+          </ul>
+        </div>
+
+        <div class="row">
+          <div class="col-12" v-if="character.equipment.length > 0">
             <strong>Equipment</strong>
-            <ul class="h-50 border-rounded border" v-if="character.equipment.length > 0">
+            <ul class="border-rounded border py-3">
               <li v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value">
-                {{equipment.name}} <span class="text-danger" title="unequip" @click="unequip(character, equipment)">-</span>
+                {{equipment.name}} <span class="text-danger click" title="unequip" @click="unequip(character, equipment)">-</span>
               </li>
             </ul>
-            <div class="h-50" v-else></div>
+          </div>
+          <div class="col-12" v-if="character.spells.length > 0">
             <strong>Spells</strong>
-            <ul class="h-50 border-rounded border" v-if="character.spells.length > 0">
+            <ul class="border-rounded border">
               <li v-for="spell in character.spells" :key="spell.name">
                 {{spell.name}}
               </li>
             </ul>
-            <div v-else>No known Spells</div>
           </div>
         </div>
       </div>
@@ -76,8 +84,11 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
 li{
   text-align: justify;
+}
+.modal-body{
+  overflow-y: auto;
 }
 </style>

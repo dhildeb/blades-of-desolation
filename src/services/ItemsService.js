@@ -19,25 +19,18 @@ class ItemsService{
       }
       let possibleItems = $store.state.items.filter(i => i.rarity == dropRarity)
       let index = Math.floor(Math.random()*possibleItems.length)
-      var item = possibleItems[index]
-      var creatureDropIndex = Math.floor(Math.random()*$store.state.combatMonsters.length)
+      let item = possibleItems[index]
+      let creatureDropIndex = Math.floor(Math.random()*$store.state.combatMonsters.length)
       $store.state.combatMonsters[creatureDropIndex].equipment.push(item.name)
+      monstersService.addItemStats($store.state.combatMonsters[creatureDropIndex], item.name)
     }
-    monstersService.addItemStats($store.state.combatMonsters[creatureDropIndex], item.name)
   }
   equipItem(character, item){
-    let canEquip = true
-    if(item?.requirements){
-      item.requirements.forEach(r => {
-          if(character[r.stat] < r.req){
-            canEquip = false
-          }
-      })
-    }
-      if(!canEquip){
+    if(!this.checkItemReqs(character, item)){
       Notify.toast('You cant equip that Item', 'warning')
       return
     }
+    
     // auto unequip
     character.equipment.forEach(e => {
       if(e.type == item.type){
@@ -48,12 +41,14 @@ class ItemsService{
     $store.state.player.items.splice(index, 1)
     character.equipment.push(item)
     characterService.addItemStats(character, item)
+    this.unequipReqMissingItems(character)
   }
   unequipItem(character, item){
     let index = character.equipment.indexOf(item)
     character.equipment.splice(index, 1)
     $store.state.player.items.push(item)
     characterService.removeItemStats(character, item)
+    this.unequipReqMissingItems(character)
   }
   sellItem(item){
     let index = $store.state.player.items.indexOf(item)
@@ -62,6 +57,38 @@ class ItemsService{
   }
   buyItem(item){
     $store.state.player.items.push(new Item(item))
+  }
+  checkItemReqs(character, item){
+    let canEquip = true
+    if(item?.requirements){
+      item.requirements.forEach(r => {
+        if(Array.isArray(character[r.stat])){
+          let multiStatReq = false
+          character[r.stat].forEach(s => {
+            if(typeof s === "object"){
+              if(s.name.includes(r.req)){
+                multiStatReq = true
+              }
+            }
+            else if(s.includes(r.req)){
+              multiStatReq = true
+            }
+          })
+          canEquip = multiStatReq
+        } 
+        else if(character[r.stat] < r.req){
+          canEquip = false
+        }
+      })
+    }
+    return canEquip
+  }
+  unequipReqMissingItems(character){
+    character.equipment.forEach(e => {
+      if(!this.checkItemReqs(character, e)){
+        this.unequipItem(character, e)
+      }
+    })
   }
 }
 
