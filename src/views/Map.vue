@@ -22,6 +22,7 @@
   <area id="area-18" shape="circle" coords="285,590,10" alt="18" title="Area 18" @click="locationChange(17)" />
   <area id="area-19" shape="circle" coords="211,675,10" alt="19" title="Area 19" @click="locationChange(18)" />
   <area id="area-20" shape="circle" coords="734,747,10" alt="20" title="Area 20" @click="locationChange(19)" />
+  <area id="area-secret" shape="circle" coords="100,100,10" alt="death" @click="locationChange(20)" />
 </map>
 </div>
 </template>

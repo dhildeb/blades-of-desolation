@@ -1,7 +1,7 @@
 import $store from '@/store/index.js'
 import { animationsSErvice } from "./AnimationsService"
 import { battleService } from "./BattleService"
-// import { useToast } from "vue-toastification"
+import { useToast } from "vue-toastification"
 import { characterService } from "./CharacterService"
 class MonstersService{
   takeTurn(){
@@ -20,7 +20,7 @@ class MonstersService{
         let target = $store.state.player.characters[Math.floor(Math.random()*numTargets)]
         battleService.handleAttack(m, target)
         animationsSErvice.shake('charImg'+target.id)
-        // _toast.warning(target.name+' was attacked by '+m.name+' for '+m.strength+'DMG', {timeout: 5000})
+        _toast.warning(target.name+' was attacked by '+m.name+' for '+m.strength+'DMG', {timeout: 5000})
         }
       }
     })
@@ -35,6 +35,9 @@ class MonstersService{
       }
     })
   }
+  addItemStats(monster, itemName){
+    $store.commit('addStatsToMonster', {monsterId: monster.id, item: itemName})
+  }
 }
-// const _toast = useToast()
+const _toast = useToast()
 export const monstersService = new MonstersService()

@@ -1,6 +1,8 @@
+import { Item } from "@/models/Item"
 import $store from '@/store/index.js'
 import Notify from "@/utils/Notify"
 import { characterService } from "./CharacterService"
+import { monstersService } from "./MonstersService"
 class ItemsService{
   randomItemDrop(){
     let dropChance = Math.ceil(Math.random()*100)
@@ -17,10 +19,11 @@ class ItemsService{
       }
       let possibleItems = $store.state.items.filter(i => i.rarity == dropRarity)
       let index = Math.floor(Math.random()*possibleItems.length)
-      let item = possibleItems[index]
-      Notify.toast('You found a '+item.name, 'success')
-      $store.state.player.items.push(item)
+      var item = possibleItems[index]
+      var creatureDropIndex = Math.floor(Math.random()*$store.state.combatMonsters.length)
+      $store.state.combatMonsters[creatureDropIndex].equipment.push(item.name)
     }
+    monstersService.addItemStats($store.state.combatMonsters[creatureDropIndex], item.name)
   }
   equipItem(character, item){
     let canEquip = true
@@ -56,6 +59,9 @@ class ItemsService{
     let index = $store.state.player.items.indexOf(item)
     $store.state.player.items.splice(index, 1)
     $store.state.player.gold += item.price/10
+  }
+  buyItem(item){
+    $store.state.player.items.push(new Item(item))
   }
 }
 

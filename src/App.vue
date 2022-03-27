@@ -50,4 +50,16 @@ nav a.router-link-exact-active {
 .click{
   cursor: pointer;
 }
+.uncommon{
+  color: green;
+}
+.rare{
+  color: blue;
+}
+.very-rare{
+  color: indigo;
+}
+.legendary{
+  color: gold;
+}
 </style>

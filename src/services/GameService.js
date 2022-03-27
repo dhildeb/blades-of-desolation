@@ -18,12 +18,12 @@ class GameService{
       let index = Math.floor(Math.random()*monstersList.length)
       $store.state.combatMonsters.push(new MonsterFactory(monstersList[index]))
     }
+    itemsService.randomItemDrop()
   }
   victory(){
     characterService.resetActions()
     this.handleExpGain()
     this.loot()
-    itemsService.randomItemDrop()
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
@@ -45,6 +45,12 @@ class GameService{
         let item = $store.state.items.filter(i => i.name == li)
         $store.state.player.items.push(new Item(item[0]))
       })
+      if(c.equipment.length > 0){
+      c.equipment.forEach(ei => {
+          let item = $store.state.items.filter(i => i.name == ei)
+          $store.state.player.items.push(new Item(item[0]))
+        })
+      }
     })
   }
 
