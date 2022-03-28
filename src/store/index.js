@@ -5,13 +5,13 @@ const store = createStore({
     // all monster stats: {name: 'any', classType: '', race: '', img: '', spells: [], equipment: [], dmgType: '', hp: 5, magic: 0, luck: 0, strength: 1, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal:  0, absorb: '', level: 1, loot: {gold: 0, items: []}, exp: 50}
       monsters: [
         //0
-        [{name: 'goblin', actions: 1, strength: 5, hp: 7, loot: {gold: 5, items: ['dagger', 'bracers of defense', 'armor +1']}, exp: 50, dodge: 10, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgoblin.png?alt=media&token=92f9a971-2733-42a9-b616-563ffcbe86dc'},
-        // {name: 'bullywug', actions: 2, strength: 3, hp: 11, loot: {gold: 5, items: ['spear']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbullywug.png?alt=media&token=b29b3455-f4ca-4c97-918c-fd20fb8946d0'},
-        // {name: 'giant bat', actions: 1, strength: 5, hp: 22, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-bat.png?alt=media&token=09a1bbb5-aea2-42ff-afbd-34c420a23b52'},
-        // {name: 'giant rat', actions: 1, strength: 4, hp: 7, loot: {gold: 2, items: []}, exp: 25, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-rat.png?alt=media&token=c09b17a6-58da-4efc-b5e0-77f8ff3d5323'},
-        // {name: 'kuo toa', actions: 1, strength: 4, hp: 18, loot: {gold: 5, items: ['spear', 'sticky shield']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fkuo-toa.png?alt=media&token=d4184eda-e4f2-4c13-8015-74abea6980ae'},
-        // {name: 'seedling', actions: 1, strength: 4, hp: 15, thorns: 1, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fseedling.png?alt=media&token=4e357d83-5c08-45d2-940e-7ae302b26366'},
-        // {name: 'skeleton', actions: 1, strength: 5, hp: 13, loot: {gold: 5, items: ['shortsword', 'shortbow']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fundead-barbarian.png?alt=media&token=8f7d9113-6d7f-4c60-b74e-a30cf4cb9ed5'},
+        [{name: 'goblin', actions: 1, strength: 5, hp: 7, loot: {gold: 5, items: ['dagger']}, exp: 50, dodge: 10, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgoblin.png?alt=media&token=92f9a971-2733-42a9-b616-563ffcbe86dc'},
+        {name: 'bullywug', actions: 2, strength: 3, hp: 11, loot: {gold: 5, items: ['spear']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbullywug.png?alt=media&token=b29b3455-f4ca-4c97-918c-fd20fb8946d0'},
+        {name: 'giant bat', actions: 1, strength: 5, hp: 22, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-bat.png?alt=media&token=09a1bbb5-aea2-42ff-afbd-34c420a23b52'},
+        {name: 'giant rat', actions: 1, strength: 4, hp: 7, loot: {gold: 2, items: []}, exp: 25, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-rat.png?alt=media&token=c09b17a6-58da-4efc-b5e0-77f8ff3d5323'},
+        {name: 'kuo toa', actions: 1, strength: 4, hp: 18, loot: {gold: 5, items: ['spear', 'sticky shield']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fkuo-toa.png?alt=media&token=d4184eda-e4f2-4c13-8015-74abea6980ae'},
+        {name: 'seedling', actions: 1, strength: 4, hp: 15, thorns: 1, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fseedling.png?alt=media&token=4e357d83-5c08-45d2-940e-7ae302b26366'},
+        {name: 'skeleton', actions: 1, strength: 5, hp: 13, loot: {gold: 5, items: ['shortsword', 'shortbow']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fundead-barbarian.png?alt=media&token=8f7d9113-6d7f-4c60-b74e-a30cf4cb9ed5'},
         ],
         //1
         [{name: 'fire snake', actions: 2, strength: 3, hp: 22, loot: {gold: 20, items: ['fire snake hide']}, absorb: 'fire', dmgType: 'fire', thorns: 5, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ffiresnake.png?alt=media&token=7a25d2f1-6c6d-4508-a200-57f324e360ba'},
@@ -100,7 +100,8 @@ const store = createStore({
         ]
     ],
     // price ranges c: 100-1000, uc: 1000-4000, r: 4000-10000, vr: 10000-25000
-    // TODO add: armor of resistance, armor of vulnerability, 
+    // TODO consumables: manual of bodily health, Manual of Gainful Exercise
+    // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting
     items: [
       {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'strength', req: 2}]},
       {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c'},
@@ -117,8 +118,8 @@ const store = createStore({
       {name: 'javelin', effect: 'strength', value: 1, type: 'mainHand', price: 200, rarity: 'c'},
       {name: 'fire snake hide', effect: 'magicResistance', value: 20, type: 'armor', price: 1400, rarity: 'uc'},
       {name: 'displacer cloak', effect: 'dodge', value: 25, type: 'cloak', price: 5000, rarity: 'r'},
-      {name: 'purple dragon scalemail', effect: 'baseHp', value: 50, type: 'armor', price: 10000, rarity: 'vr'},
-      {name: 'red dragon scalemail', effect: 'baseHp', value: 50, type: 'armor', price: 10000, rarity: 'vr'},
+      {name: 'purple dragon scalemail', effect: ['baseHp', 'resistances'], value: [50, 'psychic'], type: 'armor', price: 10000, rarity: 'vr'},
+      {name: 'red dragon scalemail', effect: ['baseHp', 'resistances'], value: [50, 'fire'], type: 'armor', price: 10000, rarity: 'vr'},
       {name: 'amulent of health', effect: 'baseHp', value: 19, type: 'accessory', price: 5000, rarity: 'r'},
       {name: 'aminated shield', effect: 'physicalResistance', value: 20, type: '', price: 10000, rarity: 'vr'},
       {name: 'armor of invulnerability', effect: 'physicalResistance', value: 100, type: 'armor', price: 100000, rarity: 'l', requirements: [{stat: 'strength', req: 15}]},
@@ -132,6 +133,19 @@ const store = createStore({
       {name: 'boots of the winterlands', effect: 'resistances', value: 'cold', type: 'accessory', price: 2000, rarity: 'uc'},
       {name: 'bracers of archery', effect: 'strength', value: 2, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'equipment', req: 'bow'}]},
       {name: 'bracers of defense', effect: 'strength', value: 2, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'armor', req: 'none'}]},
+      {name: 'cloak of protection', effect: 'physicalResistance', value: 20, type: 'cloak', price: 2500, rarity: 'uc'},
+      {name: 'dagger of venom', effect: ['strength', 'dmgType'], value: [10, 'poison'], type: 'offHand', price: 10000, rarity: 'r'},
+      {name: 'dancing sword', effect: 'baseActions', value: 1, type: '', price: 10000, rarity: 'vr'},
+      {name: 'defender', effect: ['strength', 'physicalResistance'], value: [10, 50], type: 'mainHand', price: 100000, rarity: 'l'},
+      {name: 'dwarven plate', effect: ['baseHp', 'physicalResistance'], value: [50, 50], type: 'armor', price: 25000, rarity: 'vr', requirements: {stat: 'race', req: 'dwarf'}},
+      {name: 'dwarven hammer', effect: 'strength', value: 15, type: 'mainHand', price: 15000, rarity: 'vr', requirements: {stat: 'race', req: 'dwarf'}},
+      {name: 'flame tongue', effect: ['strength', 'dmgType'], value: [10, 'fire'], type: 'mainHand', price: 10000, rarity: 'r'},
+      {name: 'frost brand', effect: ['strength', 'dmgType', 'resistances'], value: [10, 'cold', 'fire'], type: 'mainHand', price: 25000, rarity: 'vr'},
+      {name: 'gauntlets of ogre power', effect: 'strength', value: 3, type: 'accessory', price: 2000, rarity: 'uc'},
+      {name: 'javelin of lightning', effect: ['strength', 'dmgType'], value: [3, 'lightning'], type: 'mainHand', price: 4000, rarity: 'uc'},
+      {name: 'luck blade', effect: ['strength', 'luck'], value: [5, 10], type: 'mainHand', price: 100000, rarity: 'l'},
+      {name: 'mace of disruption', effect: ['strength', 'dmgType'], value: [6, 'radiant'], type: 'mainHand', price: 10000, rarity: 'r'},
+      {name: 'mantle of spell resistance', effect: 'magicResistance', value: 50, type: 'cloak', price: 10000, rarity: 'r'},
     ],
     combatMonsters: [],
     player: {
@@ -167,13 +181,18 @@ const store = createStore({
         for(let i = 0; i < data.item.effect.length; i++){
           if(Array.isArray(char[data.item.effect[i]])){
             char[data.item.effect[i]].push(data.item.value[i])
-          }else{
+          }else if(typeof char[data.item.effect[i]] === 'string'){
+            char[data.item.effect[i]] = data.item.value[i]
+          }
+          else{
             char[data.item.effect[i]] += data.item.value[i]
           }
         }
       }else{
         if(Array.isArray(char[data.item.effect])){
           char[data.item.effect].push(data.item.value)
+        }else if(typeof char[data.item.effect] === 'string'){
+          char[data.item.effect] = data.item.value
         }else{
           char[data.item.effect] += data.item.value
         }
@@ -187,6 +206,8 @@ const store = createStore({
           if(Array.isArray(char[data.item.effect[i]])){
             let index = char[data.item.effect[i]].indexOf(data.item.value[i])
             char[data.item.effect[i]].splice(index, 1)
+          }else if(typeof char[data.item.effect[i]] === 'string'){
+            char[data.item.effect[i]] = null
           }else{
             char[data.item.effect[i]] -= data.item.value[i]
           }
@@ -195,6 +216,8 @@ const store = createStore({
         if(Array.isArray(char[data.item.effect])){
           let index = char[data.item.effect].indexOf(data.item.value)
           char[data.item.effect].splice(index, 1)
+        }else if(typeof char[data.item.effect] === 'string'){
+          char[data.item.effect] = null
         }else{
           char[data.item.effect] -= data.item.value
         }

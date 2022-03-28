@@ -4,6 +4,8 @@ class BattleService{
     if(attacker.actions > 0){
       attacker.actions--
       let dmg = attacker.strength+attacker.magic
+      attacker.dmgType = attacker.dmgType ?? 'melee'
+      console.log(attacker.dmgType)
       if(target.immunities.filter(i => i == 'crit').length < 1){
         dmg = this.crit(attacker, dmg)
       }
