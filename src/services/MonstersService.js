@@ -26,7 +26,11 @@ class MonstersService{
     })
   }
   endPhase(){
+    this.regen()
     characterService.takeTurn()
+  }
+  regen(){
+    $store.state.combatMonsters.forEach(m => m.hp += m.regen)
   }
   resetActions(){
     $store.state.combatMonsters.forEach(m => {

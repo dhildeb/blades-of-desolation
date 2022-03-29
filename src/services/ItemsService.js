@@ -60,28 +60,48 @@ class ItemsService{
   }
   checkItemReqs(character, item){
     let canEquip = true
-    if(item?.requirements){
-      item.requirements.forEach(r => {
-        if(Array.isArray(character[r.stat])){
-          let multiStatReq = false
-          character[r.stat].forEach(s => {
-            if(typeof s === "object"){
-              if(s.name.includes(r.req)){
-                multiStatReq = true
-              }
-            }
-            else if(s.includes(r.req)){
-              multiStatReq = true
-            }
-          })
-          canEquip = multiStatReq
-        } 
-        else if(character[r.stat] < r.req){
-          canEquip = false
+    
+    if(!item?.requirements){
+      return canEquip
+    }
+    item.requirements.forEach(r => {
+      if(Array.isArray(r.req)){
+        canEquip = this.checkMultiReqs(character, r)
+      }else{
+        canEquip = this.checkSingleReq(character, r)
+      }
+    })
+    return canEquip
+  }
+  checkMultiReqs(character, reqs){
+    let pass = false
+    reqs.req.forEach(r => {
+      if(Array.isArray(character[r.stat])){
+        pass = this.checkSingleReq(character, reqs)
+      }else if(character[reqs.stat].includes(r) || character[reqs.stat] >= r){
+        pass = true
+      }
+    })
+    return pass
+  }
+  checkSingleReq(character, r){
+    let pass = false
+
+    if(Array.isArray(character[r.stat])){
+      character[r.stat].forEach(s => {
+        if(typeof s === "object"){
+          if(s.name.includes(r.req)){
+            pass = true
+          }
+        }
+        else if(s.includes(r.req) || s >= r.req){
+          pass = true
         }
       })
-    }
-    return canEquip
+    }else if(character[r.stat] >= r.req){
+        pass = true
+      }
+    return pass
   }
   unequipReqMissingItems(character){
     character.equipment.forEach(e => {

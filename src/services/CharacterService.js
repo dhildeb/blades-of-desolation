@@ -15,7 +15,7 @@ class CharacterService{
 
   }
   endPhase(){
-
+    this.regen()
   }
   addCharacter(character){
     $store.state.player.characters.push(character)
@@ -51,6 +51,9 @@ class CharacterService{
         return
       }
     })
+  }
+  regen(){
+    $store.state.player.characters.forEach(c => c.hp += c.regen)
   }
   addItemStats(character, item){
     $store.commit('equipItem', {characterId: character.id, item: item})

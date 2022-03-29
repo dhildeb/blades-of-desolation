@@ -47,7 +47,7 @@ const store = createStore({
         //5
         [{name: 'barbed devil', actions: 3, strength: 10, hp: 110, loot: {gold: 180, items: []}, exp: 1800, thorns: 5, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbarbed-devil.png?alt=media&token=b3c691e9-93f9-45ca-867d-30965616026a'},
         {name: 'flesh golem', actions: 2, strength: 13, hp: 93, loot: {gold: 180, items: []}, exp: 1800, absorb: 'lightning', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fflesh-golem.png?alt=media&token=4c36dfad-d0b6-434f-9fd9-97976ef0d97d'},
-        {name: 'troll', actions: 3, strength: 9, lifeSteal: 40, hp: 84, loot: {gold: 180, items: []}, exp: 1800, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ftroll.png?alt=media&token=17bcb389-591b-4404-bfba-516529ee9e11'},
+        {name: 'troll', actions: 3, strength: 9, lifeSteal: 40, regen: 10, hp: 84, loot: {gold: 180, items: []}, exp: 1800, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ftroll.png?alt=media&token=17bcb389-591b-4404-bfba-516529ee9e11'},
         ],
         //6
         [{name: 'sorcerer beast', actions: 1, strength: 45, hp: 58, loot: {gold: 230, items: []}, exp: 2300, dmgType: 'magic', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fsorcerer-beastman.png?alt=media&token=b8e28940-d354-45c6-a433-d90979e7ae22'}
@@ -101,7 +101,7 @@ const store = createStore({
     ],
     // price ranges c: 100-1000, uc: 1000-4000, r: 4000-10000, vr: 10000-25000
     // TODO consumables: manual of bodily health, Manual of Gainful Exercise
-    // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting
+    // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting, ring of resistance
     items: [
       {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'strength', req: 2}]},
       {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c'},
@@ -132,13 +132,13 @@ const store = createStore({
       {name: 'boots of speed', effect: 'baseActions', value: 1, type: 'accessory', price: 7500, rarity: 'r'},
       {name: 'boots of the winterlands', effect: 'resistances', value: 'cold', type: 'accessory', price: 2000, rarity: 'uc'},
       {name: 'bracers of archery', effect: 'strength', value: 2, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'equipment', req: 'bow'}]},
-      {name: 'bracers of defense', effect: 'strength', value: 2, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'armor', req: 'none'}]},
+      {name: 'bracers of defense', effect: 'strength', value: 2, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'armor', req: null}]},
       {name: 'cloak of protection', effect: 'physicalResistance', value: 20, type: 'cloak', price: 2500, rarity: 'uc'},
       {name: 'dagger of venom', effect: ['strength', 'dmgType'], value: [10, 'poison'], type: 'offHand', price: 10000, rarity: 'r'},
       {name: 'dancing sword', effect: 'baseActions', value: 1, type: '', price: 10000, rarity: 'vr'},
       {name: 'defender', effect: ['strength', 'physicalResistance'], value: [10, 50], type: 'mainHand', price: 100000, rarity: 'l'},
-      {name: 'dwarven plate', effect: ['baseHp', 'physicalResistance'], value: [50, 50], type: 'armor', price: 25000, rarity: 'vr', requirements: {stat: 'race', req: 'dwarf'}},
-      {name: 'dwarven hammer', effect: 'strength', value: 15, type: 'mainHand', price: 15000, rarity: 'vr', requirements: {stat: 'race', req: 'dwarf'}},
+      {name: 'dwarven plate', effect: ['baseHp', 'physicalResistance'], value: [50, 50], type: 'armor', price: 25000, rarity: 'vr', requirements: [{stat: 'race', req: 'dwarf'}]},
+      {name: 'dwarven hammer', effect: 'strength', value: 15, type: 'mainHand', price: 15000, rarity: 'vr', requirements: [{stat: 'race', req: 'dwarf'}]},
       {name: 'flame tongue', effect: ['strength', 'dmgType'], value: [10, 'fire'], type: 'mainHand', price: 10000, rarity: 'r'},
       {name: 'frost brand', effect: ['strength', 'dmgType', 'resistances'], value: [10, 'cold', 'fire'], type: 'mainHand', price: 25000, rarity: 'vr'},
       {name: 'gauntlets of ogre power', effect: 'strength', value: 3, type: 'accessory', price: 2000, rarity: 'uc'},
@@ -146,6 +146,32 @@ const store = createStore({
       {name: 'luck blade', effect: ['strength', 'luck'], value: [5, 10], type: 'mainHand', price: 100000, rarity: 'l'},
       {name: 'mace of disruption', effect: ['strength', 'dmgType'], value: [6, 'radiant'], type: 'mainHand', price: 10000, rarity: 'r'},
       {name: 'mantle of spell resistance', effect: 'magicResistance', value: 50, type: 'cloak', price: 10000, rarity: 'r'},
+      {name: 'periapt of proof against poison', effect: 'immunities', value: 'poison', type: 'accessory', price: 10000, rarity: 'r'},
+      {name: 'ring of evasion', effect: 'dodge', value: 20, type: 'accessory', price: 4000, rarity: 'r'},
+      {name: 'ring of protection', effect: ['physicalResistance', 'magicResistance'], value: [20, 20], type: 'accessory', price: 8000, rarity: 'r'},
+      {name: 'ring of regeneration', effect: 'regen', value: 5, type: 'accessory', price: 20000, rarity: 'vr'},
+      {name: 'ring of spell turning', effect: ['thorns', 'magicResistance'], value: [100, 100], type: 'accessory', price: 100000, rarity: 'l'},
+      {name: 'ring of warmth', effect: 'resistances', value: 'cold', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'robe of the archmagi', effect: ['magicResistance', 'magic', 'physicalResistance'], value: [50, 10, 25], type: 'cloak', price: 100000, rarity: 'l'},
+      {name: 'rod of absorption', effect: 'absorb', value: 'randomDmgType', type: 'mainHand', price: 25000, rarity: 'vr'},
+      {name: 'scimitar of speed', effect: ['actions', 'strength'], value: [1, 5], type: 'mainHand', price: 25000, rarity: 'vr'},
+      {name: 'shield', effect: 'physicalResistance', value: 10, type: 'offHand', price: 500, rarity: 'c'},
+      {name: 'shield +1', effect: 'physicalResistance', value: 20, type: 'offHand', price: 5000, rarity: 'uc'},
+      {name: 'shield +2', effect: 'physicalResistance', value: 40, type: 'offHand', price: 10000, rarity: 'r'},
+      {name: 'shield +3', effect: 'physicalResistance', value: 75, type: 'offHand', price: 50000, rarity: 'vr'},
+      {name: 'spellguard shield', effect: ['physicalResistance', 'magicResistance'], value: [10, 50], type: 'offHand', price: 50000, rarity: 'vr'},
+      {name: 'staff of fire', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'fire', 'fire'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
+      {name: 'staff of frost', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'cold', 'cold'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
+      {name: 'staff of force', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'force', 'force'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
+      {name: 'staff of lightning', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'lightning', 'lightning'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
+      {name: 'staff of withering', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'necrotic', 'necrotic'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['cleric', 'warlock']}]},
+      {name: 'staff of the magi', effect: ['magic', 'absorb'], value: [10, 'magic'], type: 'mainHand', price: 100000, rarity: 'l', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
+      {name: 'luckstone', effect: 'luck', value: 2, type: 'accessory', price: 2000, rarity: 'uc'},
+      {name: 'sun blade', effect: ['strength', 'dmgType'], value: [5, 'radiant'], type: 'mainHand', price: 10000, rarity: 'r'},
+      {name: 'sword of life stealing', effect: ['strength', 'dmgType', 'lifeSteal'], value: [5, 'necrotic', 25], type: 'mainHand', price: 10000, rarity: 'r'},
+      {name: 'sword of sharpness', effect: 'strength', value: 15, type: 'mainHand', price: 25000, rarity: 'vr'},
+      {name: 'sword of sharpness', effect: 'strength', value: 25, type: 'mainHand', price: 100000, rarity: 'l'},
+      {name: 'wand of the war mage', effect: 'magic', value: 15, type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['warlock', 'cleric', 'wizard']}]},
     ],
     combatMonsters: [],
     player: {

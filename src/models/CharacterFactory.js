@@ -13,10 +13,10 @@ export class CharacterFactory{
     }
     this.spells = characterData.spells ?? []
     this.equipment = characterData.equipment ?? []
-    this.mainHand = characterData.mainHand
-    this.offHand = characterData.offHand
-    this.armor = characterData.armor
-    this.cloak = characterData.cloak
+    this.mainHand = characterData.mainHand ?? null
+    this.offHand = characterData.offHand ?? null
+    this.armor = characterData.armor ?? null
+    this.cloak = characterData.cloak ?? null
     this.accessory = characterData.accessory
     this.dmgType = characterData.dmgType ?? 'melee'
     this.hp = characterData.hp ?? 5
@@ -31,6 +31,7 @@ export class CharacterFactory{
     this.immunities = characterData.immunities ?? []
     this.resistances = characterData.resistances ?? []
     this.lifeSteal = characterData.lifeSteal ?? 0
+    this.regen = characterData.regen ?? 0
     this.absorb = characterData.absorb ?? ''
     this.level = characterData.level ?? 0
     this.exp = characterData.exp ?? 0

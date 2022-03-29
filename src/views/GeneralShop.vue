@@ -8,16 +8,24 @@
     </div>
   </div>
   <div class="row">
-    <label for="buy">Buy Items</label>
-    <ul>
-      <li :class="getRarityFullName(item.rarity)" v-for="item in storeItems" :key="item.id" @click="buy(item)">{{item.name}} - {{item.price}}gold</li>
-    </ul>
+    <div class="col-6">
+      <label for="buy">Buy Items</label>
+    </div>
+    <div class="col-6">
+      <label for="sell">Sell Items</label>
+    </div>
   </div>
-  <div class="row">
-    <label for="sell">Sell Items</label>
-    <ul>
-      <li :class="getRarityFullName(item.rarity)" v-for="item in playerItems" :key="item.id" @click="sell(item)">{{item.name}} - {{item.price/10}}gold</li>
-    </ul>
+  <div class="row mh-100">
+    <div class="col-6">
+      <ul>
+        <li :class="getRarityFullName(item.rarity)" v-for="item in storeItems" :key="item.id" @click="buy(item)">{{item.name}} - {{item.price}}gold</li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <ul>
+        <li :class="getRarityFullName(item.rarity)" v-for="item in playerItems" :key="item.id" @click="sell(item)">{{item.name}} - {{item.price/10}}gold</li>
+      </ul>
+    </div>
   </div>
 </div>
 </template>
@@ -69,5 +77,8 @@ methods: {
 </script>
 
 <style>
-
+.mh-100{
+  height: 75vh;
+  overflow-y: auto;
+}
 </style>
