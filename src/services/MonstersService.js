@@ -28,7 +28,12 @@ class MonstersService{
     characterService.takeTurn()
   }
   regen(){
-    $store.state.combatMonsters.forEach(m => m.hp += m.regen)
+    $store.state.combatMonsters.forEach(m => {
+      if(m.regen > 0){
+        animationsService.fadeOutUp('hit'+m.id, m.regen, '+')
+        m.hp += m.regen
+      }
+    })
   }
   resetActions(){
     $store.state.combatMonsters.forEach(m => {

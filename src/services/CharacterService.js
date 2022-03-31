@@ -1,5 +1,6 @@
 import $store from '@/store/index.js'
 import Notify from "@/utils/Notify"
+import { animationsService } from "./AnimationsService"
 class CharacterService{
   takeTurn(){
     this.prepPhase()
@@ -53,7 +54,12 @@ class CharacterService{
     })
   }
   regen(){
-    $store.state.player.characters.forEach(c => c.hp += c.regen)
+    $store.state.player.characters.forEach(c => {
+      if(c.regen > 0){
+        animationsService.fadeOutUp('hit'+c.id, c.regen, '+')
+        c.hp += c.regen
+      }
+    })
   }
   addItemStats(character, item){
     $store.commit('equipItem', {characterId: character.id, item: item})

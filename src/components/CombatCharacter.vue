@@ -1,5 +1,5 @@
 <template>
-  <div v-if="character.hp < 0">
+  <div v-if="character.hp < 0.1">
       <strong class="d-flex dead" title="dead">{{character.name}}</strong>
   </div>
   <div v-else>
