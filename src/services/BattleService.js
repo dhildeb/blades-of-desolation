@@ -1,4 +1,5 @@
 import Notify from "@/utils/Notify"
+import { animationsService } from "./AnimationsService"
 class BattleService{
   handleAttack(attacker, target){
     if(attacker.actions > 0){
@@ -18,7 +19,7 @@ class BattleService{
 
       if(target.absorb == attacker.dmgType && target.absorb != ''){
         target.hp += attacker.strength
-        Notify.toast(target.name+' absorbed the attack', 'info')
+        animationsService.fadeOutUp('hit'+target.id, attacker.strength, '+')
         return
       }
 
@@ -30,13 +31,14 @@ class BattleService{
         console.log(target.name+' is immune to '+attacker.dmgType)
         dmg = 0
       }
+      animationsService.fadeOutUp('hit'+target.id, dmg, '-')
       target.hp -= dmg
     }
   }
   thorns(attacker, target){
       if(target.thorns > 0){
         attacker.hp -= target.thorns
-        Notify.toast(attacker.name+' took thorn DMG '+target.thorns)
+      animationsService.fadeOutUp('hit'+attacker.id, target.thorns, '-')
     }
   }
   dodge(target){
@@ -64,7 +66,7 @@ class BattleService{
     if(attacker.lifeSteal > 0){
       let lifeSteal = Math.round(dmg*(attacker.lifeSteal/100)*10)/10
       if(lifeSteal > 0){
-        Notify.toast(attacker.name+' recovers some HP', 'info')
+        animationsService.fadeOutUp('hit'+attacker.id, lifeSteal, '+')
         attacker.hp = Math.round((lifeSteal + attacker.hp)*10)/10
       }
     }
@@ -75,7 +77,7 @@ class BattleService{
       let dmg = Math.round(attacker.strength*(target.reflect))
       if(dmg > 0){
         attacker.hp -= dmg
-        Notify.toast(attacker.name+' took DMG '+dmg)
+        animationsService.fadeOutUp('hit'+attacker.id, dmg, '-')
       }
     }
   }

@@ -4,6 +4,7 @@
   </div>
   <div v-else>
       <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected.id == character.id" />
+    <h3 class="d-none position-absolute hit" :id="'hit'+character.id"></h3>
     <strong class="d-flex" :class="character.actions < 1 ? 'text-danger' : ''">{{character.name}}</strong>
     <img :id="'charImg'+character.id" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
   </div>
@@ -54,5 +55,8 @@ strong{
   width: auto;
   display: block;
   overflow: hidden
+}
+.hit{
+  left: 75%
 }
 </style>

@@ -12,14 +12,17 @@ class AnimationsService{
       charImgElem.on('animationend', handleAnimationEnd)
     })
   }
-  fadeOutUp(id){
+  fadeOutUp(id, dmg, operator){
     let elem = $('#'+id)
+    elem.text(operator+dmg)
     new Promise((resolve) => {
       elem.removeClass('d-none')
-      elem.addClass('animate__animated animate__fadeOutUp')
+      elem.addClass(operator == '-' ? 'text-danger' : 'text-success')
+      elem.addClass('animate__animated animate__fadeOutUp '+operator)
       function handleAnimationEnd(e){
         e.stopPropagation()
-        elem.removeClass('animate__animated animate__fadeOutUp')
+        elem.removeClass('animate__animated animate__fadeOutUp '+operator)
+        elem.removeClass(operator == '-' ? 'text-danger' : 'text-success')
         elem.addClass('d-none')
         resolve('Animation ended')
       }
