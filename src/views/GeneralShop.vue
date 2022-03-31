@@ -77,6 +77,9 @@ methods: {
 </script>
 
 <style>
+li{
+  cursor: pointer;
+}
 .mh-100{
   height: 75vh;
   overflow-y: auto;
