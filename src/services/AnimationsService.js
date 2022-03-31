@@ -1,5 +1,5 @@
 import $ from 'jquery'
-class AnimationsSErvice{
+class AnimationsService{
   shake(id){
     let charImgElem = $('#'+id)
     new Promise((resolve) => {
@@ -12,6 +12,21 @@ class AnimationsSErvice{
       charImgElem.on('animationend', handleAnimationEnd)
     })
   }
+  fadeOutUp(id){
+    let elem = $('#'+id)
+    new Promise((resolve) => {
+      elem.removeClass('d-none')
+      elem.addClass('animate__animated animate__fadeOutUp')
+      function handleAnimationEnd(e){
+        e.stopPropagation()
+        elem.removeClass('animate__animated animate__fadeOutUp')
+        elem.addClass('d-none')
+        resolve('Animation ended')
+      }
+      elem.on('animationend', handleAnimationEnd)
+    })
+
+  }
 }
 
-export const animationsSErvice = new AnimationsSErvice()
+export const animationsService = new AnimationsService()
