@@ -26,6 +26,13 @@ class CharacterService{
       c.actions = c.baseActions
     })
   }
+  resetExtraHp(){
+    $store.state.player.characters.forEach(c => {
+      if(c.hp > c.baseHp){
+        c.hp = c.baseHp
+      }
+    })
+  }
   getAverageCharacterLvl(){
     let totalLvl = 0
     $store.state.player.characters.forEach(c => totalLvl += c.level)
@@ -33,6 +40,11 @@ class CharacterService{
       return Math.floor(totalLvl/$store.state.player.characters.length)
     }
     return totalLvl
+  }
+  getPartyLuck(){
+    let luck = 0
+    $store.state.player.characters.forEach(c => luck += c.luck)
+    return luck
   }
   removeDestroyedCharacters(){
     $store.state.player.characters.forEach(c => {

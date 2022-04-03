@@ -124,6 +124,7 @@ const store = createStore({
       {name: 'aminated shield', effect: 'physicalResistance', value: 20, type: '', price: 10000, rarity: 'vr'},
       {name: 'armor of invulnerability', effect: 'physicalResistance', value: 100, type: 'armor', price: 100000, rarity: 'l', requirements: [{stat: 'strength', req: 15}]},
       {name: 'armor +1', effect: 'physicalResistance', value: 25, type: 'armor', price: 5000, rarity: 'r'},
+      {name: 'longsword +1', effect: 'strength', value: 10, type: 'mainHand', price: 5000, rarity: 'r'},
       {name: 'armor +2', effect: 'physicalResistance', value: 50, type: 'armor', price: 10000, rarity: 'vr'},
       {name: 'belt of hill giant strength', effect: 'strength', value: 5, type: 'accessory', price: 5000, rarity: 'r'},
       {name: 'belt of storm giant strength', effect: 'strength', value: 9, type: 'accessory', price: 5000, rarity: 'vr'},
@@ -154,7 +155,7 @@ const store = createStore({
       {name: 'ring of warmth', effect: 'resistances', value: 'cold', type: 'accessory', price: 1500, rarity: 'uc'},
       {name: 'robe of the archmagi', effect: ['magicResistance', 'magic', 'physicalResistance'], value: [50, 10, 25], type: 'cloak', price: 100000, rarity: 'l'},
       {name: 'rod of absorption', effect: 'absorb', value: 'randomDmgType', type: 'mainHand', price: 25000, rarity: 'vr'},
-      {name: 'scimitar of speed', effect: ['actions', 'strength'], value: [1, 5], type: 'mainHand', price: 25000, rarity: 'vr'},
+      {name: 'scimitar of speed', effect: ['actions', 'strength'], value: [1, 15], type: 'mainHand', price: 25000, rarity: 'vr'},
       {name: 'shield', effect: 'physicalResistance', value: 10, type: 'offHand', price: 500, rarity: 'c'},
       {name: 'shield +1', effect: 'physicalResistance', value: 20, type: 'offHand', price: 5000, rarity: 'uc'},
       {name: 'shield +2', effect: 'physicalResistance', value: 40, type: 'offHand', price: 10000, rarity: 'r'},
@@ -173,11 +174,14 @@ const store = createStore({
       {name: 'sword of sharpness', effect: 'strength', value: 25, type: 'mainHand', price: 100000, rarity: 'l'},
       {name: 'wand of the war mage', effect: 'magic', value: 15, type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['warlock', 'cleric', 'wizard']}]},
     ],
+    quests: [{objective: 'kill', target: 'monsters', goal: 10, reward: 500}, {objective: 'kill', target: 'monsters', goal: 25, reward: 5000}, {objective: 'kill', target: 'monsters', goal: 1, reward: 50}, {objective: 'find', target: 'item', goal: 'c', reward: 'uc'}, {objective: 'find', target: 'item', goal: 'uc', reward: 'r'}, {objective: 'find', target: 'item', goal: 'r', reward: 'vr'}],
     combatMonsters: [],
     player: {
       characters: [],
       gold: 0,
-      items: []
+      items: [],
+      kills: {},
+      quest: {}
     },
     location: 0,
     selected: '',

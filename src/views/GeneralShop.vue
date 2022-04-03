@@ -32,22 +32,37 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { computed } from "@vue/runtime-core"
+import { computed, onMounted } from "@vue/runtime-core"
 import $store from "@/store/index.js"
 import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
+import { questService } from "@/services/QuestService"
+import { characterService } from "@/services/CharacterService"
+import Notify from "@/utils/Notify"
 export default {
 name: 'GeneralShop',
 components: {
 
 },
 setup(){
+  onMounted(async()=> {
+    let luck = 1+characterService.getPartyLuck()+50
+    let chance = Math.ceil(Math.random()*100)
+    if(luck > chance){
+      let index = Math.floor(Math.random()*$store.state.quests.length)
+      let newQuest = $store.state.quests[index]
+      if(await Notify.confirm(newQuest.objective, newQuest.target)){
+        questService.acceptQuest(newQuest)
+      }
+    }
+  })
   const state = reactive({
     healPartyCost: computed(()=> $store.state.player.characters.map(c => c.hp > 0 ? c.baseHp - c.hp : 0).reduce((a, b) => a+b)),
     revive: computed(()=> $store.state.player.characters.filter(c => c.hp < 1)),
     playersGold: computed(()=> $store.state.player.gold),
     playerItems: computed(()=> $store.state.player.items),
-    storeItems: computed(()=> $store.state.items.sort((a,b)=> a.price - b.price))
+    storeItems: computed(()=> $store.state.items.sort((a,b)=> a.price - b.price)),
+    quest: null
   })
   return state
 },

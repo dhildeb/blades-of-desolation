@@ -1,6 +1,7 @@
 <template>
   <CharacterDetailsModal :character="selectedCharacter" />
   <ItemPouchModal />
+  <QuestModal />
   <div class="bg-dark text-light side-window">
     <nav class="pb-2 d-flex justify-content-center">
       <div v-if="player.characters.length > 0">
@@ -27,6 +28,9 @@
         <p class="click" data-toggle="modal" data-target="#itemPouchModal" title="items">
           Items
         </p>
+        <p v-if="this.$store.state.player.quest?.target" class="click" data-toggle="modal" data-target="#questModal" title="quest">
+          Quest
+        </p>
       </div>
     </div>
     <div class="collapse" id="collapseParty">
@@ -48,9 +52,10 @@ import $store from '@/store/index.js'
 import Notify from "@/utils/Notify"
 import ItemPouchModal from "./ItemPouchModal.vue"
 import CharacterDetailsModal from "./CharacterDetailsModal.vue"
+import QuestModal from "./QuestModal.vue"
 
 export default {
-  components: { CharacterDetailsModal, ItemPouchModal },
+  components: { CharacterDetailsModal, ItemPouchModal, QuestModal },
   setup(){
     const state = reactive({
       player: computed(()=> $store.state.player),

@@ -5,6 +5,7 @@ import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
 import { monstersService } from "./MonstersService"
+import { questService } from "./QuestService"
 class GameService{
   determineTurn(){
     monstersService.takeTurn()
@@ -22,8 +23,11 @@ class GameService{
   }
   victory(){
     characterService.resetActions()
+    characterService.resetExtraHp()
+    this.addKillCounts()
     this.handleExpGain()
     this.loot()
+    questService.checkQuest()
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
@@ -50,6 +54,15 @@ class GameService{
           let item = $store.state.items.filter(i => i.name == ei)
           $store.state.player.items.push(new Item(item[0]))
         })
+      }
+    })
+  }
+  addKillCounts(){
+    $store.state.combatMonsters.forEach(m => {
+      if(!$store.state.player.kills[m.name]){
+        $store.state.player.kills[m.name] = 1
+      }else{
+        $store.state.player.kills[m.name]++
       }
     })
   }

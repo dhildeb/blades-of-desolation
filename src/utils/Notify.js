@@ -10,7 +10,7 @@ export default class Notify {
  * -----------------------------------
  * {@link https://sweetalert2.github.io/#configuration|Check out Sweet Alerts}
  */
-  static async confirm(title = 'Are you sure?', text = "You won't be able to revert this!", icon = 'warning', confirmButtonText = 'Yes, delete it!') {
+  static async confirm(title = 'New Quest', text = "Mysterious", icon = 'question', confirmButtonText = 'Yes, Accept!') {
     try {
       const res = await Swal.fire({
         title: title,
