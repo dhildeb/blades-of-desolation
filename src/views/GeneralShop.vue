@@ -46,7 +46,7 @@ components: {
 },
 setup(){
   onMounted(async()=> {
-    let luck = 1+characterService.getPartyLuck()+50
+    let luck = 1+characterService.getPartyLuck()
     let chance = Math.ceil(Math.random()*100)
     if(luck > chance){
       let index = Math.floor(Math.random()*$store.state.quests.length)
