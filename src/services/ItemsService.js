@@ -10,7 +10,7 @@ class ItemsService{
     $store.state.player.characters.forEach(c => partyLuck += c.luck)
     if(partyLuck > dropChance){
       // c 79.74% un 15% r 5% vr .25% l .01%
-      let dropRarity = Math.ceil(Math.random()*10000)+partyLuck
+      let dropRarity = Math.ceil(Math.random()*10000)+partyLuck+$store.state.location
       const rarityDictionary = {c: 7974, uc: 9474, r: 9974, vr: 9999, l: 10000}
       for(let r in rarityDictionary){
         if(rarityDictionary[r] >= dropRarity){

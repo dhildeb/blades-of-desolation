@@ -17,7 +17,7 @@ class QuestService{
       let itemList = $store.state[quest.target+'s'].filter(i => i.rarity == quest.goal)
       let index = Math.floor(Math.random()*itemList.length)
       quest.target = itemList[index].name
-      itemList = $store.state[newQuest.target+'s'].filter(i => i.rarity == quest.goal)
+      itemList = $store.state[newQuest.target+'s'].filter(i => i.rarity == quest.reward)
       index = Math.floor(Math.random()*itemList.length)
       quest.reward = itemList[index].name
     }
@@ -29,9 +29,9 @@ class QuestService{
       $store.state.player.kills[quest.target] >= quest.goal
       this.completeQuest()
     }
-    if(quest.objective == 'item'){
+    if(quest.objective == 'find'){
       $store.state.player.items.forEach(i => {
-        if(i.name == quest.goal){
+        if(i.name == quest.target){
           this.completeQuest()
         }
       })
@@ -40,7 +40,7 @@ class QuestService{
   completeQuest(){
     let quest = $store.state.player.quest
     if(typeof quest.reward == 'string'){
-      $store.state.player.items = $store.player.items.filter(i => i.name != quest.name)
+      $store.state.player.items = $store.state.player.items.filter(i => i.name != quest.name)
       let item = $store.state.items.filter(i => i.name == quest.reward)
       $store.state.player.items.push(new Item(item[0]))
     }else{

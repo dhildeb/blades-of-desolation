@@ -9,24 +9,24 @@ class BattleService{
       if(target.immunities.filter(i => i == 'crit').length < 1){
         dmg = this.crit(attacker, dmg)
       }
-
+      
       if(this.dodge(target)){
         Notify.toast(target.name+' dodged the attack', 'info')
         return
       }
-
+      
       this.thorns(attacker, target)
-
+      
       if(target.absorb == attacker.dmgType && target.absorb != ''){
-        target.hp += attacker.strength
+        target.hp += attacker.strength+attacker.magic
         animationsService.fadeOutUp('hit'+target.id, attacker.strength, '+')
         return
       }
-
+      
       dmg = this.resistance(attacker, target)
-
+      
       this.lifeSteal(attacker, dmg)
-
+      
       if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
         console.log(target.name+' is immune to '+attacker.dmgType)
         dmg = 0
@@ -47,7 +47,7 @@ class BattleService{
     return dodge >= chance
   }
   resistance(attacker, target){
-    let dmg = attacker.strength
+    let dmg = attacker.strength+attacker.magic
     if(target.resistances.filter(r => r == attacker.dmgType).length > 0){
       console.log(target.name+' is resistant to '+attacker.dmgType)
       dmg = Math.round(dmg/2)
@@ -74,7 +74,7 @@ class BattleService{
 
   reflect(attacker, target){
     if(target.reflect > 0){
-      let dmg = Math.round(attacker.strength*(target.reflect))
+      let dmg = Math.round((attacker.strength+attacker.magic)*(target.reflect))
       if(dmg > 0){
         attacker.hp -= dmg
         animationsService.fadeOutUp('hit'+attacker.id, dmg, '-')

@@ -4,13 +4,16 @@ export function characterLvlUpStatHelper(classType, race){
   let boosts = {}
   switch(classType){
     case 'rogue':
-      boosts['classBoost'] = ['actions', 'dodge']
-      break
+      boosts['classBoost'] = ['strength', 'dodge']
+      break 
     case 'ranger':
-      boosts['classBoost'] = ['actions', 'hp']
+      boosts['classBoost'] = ['strength', 'hp']
       break
     case 'barbarian':
       boosts['classBoost'] = ['strength', 'strength']
+      break
+    case 'bard':
+      boosts['classBoost'] = ['dodge', 'luck']
       break
     case 'wizard':
       boosts['classBoost'] = ['magic', 'magic']
@@ -19,10 +22,10 @@ export function characterLvlUpStatHelper(classType, race){
       boosts['classBoost'] = ['magic', 'hp']
       break
     case 'fighter':
-      boosts['classBoost'] = ['strength', 'actions']
+      boosts['classBoost'] = ['strength', 'physicalResistance']
       break
     case 'monk':
-      boosts['classBoost'] = ['actions', 'actions']
+      boosts['classBoost'] = ['physicalResistance', 'magicResistance']
       break
     case 'paladin':
       boosts['classBoost'] = ['strength', 'thorns']
@@ -42,7 +45,7 @@ export function characterLvlUpStatHelper(classType, race){
       boosts['raceBoost'] = ['strength', 'hp']
       break
     case 'elf':
-      boosts['raceBoost'] = ['magic', 'actions']
+      boosts['raceBoost'] = ['magic', 'dodge']
       break
     case 'dwarf':
       boosts['raceBoost'] = ['hp', 'hp']
