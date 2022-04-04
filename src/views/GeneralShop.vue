@@ -1,7 +1,7 @@
 <template>
 <div class="container">
   <div class="row pt-5">
-    <button v-if="healPartyCost" class="btn btn-success" @click="healParty()" :disabled="playersGold < healPartyCost">Heal Party ({{healPartyCost}} gold)</button>
+    <button v-if="healPartyCost > 0" class="btn btn-success" @click="healParty()" :disabled="playersGold < healPartyCost">Heal Party ({{healPartyCost}} gold)</button>
     <div v-for="character in revive" :key="character.id">
       <button class="btn btn-secondary m-3" @click="reviveCharacter(character.id)" :disabled="playersGold <
          character.cost">Revive {{character.name}} ({{(character.hp - character.baseHp)*-10}} gold)</button>

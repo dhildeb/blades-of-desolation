@@ -6,7 +6,7 @@ import { monstersService } from "./MonstersService"
 class ItemsService{
   randomItemDrop(){
     let dropChance = Math.ceil(Math.random()*100)
-    let partyLuck = 1
+    let partyLuck = 1+$store.state.location
     $store.state.player.characters.forEach(c => partyLuck += c.luck)
     if(partyLuck > dropChance){
       // c 79.74% un 15% r 5% vr .25% l .01%
