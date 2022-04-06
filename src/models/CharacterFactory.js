@@ -35,6 +35,7 @@ export class CharacterFactory{
     this.absorb = characterData.absorb ?? ''
     this.level = characterData.level ?? 0
     this.exp = characterData.exp ?? 0
+    this.inBattle = characterData.inBattle ?? true
     switch(this.classType){
       case 'rogue':
         this.actions += 1

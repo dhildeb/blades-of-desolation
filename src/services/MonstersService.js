@@ -12,14 +12,14 @@ class MonstersService{
     this.resetActions()
   }
   attackPhase(){
-    let numTargets = $store.state.player.characters.length
+    let numTargets = $store.state.player.characters.filter(c => c.inBattle).length
     // let duration = 1000
     $store.state.combatMonsters.forEach(m => {
       if(m.actions && m.hp > 0){
         for(m.actions; m.actions > 0; m.actions--){
           // var date = Date.now();
           // var curDate = null;
-            let target = $store.state.player.characters[Math.floor(Math.random()*numTargets)]
+            let target = $store.state.player.characters.filter(c => c.inBattle)[Math.floor(Math.random()*numTargets)]
             battleService.handleAttack(m, target)
             animationsService.shake('charImg'+target.id)
             // do {

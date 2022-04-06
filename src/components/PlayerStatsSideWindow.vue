@@ -53,6 +53,8 @@ import Notify from "@/utils/Notify"
 import ItemPouchModal from "./ItemPouchModal.vue"
 import CharacterDetailsModal from "./CharacterDetailsModal.vue"
 import QuestModal from "./QuestModal.vue"
+import { CharacterFactory } from "@/models/CharacterFactory"
+import { Item } from "@/models/Item"
 
 export default {
   components: { CharacterDetailsModal, ItemPouchModal, QuestModal },
@@ -73,6 +75,15 @@ export default {
     },
     loadGame(){
         this.$store.state.player = JSON.parse(window.localStorage.getItem("player"))
+        this.$store.state.player.items.forEach((i, index) => {
+          this.$store.state.player.items[index] = new Item(i)
+        })
+        this.$store.state.player.characters.forEach((c, index) => {
+          this.$store.state.player.characters[index] = new CharacterFactory(c)
+          c.equipment.forEach((e, endex) => {
+            this.$store.state.player.characters[index].equipment[endex] = new Item(e)
+          })
+        })
         Notify.toast('Game Loaded!', 'success')
     }
   }

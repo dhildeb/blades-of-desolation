@@ -59,7 +59,7 @@ class CharacterService{
       return
     }
     $store.state.player.characters.forEach(c => {
-      if(c.actions && c.hp > 0){
+      if(c.actions > 0 && c.hp > 0 && c.inBattle){
         $store.state.selected = c
         return
       }
@@ -67,11 +67,27 @@ class CharacterService{
   }
   regen(){
     $store.state.player.characters.forEach(c => {
-      if(c.regen > 0){
+      if(c.regen > 0 ?? c.inBattle){
         animationsService.fadeOutUp('hit'+c.id, c.regen, '+')
         c.hp += c.regen
       }
     })
+  }
+  attemptToFlee(character){
+    let enemies = $store.state.combatMonsters.filter(m => m.hp > 0).length
+    let party = $store.state.player.characters.filter(c => c.inBattle).length
+    let chance = party == enemies ? .5 : party/enemies
+    chance += character.luck/100
+    let fail = Math.random()
+    if(chance > fail){
+      character.inBattle = false
+      Notify.toast(character.name+' got away', 'success')
+    }else{
+      Notify.toast('Failed to escape')
+    }
+  }
+  enterBattle(){
+    $store.state.player.characters.forEach(c => c.inBattle = true)
   }
   addItemStats(character, item){
     $store.commit('equipItem', {characterId: character.id, item: item})

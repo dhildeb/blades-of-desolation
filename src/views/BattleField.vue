@@ -15,7 +15,9 @@
     </div>
     <div class="row justify-content-center h-50">
       <div class="col-4 col-md-2" v-for="character in characters" :key="character.id">
-        <CombatCharacter :character="character" />
+        <div v-if="character.inBattle">
+          <CombatCharacter :character="character" />
+        </div>
       </div>
     </div>
   </div>
@@ -31,6 +33,7 @@ import { computed, onMounted } from "@vue/runtime-core"
 import { gameService } from "@/services/GameService"
 import router from "@/router"
 import Notify from "@/utils/Notify"
+import { characterService } from "@/services/CharacterService"
 
 
 export default {
@@ -40,12 +43,15 @@ export default {
   },
   watch: {
     charactersWithActions: function(){
-      if(this.charactersWithActions < 1){
+      if(this.charactersWithActions < 1 && this.characters.length > 0){
         gameService.determineTurn()
       }
     },
     charactersWithHp: function(){
-      if(this.charactersWithHp < 1){
+      if(this.characters.length < 1){
+        router.push({name: 'MapLocation'})
+        Notify.toast('You fled from battle', 'info', 'top-end')
+      }else if(this.charactersWithHp < 1){
         router.push({name: 'CharacterForm'})
         Notify.toast('Your party is dead, revive or start over', 'error', 'top-end')
       }
@@ -60,10 +66,11 @@ export default {
   setup(){
     onMounted(()=>{
       gameService.spawnMonsters()
+      characterService.enterBattle()
     })
     const state = reactive({
       monsters: computed(()=> $store.state.combatMonsters),
-      characters: computed(()=> $store.state.player.characters),
+      characters: computed(()=> $store.state.player.characters.filter(c => c.inBattle)),
       monstersWithHp: computed(()=> state.monsters.filter(m => m.hp > 0).length),
       charactersWithActions: computed(()=> state.characters.filter(c => c.actions > 0 && c.hp > 0 ).length),
       charactersWithHp: computed(()=> state.characters.filter(c => c.hp > 0).length),
@@ -73,6 +80,7 @@ export default {
   methods:{
     spawnMonsters(){
       gameService.spawnMonsters()
+      characterService.enterBattle()
     }
   },
     beforeRouteLeave(){

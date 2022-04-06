@@ -6,11 +6,10 @@ import { monstersService } from "./MonstersService"
 class ItemsService{
   randomItemDrop(){
     let dropChance = Math.ceil(Math.random()*100)
-    let partyLuck = 1+$store.state.location
-    $store.state.player.characters.forEach(c => partyLuck += c.luck)
+    let partyLuck = 1+$store.state.location+characterService.getPartyLuck()
     if(partyLuck > dropChance){
       // c 79.74% un 15% r 5% vr .25% l .01%
-      let dropRarity = Math.ceil(Math.random()*10000)+partyLuck+$store.state.location
+      let dropRarity = Math.ceil(Math.random()*10000)+partyLuck
       const rarityDictionary = {c: 7974, uc: 9474, r: 9974, vr: 9999, l: 10000}
       for(let r in rarityDictionary){
         if(rarityDictionary[r] >= dropRarity){

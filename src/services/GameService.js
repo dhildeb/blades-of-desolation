@@ -31,9 +31,9 @@ class GameService{
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
-    let charNum = $store.state.player.characters.filter(c => c.hp > 0).length
+    let charNum = $store.state.player.characters.filter(c => c.hp > 0 && c.inBattle).length
     $store.state.player.characters.forEach(c => {
-      if(c.hp > 0){
+      if(c.hp > 0 && c.inBattle){
         c.exp += totalExp/charNum
         if(c.exp >= $store.state.levelUpChart[c.level]){
           this.levelUp(c)
