@@ -179,7 +179,6 @@ class CharacterService{
         break
     }
     let newChar = new Character(char)
-    //learn spells
     if(spell){
       spellsService.learnSpell(spell, newChar)
     }
