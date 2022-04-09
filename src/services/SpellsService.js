@@ -45,7 +45,7 @@ class SpellsService{
       this.levelUpSpell(spellName, character)
       return
     }
-    let spellData = $store.state.spells.find(s => s.name == spellName)
+    let spellData = $store.state.spells.find(spells => spells.find(s => s.name == spellName)).find(s => s.name == spellName)
     character.spells.push(new Spell(spellData))
   }
   levelUpSpell(spellName, character){
@@ -53,10 +53,10 @@ class SpellsService{
     if(spell.level < character.level){
       spell.level++
       if(spell.strength){
-        spell.strength += Math.floor(spell.strength*.5)
+        spell.strength += Math.floor(spell.strength/spell.level)
       }
       if(spell.value){
-        spell.value += Math.floor(spell.value*.5)
+        spell.value += Math.floor(spell.value/spell.level)
       }
     }else{
       Notify.toast('can\'t improve that spell at this time', 'warning')

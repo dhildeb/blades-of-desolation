@@ -29,12 +29,12 @@ export default class Notify {
       return false
     }
   }
-  static async selectChar(title = 'Learn spell', cost = 1000, reqs) {
+  static async selectChar(title = 'Learn spell', cost = 1000) {
     try {
       const res = await Swal.fire({
         title: title,
         input: 'select',
-        inputOptions: getCharOptions(reqs),
+        inputOptions: getCharOptions((cost-1000)/1000),
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -91,20 +91,9 @@ export default class Notify {
   }
 }
 
-function getCharOptions(reqs){
+function getCharOptions(lvl){
   let options = {}
-  let chars = $store.state.player.characters
-  Object.keys(reqs).forEach(key => {
-    chars = chars.filter(c => {
-      // check if char already knows spell
-      if(Array.isArray(c[key])){
-        return !c[key].find(ck => ck.name == reqs[key])
-      }else{
-        // check if char can cast spells
-        return c[key] >= reqs[key]
-      }
-    })
-  })
+  let chars = $store.state.player.characters.filter(c => c.baseMagic > 0 && c.level >= lvl)
   if(chars.length < 1){
     return {0:'No one can learn this spell'}
   }

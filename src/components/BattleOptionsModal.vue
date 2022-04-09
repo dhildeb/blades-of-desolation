@@ -63,7 +63,7 @@ export default {
       this.selectedSpell = spell
     },
     async castSpell(){
-      if(this.selected.magic < 1 || this.selected.actions < 1){
+      if(this.selected.magic <= this.selectedSpell.level || this.selected.actions < 1){
         return
       }
       let targetId = null

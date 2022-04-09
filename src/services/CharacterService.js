@@ -3,6 +3,7 @@ import $store from '@/store/index.js'
 import { getRandomAbility } from "@/utils/getRandomAbility"
 import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
+import { spellsService } from "./SpellsService"
 class CharacterService{
   takeTurn(){
     this.prepPhase()
@@ -98,6 +99,7 @@ class CharacterService{
     $store.state.player.characters[index] = new Character(char)
   }
   createCharacter(char){
+    let spell = false
     switch(char.classType){
       case 'rogue':
         char["actions"] += 1
@@ -110,6 +112,7 @@ class CharacterService{
       case 'bard':
         char["luck"] += 3
         char["dodge"] += 2
+        spell = 'vicious mockery'
         break
       case 'barbarian':
         char["strength"] += 3
@@ -117,11 +120,13 @@ class CharacterService{
       case 'wizard':
         char["magic"] += 3
         char["dmgType"] = 'magic'
+        spell = $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name
         break
       case 'cleric':
         char["magic"] += 1
         char["hp"] += 5
         char["dmgType"] = 'magic'
+        spell = 'light heal'
         break
       case 'fighter':
         char["strength"] += 1
@@ -133,16 +138,19 @@ class CharacterService{
       case 'paladin':
         char["strength"] += 1
         char["thorns"] += 1
+        spell = 'sacred flame'
         break
       case 'warlock':
         char["magic"] += 1
         char["lifeSteal"] += 10
         char["dmgType"] = 'magic'
+        spell = 'chill touch'
         break
       default:
         char["classType"] = 'unknown'
         char[getRandomAbility()] += 3
         char[getRandomAbility()] += 3
+        spell = char.magic > 0 ? $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name : false
         break
     }
     switch(char.race){
@@ -167,9 +175,15 @@ class CharacterService{
         char["race"] = 'unknown'
         char[getRandomAbility()] += 3
         char[getRandomAbility()] += 3
+        spell = char.magic > 0 ? $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name : false
         break
     }
-    $store.state.player.characters.push(new Character(char))
+    let newChar = new Character(char)
+    //learn spells
+    if(spell){
+      spellsService.learnSpell(spell, newChar)
+    }
+    $store.state.player.characters.push(newChar)
   }
 }
 export const characterService = new CharacterService()

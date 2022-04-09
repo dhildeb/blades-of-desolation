@@ -268,7 +268,7 @@ const store = createStore({
     combatMonsters: [],
     player: {
       characters: [],
-      gold: 0,
+      gold: 100000,
       items: [],
       kills: {},
       quest: {}

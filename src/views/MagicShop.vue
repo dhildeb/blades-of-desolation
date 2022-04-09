@@ -9,7 +9,7 @@
   <div class="row mh-100">
     <div class="col-6">
       <ul v-for="(spells, index) in spellList" :key="spells">
-        <label for="spells">Level {{index}} Spells</label>
+        <label for="spells">{{index > 0 ? "Level "+index : 'Cantrip'}} Spells</label>
         <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
       </ul>
     </div>
@@ -37,11 +37,11 @@ setup(){
 },
 methods: {
   async buySpell(spell){
-    let price = spell.price ?? spell.level*1000
+    let price = spell.price ?? spell.level*1000+1000
     if($store.state.player.gold < price){
       return
     }
-    let char = await Notify.selectChar('Learn '+spell.name, price, {magic: 1, spells: spell.name})
+    let char = await Notify.selectChar('Learn '+spell.name, price)
     if(char == 0 || !char){
       return
     }

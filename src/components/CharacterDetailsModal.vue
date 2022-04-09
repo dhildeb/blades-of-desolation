@@ -29,7 +29,7 @@
                 <span>EXP: {{Math.round(character.exp)}} / {{levelUpChart[character.level]}}</span>
                 <span>Speed: {{character.actions}} / {{character.baseActions}}</span>
                 <span>STR: {{character.strength}}</span>
-                <span v-if="character.magic">Magic: {{character.magic}} / {{character.baseMagic}}</span>
+                <span v-if="character.baseMagic">Magic: {{character.magic}} / {{character.baseMagic}}</span>
                 <span v-if="character.dodge">Dodge: {{character.dodge}}%</span>
                 <span v-if="character.thorns">Thorns: {{character.thorns}}</span>
                 <span v-if="character.lifeSteal">Life Steal: {{character.lifeSteal}}%</span>
