@@ -71,9 +71,9 @@ class GameService{
     character.level++
     let lvlUpBoosts = characterLvlUpStatHelper(character.classType, character.race)
     lvlUpBoosts.classBoost.forEach(b => character[b]++)
-    // lvlUpBoosts.classBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
+    lvlUpBoosts.classBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
     lvlUpBoosts.raceBoost.forEach(b => character[b]++)
-    // lvlUpBoosts.raceBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
+    lvlUpBoosts.raceBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
 
     character.hp += character.level*(character.level > 1 ? character.level : 3)
     character.baseHp += character.level*(character.level > 1 ? character.level : 3)

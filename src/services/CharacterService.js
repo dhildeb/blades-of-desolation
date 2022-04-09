@@ -1,4 +1,6 @@
+import { Character } from "@/models/Character"
 import $store from '@/store/index.js'
+import { getRandomAbility } from "@/utils/getRandomAbility"
 import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
 class CharacterService{
@@ -17,9 +19,6 @@ class CharacterService{
   }
   endPhase(){
     this.regen()
-  }
-  addCharacter(character){
-    $store.state.player.characters.push(character)
   }
   resetActions(){
     $store.state.player.characters.forEach(c => {
@@ -94,6 +93,83 @@ class CharacterService{
   }
   removeItemStats(character, item){
     $store.commit('unequipItem', {characterId: character.id, item: item})
+  }
+  loadCharacter(index, char){
+    $store.state.player.characters[index] = new Character(char)
+  }
+  createCharacter(char){
+    switch(char.classType){
+      case 'rogue':
+        char["actions"] += 1
+        char["dodge"] += 5
+        break
+      case 'ranger':
+        char["actions"] += 1
+        char["hp"] += 5
+        break
+      case 'bard':
+        char["luck"] += 3
+        char["dodge"] += 2
+        break
+      case 'barbarian':
+        char["strength"] += 3
+        break
+      case 'wizard':
+        char["magic"] += 3
+        char["dmgType"] = 'magic'
+        break
+      case 'cleric':
+        char["magic"] += 1
+        char["hp"] += 5
+        char["dmgType"] = 'magic'
+        break
+      case 'fighter':
+        char["strength"] += 1
+        char["actions"] += 1
+        break
+      case 'monk':
+        char["actions"] += 2
+        break
+      case 'paladin':
+        char["strength"] += 1
+        char["thorns"] += 1
+        break
+      case 'warlock':
+        char["magic"] += 1
+        char["lifeSteal"] += 10
+        char["dmgType"] = 'magic'
+        break
+      default:
+        char["classType"] = 'unknown'
+        char[getRandomAbility()] += 3
+        char[getRandomAbility()] += 3
+        break
+    }
+    switch(char.race){
+      case 'dragonborn':
+        char["strength"] += 3
+        break
+      case 'human':
+        char["strength"] += 1
+        char["hp"] += 5
+        break
+      case 'elf':
+        char["magic"] += 1
+        char["actions"] += 1
+        break
+      case 'dwarf':
+        char["hp"] += 10
+        break
+      case 'halfling':
+        char["luck"] += 3
+        break
+      default:
+        char["race"] = 'unknown'
+        char[getRandomAbility()] += 3
+        char[getRandomAbility()] += 3
+        break
+    }
+    $store.state.player.characters.push(new Character(char))
   }
 }
 export const characterService = new CharacterService()

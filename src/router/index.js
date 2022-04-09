@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BattleField from '../views/BattleField.vue'
 import BadPageDefault from '../views/BadPageDefault.vue'
 import CharacterForm from '@/views/CharacterForm.vue'
+import MagicShop from '@/views/MagicShop.vue'
 import $store from '@/store/index.js'
 import Notify from "@/utils/Notify"
 
@@ -39,10 +40,28 @@ const routes = [
     path: '/shop',
     name: 'shop',
     component: () => import(/* webpackChunkName: "shop" */ '../views/GeneralShop.vue'),
-    children: [
-      {path: 'cards', component: () => import(/* webpackChunkName: "cards" */ '../components/CardShop.vue')},
-      {path: 'abilities', component: () => import(/* webpackChunkName: "abilities" */ '../components/AbilitiesShop.vue')}
-    ],
+    beforeEnter: function(){
+      if($store.state.player.characters.length == 0){
+        Notify.toast('You cannot shop without a party.', 'warning')
+        router.push({name: 'CharacterForm'})
+      }
+    }
+  },
+  {
+    path: '/shop/sell',
+    name: 'SellShop',
+    component: () => import(/* webpackChunkName: "SellShop" */ '../views/SellShop.vue'),
+    beforeEnter: function(){
+      if($store.state.player.characters.length == 0){
+        Notify.toast('You cannot shop without a party.', 'warning')
+        router.push({name: 'CharacterForm'})
+      }
+    }
+  },
+  {
+    path: '/shop/magic',
+    name: 'MagicShop',
+    component: MagicShop,
     beforeEnter: function(){
       if($store.state.player.characters.length == 0){
         Notify.toast('You cannot shop without a party.', 'warning')

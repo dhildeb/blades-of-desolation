@@ -1,5 +1,6 @@
 <template>
-<div class="container">
+<ShopNavBar />
+<div class="container pt-5">
   <div class="row pt-5">
     <button v-if="healPartyCost > 0" class="btn btn-success" @click="healParty()" :disabled="playersGold < healPartyCost">Heal Party ({{healPartyCost}} gold)</button>
     <div v-for="character in revive" :key="character.id">
@@ -11,19 +12,11 @@
     <div class="col-6">
       <label for="buy">Buy Items</label>
     </div>
-    <div class="col-6">
-      <label for="sell">Sell Items</label>
-    </div>
   </div>
   <div class="row mh-100">
     <div class="col-6">
       <ul>
         <li :class="getRarityFullName(item.rarity)" v-for="item in storeItems" :key="item.id" @click="buy(item)" :title="item.effect+' +'+item.value">{{item.name}} - {{item.price}}gold</li>
-      </ul>
-    </div>
-    <div class="col-6">
-      <ul>
-        <li :class="getRarityFullName(item.rarity)" v-for="item in playerItems" :key="item.id" @click="sell(item)">{{item.name}} - {{item.price/10}}gold</li>
       </ul>
     </div>
   </div>
@@ -38,11 +31,12 @@ import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
 import { questService } from "@/services/QuestService"
 import { characterService } from "@/services/CharacterService"
+import ShopNavBar from "@/components/ShopNavBar.vue"
 import Notify from "@/utils/Notify"
 export default {
 name: 'GeneralShop',
 components: {
-
+  ShopNavBar
 },
 setup(){
   onMounted(async()=> {
@@ -60,7 +54,6 @@ setup(){
     healPartyCost: computed(()=> $store.state.player.characters.map(c => c.hp > 0 ? c.baseHp - c.hp : 0).reduce((a, b) => a+b)),
     revive: computed(()=> $store.state.player.characters.filter(c => c.hp < 1)),
     playersGold: computed(()=> $store.state.player.gold),
-    playerItems: computed(()=> $store.state.player.items),
     storeItems: computed(()=> $store.state.items.sort((a,b)=> a.price - b.price)),
     quest: null
   })
@@ -76,9 +69,6 @@ methods: {
   healParty(){
       this.$store.commit('reducePlayerGold', this.healPartyCost)
       this.$store.state.player.characters.forEach(c => c.hp < c.baseHp && c.hp > 0 ? c.hp = c.baseHp : '')
-  },
-  sell(item){
-    itemsService.sellItem(item)
   },
   buy(item){
     if(this.$store.state.player.gold >= item.price){

@@ -45,7 +45,6 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { CharacterFactory } from '@/models/CharacterFactory.js'
 import { computed, onMounted } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
@@ -96,8 +95,8 @@ export default {
   },
   methods: {
     createCharacter(){
-      let charData = {name: this.name, classType: this.classType, race: this.race, img: this.selectedImg}
-      characterService.addCharacter(new CharacterFactory(charData))
+      let charData = {name: this.name, classType: this.classType, race: this.race, img: this.selectedImg, actions: 1, dodge: 0, hp: 5, luck: 0, strength: 1, magic: 0, thorns: 0, lifeSteal: 0, physicalResistance: 0, magicResistance: 0}
+      characterService.createCharacter(charData)
       Notify.toast(charData.name+' was created!', 'success')
       this.name = ''
       this.classType = ''

@@ -1,5 +1,5 @@
 export function getRandomAbility(){
-  let random = Math.floor(Math.random()*11)
-  let stats = ['hp', 'strength', 'dodge', 'thorns', 'dodge', 'thorns', 'actions', 'lifeSteal', 'luck', 'magic', 'physicalResistance', 'magicResistance']
+  let stats = ['hp', 'strength', 'dodge', 'thorns', 'actions', 'lifeSteal', 'luck', 'magic', 'physicalResistance', 'magicResistance']
+  let random = Math.floor(Math.random()*stats.length)
   return stats[random]
 }

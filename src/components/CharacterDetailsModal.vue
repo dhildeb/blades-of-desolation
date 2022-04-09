@@ -10,47 +10,48 @@
             <h5 class="col-4">{{character.race}}</h5>
           </div>
           <div class="row">
-            <sup class="col-4">Name</sup>
+            <sup class="col-4"></sup>
             <sup class="col-4">Class</sup>
             <sup class="col-4">Race</sup>
           </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
         </div>
       </div>
       <div class="modal-body container">
         <div class="row">
-          <div class="col-6 border-right">
+          <div class="col-md-6 col-12">
             <strong for="stats">Stats</strong>
-            <div class="row mt-3">
-              <ul class="col-6 pl-5">
-                <li>HP: {{character.hp}} / {{character.baseHp}}</li>
-                <li>LVL: {{character.level}}</li>
-                <li>EXP: {{Math.round(character.exp)}} / {{levelUpChart[character.level]}}</li>
-                <li>Speed: {{character.actions}}/{{character.baseActions}}</li>
-                <li>STR: {{character.strength}}</li>
-                <li v-if="character.magic">Magic: {{character.magic}}</li>
-                <li v-if="character.dodge">Dodge: {{character.dodge}}%</li>
-                <li v-if="character.thorns">Thorns: {{character.thorns}}</li>
-                <li v-if="character.lifeSteal">Life Steal: {{character.lifeSteal}}%</li>
-                <li v-if="character.luck">Luck: {{character.luck}}%</li>
-                <li v-if="character.absorb">Absorb: {{character.absorb}}</li>
-                <li v-if="character.dmgType">DMG Type: {{character.dmgType}}</li>
-              </ul>
-              <ul class="col-6" v-if="character.resistances.length > 0">
+            <div class="mt-3 pl-3 d-grid">
+                <span>HP: {{character.hp}} / {{character.baseHp}}</span>
+                <span>LVL: {{character.level}}</span>
+                <span>EXP: {{Math.round(character.exp)}} / {{levelUpChart[character.level]}}</span>
+                <span>Speed: {{character.actions}} / {{character.baseActions}}</span>
+                <span>STR: {{character.strength}}</span>
+                <span v-if="character.magic">Magic: {{character.magic}} / {{character.baseMagic}}</span>
+                <span v-if="character.dodge">Dodge: {{character.dodge}}%</span>
+                <span v-if="character.thorns">Thorns: {{character.thorns}}</span>
+                <span v-if="character.lifeSteal">Life Steal: {{character.lifeSteal}}%</span>
+                <span v-if="character.luck">Luck: {{character.luck}}%</span>
+                <span v-if="character.absorb">Absorb: {{character.absorb}}</span>
+                <span v-if="character.dmgType">DMG Type: {{character.dmgType}}</span>
+              <ul class="col-md-6 col-12" v-if="character.resistances.length > 0">
                 <label class="text-left w-100" for="resistances">Resistances: </label>
                 <li class="ml-4" v-for="resistance in character.resistances" :key="resistance">{{resistance}}</li>
               </ul>
             </div>
           </div>
-          <div class="col-6">
+          <div class="col-md-6 col-12">
             <strong for="items">Items</strong>
-            <ul v-if="items.length > 0">
+            <ul class="border border-rounded h-100" v-if="items.length > 0">
               <li :id="'item'+item.id" class="click" :class="statDiffColor(character, item) ? 'text-success' : statDiffColor(character, item) == null ? '' : 'text-danger'" v-for="item in items" :key="item.id" @click="equip(character, item)" :title="item.effect+' +'+item.value">{{item.name}} {{getStatDiff(character, item)}}</li>
           </ul>
           <p v-else>No items in pouch</p>
           </div>
         </div>
-        <div class="row">
-          <div class="col-6" v-if="character.equipment.length > 0">
+        <div class="row mt-4">
+          <div class="col-md-6 col-12" v-if="character.equipment.length > 0">
             <strong>Equipment</strong>
             <ul class="border-rounded border py-3">
               <li v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value">
@@ -60,7 +61,7 @@
           </div>
           <div class="col-6" v-if="character.spells.length > 0">
             <strong>Spells</strong>
-            <ul class="border-rounded border">
+            <ul class="border-rounded border h-100">
               <li v-for="spell in character.spells" :key="spell.name">
                 {{spell.name}}
               </li>
@@ -154,10 +155,28 @@ export default {
 </script>
 
 <style scope>
-li{
+span{
   text-align: justify;
 }
 .modal-body{
   overflow-y: auto;
+}
+.close{
+  position: absolute;
+  top: 1vh;
+  right: 3vw;
+}
+.d-grid{
+  display: grid;
+}
+@media screen and (min-width: 992px) {
+  .text-size{
+    font-size: large;
+  }
+}
+@media screen and (max-width: 992px) {
+  .text-size{
+    font-size: small;
+  }
 }
 </style>

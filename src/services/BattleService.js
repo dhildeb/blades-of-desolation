@@ -4,7 +4,7 @@ class BattleService{
   handleAttack(attacker, target){
     if(attacker.actions > 0){
       attacker.actions--
-      let dmg = attacker.strength+attacker.magic
+      let dmg = attacker.strength
       attacker.dmgType = attacker.dmgType ?? 'melee'
       if(target.immunities.filter(i => i == 'crit').length < 1){
         dmg = this.crit(attacker, dmg)
@@ -18,13 +18,14 @@ class BattleService{
       this.thorns(attacker, target)
       
       if(target.absorb == attacker.dmgType && target.absorb != ''){
-        target.hp += attacker.strength+attacker.magic
+        target.hp += attacker.strength
         animationsService.fadeOutUp('hit'+target.id, attacker.strength, '+')
         return
       }
       
       dmg = this.resistance(attacker, target)
-      
+      dmg = this.vulnerable(attacker, target)
+
       this.lifeSteal(attacker, dmg)
       
       if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
@@ -47,7 +48,7 @@ class BattleService{
     return dodge >= chance
   }
   resistance(attacker, target){
-    let dmg = attacker.strength+attacker.magic
+    let dmg = attacker.strength
     if(target.resistances.filter(r => r == attacker.dmgType).length > 0){
       console.log(target.name+' is resistant to '+attacker.dmgType)
       dmg = Math.round(dmg/2)
@@ -59,6 +60,14 @@ class BattleService{
     if(target.magicResistance > 0 && attacker.dmgType == 'magic'){
       Notify.toast(target.name+' is resistant to the attack', 'info')
       dmg = dmg - Math.round(dmg * (target.magicResistance/100))
+    }
+    return dmg
+  }
+  vulnerable(attacker, target){
+    let dmg = attacker.strength
+    if(target.vulnerabilities.filter(v => v == attacker.dmgType).length > 0){
+      console.log(target.name+' is vulnerable to '+attacker.dmgType)
+      dmg = Math.round(dmg*2)
     }
     return dmg
   }
@@ -74,7 +83,7 @@ class BattleService{
 
   reflect(attacker, target){
     if(target.reflect > 0){
-      let dmg = Math.round((attacker.strength+attacker.magic)*(target.reflect))
+      let dmg = Math.round((attacker.strength)*(target.reflect))
       if(dmg > 0){
         attacker.hp -= dmg
         animationsService.fadeOutUp('hit'+attacker.id, dmg, '-')

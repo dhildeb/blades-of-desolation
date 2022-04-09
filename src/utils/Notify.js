@@ -1,5 +1,5 @@
 import Swal from '../../node_modules/sweetalert2/src/sweetalert2.js'
-
+import $store from '@/store/index'
 export default class Notify {
   /**
  *
@@ -29,6 +29,44 @@ export default class Notify {
       return false
     }
   }
+  static async selectChar(title = 'Learn spell', cost = 1000, reqs) {
+    try {
+      const res = await Swal.fire({
+        title: title,
+        input: 'select',
+        inputOptions: getCharOptions(reqs),
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Learn Spells('+cost+')'
+      })
+      if (res.isConfirmed) {
+        return res.value
+      }
+      return false
+    } catch (error) {
+      return false
+    }
+  }
+  static async selectTarget(title = 'Select Target', confirmText = 'Cast Spell') {
+    try {
+      const res = await Swal.fire({
+        title: title,
+        input: 'select',
+        inputOptions: getTargetOptions(),
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: confirmText
+      })
+      if (res.isConfirmed) {
+        return res.value
+      }
+      return false
+    } catch (error) {
+      return false
+    }
+  }
 
   /**
  *
@@ -51,4 +89,39 @@ export default class Notify {
       showConfirmButton: false
     })
   }
+}
+
+function getCharOptions(reqs){
+  let options = {}
+  let chars = $store.state.player.characters
+  Object.keys(reqs).forEach(key => {
+    chars = chars.filter(c => {
+      // check if char already knows spell
+      if(Array.isArray(c[key])){
+        return !c[key].find(ck => ck.name == reqs[key])
+      }else{
+        // check if char can cast spells
+        return c[key] >= reqs[key]
+      }
+    })
+  })
+  if(chars.length < 1){
+    return {0:'No one can learn this spell'}
+  }
+  chars.forEach(c => {
+    options[c.id] = c.name
+  })
+  return options
+}
+function getTargetOptions(){
+  let options = {}
+  let monsters = $store.state.combatMonsters
+  let chars = $store.state.player.characters
+  monsters.forEach(m => {
+    options[m.id] = m.name
+  })
+  chars.forEach(c => {
+    options[c.id] = c.name
+  })
+  return options
 }
