@@ -79,8 +79,8 @@ export default {
         return
       }
       target = $store.state.combatMonsters.filter(m => m.id == targetId)[0]
-      target = target ?? $store.state.player.characters.filter(c => c.id == targetId)
-      this.selected.magic -= this.selectedSpell?.cost ?? 1
+      target = target ?? $store.state.player.characters.filter(c => c.id == targetId)[0]
+      this.selected.magic -= this.selectedSpell?.level ?? 1
       this.selected.actions--
       spellsService.castSpell(this.selectedSpell, target)
       document.getElementById('closeBattleOptionsModal').click()

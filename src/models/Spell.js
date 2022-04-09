@@ -11,5 +11,6 @@ export class Spell{
     this.areaEffect = spellData.areaEffect ?? false
     this.effect = spellData.effect ?? []
     this.value = spellData.value ?? []
+    this.buff = spellData.buff ?? false
   }
 }

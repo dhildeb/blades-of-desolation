@@ -19,7 +19,7 @@ class SpellsService{
       }
       return
     }
-    if(spell.strength){
+    if(spell.strength && !spell.buff){
       spell['actions'] = 1
       spell['hp'] = 1
       spell['lifeSteal'] = 0
@@ -29,8 +29,14 @@ class SpellsService{
     if(spell.effect){
       if(Array.isArray(target[spell.effect])){
         target[spell.effect].push(spell.value)
+      }else if(typeof spell.value !== 'number'){
+        target[spell.effect] = spell.value
       }else{
-        target[spell.effect] -= spell.value
+        if(spell.buff){
+          target[spell.effect] += spell.value
+        }else{
+          target[spell.effect] -= spell.value
+        }
       }
     }
   }
@@ -46,6 +52,12 @@ class SpellsService{
     let spell = character.spells.find(s => s.name == spellName)
     if(spell.level < character.level){
       spell.level++
+      if(spell.strength){
+        spell.strength += Math.floor(spell.strength*.5)
+      }
+      if(spell.value){
+        spell.value += Math.floor(spell.value*.5)
+      }
     }else{
       Notify.toast('can\'t improve that spell at this time', 'warning')
     }

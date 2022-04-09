@@ -12,7 +12,7 @@ export class Item{
     this.rarity = itemData.rarity
   }
   getRandomDmgType(){
-    let dmgTypeList = ['lightning', 'melee', 'magic', 'acid', 'necrotic', 'poison', 'fire', 'radiant', 'psychic', 'force']
+    let dmgTypeList = ['lightning', 'melee', 'magic', 'acid', 'necrotic', 'poison', 'fire', 'radiant', 'psychic']
     let random = Math.floor(Math.random()*dmgTypeList.length)
     this.name += ' ('+dmgTypeList[random]+')'
     return dmgTypeList[random]

@@ -1,3 +1,4 @@
+import { getRandomDmgType } from "@/utils/getRandomDmgType"
 import { createStore } from 'vuex'
 
 const store = createStore({
@@ -163,7 +164,7 @@ const store = createStore({
       {name: 'spellguard shield', effect: ['physicalResistance', 'magicResistance'], value: [10, 50], type: 'offHand', price: 50000, rarity: 'vr'},
       {name: 'staff of fire', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'fire', 'fire'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
       {name: 'staff of frost', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'cold', 'cold'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
-      {name: 'staff of force', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'force', 'force'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
+      {name: 'staff of force', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'melee', 'melee'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
       {name: 'staff of lightning', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'lightning', 'lightning'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
       {name: 'staff of withering', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'necrotic', 'necrotic'], type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['cleric', 'warlock']}]},
       {name: 'staff of the magi', effect: ['magic', 'absorb'], value: [10, 'magic'], type: 'mainHand', price: 100000, rarity: 'l', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
@@ -177,16 +178,91 @@ const store = createStore({
     spells: [
       //0
       [
-        {name: 'acid splash', strength: 6, dmgType: 'acid', level: 1}
+        {name: 'acid splash', strength: 3, dmgType: 'acid', level: 0},
+        {name: 'poison spray', strength: 6, dmgType: 'poison', level: 0},
+        {name: 'chill touch', strength: 4, dmgType: 'necrotic', level: 0},
+        {name: 'edritch blast', strength: 5, dmgType: 'melee', level: 0},
+        {name: 'fire bolt', strength: 5, dmgType: 'fire', level: 0},
+        {name: 'ray of frost', strength: 4, dmgType: 'cold', level: 0},
+        {name: 'sacred flame', strength: 4, dmgType: 'radiant', level: 0},
+        {name: 'shocking grasp', strength: 4, dmgType: 'lightning', level: 0},
+        {name: 'vicious mockery', strength: 4, dmgType: 'psychic', level: 0},
+        {name: 'light heal', effect: 'hp', value: 1, buff: true, level: 0},
       ],
       //1
       [
-        {name: 'cure wounds', effect: 'hp', value: 10, level: 2}
+        {name: 'burning hands', strength: 9, dmgType: 'fire', level: 1},
+        {name: 'hellish rebuke', strength: 10, dmgType: 'fire', reqs: {classType: 'warlock'}, level: 1},
+        {name: 'inflict wounds', strength: 15, dmgType: 'necrotic', reqs: {classType: 'warlock'}, level: 1},
+        {name: 'guided bolt', strength: 12, dmgType: 'radiant', level: 1},
+        {name: 'magic missile', areaEffect: true, strength: 4, dmgType: 'melee', level: 1},
+        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 1},
       ],
       //2
       [
-        {name: 'cloud of daggers', areaEffect: true, strength: 12, dmgType: 'melee', level: 3}
-      ]
+        {name: 'cure wounds', effect: 'hp', value: 10, buff: true, level: 2},
+        {name: 'acid arrow', strength: 16, dmgType: 'acid', level: 2},
+        {name: 'scorching ray', areaEffect: true, strength: 6, dmgType: 'fire', level: 2},
+        {name: 'shatter', areaEffect: true, strength: 8, dmgType: 'melee', level: 2},
+        {name: 'branding smite', strength: 12, dmgType: 'radiant', level: 2},
+        {name: 'moonbeam', areaEffect: true, strength: 6, dmgType: 'radiant', level: 2},
+        {name: 'prayer of healing', areaEffect: true, effect: 'hp', value: 4, buff: true, level: 2},
+      ],
+      //3
+      [
+        {name: 'cloud of daggers', areaEffect: true, strength: 12, dmgType: 'melee', level: 3},
+        {name: 'call lightning', strength: 22, dmgType: 'lightning', level: 3},
+        {name: 'fireball', strength: 24, dmgType: 'fire', level: 3},
+        {name: 'lightning bolt', strength: 24, dmgType: 'lightning', level: 3},
+        {name: 'haste', effect: 'actions', value: 1, buff: true, level: 3},
+        {name: 'slow', effect: 'actions', value: 1, level: 3},
+        {name: 'mass healing word', effect: 'hp', value: 8, buff: true, level: 3},
+      ],
+      //4
+      [
+        {name: 'blight', strength: 32, dmgType: 'necrotic', level: 4},
+        {name: 'ice storm', strength: 16, areaEffect: true, dmgType: 'cold', level: 4},
+        {name: 'phantasmal killer', strength: 40, dmgType: 'psychic', level: 4},
+      ],
+      //5
+      [
+        {name: 'cloud kill', areaEffect: true, strength: 20, dmgType: 'poison', level: 5},
+        {name: 'cone of cold', strength: 48, dmgType: 'cold', level: 5},
+        {name: 'flame strike', strength: 48, dmgType: 'fire', level: 5},
+        {name: 'insect plague', areaEffect: true, strength: 20, dmgType: 'melee', level: 5},
+        {name: 'greater restoration', effect: 'hp', value: 55, buff: true, level: 5},
+        {name: 'mass cure wounds', areaEffect: true, effect: 'hp', value: 17, buff: true, level: 5},
+      ],
+      //6
+      [
+        {name: 'chain lightning', areaEffect: true, strength: 25, dmgType: 'lightning', level: 6},
+        {name: 'circle of death', areaEffect: true, strength: 24, dmgType: 'necrotic', level: 6},
+        {name: 'disintegrate', strength: 70, dmgType: 'melee', level: 6},
+        {name: 'sunbeam', strength: 65, dmgType: 'radiant', level: 6},
+        {name: 'freezing sphere', areaEffect: true, strength: 60, dmgType: 'cold', level: 6},
+        {name: 'harm', strength: 60, dmgType: 'necrotic', level: 6},
+        {name: 'heal', effect: 'hp', value: 70, buff: true, level: 6},
+      ],
+      //7
+      [
+        {name: 'finger of death', strength: 86, dmgType: 'necrotic', level: 7},
+        {name: 'fire storm', areaEffect: true, strength: 35, dmgType: 'necrotic', level: 7},
+        {name: 'teleport', areaEffect: true, effect: 'inBattle', value: false, level: 7},
+        {name: 'prasmatic spray', areaEffect: true, strength: 35, dmgType: getRandomDmgType(), level: 7},
+      ],
+      //8
+      [
+        {name: 'earthquake', areaEffect: true, strength: 50, dmgType: 'melee', level: 8},
+        {name: 'incendiary cloud', areaEffect: true, strength: 50, dmgType: 'fire', level: 8},
+        {name: 'sunburst', areaEffect: true, strength: 56, dmgType: 'radiant', level: 8},
+      ],
+      //9
+      [
+        {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, level: 9},
+        {name: 'meteor storm', areaEffect: true, strength: 120, dmgType: 'fire', level: 9},
+        {name: 'power word kill', strength: 100, dmgType: 'fire', level: 9},
+        {name: 'weird', areaEffect: true, strength: 75, dmgType: 'psychic', level: 9},
+      ],
     ],
     quests: [{objective: 'kill', target: 'monsters', goal: 10, reward: 500}, {objective: 'kill', target: 'monsters', goal: 25, reward: 5000}, {objective: 'kill', target: 'monsters', goal: 1, reward: 50}, {objective: 'find', target: 'item', goal: 'c', reward: 'uc'}, {objective: 'find', target: 'item', goal: 'uc', reward: 'r'}, {objective: 'find', target: 'item', goal: 'r', reward: 'vr'}],
     combatMonsters: [],

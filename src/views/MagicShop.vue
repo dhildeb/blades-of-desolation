@@ -8,8 +8,9 @@
   </div>
   <div class="row mh-100">
     <div class="col-6">
-      <ul>
-        <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell[0])">{{spell[0].name}} - {{spell[0].price ?? spell[0].level*1000}}gold</li>
+      <ul v-for="(spells, index) in spellList" :key="spells">
+        <label for="spells">Level {{index}} Spells</label>
+        <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
       </ul>
     </div>
   </div>
@@ -30,7 +31,7 @@ components: {
 },
 setup(){
   const state = reactive({
-    spells: computed(()=> $store.state.spells),
+    spellList: computed(()=> $store.state.spells),
   })
   return state
 },
@@ -52,9 +53,15 @@ methods: {
 }
 </script>
 
-<style>
+<style scoped>
 li{
   cursor: pointer;
+}
+label{
+  right: 9vw;
+  position: relative;
+  color:darkgreen;
+  font-size: large;
 }
 .mh-100{
   height: 75vh;

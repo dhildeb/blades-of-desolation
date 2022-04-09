@@ -1,4 +1,4 @@
-dmgTypes: lightning, melee, magic, acid, necrotic
+dmgTypes: 'lightning', 'melee', 'magic', 'acid', 'necrotic', 'poison', 'fire', 'cold', 'psychic', 'radiant'
 
 
 TODO

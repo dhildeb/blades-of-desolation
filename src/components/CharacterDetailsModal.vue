@@ -61,7 +61,7 @@
           </div>
           <div class="col-6" v-if="character.spells.length > 0">
             <strong>Spells</strong>
-            <ul class="border-rounded border h-100">
+            <ul class="border-rounded border h-75">
               <li v-for="spell in character.spells" :key="spell.name">
                 {{spell.name}}
               </li>
