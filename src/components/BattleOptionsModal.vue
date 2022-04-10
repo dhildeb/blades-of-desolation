@@ -69,9 +69,11 @@ export default {
       let targetId = null
       let target = null
       if(!this.selectedSpell.areaEffect){
-       targetId = await Notify.selectTarget()
+        targetId = await Notify.selectTarget()
       }else{
         target = 'enemies'
+        this.selected.magic -= this.selectedSpell?.level ?? 1
+        this.selected.actions--
         spellsService.castSpell(this.selectedSpell, target)
         return
       }

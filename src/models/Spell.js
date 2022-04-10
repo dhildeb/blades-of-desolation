@@ -12,5 +12,17 @@ export class Spell{
     this.effect = spellData.effect ?? []
     this.value = spellData.value ?? []
     this.buff = spellData.buff ?? false
+    this.title = spellData.title ?? null
+  }
+  getTitle(){
+    let title = ''
+    if(this.strength){
+      title = this.strength+' '+this.dmgType+' dmg'
+    }else{
+      title = this.buff ? '+' : '-'
+      title += this.value+' '+this.effect
+    }
+    title += this.areaEffect ? ' (Mass effect)' :  ''
+    return title
   }
 }

@@ -4,7 +4,8 @@ import { Spell } from "@/models/Spell"
 import Notify from "@/utils/Notify"
 
 class SpellsService{
-  castSpell(spell, target){
+  castSpell(castSpell, target){
+    let spell = Object.assign({}, castSpell)
     if(spell.areaEffect){
       if(target == 'enemies'){
         $store.state.combatMonsters.forEach(m => {

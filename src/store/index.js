@@ -247,7 +247,7 @@ const store = createStore({
       [
         {name: 'finger of death', strength: 86, dmgType: 'necrotic', level: 7},
         {name: 'fire storm', areaEffect: true, strength: 35, dmgType: 'necrotic', level: 7},
-        {name: 'teleport', areaEffect: true, effect: 'inBattle', value: false, level: 7},
+        {name: 'teleport', areaEffect: true, effect: 'inBattle', value: false, title: 'Party flee battle', level: 7},
         {name: 'prasmatic spray', areaEffect: true, strength: 35, dmgType: getRandomDmgType(), level: 7},
       ],
       //8
@@ -258,7 +258,7 @@ const store = createStore({
       ],
       //9
       [
-        {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, level: 9},
+        {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, buff: true, level: 9},
         {name: 'meteor storm', areaEffect: true, strength: 120, dmgType: 'fire', level: 9},
         {name: 'power word kill', strength: 100, dmgType: 'fire', level: 9},
         {name: 'weird', areaEffect: true, strength: 75, dmgType: 'psychic', level: 9},

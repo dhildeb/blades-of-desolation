@@ -10,7 +10,7 @@
     <div class="col-6">
       <ul v-for="(spells, index) in spellList" :key="spells">
         <label for="spells">{{index > 0 ? "Level "+index : 'Cantrip'}} Spells</label>
-        <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
+        <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)" :title="spell.title ?? getTitle(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
       </ul>
     </div>
   </div>
@@ -48,6 +48,17 @@ methods: {
     let character = $store.state.player.characters.filter(c => c.id == char)[0]
     this.$store.commit('reducePlayerGold', price)
     spellsService.learnSpell(spell.name, character)
+  },
+  getTitle(spell){
+    let title = ''
+    if(spell.strength){
+      title = spell.strength+' '+spell.dmgType+' dmg'
+    }else{
+      title = spell.buff ? '+' : '-'
+      title += spell.value+' '+spell.effect
+    }
+    title += spell.areaEffect ? ' (Mass effect)' :  ''
+    return title
   }
 }
 }
