@@ -20,7 +20,7 @@ class SpellsService{
       }
       return
     }
-    if(spell.strength && !spell.buff){
+    if(spell.strength && (!spell.buff || !spell.debuff)){
       spell['actions'] = 1
       spell['hp'] = 1
       spell['lifeSteal'] = 0
@@ -38,6 +38,14 @@ class SpellsService{
         }else{
           target[spell.effect] -= spell.value
         }
+      }
+    }
+    if(spell.temp){
+      if(spell.debuff){
+        target['debuffs'].push({effect: spell.effect, value: spell.value})
+      }
+      if(spell.buff){
+        target['buffs'].push({effect: spell.effect, value: spell.value})
       }
     }
   }

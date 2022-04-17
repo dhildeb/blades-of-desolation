@@ -12,6 +12,7 @@ export class Spell{
     this.effect = spellData.effect ?? []
     this.value = spellData.value ?? []
     this.buff = spellData.buff ?? false
+    this.temp = spellData.temp ?? false
     this.title = spellData.title ?? null
   }
   getTitle(){

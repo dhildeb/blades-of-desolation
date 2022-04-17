@@ -62,7 +62,7 @@
           <div class="col-6" v-if="character.spells.length > 0">
             <strong>Spells</strong>
             <ul class="border-rounded border h-75">
-              <li v-for="spell in character.spells" :key="spell.name" :title="spell.title ?? spell.getTitle()">{{spell.name}}</li>
+              <li v-for="spell in character.spells" :key="spell.name" :title="spell.title ?? spell.getTitle()">{{spell.name}} lvl-{{spell.level}}</li>
             </ul>
           </div>
         </div>

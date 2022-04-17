@@ -16,12 +16,12 @@
          <button class="btn btn-secondary" @click="fleeAction" :disabled="selected.actions < 1">Flee</button>
         </div>
         <div class="btn-group" v-if="selected.spells.length > 0">
-          <button type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || selected.magic < 1">{{selectedSpell?.name ?? selectedSpell}}</button>
+          <button type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || selected.magic < 1">{{selectedSpell.name}} lvl-{{selectedSpell.level}}</button>
           <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
           </button>
           <div class="dropdown-menu">
-              <button class="dropdown-item" v-for="spell in selected.spells" :key="spell.id" @click="selectSpell(spell)">{{spell.name}}</button>
+              <button class="dropdown-item" v-for="spell in selected.spells" :key="spell.id" @click="selectSpell(spell)">{{spell.name}} lvl-{{spell.level}}</button>
           </div>
         </div>
       </div>
@@ -40,10 +40,17 @@ import Notify from "@/utils/Notify"
 
 export default {
   name: 'BattleOptionsModal',
+  watch: {
+    selected: function(){
+      if(this.selected.spells.length > 0){
+        this.selectSpell(this.selected.spells[0])
+      }
+    },
+  },
   setup(){
     const state = reactive({
       selected: computed(() => $store.state.selected),
-      selectedSpell: 'Choose a Spell'
+      selectedSpell: {name: 'select spell', level: null}
     })
     return state
   },
@@ -63,7 +70,7 @@ export default {
       this.selectedSpell = spell
     },
     async castSpell(){
-      if(this.selected.magic <= this.selectedSpell.level || this.selected.actions < 1){
+      if(this.selected.magic < this.selectedSpell.level || this.selected.actions < 1){
         return
       }
       let targetId = null
@@ -72,7 +79,7 @@ export default {
         targetId = await Notify.selectTarget()
       }else{
         target = 'enemies'
-        this.selected.magic -= this.selectedSpell?.level ?? 1
+        this.selected.magic -= this.selectedSpell.level
         this.selected.actions--
         spellsService.castSpell(this.selectedSpell, target)
         return
@@ -82,7 +89,7 @@ export default {
       }
       target = $store.state.combatMonsters.filter(m => m.id == targetId)[0]
       target = target ?? $store.state.player.characters.filter(c => c.id == targetId)[0]
-      this.selected.magic -= this.selectedSpell?.level ?? 1
+      this.selected.magic -= this.selectedSpell.level
       this.selected.actions--
       spellsService.castSpell(this.selectedSpell, target)
       document.getElementById('closeBattleOptionsModal').click()

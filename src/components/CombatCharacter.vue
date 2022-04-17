@@ -13,6 +13,18 @@
     <div v-else>
       <img :id="'charImg'+character.id" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
     </div>
+    <div class="d-flex">
+      <p class="border rounded-circle h-25 w-25" title="Strength">
+        {{character.strength}}
+      </p>
+      <p class="border rounded-circle h-25 w-25" title="Actions">
+        {{character.actions}}
+      </p>
+      <p class="border rounded-circle h-25 w-25" title="Magic" v-if="character.magic">
+        {{character.magic}}
+      </p>
+      
+    </div>
   </div>
 </template>
 

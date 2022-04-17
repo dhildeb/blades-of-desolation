@@ -32,6 +32,7 @@ export class Character{
     this.resistances = characterData.resistances ?? []
     this.lifeSteal = characterData.lifeSteal ?? 0
     this.regen = characterData.regen ?? 0
+    this.magicRegen = characterData.magicRegen ?? 0
     this.absorb = characterData.absorb ?? ''
     this.level = characterData.level ?? 0
     this.exp = characterData.exp ?? 0
@@ -39,6 +40,8 @@ export class Character{
     this.baseHp = characterData.baseHp ?? this.hp
     this.baseActions = characterData.baseActions ?? this.actions
     this.baseMagic = characterData.baseMagic ?? this.magic
+    this.buffs = []
+    this.debuffs = []
   }
   randomCharacterImg(){
     let img = ''

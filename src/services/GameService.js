@@ -2,6 +2,7 @@ import { Item } from "@/models/Item"
 import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
 import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
+import { buffService } from "./BuffService"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
 import { monstersService } from "./MonstersService"
@@ -24,6 +25,7 @@ class GameService{
   victory(){
     characterService.resetActions()
     characterService.resetExtraHp()
+    this.removeBuffs()
     this.addKillCounts()
     this.handleExpGain()
     this.loot()
@@ -50,11 +52,19 @@ class GameService{
         $store.state.player.items.push(new Item(item[0]))
       })
       if(c.equipment.length > 0){
-      c.equipment.forEach(ei => {
+        c.equipment.forEach(ei => {
           let item = $store.state.items.filter(i => i.name == ei)
           $store.state.player.items.push(new Item(item[0]))
         })
       }
+    })
+  }
+  removeBuffs(){
+    $store.state.player.characters.forEach(c => {
+      c.buffs.forEach(b => buffService.removeBuff(c, b))
+      c.debuffs.forEach(b => buffService.removeDebuff(c, b))
+      c.buffs = []
+      c.debuffs = []
     })
   }
   addKillCounts(){
@@ -69,7 +79,7 @@ class GameService{
 
   levelUp(character){
     character.level++
-    let lvlUpBoosts = characterLvlUpStatHelper(character.classType, character.race)
+    let lvlUpBoosts = characterLvlUpStatHelper(character.classType, character.race, character.level)
     lvlUpBoosts.classBoost.forEach(b => character[b]++)
     lvlUpBoosts.classBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
     lvlUpBoosts.raceBoost.forEach(b => character[b]++)

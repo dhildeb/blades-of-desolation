@@ -78,7 +78,7 @@ export default class Notify {
  * -----------------------------------
  * {@link https://sweetalert2.github.io/#configuration|Check out Sweet Alerts}
  */
-  static toast(title = 'Warning!', display = 'warning', position = 'bottom-end', timer = 5000, progressBar = true) {
+  static toast(title = 'Warning!', display = 'warning', position = 'center-end', timer = 5000, progressBar = true) {
     Swal.fire({
       title: title,
       icon: display,
@@ -93,7 +93,7 @@ export default class Notify {
 
 function getCharOptions(lvl){
   let options = {}
-  let chars = $store.state.player.characters.filter(c => c.baseMagic > 0 && c.level >= lvl)
+  let chars = $store.state.player.characters.filter(c => c.baseMagic > 0 && c.level >= lvl-1)
   if(chars.length < 1){
     return {0:'No one can learn this spell'}
   }

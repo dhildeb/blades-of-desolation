@@ -20,6 +20,7 @@ class CharacterService{
   }
   endPhase(){
     this.regen()
+    this.magicRegen()
   }
   resetActions(){
     $store.state.player.characters.forEach(c => {
@@ -73,6 +74,14 @@ class CharacterService{
       }
     })
   }
+  magicRegen(){
+    $store.state.player.characters.forEach(c => {
+      if(c.magicRegen > 0 ?? c.inBattle){
+        c.magic += c.magicRegen
+        c.magic = c.magic > c.baseMagic ? c.baseMagic : c.magic
+      }
+    })
+  }
   attemptToFlee(character){
     let enemies = $store.state.combatMonsters.filter(m => m.hp > 0).length
     let party = $store.state.player.characters.filter(c => c.inBattle).length
@@ -112,6 +121,7 @@ class CharacterService{
       case 'bard':
         char["luck"] += 3
         char["dodge"] += 2
+        char["magicRegen"] = 1
         spell = 'vicious mockery'
         break
       case 'barbarian':
@@ -120,12 +130,14 @@ class CharacterService{
       case 'wizard':
         char["magic"] += 3
         char["dmgType"] = 'magic'
+        char["magicRegen"] = 1
         spell = $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name
         break
       case 'cleric':
         char["magic"] += 1
         char["hp"] += 5
         char["dmgType"] = 'magic'
+        char["magicRegen"] = 1
         spell = 'light heal'
         break
       case 'fighter':
@@ -138,18 +150,21 @@ class CharacterService{
       case 'paladin':
         char["strength"] += 1
         char["thorns"] += 1
+        char["magicRegen"] = 1
         spell = 'sacred flame'
         break
       case 'warlock':
         char["magic"] += 1
         char["lifeSteal"] += 10
         char["dmgType"] = 'magic'
+        char["magicRegen"] = 1
         spell = 'chill touch'
         break
       default:
         char["classType"] = 'unknown'
         char[getRandomAbility()] += 3
         char[getRandomAbility()] += 3
+        char["magicRegen"] = char.magic > 0 ? 1 : 0
         spell = char.magic > 0 ? $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name : false
         break
     }
