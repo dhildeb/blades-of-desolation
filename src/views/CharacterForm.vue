@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-<h5>Create Your Character</h5>
+<h5 data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="And here's some amazing content. It's very engaging. Right?">Create Your Character</h5>
   <div class="row justify-content-center">
     <div class="col-10 col-md-8">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">
@@ -10,23 +10,15 @@
         <div class="form-group">
           <select class="custom-select" id="classType" v-model="classType">
             <option disabled value="">Select a Class</option>
-            <option value="barbarian">Barbarian</option>
-            <option value="bard">Bard</option>
-            <option value="cleric">Cleric</option>
-            <option value="fighter">Fighter</option>
-            <option value="monk">Monk</option>
-            <option value="paladin">Paladin</option>
-            <option value="ranger">Ranger</option>
-            <option value="rogue">Rogue</option>
-            <option value="warlock">Warlock</option>
-            <option value="wizard">Wizard</option>
+            <option v-for="classType in classList" :key="classType" :value="classType"
+            >{{classType}}</option>
           </select>
         </div>
         <div class="form-group">
           <select class="custom-select" id="race" v-model="race">
             <option disabled value="">Select a Race</option>
             <option value="dragonborn">Dragonborn</option>
-            <option value="elf">dwarf</option>
+            <option value="dwarf">dwarf</option>
             <option value="elf">Elf</option>
             <option value="halfling">Halfling</option>
             <option value="human">Human</option>
@@ -71,19 +63,20 @@ export default {
           }
         })
       }else{
-          const storage = getStorage(firebaseApp)
-          listAll(ref(storage, 'characters/')).then((res) => {
-            res.items.forEach((itemRef)=>{
-              getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url) => {
-                $store.state.characterImgList.push(url)
-          })
+        const storage = getStorage(firebaseApp)
+        listAll(ref(storage, 'characters/')).then((res) => {
+          res.items.forEach((itemRef)=>{
+            getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
+              $store.state.characterImgList.push(url)
             })
-          }).catch((error) => {
-            console.log(error)
           })
-        }
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
     })
     const state = reactive({
+      classList: ['Barbarian', 'Bard', 'Cleric', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Warlock', 'Wizard'],
       name: '',
       classType: '',
       race: '',
@@ -95,7 +88,7 @@ export default {
   },
   methods: {
     createCharacter(){
-      let charData = {name: this.name, classType: this.classType, race: this.race, img: this.selectedImg, actions: 1, dodge: 0, hp: 5, luck: 0, strength: 1, magic: 0, thorns: 0, lifeSteal: 0, physicalResistance: 0, magicResistance: 0}
+      let charData = {name: this.name, classType: this.classType.toLowerCase(), race: this.race, img: this.selectedImg, actions: 1, dodge: 0, hp: 5, luck: 0, strength: 1, magic: 0, thorns: 0, lifeSteal: 0, physicalResistance: 0, magicResistance: 0}
       characterService.createCharacter(charData)
       Notify.toast(charData.name+' was created!', 'success')
       this.name = ''
@@ -105,6 +98,9 @@ export default {
     },
     selectImg(img){
         this.selectedImg = img
+    },
+    pop(event){
+      console.log(event)
     }
   }
 }

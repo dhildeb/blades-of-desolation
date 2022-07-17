@@ -5,8 +5,7 @@ export class Ability{
     this.id = generateId()
     this.name = abilityData.name
     this.level = abilityData.level ?? 1
-    this.cost = abilityData.cost ?? 1
-    this.dmgType = abilityData.dmgType ?? 'magic'
+    this.dmgType = abilityData.dmgType
     this.strength = abilityData.strength
     this.areaEffect = abilityData.areaEffect ?? false
     this.effect = abilityData.effect ?? []
@@ -14,6 +13,8 @@ export class Ability{
     this.buff = abilityData.buff ?? false
     this.title = abilityData.title ?? null
     this.classType = abilityData.classType ?? 'any'
+    this.uses = abilityData.uses ?? 1
+    this.baseUses = abilityData.baseUses ?? 1
   }
   getTitle(){
     let title = ''

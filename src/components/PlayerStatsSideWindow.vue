@@ -40,7 +40,7 @@
         </p>
       </div>
     </div>
-    <button class="btn btn-success float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="saveGame">Save</button>
+    <button v-if="this.$route.name !== 'battleField'" class="btn btn-success float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="saveGame">Save</button>
     <button class="btn btn-success float-bottom" :class="player.characters.length < 1 ? '' : 'd-none'" @click="loadGame">Load Game</button>
   </div>
 </template>

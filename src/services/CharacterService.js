@@ -131,7 +131,7 @@ class CharacterService{
         char["magic"] += 3
         char["dmgType"] = 'magic'
         char["magicRegen"] = 1
-        spell = $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name
+        spell = spellsService.findRandomLearnableSpell(char)
         break
       case 'cleric':
         char["magic"] += 1
@@ -165,7 +165,7 @@ class CharacterService{
         char[getRandomAbility()] += 3
         char[getRandomAbility()] += 3
         char["magicRegen"] = char.magic > 0 ? 1 : 0
-        spell = char.magic > 0 ? $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name : false
+        spell = char.magic > 0 ? spellsService.findRandomLearnableSpell(char) : false
         break
     }
     switch(char.race){
@@ -190,7 +190,7 @@ class CharacterService{
         char["race"] = 'unknown'
         char[getRandomAbility()] += 3
         char[getRandomAbility()] += 3
-        spell = char.magic > 0 ? $store.state.spells[0][Math.floor(Math.random()*$store.state.spells[0].length)].name : false
+        spell = char.magic > 0 ? spellsService.findRandomLearnableSpell(char) : false
         break
     }
     let newChar = new Character(char)

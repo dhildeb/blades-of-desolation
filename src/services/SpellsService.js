@@ -49,6 +49,28 @@ class SpellsService{
       }
     }
   }
+  findRandomLearnableSpell(character){
+    let spellLvl = Math.floor((Math.random()*(character.level ?? 0))/2)
+    if(character.classType == 'wizard' || character.classType == 'unknown'){
+      return $store.state.spells[spellLvl][Math.floor(Math.random()*$store.state.spells[spellLvl].length)].name
+    }
+    let spell = false
+    do {
+      let potientalSpell = $store.state.spells[spellLvl][Math.floor(Math.random()*$store.state.spells[spellLvl].length)]
+      let canLearn = true
+      if(potientalSpell.reqs){
+        for(let req in potientalSpell.reqs){
+          if(character[req] != potientalSpell.reqs[req]){
+            canLearn = false
+          }
+        }
+      }
+      if(canLearn){
+        spell = potientalSpell.name
+      }
+    } while (!spell);
+    return spell
+  }
   learnSpell(spellName, character){
     if(character.spells.find(s => s.name == spellName)){
       this.levelUpSpell(spellName, character)

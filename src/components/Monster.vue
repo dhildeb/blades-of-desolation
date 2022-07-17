@@ -1,5 +1,5 @@
 <template>
-  <HpBar :hp="monster.hp" :baseHp="monster.baseHp" />
+  <HpBar :hp="monster.hp" :baseHp="monster.baseHp" :unknown="unknown" />
 <div>
   <h3 class="d-none position-absolute hit" :id="'hit'+monster.id"></h3>
   <img :id="'monster'+monster.id" v-if="monster.hp > 0" class="img-fluid monster-img" @click="attackMonster(monster)" :src="monster.img" />
@@ -10,9 +10,10 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import HpBar from "./HpBar.vue"
+import $store from '../store/index.js'
 import { battleService } from "@/services/BattleService"
 import { characterService } from "@/services/CharacterService"
-import { onMounted } from "@vue/runtime-core"
+import { computed, onMounted } from "@vue/runtime-core"
 import 'animate.css'
 import { animationsService } from "@/services/AnimationsService"
 
@@ -28,7 +29,8 @@ export default {
         characterService.autoSelect()
       })
     const state = reactive({
-      deadImg: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904'
+      deadImg: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904',
+      unknown: computed(()=>!$store.state.player.kills[props.monster.name])
     })
     return state
   },

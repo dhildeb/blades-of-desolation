@@ -7,6 +7,7 @@ import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
 import { monstersService } from "./MonstersService"
 import { questService } from "./QuestService"
+import { spellsService } from "./SpellsService"
 class GameService{
   determineTurn(){
     monstersService.takeTurn()
@@ -84,6 +85,11 @@ class GameService{
     lvlUpBoosts.classBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
     lvlUpBoosts.raceBoost.forEach(b => character[b]++)
     lvlUpBoosts.raceBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
+
+    if(character.magic > 0){
+      let spell = spellsService.findRandomLearnableSpell(character)
+      spellsService.learnSpell(spell, character)
+    }
 
     character.hp += character.level*(character.level > 1 ? character.level : 3)
     character.baseHp += character.level*(character.level > 1 ? character.level : 3)

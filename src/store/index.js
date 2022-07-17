@@ -175,6 +175,9 @@ const store = createStore({
       {name: 'sword of sharpness', effect: 'strength', value: 25, type: 'mainHand', price: 100000, rarity: 'l'},
       {name: 'wand of the war mage', effect: 'magic', value: 15, type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['warlock', 'cleric', 'wizard']}]},
     ],
+    abilities: [
+      {name: 'rage', level: 1, strength: 1, effect: 'physicalResistance', value: 50, buff: true, classType: 'barbarian', uses: 1, baseUses: 1},
+    ],
     spells: [
       //1
       [
@@ -196,19 +199,19 @@ const store = createStore({
         {name: 'inflict wounds', strength: 15, dmgType: 'necrotic', reqs: {classType: 'warlock'}, level: 2},
         {name: 'guided bolt', strength: 12, dmgType: 'radiant', level: 2},
         {name: 'magic missile', areaEffect: true, strength: 4, dmgType: 'melee', level: 2},
-        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 2},
+        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 2, reqs: {classType: 'cleric'}},
         {name: 'weaken', effect: 'strength', value: -3, buff: true, temp: true, level: 2},
         {name: 'power up', effect: 'strength', value: 3, buff: true, temp: true, level: 2},
       ],
       //3
       [
-        {name: 'cure wounds', effect: 'hp', value: 10, buff: true, level: 3},
+        {name: 'cure wounds', effect: 'hp', value: 10, buff: true, level: 3, reqs: {classType: 'cleric'}},
         {name: 'acid arrow', strength: 16, dmgType: 'acid', level: 3},
         {name: 'scorching ray', areaEffect: true, strength: 6, dmgType: 'fire', level: 3},
         {name: 'shatter', areaEffect: true, strength: 8, dmgType: 'melee', level: 3},
         {name: 'branding smite', strength: 12, dmgType: 'radiant', level: 3},
         {name: 'moonbeam', areaEffect: true, strength: 6, dmgType: 'radiant', level: 3},
-        {name: 'prayer of healing', areaEffect: true, effect: 'hp', value: 4, buff: true, level: 3},
+        {name: 'prayer of healing', areaEffect: true, effect: 'hp', value: 4, buff: true, level: 3, reqs: {classType: 'cleric'}},
       ],
       //4
       [
@@ -218,7 +221,7 @@ const store = createStore({
         {name: 'lightning bolt', strength: 24, dmgType: 'lightning', level: 4},
         {name: 'haste', effect: 'actions', value: 1, buff: true, level: 4},
         {name: 'slow', effect: 'actions', value: 1, level: 4},
-        {name: 'mass healing word', effect: 'hp', value: 8, buff: true, level: 4},
+        {name: 'mass healing word', effect: 'hp', value: 8, buff: true, level: 4, reqs: {classType: 'cleric'}},
       ],
       //5
       [
@@ -232,8 +235,8 @@ const store = createStore({
         {name: 'cone of cold', strength: 48, dmgType: 'cold', level: 6},
         {name: 'flame strike', strength: 48, dmgType: 'fire', level: 6},
         {name: 'insect plague', areaEffect: true, strength: 20, dmgType: 'melee', level: 6},
-        {name: 'greater restoration', effect: 'hp', value: 55, buff: true, level: 6},
-        {name: 'mass cure wounds', areaEffect: true, effect: 'hp', value: 17, buff: true, level: 6},
+        {name: 'greater restoration', effect: 'hp', value: 55, buff: true, level: 6, reqs: {classType: 'cleric'}},
+        {name: 'mass cure wounds', areaEffect: true, effect: 'hp', value: 17, buff: true, level: 6, reqs: {classType: 'cleric'}},
       ],
       //7
       [
@@ -243,7 +246,7 @@ const store = createStore({
         {name: 'sunbeam', strength: 65, dmgType: 'radiant', level: 7},
         {name: 'freezing sphere', areaEffect: true, strength: 60, dmgType: 'cold', level: 7},
         {name: 'harm', strength: 60, dmgType: 'necrotic', level: 7},
-        {name: 'heal', effect: 'hp', value: 70, buff: true, level: 7},
+        {name: 'heal', effect: 'hp', value: 70, buff: true, level: 7, reqs: {classType: 'cleric'}},
       ],
       //8
       [
@@ -260,7 +263,7 @@ const store = createStore({
       ],
       //10
       [
-        {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, buff: true, level: 10},
+        {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, buff: true, level: 10, reqs: {classType: 'cleric'}},
         {name: 'mass haste', areaEffect: true, effect: 'actions', value: 1, buff: true, level: 10},
         {name: 'meteor storm', areaEffect: true, strength: 120, dmgType: 'fire', level: 10},
         {name: 'power word kill', strength: 100, dmgType: 'fire', level: 10},
@@ -280,7 +283,7 @@ const store = createStore({
     selected: '',
     characterImgList: [],
     // max exp til next lvl
-    levelUpChart: [300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]
+    levelUpChart: [30, 90, 270, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]
   },
   getters: {
 
