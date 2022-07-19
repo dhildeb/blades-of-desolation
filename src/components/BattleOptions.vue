@@ -80,7 +80,6 @@ export default {
         return
       }
       this.selected.magic -= this.selectedSpell.level
-      this.selected.actions--
     },
     eventListenerSpell(event){
       let target = monstersService.getMonsterById($(event.target).prop('id').replace(/[^0-9]+/, ''))
