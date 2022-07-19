@@ -5,6 +5,9 @@ import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
 import { spellsService } from "./SpellsService"
 class CharacterService{
+  getCharacterById(id){
+    return $store.state.player.characters.find(c => c.id == id)
+  }
   takeTurn(){
     this.prepPhase()
     this.attackPhase()

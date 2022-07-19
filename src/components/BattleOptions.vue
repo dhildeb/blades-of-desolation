@@ -84,6 +84,9 @@ export default {
     },
     eventListenerSpell(event){
       let target = monstersService.getMonsterById($(event.target).prop('id').replace(/[^0-9]+/, ''))
+      if(!target){
+        target = characterService.getCharacterById($(event.target).prop('id').replace(/[^0-9]+/, ''))
+      }
       $('[id^=hit]').each(function(){
         let id = $(this).prop('id').replace(/[^0-9]+/, '')
         $('#charImg'+id).removeClass('selectable')
