@@ -8,10 +8,9 @@
         <router-link to="/battle">Battle</router-link> | 
         <router-link to="/map">Map</router-link> | 
         <router-link to="/shop">Shop</router-link>
-      </div>
-      <span class="px-1" v-if="player.characters.length < 5 && player.characters.length > 0"> | </span>
-      <div v-if="player.characters.length < 5">
-        <router-link to="/">Create</router-link>
+        <div v-if="player.characters.length < 5">
+          <router-link to="/">Create</router-link>
+        </div>
       </div>
     </nav>
     <div class="pb-2">
@@ -42,6 +41,7 @@
     </div>
     <button v-if="this.$route.name !== 'battleField'" class="btn btn-success float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="saveGame">Save</button>
     <button class="btn btn-success float-bottom" :class="player.characters.length < 1 ? '' : 'd-none'" @click="loadGame">Load Game</button>
+    <BattleOptions v-if="$route.name == 'battleField'" />
   </div>
 </template>
 
@@ -56,9 +56,10 @@ import QuestModal from "./QuestModal.vue"
 import { Item } from "@/models/Item"
 import { characterService } from "@/services/CharacterService"
 import { Spell } from "@/models/Spell"
+import BattleOptions from '@/components/BattleOptions'
 
 export default {
-  components: { CharacterDetailsModal, ItemPouchModal, QuestModal },
+  components: { CharacterDetailsModal, ItemPouchModal, QuestModal, BattleOptions },
   setup(){
     const state = reactive({
       player: computed(()=> $store.state.player),

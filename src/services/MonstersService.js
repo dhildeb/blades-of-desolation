@@ -52,5 +52,8 @@ class MonstersService{
   addItemStats(monster, itemName){
     $store.commit('addStatsToMonster', {monsterId: monster.id, item: itemName})
   }
+  getMonsterById(id){
+    return $store.state.combatMonsters.find(m => m.id == id)
+  }
 }
 export const monstersService = new MonstersService()

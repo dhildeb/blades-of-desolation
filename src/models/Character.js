@@ -40,6 +40,7 @@ export class Character{
     this.baseHp = characterData.baseHp ?? this.hp
     this.baseActions = characterData.baseActions ?? this.actions
     this.baseMagic = characterData.baseMagic ?? this.magic
+    this.baseStrength = characterData.baseStrength ?? this.strength
     this.buffs = []
     this.debuffs = []
   }

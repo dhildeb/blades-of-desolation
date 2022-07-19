@@ -81,13 +81,16 @@ class SpellsService{
   }
   levelUpSpell(spellName, character){
     let spell = character.spells.find(s => s.name == spellName)
+    let originalSpell = $store.state.spells.find(spell => spell.find(s => s.name == spellName))
+    originalSpell = originalSpell.find(s => s.name == spellName)
+
     if(spell.level < character.level){
       spell.level++
       if(spell.strength){
-        spell.strength += Math.floor(spell.strength/spell.level)
+        spell.strength += originalSpell.strength
       }
       if(spell.value){
-        spell.value += Math.floor(spell.value/spell.level)
+        spell.value += originalSpell.value
       }
     }else{
       Notify.toast('can\'t improve that spell at this time', 'warning')

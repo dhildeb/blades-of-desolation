@@ -99,4 +99,7 @@ export default {
 .vh-75{
   height: 75vh;
 }
+.selectable{
+  box-shadow: 0px 0px 15px 15px yellow;
+}
 </style>

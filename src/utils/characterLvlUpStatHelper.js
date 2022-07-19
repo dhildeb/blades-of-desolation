@@ -4,34 +4,34 @@ export function characterLvlUpStatHelper(classType, race, lvl){
   let boosts = {}
   switch(classType){
     case 'rogue':
-      boosts['classBoost'] = ['strength', 'dodge']
+      boosts['classBoost'] = ['baseStrength', 'strength', 'dodge']
       if(lvl % 3 == 0){
         boosts['classBoost'].push('luck')
       }
       break 
     case 'ranger':
-      boosts['classBoost'] = ['strength', 'hp']
+      boosts['classBoost'] = ['baseStrength', 'strength', 'baseHp', 'hp']
       break
     case 'barbarian':
-      boosts['classBoost'] = ['strength', 'strength']
+      boosts['classBoost'] = ['baseStrength', 'baseStrength', 'strength', 'strength']
       break
     case 'bard':
       boosts['classBoost'] = ['dodge', 'luck']
       break
     case 'wizard':
-      boosts['classBoost'] = ['magic', 'magic']
+      boosts['classBoost'] = ['baseMagic', 'baseMagic', 'magic', 'magic']
       if(lvl % 2 == 0){
         boosts['classBoost'].push('magicRegen')
       }
       break
     case 'cleric':
-      boosts['classBoost'] = ['magic', 'hp']
+      boosts['classBoost'] = ['baseMagic', 'magic', 'hp']
       if(lvl % 2 == 0){
         boosts['classBoost'].push('magicRegen')
       }
       break
     case 'fighter':
-      boosts['classBoost'] = ['strength', 'physicalResistance']
+      boosts['classBoost'] = ['baseStrength', 'strength', 'physicalResistance']
       break
     case 'monk':
       boosts['classBoost'] = ['physicalResistance', 'magicResistance']
@@ -40,7 +40,7 @@ export function characterLvlUpStatHelper(classType, race, lvl){
       }
       break
       case 'paladin':
-        boosts['classBoost'] = ['strength', 'thorns']
+        boosts['classBoost'] = ['baseStrength', 'strength', 'thorns']
         if(lvl % 2 == 0){
           boosts['classBoost'].push('magic')
         }
@@ -49,7 +49,7 @@ export function characterLvlUpStatHelper(classType, race, lvl){
         }
       break
     case 'warlock':
-      boosts['classBoost'] = ['magic', 'lifeSteal']
+      boosts['classBoost'] = ['baseMagic', 'magic', 'lifeSteal']
       if(lvl % 2 == 0){
         boosts['classBoost'].push('magicRegen')
       }
@@ -60,16 +60,16 @@ export function characterLvlUpStatHelper(classType, race, lvl){
   }
   switch(race){
     case 'dragonborn':
-      boosts['raceBoost'] = ['strength', 'strength']
+      boosts['raceBoost'] = ['baseStrength', 'baseStrength', 'strength', 'strength']
       break
     case 'human':
-      boosts['raceBoost'] = ['strength', 'hp']
+      boosts['raceBoost'] = ['baseStrength', 'baseHp', 'strength', 'hp']
       break
     case 'elf':
-      boosts['raceBoost'] = ['magic', 'dodge']
+      boosts['raceBoost'] = ['baseMagic', 'magic', 'dodge']
       break
     case 'dwarf':
-      boosts['raceBoost'] = ['hp', 'hp']
+      boosts['raceBoost'] = ['baseHp', 'baseHp', 'hp', 'hp']
       break
     case 'halfling':
       boosts['raceBoost'] = ['luck', 'luck']

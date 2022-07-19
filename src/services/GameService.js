@@ -81,10 +81,8 @@ class GameService{
   levelUp(character){
     character.level++
     let lvlUpBoosts = characterLvlUpStatHelper(character.classType, character.race, character.level)
-    lvlUpBoosts.classBoost.forEach(b => character[b]++)
-    lvlUpBoosts.classBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
-    lvlUpBoosts.raceBoost.forEach(b => character[b]++)
-    lvlUpBoosts.raceBoost.forEach(b => character['base'+b[0].charAt(0).toUpperCase()+b[0].slice(1)]++)
+    lvlUpBoosts.classBoost.forEach(stat => character[stat]++)
+    lvlUpBoosts.raceBoost.forEach(stat => character[stat]++)
 
     if(character.magic > 0){
       let spell = spellsService.findRandomLearnableSpell(character)
