@@ -69,9 +69,12 @@ export default {
       }
       let target = null
       if(!this.selectedSpell.areaEffect){
-        // TODO remove swal select in place of highlighted target select
-        // targetId = await Notify.selectTarget()
-        this.prepSpell()
+        $('[id^=hit]').each(function(){
+          let id = $(this).prop('id').replace(/[^0-9]+/, '')
+          $('#charImg'+id).addClass('selectable')
+          $('#monster'+id).addClass('selectable click')
+        })
+        setTimeout(()=>document.addEventListener('click', this.eventListenerSpell, {once: true}), 100)
       }else{
         target = 'enemies'
         this.selected.magic -= this.selectedSpell.level
@@ -91,16 +94,7 @@ export default {
         $('#charImg'+id).removeClass('selectable')
         $('#monster'+id).removeClass('selectable click')
       })
-      console.log(target)
       spellsService.castSpell(this.selectedSpell, target)
-    },
-    prepSpell(){
-      $('[id^=hit]').each(function(){
-        let id = $(this).prop('id').replace(/[^0-9]+/, '')
-        $('#charImg'+id).addClass('selectable')
-        $('#monster'+id).addClass('selectable click')
-      })
-      setTimeout(()=>document.addEventListener('click', this.eventListenerSpell, {once: true}), 100)
     }
   }
 }
