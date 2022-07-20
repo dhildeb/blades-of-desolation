@@ -66,6 +66,9 @@
             </ul>
           </div>
         </div>
+        <div class="mt-5">
+          <button class="btn btn-outline-danger" @click="deleteCharacter" data-dismiss="modal">Delete</button>
+        </div>
       </div>
     </div>
   </div>
@@ -75,6 +78,8 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { itemsService } from "@/services/ItemsService"
+import { characterService } from "@/services/CharacterService"
+import Notify from "@/utils/Notify"
 import $store from "@/store/index"
 import { computed } from "@vue/runtime-core"
 export default {
@@ -147,6 +152,11 @@ export default {
         }
         })
       return slot
+    },
+    async deleteCharacter(){
+      if(await Notify.confirm('Removing Character', 'Are you sure you want to remove '+this.character.name+' from your party?', 'warning', 'Remove')){
+        characterService.deleteCharacter(this.character.id)
+      }
     }
   }
 }

@@ -202,5 +202,8 @@ class CharacterService{
     }
     $store.state.player.characters.push(newChar)
   }
+  deleteCharacter(characterId){
+    $store.state.player.characters = $store.state.player.characters.filter(c => c.id !== characterId)
+  }
 }
 export const characterService = new CharacterService()
