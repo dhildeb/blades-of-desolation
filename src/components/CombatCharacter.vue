@@ -76,6 +76,6 @@ strong{
   left: 75%
 }
 .selectable{
-  box-shadow: 0px 0px 15px 15px yellow;
+  filter: drop-shadow(0px 0px 15px gold);
 }
 </style>

@@ -1,5 +1,6 @@
 import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
+
 class BattleService{
   handleAttack(attacker, target){
     if(attacker.actions > 0){

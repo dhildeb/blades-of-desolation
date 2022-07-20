@@ -28,6 +28,7 @@ import { reactive } from "@vue/reactivity"
 import { computed } from "@vue/runtime-core"
 import $store from "@/store/index"
 import $ from "jquery"
+import Notify from "@/utils/Notify"
 import { characterService } from "@/services/CharacterService"
 import { spellsService } from "@/services/SpellsService"
 import { monstersService } from "@/services/MonstersService"
@@ -74,7 +75,7 @@ export default {
           $('#charImg'+id).addClass('selectable')
           $('#monster'+id).addClass('selectable click')
         })
-        setTimeout(()=>document.addEventListener('click', this.eventListenerSpell, {once: true}), 100)
+        setTimeout(()=>document.addEventListener('click', this.eventListenerSpell, {once: true, capture: true}), 100)
       }else{
         target = 'enemies'
         this.selected.magic -= this.selectedSpell.level
@@ -82,9 +83,9 @@ export default {
         spellsService.castSpell(this.selectedSpell, target)
         return
       }
-      this.selected.magic -= this.selectedSpell.level
     },
     eventListenerSpell(event){
+      event.stopImmediatePropagation()
       let target = monstersService.getMonsterById($(event.target).prop('id').replace(/[^0-9]+/, ''))
       if(!target){
         target = characterService.getCharacterById($(event.target).prop('id').replace(/[^0-9]+/, ''))
@@ -94,6 +95,11 @@ export default {
         $('#charImg'+id).removeClass('selectable')
         $('#monster'+id).removeClass('selectable click')
       })
+      if(!target){
+        Notify.toast('Cant cast spell without proper target.')
+        return
+      }
+      this.selected.magic -= this.selectedSpell.level
       spellsService.castSpell(this.selectedSpell, target)
     }
   }
