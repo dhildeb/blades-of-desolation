@@ -8,7 +8,7 @@
         <router-link to="/battle">Battle</router-link> | 
         <router-link to="/map">Map</router-link> | 
         <router-link to="/shop">Shop</router-link>
-        <div v-if="player.characters.length < 5">
+        <div v-if="player.characters.length <= 5">
           <router-link to="/">Create</router-link>
         </div>
       </div>

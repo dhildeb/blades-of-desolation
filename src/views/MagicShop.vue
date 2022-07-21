@@ -2,7 +2,7 @@
 <ShopNavBar />
 <div class="container pt-5">
   <div class="row pt-5">
-    <div class="col-6">
+    <div class="col-6 text-right">
       <label for="buy">Learn Spells</label>
     </div>
   </div>

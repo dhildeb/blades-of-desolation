@@ -1,13 +1,6 @@
 <template>
 <ShopNavBar />
-<div class="container pt-5">
-  <div class="row pt-5">
-    <button v-if="healPartyCost > 0" class="btn btn-success" @click="healParty()" :disabled="playersGold < healPartyCost">Heal Party ({{healPartyCost}} gold)</button>
-    <div v-for="character in revive" :key="character.id">
-      <button class="btn btn-secondary m-3" @click="reviveCharacter(character.id)" :disabled="playersGold <
-         character.cost">Revive {{character.name}} ({{(character.hp - character.baseHp)*-10}} gold)</button>
-    </div>
-  </div>
+<div class="container mt-5 pt-5">
   <div class="row">
     <div class="col-6">
       <label for="buy">Buy Items</label>
@@ -40,6 +33,7 @@ components: {
 },
 setup(){
   onMounted(async()=> {
+    // random chance to get a quest request
     let luck = 1+characterService.getPartyLuck()
     let chance = Math.ceil(Math.random()*100)
     if(luck > chance){
@@ -51,8 +45,6 @@ setup(){
     }
   })
   const state = reactive({
-    healPartyCost: computed(()=> $store.state.player.characters.map(c => c.hp > 0 ? c.baseHp - c.hp : 0).reduce((a, b) => a+b)),
-    revive: computed(()=> $store.state.player.characters.filter(c => c.hp < 1)),
     playersGold: computed(()=> $store.state.player.gold),
     storeItems: computed(()=> $store.state.items.sort((a,b)=> a.price - b.price)),
     quest: null
@@ -60,16 +52,6 @@ setup(){
   return state
 },
 methods: {
-  reviveCharacter(id){
-    let deadCharacter = this.revive.find(dc => dc.id = id)
-    let cost = (deadCharacter.hp - deadCharacter.baseHp)*-10
-    this.$store.commit('reducePlayerGold', cost)
-    this.$store.state.player.characters.forEach(c => c.id == id ? c.hp = c.baseHp : '')
-  },
-  healParty(){
-      this.$store.commit('reducePlayerGold', this.healPartyCost)
-      this.$store.state.player.characters.forEach(c => c.hp < c.baseHp && c.hp > 0 ? c.hp = c.baseHp : '')
-  },
   buy(item){
     if(this.$store.state.player.gold >= item.price){
       this.$store.commit('reducePlayerGold', item.price)
