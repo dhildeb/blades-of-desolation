@@ -16,8 +16,8 @@ export class Character{
     this.offHand = characterData.offHand ?? null
     this.armor = characterData.armor ?? null
     this.cloak = characterData.cloak ?? null
-    this.accessory = characterData.accessory
-    this.dmgType = characterData.dmgType ?? 'melee'
+    this.accessory = characterData.accessory ?? null
+    this.dmgType = characterData.dmgType ?? 'melee' 
     this.hp = characterData.hp ?? 5
     this.magic = characterData.magic ?? 0
     this.luck = characterData.luck ?? 0

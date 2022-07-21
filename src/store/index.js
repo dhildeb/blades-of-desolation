@@ -107,7 +107,7 @@ const store = createStore({
       {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'strength', req: 2}]},
       {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c'},
       {name: 'spear', effect: 'strength', value: 1, type: 'mainHand', price: 200, rarity: 'c'},
-      {name: 'shortbow', effect: 'strength', value: 1, type: 'mainHand', price: 200, rarity: 'c'},
+      {name: 'shortbow', effect: ['strength', 'dmgType'], value: [1, 'range'], type: 'mainHand', price: 200, rarity: 'c'},
       {name: 'sticky shield', effect: 'baseHp', value: 3, type: 'offHand', price: 600, rarity: 'c'},
       {name: 'battleaxe', effect: 'strength', value: 3, type: 'mainHand', price: 600, rarity: 'c'},
       {name: 'greataxe', effect: 'strength', type: 'mainHand', value: 6, requirements: [{stat: 'strength', req: 4}], price: 1200, rarity: 'uc'},
@@ -333,7 +333,7 @@ const store = createStore({
             let index = char[data.item.effect[i]].indexOf(data.item.value[i])
             char[data.item.effect[i]].splice(index, 1)
           }else if(typeof char[data.item.effect[i]] === 'string'){
-            char[data.item.effect[i]] = null
+            char[data.item.effect[i]] = data.item.effect[i] == 'dmgType' ? 'melee' : null
           }else{
             char[data.item.effect[i]] -= data.item.value[i]
           }
@@ -343,7 +343,7 @@ const store = createStore({
           let index = char[data.item.effect].indexOf(data.item.value)
           char[data.item.effect].splice(index, 1)
         }else if(typeof char[data.item.effect] === 'string'){
-          char[data.item.effect] = null
+          char[data.item.effect] = data.item.effect == 'dmgType' ? 'melee' : null
         }else{
           char[data.item.effect] -= data.item.value
         }

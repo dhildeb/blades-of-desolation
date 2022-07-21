@@ -36,9 +36,9 @@ class BattleService{
     }
   }
   thorns(attacker, target){
-      if(target.thorns > 0){
+      if(target.thorns > 0 && attacker.dmgType == 'melee'){
         attacker.hp -= target.thorns
-      animationsService.fadeOutUp('hit'+attacker.id, target.thorns, '-')
+        animationsService.fadeOutUp('hit'+attacker.id, target.thorns, '-')
     }
   }
   dodge(target){
