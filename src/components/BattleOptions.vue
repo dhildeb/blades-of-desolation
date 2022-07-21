@@ -100,6 +100,7 @@ export default {
         return
       }
       this.selected.magic -= this.selectedSpell.level
+      this.selected.actions--
       spellsService.castSpell(this.selectedSpell, target)
     }
   }
