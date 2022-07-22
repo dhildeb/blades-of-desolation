@@ -9,7 +9,7 @@
   <div class="row mh-100">
     <div class="col-6">
       <ul>
-        <li :class="getRarityFullName(item.rarity)" v-for="item in storeItems" :key="item.id" @click="buy(item)" :title="item.effect+' +'+item.value">{{item.name}} - {{item.price}}gold</li>
+        <Item :class="getRarityFullName(item.rarity)" v-for="item in storeItems" :key="item.id" :item="item" display="shop" @click="buy(item)" />
       </ul>
     </div>
   </div>
@@ -26,10 +26,11 @@ import { questService } from "@/services/QuestService"
 import { characterService } from "@/services/CharacterService"
 import ShopNavBar from "@/components/ShopNavBar.vue"
 import Notify from "@/utils/Notify"
+import Item from "@/components/Item.vue"
 export default {
 name: 'GeneralShop',
 components: {
-  ShopNavBar
+  ShopNavBar, Item
 },
 setup(){
   onMounted(async()=> {

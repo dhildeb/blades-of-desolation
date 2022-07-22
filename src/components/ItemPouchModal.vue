@@ -9,30 +9,8 @@
       </div>
       <div class="modal-body container">
         <div class="row px-3">
-          <ul v-if="items.length > 0">
-            <li :id="'item'+item.id" class="click d-flex" :class="getRarityFullName(item.rarity)" v-for="item in items" :key="item.id" :title="item.effect+' +'+item.value">
-              {{item.name}} - 
-                <div v-if="typeof item.value == 'array'">
-                <span v-for="effect in item.effect" :key="effect">
-                   &nbsp;{{effect}}&nbsp;+
-                  </span>
-                </div>
-                <div v-else>
-                  <span>&nbsp;{{item.effect}}&nbsp;+</span>
-                </div>
-                <div v-if="typeof item.value == 'array'">
-                  <span v-for="index in item.value" :key="index">+{{item.value[index]}}</span>
-                </div>
-                <div v-else>
-                  <span>{{item.value}}</span>
-                </div>
-                &nbsp;({{item.type}})&nbsp;
-                <div v-if="item?.requirements">
-                  <span v-for="req in item.requirments" :key="req">
-                    {{req}}
-                  </span>
-                </div>
-              </li>
+          <ul v-if="items.length > 0" >
+            <Item v-for="item in items" :key="item.id" :item="item"/>
           </ul>
           <p v-else>No items in pouch</p>
         </div>
@@ -46,10 +24,11 @@
 import { reactive } from "@vue/reactivity"
 import { computed } from "@vue/runtime-core"
 import $store from "@/store/index"
-import { getRarityFullName } from "@/utils/getRarityFullName"
+import Item from "@/components/Item.vue"
 
 export default {
   name: 'ItemPouchModal',
+  components: { Item },
   setup(){
     const state = reactive({
       items: computed(()=> $store.state.player.items),
@@ -57,7 +36,6 @@ export default {
     return state
   },
   methods: {
-    getRarityFullName : getRarityFullName
   }
 }
 </script>

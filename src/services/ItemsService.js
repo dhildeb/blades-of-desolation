@@ -25,10 +25,12 @@ class ItemsService{
     }
   }
   equipItem(character, item){
+    $store.message = ''
     if(!this.checkItemReqs(character, item)){
-      Notify.toast('You cant equip that Item', 'warning')
+      Notify.toast($store.message, 'warning')
       return
     }
+    $store.message = ''
     
     // auto unequip
     character.equipment.forEach(e => {
@@ -99,7 +101,10 @@ class ItemsService{
       })
     }else if(character[r.stat] >= r.req){
         pass = true
-      }
+    }else{
+      $store.message += ' requires '+r.stat.replace(/([A-Z])/g, " $1")+' to be '+r.req
+    }
+
     return pass
   }
   unequipReqMissingItems(character){

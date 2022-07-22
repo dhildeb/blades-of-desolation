@@ -106,43 +106,38 @@ export default {
       let diff = ''
       if(Array.isArray(item.value)){
         for(let i = 0; i < item.value.length; i++){
-          diff += this.addItemEffectDiff(character.equipment, {effect: item.effect[i], value: item.value[i], type: item.type})
+          diff += this.compareEffectDiff(character.equipment, {effect: item.effect[i], value: item.value[i], type: item.type})
         }
       }else{
-        diff += this.addItemEffectDiff(character.equipment, item)
+        diff += this.compareEffectDiff(character.equipment, item)
       }
       return diff
     },
-    addItemEffectDiff(equipment, item){
-      let diff = ''
-      let sameType = equipment.filter(e => e.type === item.type)
-      let sameEffect = ''
-      let index = false
-      let sameValue = 0
-      if(sameType.length > 0){
-        sameType = sameType[0]
-        if(Array.isArray(sameType.effect)){
-          sameEffect = sameType.effect.filter(e => e === item.effect)
-          if(typeof sameEffect[0] === 'string'){
-            return diff
-          }
-          index = sameType.effect.indexOf(item.effect)
-        }else{
-          sameEffect = sameType.effect === item.effect ? sameType.effect : ''
-        }
-        if(sameEffect.length > 0){
-          sameValue = index && index >= 0 ? sameType.value[index] : sameType.value
-          if((item.value - sameValue) !== 0){
-            let operator = (item.value - sameValue) > 0 ? '+' : ''
-            diff = operator+(item.value - sameValue)+' '+item.effect+' '
-          }
-        }else{
-          diff = '+'+item.value+' '+item.effect+' '
-        }
-      }else{
-        diff = '+'+item.value+' '+item.effect+' '
+    compareEffectDiff(equipment, item){
+      let equipItem = equipment.filter(e => e.type === item.type)[0]
+      if(!equipItem){
+        return `+${item.value} ${item.effect} `
       }
-      return diff
+      let matchingEffect = equipItem.effect
+      let index = false
+      if(Array.isArray(matchingEffect)){
+        index = matchingEffect.findIndex(e => e == item.effect)
+        matchingEffect = matchingEffect.filter(e => e == item.effect)[0]
+      }
+      if(!matchingEffect){
+        return `+${item.value} ${item.effect} `
+      }
+      let equipValue = equipItem.value[index] ?? equipItem.value
+      let equipEffect = equipItem.effect[index] ?? equipItem.effect
+      if(equipValue == item.value){
+        return ''
+      }
+      if(typeof item.value == 'string'){
+        return `+${item.value} ${item.effect} `
+      }
+      let effectDiff = item.value - equipValue
+      let operator = effectDiff > 0 ? '+' : ''
+      return operator+effectDiff+' '+equipEffect+' '
     },
     statDiffColor(character, item){
       let slot = true

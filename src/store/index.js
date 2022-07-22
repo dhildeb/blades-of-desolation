@@ -104,13 +104,13 @@ const store = createStore({
     // TODO consumables: manual of bodily health, Manual of Gainful Exercise
     // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting, ring of resistance
     items: [
-      {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'strength', req: 2}]},
+      {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'baseStrength', req: 2}]},
       {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c'},
       {name: 'spear', effect: 'strength', value: 1, type: 'mainHand', price: 200, rarity: 'c'},
       {name: 'shortbow', effect: ['strength', 'dmgType'], value: [1, 'range'], type: 'mainHand', price: 200, rarity: 'c'},
       {name: 'sticky shield', effect: 'baseHp', value: 3, type: 'offHand', price: 600, rarity: 'c'},
       {name: 'battleaxe', effect: 'strength', value: 3, type: 'mainHand', price: 600, rarity: 'c'},
-      {name: 'greataxe', effect: 'strength', type: 'mainHand', value: 6, requirements: [{stat: 'strength', req: 4}], price: 1200, rarity: 'uc'},
+      {name: 'greataxe', effect: 'strength', type: 'mainHand', value: 6, requirements: [{stat: 'baseStrength', req: 4}], price: 1200, rarity: 'uc'},
       {name: 'scimitar', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c'},
       {name: 'adamantine armor', effect: 'immunities', value: 'crit', type: 'armor', price: 4000, rarity: 'uc'},
       {name: 'handaxe', effect: 'strength', value: 1, type: 'mainHand', price: 200, rarity: 'c'},
@@ -123,7 +123,7 @@ const store = createStore({
       {name: 'red dragon scalemail', effect: ['baseHp', 'resistances'], value: [50, 'fire'], type: 'armor', price: 10000, rarity: 'vr'},
       {name: 'amulent of health', effect: 'baseHp', value: 19, type: 'accessory', price: 5000, rarity: 'r'},
       {name: 'aminated shield', effect: 'physicalResistance', value: 20, type: '', price: 10000, rarity: 'vr'},
-      {name: 'armor of invulnerability', effect: 'physicalResistance', value: 100, type: 'armor', price: 100000, rarity: 'l', requirements: [{stat: 'strength', req: 15}]},
+      {name: 'armor of invulnerability', effect: 'physicalResistance', value: 100, type: 'armor', price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},
       {name: 'armor +1', effect: 'physicalResistance', value: 25, type: 'armor', price: 5000, rarity: 'r'},
       {name: 'longsword +1', effect: 'strength', value: 10, type: 'mainHand', price: 5000, rarity: 'r'},
       {name: 'armor +2', effect: 'physicalResistance', value: 50, type: 'armor', price: 10000, rarity: 'vr'},
@@ -283,7 +283,8 @@ const store = createStore({
     selected: '',
     characterImgList: [],
     // max exp til next lvl
-    levelUpChart: [300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000]
+    levelUpChart: [300, 900, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000],
+    message: ''
   },
   getters: {
 
