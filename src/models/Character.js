@@ -1,46 +1,46 @@
 import { generateId } from "@/utils/generateId"
 import $store from '@/store/index'
 export class Character{
-  constructor(characterData){
+  constructor(data){
     this.id = generateId()
-    this.name = characterData.name == '' ? 'unknown' : characterData.name
-    this.classType = characterData.classType ?? 'unknown'
-    this.race = characterData.race ?? 'unknown'
-    this.img = characterData.img
+    this.name = data.name == '' ? 'unknown' : data.name
+    this.classType = data.classType ?? 'unknown'
+    this.race = data.race ?? 'unknown'
+    this.img = data.img
     if(!this.img){
       this.randomCharacterImg()
     }
-    this.spells = characterData.spells ?? []
-    this.equipment = characterData.equipment ?? []
-    this.mainHand = characterData.mainHand ?? null
-    this.offHand = characterData.offHand ?? null
-    this.armor = characterData.armor ?? null
-    this.cloak = characterData.cloak ?? null
-    this.accessory = characterData.accessory ?? null
-    this.dmgType = characterData.dmgType ?? 'melee' 
-    this.hp = characterData.hp ?? 5
-    this.magic = characterData.magic ?? 0
-    this.luck = characterData.luck ?? 0
-    this.strength = characterData.strength ?? 1
-    this.dodge = characterData.dodge ?? 0
-    this.thorns = characterData.thorns ?? 0
-    this.actions = characterData.actions ?? 1
-    this.physicalResistance = characterData.physicalResistance ?? 0
-    this.magicResistance = characterData.magicResistance ?? 0
-    this.immunities = characterData.immunities ?? []
-    this.vulnerabilities = characterData.vulnerabilities ?? []
-    this.resistances = characterData.resistances ?? []
-    this.lifeSteal = characterData.lifeSteal ?? 0
-    this.regen = characterData.regen ?? 0
-    this.magicRegen = characterData.magicRegen ?? 0
-    this.absorb = characterData.absorb ?? ''
-    this.level = characterData.level ?? 0
-    this.exp = characterData.exp ?? 0
-    this.inBattle = characterData.inBattle ?? true
-    this.baseHp = characterData.baseHp ?? this.hp
-    this.baseActions = characterData.baseActions ?? this.actions
-    this.baseMagic = characterData.baseMagic ?? this.magic
-    this.baseStrength = characterData.baseStrength ?? this.strength
+    this.spells = data.spells ?? []
+    this.equipment = data.equipment ?? []
+    this.mainHand = data.mainHand ?? null
+    this.offHand = data.offHand ?? null
+    this.armor = data.armor ?? null
+    this.cloak = data.cloak ?? null
+    this.accessory = data.accessory ?? null
+    this.dmgType = data.dmgType ?? 'melee' 
+    this.hp = data.hp ?? 5
+    this.magic = data.magic ?? 0
+    this.luck = data.luck ?? 0
+    this.strength = data.strength ?? 1
+    this.dodge = data.dodge ?? 0
+    this.thorns = data.thorns ?? 0
+    this.actions = data.actions ?? 1
+    this.physicalResistance = data.physicalResistance ?? 0
+    this.magicResistance = data.magicResistance ?? 0
+    this.immunities = data.immunities ?? []
+    this.vulnerabilities = data.vulnerabilities ?? []
+    this.resistances = data.resistances ?? []
+    this.lifeSteal = data.lifeSteal ?? 0
+    this.regen = data.regen ?? 0
+    this.magicRegen = data.magicRegen ?? 0
+    this.absorb = data.absorb ?? ''
+    this.level = data.level ?? 0
+    this.exp = data.exp ?? 0
+    this.inBattle = data.inBattle ?? true
+    this.baseHp = data.baseHp ?? this.hp
+    this.baseActions = data.baseActions ?? this.actions
+    this.baseMagic = data.baseMagic ?? this.magic
+    this.baseStrength = data.baseStrength ?? this.strength
     this.buffs = []
     this.debuffs = []
   }

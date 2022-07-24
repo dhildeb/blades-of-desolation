@@ -123,6 +123,8 @@ export default {
       if(Array.isArray(matchingEffect)){
         index = matchingEffect.findIndex(e => e == item.effect)
         matchingEffect = matchingEffect.filter(e => e == item.effect)[0]
+      }else{
+        matchingEffect = matchingEffect == item.effect
       }
       if(!matchingEffect){
         return `+${item.value} ${item.effect} `

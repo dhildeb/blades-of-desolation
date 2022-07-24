@@ -1,20 +1,20 @@
 import { generateId } from "@/utils/generateId"
 
 export class Ability{
-  constructor(abilityData){
+  constructor(data){
     this.id = generateId()
-    this.name = abilityData.name
-    this.level = abilityData.level ?? 1
-    this.dmgType = abilityData.dmgType
-    this.strength = abilityData.strength
-    this.areaEffect = abilityData.areaEffect ?? false
-    this.effect = abilityData.effect ?? []
-    this.value = abilityData.value ?? []
-    this.buff = abilityData.buff ?? false
-    this.title = abilityData.title ?? null
-    this.classType = abilityData.classType ?? 'any'
-    this.uses = abilityData.uses ?? 1
-    this.baseUses = abilityData.baseUses ?? 1
+    this.name = data.name
+    this.level = data.level ?? 1
+    this.dmgType = data.dmgType
+    this.strength = data.strength
+    this.areaEffect = data.areaEffect ?? false
+    this.effect = data.effect ?? []
+    this.value = data.value ?? []
+    this.buff = data.buff ?? false
+    this.title = data.title ?? null
+    this.classType = data.classType ?? 'any'
+    this.uses = data.uses ?? 1
+    this.baseUses = data.baseUses ?? 1
   }
   getTitle(){
     let title = ''

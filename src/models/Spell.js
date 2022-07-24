@@ -1,19 +1,19 @@
 import { generateId } from "@/utils/generateId"
 
 export class Spell{
-  constructor(spellData){
+  constructor(data){
     this.id = generateId()
-    this.name = spellData.name
-    this.level = spellData.level ?? 1
-    this.cost = spellData.cost ?? 1
-    this.dmgType = spellData.dmgType ?? 'magic'
-    this.strength = spellData.strength
-    this.areaEffect = spellData.areaEffect ?? false
-    this.effect = spellData.effect ?? []
-    this.value = spellData.value ?? []
-    this.buff = spellData.buff ?? false
-    this.temp = spellData.temp ?? false
-    this.title = spellData.title ?? null
+    this.name = data.name
+    this.level = data.level ?? 1
+    this.cost = data.cost ?? 1
+    this.dmgType = data.dmgType ?? 'magic'
+    this.strength = data.strength
+    this.areaEffect = data.areaEffect ?? false
+    this.effect = data.effect ?? []
+    this.value = data.value ?? []
+    this.buff = data.buff ?? false
+    this.temp = data.temp ?? false
+    this.title = data.title ?? null
   }
   getTitle(){
     let title = ''

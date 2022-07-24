@@ -36,7 +36,7 @@ export default {
   },
   methods:{
     reviveCharacter(id){
-      let deadCharacter = this.revive.find(dc => dc.id = id)
+      let deadCharacter = this.state.revive.find(dc => dc.id = id)
       let cost = (deadCharacter.hp - deadCharacter.baseHp)*-10
       this.$store.commit('reducePlayerGold', cost)
       this.$store.state.player.characters.forEach(c => c.id == id ? c.hp = c.baseHp : '')

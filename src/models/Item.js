@@ -1,15 +1,15 @@
 import { generateId } from "@/utils/generateId";
 
 export class Item{
-  constructor(itemData){
+  constructor(data){
     this.id = generateId()
-    this.name = itemData.name
-    this.requirements = itemData.requirements
-    this.effect = itemData.effect
-    this.value = itemData.value == 'randomDmgType' ? this.getRandomDmgType() : itemData.value
-    this.type = itemData.type
-    this.price = itemData.price
-    this.rarity = itemData.rarity
+    this.name = data.name
+    this.requirements = data.requirements
+    this.effect = data.effect
+    this.value = data.value == 'randomDmgType' ? this.getRandomDmgType() : data.value
+    this.type = data.type
+    this.price = data.price
+    this.rarity = data.rarity
   }
   getRandomDmgType(){
     let dmgTypeList = ['lightning', 'melee', 'magic', 'acid', 'necrotic', 'poison', 'fire', 'radiant', 'psychic']

@@ -103,6 +103,12 @@ const store = createStore({
     // price ranges c: 100-1000, uc: 1000-4000, r: 4000-10000, vr: 10000-25000
     // TODO consumables: manual of bodily health, Manual of Gainful Exercise
     // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting, ring of resistance
+    itemReqs:[
+
+    ],
+    reqs: [
+
+    ],
     items: [
       {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'baseStrength', req: 2}]},
       {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c'},
