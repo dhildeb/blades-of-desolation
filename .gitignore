@@ -2,7 +2,8 @@
 node_modules
 rootkey.csv
 /aws
-/public/assets
+/public/assets/characters
+/public/assets/monsters
 # local env files
 .env.local
 .env.*.local

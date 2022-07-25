@@ -36,7 +36,7 @@ setup(){
   onMounted(async()=> {
     // random chance to get a quest request
     let luck = 1+characterService.getPartyLuck()
-    let chance = Math.ceil(Math.random()*100)
+    let chance = Math.ceil(Math.random()*25)
     if(luck > chance){
       let index = Math.floor(Math.random()*$store.state.quests.length)
       let newQuest = $store.state.quests[index]
