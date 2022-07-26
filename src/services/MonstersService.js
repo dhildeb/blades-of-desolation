@@ -22,12 +22,12 @@ class MonstersService {
       if (m.actions && m.hp > 0) {
         for (m.actions; m.actions > 0; m.actions--) {
           sleep(delay).then(() => {
-            animationsService.shake('monster' + m.id)
+            animationsService.pounce('monster' + m.id)
             let target = $store.state.player.characters.filter(c => c.inBattle)[Math.floor(Math.random() * numTargets)]
             battleService.handleAttack(m, target)
           })
         }
-        delay += 1500
+        delay += 1000
       }
     })
     setTimeout(()=>{

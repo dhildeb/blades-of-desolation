@@ -12,6 +12,18 @@ class AnimationsService{
       charImgElem.on('animationend', handleAnimationEnd)
     })
   }
+  pounce(id){
+    let charImgElem = $('#'+id)
+    new Promise((resolve) => {
+      charImgElem.addClass('animate__animated animate__tada')
+      function handleAnimationEnd(e){
+        e.stopPropagation()
+        charImgElem.removeClass('animate__animated animate__tada')
+        resolve('Animation ended')
+      }
+      charImgElem.on('animationend', handleAnimationEnd)
+    })
+  }
   fadeOutUp(id, dmg, operator){
     let elem = $('#'+id)
     elem.text(operator+dmg)
