@@ -79,6 +79,7 @@ export default {
         this.selected.magic -= this.selectedSpell.level
         this.selected.actions--
         spellsService.castSpell(this.selectedSpell, target)
+        characterService.autoSelect()
         return
       }
     },
@@ -100,6 +101,7 @@ export default {
       this.selected.magic -= this.selectedSpell.level
       this.selected.actions--
       spellsService.castSpell(this.selectedSpell, target)
+      characterService.autoSelect()
     }
   }
 }

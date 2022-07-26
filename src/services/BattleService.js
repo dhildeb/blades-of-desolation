@@ -6,10 +6,10 @@ import { MonsterFactory } from "../models/MonsterFactory"
 class BattleService{
   handleAttack(attacker, target){
     let delay = attacker instanceof MonsterFactory ? 200 : 0
+    if(delay == 0){
+      attacker.actions--
+    }
     sleep(delay).then(()=>{
-      if(delay == 0){
-        attacker.actions--
-      }
       let dmg = attacker.strength
       if(target.immunities.filter(i => i == 'crit').length < 1){
         dmg = this.crit(attacker, dmg)
@@ -18,20 +18,20 @@ class BattleService{
         Notify.toast(target.name+' dodged the attack', 'info')
         return
       }
-      
+
       this.thorns(attacker, target)
-      
+
       if(target.absorb == attacker.dmgType && target.absorb != ''){
         target.hp += attacker.strength
         animationsService.fadeOutUp('hit'+target.id, attacker.strength, '+')
         return
       }
-      
+
       dmg = this.resistance({strength: dmg, dmgType: attacker.dmgType}, target)
       dmg = this.vulnerable({strength: dmg, dmgType: attacker.dmgType}, target)
-      
+
       this.lifeSteal(attacker, dmg)
-      
+
       if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
         console.log(target.name+' is immune to '+attacker.dmgType)
         dmg = 0
@@ -68,7 +68,7 @@ class BattleService{
       Notify.toast(target.name+' is resistant to '+attack.dmgType, 'info')
       dmg = dmg - Math.round(dmg * (target.magicResistance/100))
     }
-    return dmg
+    return dmg < 0 ? 0 : dmg
   }
   vulnerable(attack, target){
     let dmg = attack.strength
