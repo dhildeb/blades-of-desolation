@@ -50,6 +50,9 @@ nav a.router-link-exact-active {
 .click{
   cursor: pointer;
 }
+.attack-cursor{
+  cursor: url(https://cur.cursors-4u.net/sports/spo-1/spo26.cur), auto !important;
+}
 .uncommon{
   color: green;
 }

@@ -1,10 +1,15 @@
 import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
+import { sleep } from "../utils/sleep"
+import { MonsterFactory } from "../models/MonsterFactory"
 
 class BattleService{
   handleAttack(attacker, target){
-    if(attacker.actions > 0){
-      attacker.actions--
+    let delay = attacker instanceof MonsterFactory ? 200 : 0
+    sleep(delay).then(()=>{
+      if(delay == 0){
+        attacker.actions--
+      }
       let dmg = attacker.strength
       if(target.immunities.filter(i => i == 'crit').length < 1){
         dmg = this.crit(attacker, dmg)
@@ -24,7 +29,7 @@ class BattleService{
       
       dmg = this.resistance({strength: dmg, dmgType: attacker.dmgType}, target)
       dmg = this.vulnerable({strength: dmg, dmgType: attacker.dmgType}, target)
-
+      
       this.lifeSteal(attacker, dmg)
       
       if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
@@ -32,8 +37,11 @@ class BattleService{
         dmg = 0
       }
       animationsService.fadeOutUp('hit'+target.id, dmg, '-')
+      sleep(200).then(()=>{
+        animationsService.shake('charImg'+target.id)
+      })
       target.hp -= dmg
-    }
+    })
   }
   thorns(attacker, target){
       if(target.thorns > 0 && attacker.dmgType == 'melee'){
@@ -53,11 +61,11 @@ class BattleService{
       dmg = Math.round(dmg/2)
     }
     if(target.physicalResistance > 0 && attack.dmgType == 'melee'){
-      Notify.toast(target.name+' is resistant to the attack', 'info')
+      Notify.toast(target.name+' is resistant to '+attack.dmgType, 'info')
       dmg = dmg - Math.round(dmg * (target.physicalResistance/100))
     }
     if(target.magicResistance > 0 && attack.dmgType == 'magic'){
-      Notify.toast(target.name+' is resistant to the attack', 'info')
+      Notify.toast(target.name+' is resistant to '+attack.dmgType, 'info')
       dmg = dmg - Math.round(dmg * (target.magicResistance/100))
     }
     return dmg

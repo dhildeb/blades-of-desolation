@@ -52,14 +52,12 @@ export default {
   methods: {
     waitAction(){
       this.selected.actions--
-      document.getElementById('closeBattleOptionsModal').click()
     },
     fleeAction(){
       if(this.selected.actions > 0){
         this.selected.actions = 0
         characterService.attemptToFlee(this.selected)
       }
-      document.getElementById('closeBattleOptionsModal').click()
     },
     selectSpell(spell){
       this.selectedSpell = spell

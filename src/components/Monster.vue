@@ -2,7 +2,7 @@
   <HpBar :hp="monster.hp" :baseHp="monster.baseHp" :unknown="unknown" />
 <div>
   <h3 class="d-none position-absolute hit" :id="'hit'+monster.id"></h3>
-  <img :id="'monster'+monster.id" v-if="monster.hp > 0" class="img-fluid monster-img" @click="attackMonster(monster)" :src="monster.img" />
+  <img :id="'monster'+monster.id" v-if="monster.hp > 0" class="img-fluid monster-img attack-cursor" @click="attackMonster(monster)" :src="monster.img" />
   <img v-else class="img-fluid monster-img" :src="deadImg" />
 </div>
 </template>

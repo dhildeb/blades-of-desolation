@@ -57,7 +57,9 @@ methods: {
     if(this.$store.state.player.gold >= item.price){
       this.$store.commit('reducePlayerGold', item.price)
       itemsService.buyItem(item)
+      Notify.toast('Purchased '+item.name, 'success')
     }
+      Notify.toast('Insufficient resources', 'warning')
   },
   getRarityFullName : getRarityFullName
 }
