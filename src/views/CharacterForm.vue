@@ -1,6 +1,6 @@
 <template>
-<div class="container">
-<h5 data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="And here's some amazing content. It's very engaging. Right?">Create Your Character</h5>
+<div class="container bg-img" style="background-image: url('/assets/locations/create-bg.jpg')">
+<h5 class="font-weight-bold text-black">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
   <div class="row justify-content-center">
     <div class="col-10 col-md-8">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">
@@ -24,12 +24,16 @@
             <option value="human">Human</option>
           </select>
         </div>
-      <div id="imgSelect" class="scrollable row">
-        <img class="img-fluid col-lg-3 col-md-6 col-12 click " :class="selectedImg == img ? 'border border-warning ' : ''" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
-      </div>
-      <button class="btn btn-primary float-left" type="submit">Create</button>
+        <div id="imgSelect" class="scrollable row">
+          <img class="img-fluid col-lg-3 col-md-6 col-12 click " :class="selectedImg == img ? 'border border-warning ' : ''" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
+        </div>
+        <button class="btn btn-primary float-left" type="submit">Create</button>
       </form>
-      <p v-else>Your Party is Full!</p>
+      <div class="row" v-else>
+        <div class="col-4 click" v-for="character in characters" :key="character.id" data-toggle="modal" data-target="#characterDetailsModal" title="stats">
+          <CombatCharacter :character="character" />
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -44,8 +48,10 @@ import Notify from "@/utils/Notify"
 import firebaseApp from 'firebase/app'
 import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
 import $ from 'jquery'
+import CombatCharacter from "@/components/CombatCharacter.vue"
 
 export default {
+    components: { CombatCharacter },
   name: 'CharacterForm',
   setup(){
     onMounted(()=>{
@@ -82,7 +88,9 @@ export default {
       race: '',
       selectedImg: '',
       imgs: computed(() => $store.state.characterImgList),
-      characterCount: computed(()=> $store.state.player.characters.length)
+      characterCount: computed(()=> $store.state.player.characters.length),
+      characters: computed(()=>$store.state.player.characters),
+      selectedCharacter: ''
     })
     return state
   },
@@ -99,8 +107,8 @@ export default {
     selectImg(img){
         this.selectedImg = img
     },
-    pop(event){
-      console.log(event)
+    selectCharacter(character){
+      this.selectedCharacter = character
     }
   }
 }
@@ -110,5 +118,9 @@ export default {
 .scrollable{
   max-height: 56vh;
   overflow-y: auto;
+  backdrop-filter: brightness(0.5);
+}
+.text-black{
+  color: #000;
 }
 </style>

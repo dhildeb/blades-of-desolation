@@ -1,6 +1,7 @@
 <template>
-<div class="d-md-flex">
+<div class="d-md-flex bg-dark">
   <PlayerStatsSideWindow />
+  <CharacterDetailsModal :character="character" />
   <router-view></router-view>
 </div>
 </template>
@@ -10,11 +11,13 @@ import { reactive } from "@vue/reactivity"
 import { computed } from "@vue/runtime-core"
 import $store from '@/store/index'
 import PlayerStatsSideWindow from "./components/PlayerStatsSideWindow.vue"
+import CharacterDetailsModal from "./components/CharacterDetailsModal.vue"
+
 export default {
-  components: { PlayerStatsSideWindow },
+  components: { PlayerStatsSideWindow, CharacterDetailsModal },
   setup() {
     const state = reactive({
-      character: computed(()=> $store.state.selected)
+      character: computed(()=> $store.state.selected),
     })
   return state
   },
@@ -46,7 +49,9 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
-
+.bg-img{
+  background-size: cover;
+}
 .click{
   cursor: pointer;
 }

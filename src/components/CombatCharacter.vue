@@ -1,16 +1,14 @@
 <template>
   <div v-if="character.hp < 0.1">
     <strong class="d-flex dead" title="dead">{{character.name}}</strong>
+     <img :id="'charImg'+character.id" class="img-fluid w-75 events-none" :src="deadImg" @click="selectCharacter(character)">
   </div>
   <div v-else>
       <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected.id == character.id" />
     <h3 class="d-none position-absolute hit selectable" :id="'hit'+character.id"></h3>
     <strong class="d-flex" :class="character.actions < 1 ? 'text-danger' : ''">{{character.name}}</strong>
-    <div v-if="selected.id == character.id">
-      <img :id="'charImg'+character.id" class="img-fluid w-75 click" :src="character.img" data-toggle="modal" data-target="#battleOptionsModal" title="Options">
-    </div>
-    <div v-else>
-      <img :id="'charImg'+character.id" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
+    <div>
+      <img :id="'charImg'+character.id" :class="selected.id == character.id ? 'animate__animated animate__slow animate__pulse animate__infinite' : ''" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
     </div>
     <div class="d-flex">
       <p class="border rounded-circle h-25 w-25" title="Strength">
@@ -40,7 +38,8 @@ export default {
   setup(props){
     const state = reactive({
       selected: computed(() => $store.state.selected),
-      hp: computed(() => props.character.hp)
+      hp: computed(() => props.character.hp),
+      deadImg: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904',
     })
     return state
   },
@@ -77,5 +76,8 @@ strong{
 }
 .selectable{
   filter: drop-shadow(0px 0px 15px gold);
+}
+.events-none{
+  pointer-events: none;
 }
 </style>

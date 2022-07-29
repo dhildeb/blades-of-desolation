@@ -36,9 +36,16 @@ export default {
   },
   methods: {
     attackMonster(monster){
+      if(!this.verifyAttack()){
+        characterService.autoSelect()
+      }
       animationsService.shake('monster'+monster.id)
       battleService.handleAttack(this.$store.state.selected, monster)
       characterService.autoSelect()
+    },
+    verifyAttack(){
+      let attacker = this.$store.state.selected
+      return attacker.actions > 0 && attacker.hp > 0
     }
   }
 }

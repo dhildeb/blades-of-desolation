@@ -1,5 +1,4 @@
 <template>
-  <CharacterDetailsModal :character="selectedCharacter" />
   <ItemPouchModal />
   <QuestModal />
   <div class="bg-dark text-light side-window">
@@ -51,7 +50,6 @@ import { computed } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 import Notify from "@/utils/Notify"
 import ItemPouchModal from "./ItemPouchModal.vue"
-import CharacterDetailsModal from "./CharacterDetailsModal.vue"
 import QuestModal from "./QuestModal.vue"
 import { Item } from "@/models/Item"
 import { characterService } from "@/services/CharacterService"
@@ -59,17 +57,16 @@ import { Spell } from "@/models/Spell"
 import BattleOptions from '@/components/BattleOptions'
 
 export default {
-  components: { CharacterDetailsModal, ItemPouchModal, QuestModal, BattleOptions },
+  components: { ItemPouchModal, QuestModal, BattleOptions },
   setup(){
     const state = reactive({
       player: computed(()=> $store.state.player),
-      selectedCharacter: ''
     })
     return state
   },
   methods: {
     selectCharacter(character){
-      this.selectedCharacter = character
+      $store.state.selected = character
     },
     saveGame(){
       window.localStorage.setItem("player", JSON.stringify(this.$store.state.player))
