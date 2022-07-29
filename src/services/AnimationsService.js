@@ -30,7 +30,7 @@ class AnimationsService{
     new Promise((resolve) => {
       elem.removeClass('d-none')
       elem.addClass(operator == '-' ? 'text-danger' : 'text-success')
-      elem.addClass('animate__animated animate__fadeOutUp '+operator)
+      elem.addClass('animate__slower animate__animated animate__fadeOutUp '+operator)
       function handleAnimationEnd(e){
         e.stopPropagation()
         elem.removeClass('animate__animated animate__fadeOutUp '+operator)

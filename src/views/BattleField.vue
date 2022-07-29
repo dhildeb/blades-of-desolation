@@ -1,6 +1,6 @@
 <template>
-  <div class="container bg-img" style="background-image: url('/assets/locations/lvl1-bg.jpg')">
-    <div class="row justify-content-center h-50">
+  <div class="container">
+    <div class="row justify-content-center h-50 bg-battle-img" style="background-image: url('/assets/locations/lvl1-bg.jpg')">
       <div class="col-4 col-md-2" v-for="monster in monsters" :key="monster.id">
         <div v-if="monstersWithHp < 1">
           <LootMonster :monster="monster" />
@@ -13,7 +13,7 @@
         <button class="btn btn-primary" @click="spawnMonsters">Battle on!</button>
       </div>
     </div>
-    <div class="row justify-content-center h-50">
+    <div class="row justify-content-center h-50 bg-img" style="background-image: url('/assets/locations/lvl1-bg.jpg')">
       <div class="col-4 col-md-2" v-for="character in characters" :key="character.id">
         <div v-if="character.inBattle">
           <CombatCharacter :character="character" />
@@ -98,5 +98,10 @@ export default {
 <style scoped>
 .vh-75{
   height: 75vh;
+}
+.bg-battle-img{
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: bottom;
 }
 </style>
