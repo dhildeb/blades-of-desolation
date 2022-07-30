@@ -1,7 +1,7 @@
 <template>
 <div class="modal fade text-dark" id="itemPouchModal" tabindex="-1" role="dialog" aria-labelledby="itemPouchModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
-    <div class="modal-content">
+    <div class="modal-content text-light font-weight-bold">
       <div class="modal-header">
         <div class="modal-title container">
           <h5>Items</h5>

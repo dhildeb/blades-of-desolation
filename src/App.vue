@@ -70,4 +70,23 @@ nav a.router-link-exact-active {
 .legendary{
   color: gold;
 }
+::-webkit-scrollbar {
+  width: 1rem;
+}
+ ::-webkit-scrollbar-track {
+   background-color: rgba(0, 0, 0, 0.5);
+   width: auto;
+   opacity: 0;
+ }
+::-webkit-scrollbar-thumb {
+  background-image: url('../public/assets/sword-bar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+} 
+::-webkit-scrollbar-button:vertical:decrement{
+  background-color: rgba(0, 0, 0, 0.5);
+  background-image: url('../public/assets/shield-bar.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 </style>

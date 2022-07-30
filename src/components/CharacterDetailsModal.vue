@@ -1,7 +1,7 @@
 <template>
 <div class="modal fade text-dark" id="characterDetailsModal" tabindex="-1" role="dialog" aria-labelledby="characterDetailsModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content" v-if="character">
+    <div class="modal-content text-light" v-if="character">
       <div class="modal-header">
         <div class="modal-title container">
           <div class="row">

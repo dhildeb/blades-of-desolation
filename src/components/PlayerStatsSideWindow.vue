@@ -1,7 +1,7 @@
 <template>
   <ItemPouchModal />
   <QuestModal />
-  <div class="bg-dark text-light side-window">
+  <div class="bg-black text-light side-window">
     <nav class="pb-2 d-flex justify-content-center">
       <div v-if="player.characters.length > 0">
         <router-link to="/battle">Battle</router-link> | 
@@ -103,5 +103,8 @@ export default {
   .side-window{
     width: 100vw;
   }
+}
+.bg-black{
+  background-color: black;
 }
 </style>

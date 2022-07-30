@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center h-50 bg-battle-img" style="background-image: url('/assets/locations/lvl1-bg.jpg')">
+    <div class="row justify-content-center align-items-center h-50 bg-battle-img" style="background-image: url('/assets/locations/lvl1-bg.jpg')">
       <div class="col-4 col-md-2" v-for="monster in monsters" :key="monster.id">
         <div v-if="monstersWithHp < 1">
           <LootMonster :monster="monster" />
