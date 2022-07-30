@@ -18,16 +18,19 @@ class MonstersService {
     $('#app').css('pointer-events', 'none')
     $('*').css('cursor', 'progress')
     $store.state.combatMonsters.forEach(m => {
-      if (m.actions && m.hp > 0) {
-        for (m.actions; m.actions > 0; m.actions--) {
-          sleep(delay).then(() => {
+      if (m.actions <= 0 && m.hp <= 0) {
+        return
+      }
+      for (m.actions; m.actions > 0; m.actions--) {
+        sleep(delay).then(() => {
+          if(m.hp > 0){
             animationsService.pounce('monster' + m.id)
             let target = $store.state.player.characters.filter(c => c.inBattle)[Math.floor(Math.random() * numTargets)]
             battleService.handleAttack(m, target)
-          })
-        }
-        delay += 1000
+          }
+        })
       }
+      delay += 1000
     })
     setTimeout(()=>{
       $('#app').css('pointer-events', '')

@@ -35,6 +35,7 @@ export class Character{
     this.magicRegen = data.magicRegen ?? 0
     this.absorb = data.absorb ?? ''
     this.level = data.level ?? 0
+    this.statBonus = data.statBonus ?? 0
     this.exp = data.exp ?? 0
     this.inBattle = data.inBattle ?? true
     this.baseHp = data.baseHp ?? this.hp

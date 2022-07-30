@@ -2,6 +2,7 @@ import { Item } from "@/models/Item"
 import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
 import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
+import Notify from "@/utils/Notify"
 import { buffService } from "./BuffService"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
@@ -31,11 +32,16 @@ class GameService{
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
     let charNum = $store.state.player.characters.filter(c => c.hp > 0 && c.inBattle).length
+    let delay = 500
     $store.state.player.characters.forEach(c => {
       if(c.hp > 0 && c.inBattle){
         c.exp += totalExp/charNum
         if(c.exp >= $store.state.levelUpChart[c.level]){
           this.levelUp(c)
+          setTimeout(() => {
+            Notify.toast(c.name+' Leveled Up! Go to details to improve stats.', 'success', 'top', 2500)
+          }, delay); 
+          delay += 2500
         }
       }
       })
@@ -74,7 +80,7 @@ class GameService{
     })
   }
 
-  levelUp(character){
+  async levelUp(character){
     character.level++
     let lvlUpBoosts = characterLvlUpStatHelper(character.classType, character.race, character.level)
     lvlUpBoosts.classBoost.forEach(stat => character[stat]++)
@@ -87,7 +93,8 @@ class GameService{
 
     character.hp += character.level*(character.level > 1 ? character.level : 3)
     character.baseHp += character.level*(character.level > 1 ? character.level : 3)
-    // TODO add custom stat bonus
+    
+    character.statBonus++
   }
 }
 

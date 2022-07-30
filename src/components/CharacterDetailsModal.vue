@@ -68,6 +68,7 @@
         </div>
         <div class="mt-5">
           <button class="btn btn-outline-danger" @click="deleteCharacter" data-dismiss="modal">Delete</button>
+          <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
         </div>
       </div>
     </div>
@@ -149,6 +150,26 @@ export default {
         }
         })
       return slot
+    },
+    async improveStat(character){
+      if(character.statBonus <= 0){
+        return
+      }
+      let options = {}
+      for(let stat in character){
+        if(character[stat] > 0){
+          if(stat.includes('base') || stat == 'level' || stat == 'exp' || stat == 'actions' || stat == 'inBattle' || stat == 'statBonus'){
+            continue
+          }
+          options[stat] = stat
+        }
+      }
+      let lvlUpStat = await Notify.selectStat(options)
+      if(!lvlUpStat){
+        return
+      }
+      character[lvlUpStat]++
+      character.statBonus--
     },
     async deleteCharacter(){
       if(await Notify.confirm('Removing Character', 'Are you sure you want to remove '+this.character.name+' from your party?', 'warning', 'Remove')){
