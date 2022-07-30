@@ -5,13 +5,9 @@ import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
 import { buffService } from "./BuffService"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
-import { monstersService } from "./MonstersService"
 import { questService } from "./QuestService"
 import { spellsService } from "./SpellsService"
 class GameService{
-  determineTurn(){
-    monstersService.takeTurn()
-  }
 
   spawnMonsters(){
     $store.state.combatMonsters = []

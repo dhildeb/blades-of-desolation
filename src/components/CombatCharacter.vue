@@ -4,11 +4,11 @@
      <img :id="'charImg'+character.id" class="img-fluid w-75 events-none" :src="deadImg" @click="selectCharacter(character)">
   </div>
   <div v-else>
-      <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected.id == character.id" />
-    <h3 class="d-none position-absolute hit selectable" :id="'hit'+character.id"></h3>
+      <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected?.id == character.id" />
+    <div class="position-absolute hit selectable" :id="'hit'+character.id"></div>
     <strong class="d-flex" :class="character.actions < 1 ? 'text-danger' : ''">{{character.name}}</strong>
     <div>
-      <img :id="'charImg'+character.id" :class="selected.id == character.id ? 'animate__animated animate__slow animate__pulse animate__infinite' : ''" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
+      <img :id="'charImg'+character.id" :class="selected?.id == character.id ? 'animate__animated animate__slow animate__pulse animate__infinite' : ''" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
     </div>
     <div class="d-flex">
       <p class="border rounded-circle h-25 w-25" title="Strength">

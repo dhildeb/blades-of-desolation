@@ -1,7 +1,7 @@
 <template>
   <HpBar :hp="monster.hp" :baseHp="monster.baseHp" :unknown="unknown" />
 <div>
-  <h3 class="d-none position-absolute hit" :id="'hit'+monster.id"></h3>
+  <div class="position-absolute hit" :id="'hit'+monster.id"></div>
   <img :id="'monster'+monster.id" v-if="monster.hp > 0" class="img-fluid monster-img attack-cursor" @click="attackMonster(monster)" :src="monster.img" />
   <img v-else class="img-fluid monster-img" :src="deadImg" />
 </div>
@@ -36,17 +36,11 @@ export default {
   },
   methods: {
     attackMonster(monster){
-      if(!this.verifyAttack()){
-        characterService.autoSelect()
-      }
+      characterService.autoSelect()
       animationsService.shake('monster'+monster.id)
       battleService.handleAttack(this.$store.state.selected, monster)
       characterService.autoSelect()
     },
-    verifyAttack(){
-      let attacker = this.$store.state.selected
-      return attacker.actions > 0 && attacker.hp > 0
-    }
   }
 }
 </script>

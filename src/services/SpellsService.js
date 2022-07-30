@@ -2,6 +2,7 @@ import { battleService } from "./BattleService"
 import $store from "@/store/index"
 import { Spell } from "@/models/Spell"
 import Notify from "@/utils/Notify"
+import { characterService } from "./CharacterService"
 
 class SpellsService{
   castSpell(castSpell, target){
@@ -26,6 +27,7 @@ class SpellsService{
       spell['lifeSteal'] = 0
       spell['luck'] = 0
       battleService.handleAttack(spell, target)
+      characterService.autoSelect()
     }
     if(spell.effect){
       if(Array.isArray(target[spell.effect])){

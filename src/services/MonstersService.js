@@ -8,7 +8,6 @@ class MonstersService {
   takeTurn() {
     this.prepPhase()
     this.attackPhase()
-    this.endPhase()
   }
   prepPhase() {
     this.resetActions()
@@ -33,7 +32,8 @@ class MonstersService {
     setTimeout(()=>{
       $('#app').css('pointer-events', '')
       $('*').css('cursor', '')
-    }, delay-1000)
+      this.endPhase()
+    }, delay)
   }
   endPhase() {
     this.regen()

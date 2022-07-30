@@ -37,7 +37,7 @@ export default {
   name: 'BattleOptions',
   watch: {
     selected: function(){
-      if(this.selected.spells.length > 0){
+      if(this.selected?.spells?.length > 0){
         this.selectSpell(this.selected.spells[0])
       }
     },

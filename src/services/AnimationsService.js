@@ -1,3 +1,4 @@
+import { generateId } from "@/utils/generateId"
 import $ from 'jquery'
 class AnimationsService{
   shake(id){
@@ -26,16 +27,15 @@ class AnimationsService{
   }
   fadeOutUp(id, dmg, operator){
     let elem = $('#'+id)
-    elem.text(operator+dmg)
+    let tempId = generateId()
+    elem.append('<h3 id="'+tempId+'" class="position-absolute">'+operator+dmg+'</h3>')
+    elem = $('#'+tempId)
     new Promise((resolve) => {
-      elem.removeClass('d-none')
       elem.addClass(operator == '-' ? 'text-danger' : 'text-success')
       elem.addClass('animate__slower animate__animated animate__fadeOutUp '+operator)
       function handleAnimationEnd(e){
         e.stopPropagation()
-        elem.removeClass('animate__animated animate__fadeOutUp '+operator)
-        elem.removeClass(operator == '-' ? 'text-danger' : 'text-success')
-        elem.addClass('d-none')
+        elem.remove()
         resolve('Animation ended')
       }
       elem.on('animationend', handleAnimationEnd)

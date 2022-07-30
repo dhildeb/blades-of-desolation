@@ -3,6 +3,7 @@ import $store from '@/store/index.js'
 import { getRandomAbility } from "@/utils/getRandomAbility"
 import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
+import { monstersService } from "./MonstersService"
 import { spellsService } from "./SpellsService"
 class CharacterService{
   getCharacterById(id){
@@ -11,19 +12,21 @@ class CharacterService{
   takeTurn(){
     this.prepPhase()
     this.attackPhase()
-    this.endPhase()
   }
+  
   prepPhase(){
     this.removeDestroyedCharacters()
     this.resetActions()
     this.autoSelect()
   }
   attackPhase(){
-
+    
   }
   endPhase(){
     this.regen()
     this.magicRegen()
+    $store.state.selected = ''
+    monstersService.takeTurn()
   }
   resetActions(){
     $store.state.player.characters.forEach(c => {
@@ -59,7 +62,7 @@ class CharacterService{
     })
   }
   autoSelect(){
-    if($store.state.selected?.actions > 0){
+    if($store.state.selected?.hp > 0 && $store.state.selected?.actions > 0){
       return
     }
     $store.state.player.characters.forEach(c => {
