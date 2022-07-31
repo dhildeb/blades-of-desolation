@@ -1,5 +1,6 @@
 import Swal from '../../node_modules/sweetalert2/src/sweetalert2.js'
 import $store from '@/store/index'
+import { spellsService } from "@/services/SpellsService.js"
 export default class Notify {
   /**
  *
@@ -32,9 +33,9 @@ export default class Notify {
   static async selectChar(title = 'Learn spell', cost = 1000) {
     try {
       const res = await Swal.fire({
-        title: title,
+        title: 'Learn spell '+title,
         input: 'select',
-        inputOptions: getCharOptions((cost-1000)/1000),
+        inputOptions: getCharOptions(title),
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
@@ -81,9 +82,9 @@ export default class Notify {
         if (res.isConfirmed) {
           return res.value
         }
-        return res
+        return false
       } catch (error) {
-        return error
+        return false
       }
     }
 
@@ -110,9 +111,9 @@ export default class Notify {
   }
 }
 
-function getCharOptions(lvl){
+function getCharOptions(spellName){
   let options = {}
-  let chars = $store.state.player.characters.filter(c => c.baseMagic > 0 && c.level >= lvl-1)
+  let chars = $store.state.player.characters.filter(c => spellsService.canLearnSpell(spellName, c))
   if(chars.length < 1){
     return {0:'No one can learn this spell'}
   }

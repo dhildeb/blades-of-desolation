@@ -9,7 +9,7 @@
   <div class="row mh-100">
     <div class="col-6">
       <ul v-for="(spells, index) in spellList" :key="spells">
-        <label for="spells">{{index > 0 ? "Level "+index : 'Cantrip'}} Spells</label>
+        <label for="spells">{{"Level "+(index+1)}} Spells</label>
         <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)" :title="spell.title ?? getTitle(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
       </ul>
     </div>
@@ -41,7 +41,7 @@ methods: {
     if($store.state.player.gold < price){
       return
     }
-    let char = await Notify.selectChar('Learn '+spell.name, price)
+    let char = await Notify.selectChar(spell.name, price)
     if(char == 0 || !char){
       return
     }
@@ -71,7 +71,7 @@ li{
 label{
   right: 9vw;
   position: relative;
-  color:darkgreen;
+  color:#00c700;
   font-size: large;
 }
 .mh-100{

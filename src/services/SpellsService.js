@@ -1,8 +1,8 @@
 import { battleService } from "./BattleService"
 import $store from "@/store/index"
 import { Spell } from "@/models/Spell"
-import Notify from "@/utils/Notify"
 import { characterService } from "./CharacterService"
+import Notify from "@/utils/Notify"
 
 class SpellsService{
   castSpell(castSpell, target){
@@ -74,29 +74,44 @@ class SpellsService{
     return spell
   }
   learnSpell(spellName, character){
+    if(!this.canLearnSpell(spellName, character)){
+      return false
+    }
     if(character.spells.find(s => s.name == spellName)){
       this.levelUpSpell(spellName, character)
       return
     }
     let spellData = $store.state.spells.find(spells => spells.find(s => s.name == spellName)).find(s => s.name == spellName)
     character.spells.push(new Spell(spellData))
+    Notify.toast(character.name+' Learned '+spellName, 'success')
+  }
+  canLearnSpell(spellName, character){
+    let spell = character.spells.find(s => s.name == spellName)
+    if(!spell){
+      spell = $store.state.spells.find(spell => spell.find(s => s.name == spellName)).find(s => s.name == spellName)
+    }else{
+      return spell.level < character.level
+    }
+    for(let req in spell.reqs){
+      if(character[req] != spell.reqs[req] && character[req] != 'unknown' && character[req] != 'wizard'){
+        return false
+      }
+    }
+    return spell.level <= character.level
   }
   levelUpSpell(spellName, character){
     let spell = character.spells.find(s => s.name == spellName)
     let originalSpell = $store.state.spells.find(spell => spell.find(s => s.name == spellName))
     originalSpell = originalSpell.find(s => s.name == spellName)
 
-    if(spell.level < character.level){
-      spell.level++
-      if(spell.strength){
-        spell.strength += originalSpell.strength
-      }
-      if(spell.value){
-        spell.value += originalSpell.value
-      }
-    }else{
-      Notify.toast('can\'t improve that spell at this time', 'warning')
+    spell.level++
+    if(spell.strength){
+      spell.strength += originalSpell.strength
     }
+    if(spell.value){
+      spell.value += originalSpell.value
+    }
+    Notify.toast(character.name+' Level up '+spellName, 'success')
   }
 }
 

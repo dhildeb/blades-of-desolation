@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-light bg-light">
+  <nav class="navbar navbar-dark bg-darker">
     <div class="w-25 d-flex justify-content-between">
       <router-link class="btn btn-sm btn-outline-secondary" to="/shop/sell">Sell</router-link>
       <router-link class="btn btn-sm btn-outline-secondary" to="/shop">Items Shop</router-link>
@@ -54,6 +54,9 @@ export default {
 </script>
 
 <style scoped>
+.bg-darker{
+  background-color: rgb(15, 15, 15);
+}
 .navbar{
   position: fixed;
   width: 80vw;

@@ -10,7 +10,7 @@
         </div>
       </div>
       <div v-if="monstersWithHp < 1">
-        <button class="btn btn-primary" @click="spawnMonsters">Battle on!</button>
+        <button class="btn btn-warning" @click="spawnMonsters">Battle on!</button>
       </div>
     </div>
     <div class="row justify-content-center h-50 bg-img" >

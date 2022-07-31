@@ -33,22 +33,25 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #f8f9fa;
   user-select: none;
 }
 
 nav {
   padding: 30px;
 }
-
 nav a {
   font-weight: bold;
   color: #f8f9fa;
 }
-
 nav a.router-link-exact-active {
   color: #42b983;
 }
+
+.modal-content{
+  background-color: black;
+}
+
 .bg-img{
   background-size: cover;
 }
@@ -59,16 +62,16 @@ nav a.router-link-exact-active {
   cursor: url(https://cur.cursors-4u.net/sports/spo-1/spo26.cur), auto !important;
 }
 .uncommon{
-  color: green;
+  color: #0cc50c;
 }
 .rare{
-  color: blue;
+  color: #6464ff;
 }
 .very-rare{
-  color: indigo;
+  color: #cd89ff;
 }
 .legendary{
-  color: gold;
+  color: #ffd700d9;
 }
 ::-webkit-scrollbar {
   width: 1rem;

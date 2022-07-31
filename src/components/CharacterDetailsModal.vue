@@ -29,16 +29,28 @@
                 <span>EXP: {{Math.round(character.exp)}} / {{levelUpChart[character.level]}}</span>
                 <span>Speed: {{character.actions}} / {{character.baseActions}}</span>
                 <span>STR: {{character.strength}}</span>
+                <span >DMG Type: {{character.dmgType}}</span>
                 <span v-if="character.baseMagic">Magic: {{character.magic}} / {{character.baseMagic}}</span>
+                <span v-if="character.regen">Regen: {{character.regen}}%</span>
+                <span v-if="character.magicRegen">Magic Regen: {{character.magicRegen}}%</span>
                 <span v-if="character.dodge">Dodge: {{character.dodge}}%</span>
                 <span v-if="character.thorns">Thorns: {{character.thorns}}</span>
                 <span v-if="character.lifeSteal">Life Steal: {{character.lifeSteal}}%</span>
                 <span v-if="character.luck">Luck: {{character.luck}}%</span>
                 <span v-if="character.absorb">Absorb: {{character.absorb}}</span>
-                <span v-if="character.dmgType">DMG Type: {{character.dmgType}}</span>
+                <span v-if="character.physicalResistance">Physical Resistance: {{character.physicalResistance}}%</span>
+                <span v-if="character.magicResistance">Magic Resistance: {{character.magicResistance}}%</span>
               <ul class="col-md-6 col-12" v-if="character.resistances.length > 0">
                 <label class="text-left w-100" for="resistances">Resistances: </label>
                 <li class="ml-4" v-for="resistance in character.resistances" :key="resistance">{{resistance}}</li>
+              </ul>
+              <ul class="col-md-6 col-12" v-if="character.immunities.length > 0">
+                <label class="text-left w-100" for="immunities">Immunities: </label>
+                <li class="ml-4" v-for="resistance in character.immunities" :key="resistance">{{resistance}}</li>
+              </ul>
+              <ul class="col-md-6 col-12" v-if="character.vulnerabilities.length > 0">
+                <label class="text-left w-100" for="vulnerabilities">Vulnerabilities: </label>
+                <li class="ml-4" v-for="resistance in character.vulnerabilities" :key="resistance">{{resistance}}</li>
               </ul>
             </div>
           </div>
@@ -91,8 +103,7 @@ export default {
   setup(){
     const state = reactive({
       levelUpChart:  $store.state.levelUpChart,
-      items: computed(()=> $store.state.player.items),
-
+      items: computed(()=> $store.state.player.items.sort((a,b)=>a.name.localeCompare(b.name)).filter(function(item, pos, ary) {return !pos || item.name != ary[pos - 1].name})),
     })
     return state
   },

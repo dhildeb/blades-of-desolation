@@ -58,8 +58,9 @@ methods: {
       this.$store.commit('reducePlayerGold', item.price)
       itemsService.buyItem(item)
       Notify.toast('Purchased '+item.name, 'success')
-    }
+    }else{
       Notify.toast('Insufficient resources', 'warning')
+    }
   },
   getRarityFullName : getRarityFullName
 }
