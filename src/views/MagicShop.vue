@@ -9,7 +9,7 @@
   <div class="row mh-100">
     <div class="col-6">
       <ul v-for="(spells, index) in spellList" :key="spells">
-        <label for="spells">{{"Level "+(index+1)}} Spells</label>
+        <label for="spells">{{index > 0 ? "Level "+index : 'Cantrip'}} Spells</label>
         <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)" :title="spell.title ?? getTitle(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
       </ul>
     </div>

@@ -82,6 +82,7 @@ nav a.router-link-exact-active {
    opacity: 0;
  }
 ::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
   background-image: url('../public/assets/sword-bar.png');
   background-size: contain;
   background-repeat: no-repeat;
