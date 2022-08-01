@@ -44,6 +44,7 @@ export class Character{
     this.baseStrength = data.baseStrength ?? this.strength
     this.buffs = []
     this.debuffs = []
+    this.abilities = []
   }
   randomCharacterImg(){
     let img = ''

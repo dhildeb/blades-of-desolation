@@ -31,12 +31,12 @@
                 <span>STR: {{character.strength}}</span>
                 <span >DMG Type: {{character.dmgType}}</span>
                 <span v-if="character.baseMagic">Magic: {{character.magic}} / {{character.baseMagic}}</span>
-                <span v-if="character.regen">Regen: {{character.regen}}%</span>
-                <span v-if="character.magicRegen">Magic Regen: {{character.magicRegen}}%</span>
+                <span v-if="character.regen" title="HP is retored by this amount at the end of each turn in battle">Regen: {{character.regen}}</span>
+                <span v-if="character.magicRegen" title="Magic is retored by this amount at the end of each turn in battle">Magic Regen: {{character.magicRegen}}</span>
                 <span v-if="character.dodge">Dodge: {{character.dodge}}%</span>
                 <span v-if="character.thorns">Thorns: {{character.thorns}}</span>
                 <span v-if="character.lifeSteal">Life Steal: {{character.lifeSteal}}%</span>
-                <span v-if="character.luck">Luck: {{character.luck}}%</span>
+                <span v-if="character.luck" title="improves chance for better items, dodged attacks, crit hits and flee">Luck: {{character.luck}}%</span>
                 <span v-if="character.absorb">Absorb: {{character.absorb}}</span>
                 <span v-if="character.physicalResistance">Physical Resistance: {{character.physicalResistance}}%</span>
                 <span v-if="character.magicResistance">Magic Resistance: {{character.magicResistance}}%</span>
@@ -75,6 +75,12 @@
             <strong>Spells</strong>
             <ul class="border-rounded border h-75">
               <li v-for="spell in character.spells" :key="spell.name" :title="spell.title ?? spell.getTitle()">{{spell.name}} lvl-{{spell.level}}</li>
+            </ul>
+          </div>
+          <div class="col-6" v-if="character.abilities.length > 0">
+            <strong>Spells</strong>
+            <ul class="border-rounded border h-75">
+              <li v-for="ability in character.abilities" :key="ability.name" :title="ability.title ?? ability.getTitle()">{{ability.name}} lvl-{{ability.level}}</li>
             </ul>
           </div>
         </div>

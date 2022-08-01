@@ -15,6 +15,9 @@
             <button class="dropdown-item" v-for="spell in selected.spells" :key="spell.id" @click="selectSpell(spell)">{{spell.name}} lvl-{{spell.level}}</button>
         </div>
       </div>
+      <div class="btn-group" v-if="selected.abilities.length > 0">
+        <button v-for="ability in selected.abilities" :key="ability.name" type="button" class="btn btn-danger" @click="ability.useAbility(ability, selected)" :disabled="ability.uses <= 0">{{ability.name}} ({{ability.uses}})</button>
+      </div>
       <div class="row justify-content-center mt-3">
         <button class="btn btn-warning mx-2" @click="waitAction" :disabled="selected.actions < 1">Wait</button>
         <button class="btn btn-secondary" @click="fleeAction" :disabled="selected.actions < 1">Flee</button>
@@ -45,7 +48,8 @@ export default {
   setup(){
     const state = reactive({
       selected: computed(() => $store.state.selected),
-      selectedSpell: {name: 'select spell', level: null}
+      selectedSpell: {name: 'select spell', level: null},
+      selectedAbility: {name: 'select ability', level: null}
     })
     return state
   },
@@ -61,6 +65,9 @@ export default {
     },
     selectSpell(spell){
       this.selectedSpell = spell
+    },
+    selectAbility(ability){
+      this.selectedAbility = ability
     },
     async castSpell(){
       if(this.selected.magic < this.selectedSpell.level || this.selected.actions < 1){

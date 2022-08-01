@@ -40,6 +40,7 @@
     </div>
     <button v-if="this.$route.name !== 'battleField'" class="btn btn-success float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="saveGame">Save</button>
     <button class="btn btn-success float-bottom" :class="player.characters.length < 1 ? '' : 'd-none'" @click="loadGame">Load Game</button>
+    <button v-if="this.$route.name !== 'battleField'" class="btn btn-primary float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="rest">Rest</button>
     <BattleOptions v-if="$route.name == 'battleField'" />
   </div>
 </template>
@@ -55,6 +56,7 @@ import { Item } from "@/models/Item"
 import { characterService } from "@/services/CharacterService"
 import { Spell } from "@/models/Spell"
 import BattleOptions from '@/components/BattleOptions'
+import router from "@/router"
 
 export default {
   components: { ItemPouchModal, QuestModal, BattleOptions },
@@ -73,21 +75,49 @@ export default {
       Notify.toast('Game Saved!', 'success')
     },
     loadGame(){
-        this.$store.state.player = JSON.parse(window.localStorage.getItem("player"))
-        this.$store.state.player.items.forEach((i, index) => {
-          this.$store.state.player.items[index] = new Item(i)
+      this.$store.state.player = JSON.parse(window.localStorage.getItem("player"))
+      this.$store.state.player.items.forEach((i, index) => {
+        this.$store.state.player.items[index] = new Item(i)
+      })
+      this.$store.state.player.characters.forEach((c, index) => {
+        characterService.loadCharacter(index, c)
+        c.equipment.forEach((e, endex) => {
+          this.$store.state.player.characters[index].equipment[endex] = new Item(e)
         })
-        this.$store.state.player.characters.forEach((c, index) => {
-          characterService.loadCharacter(index, c)
-          c.equipment.forEach((e, endex) => {
-            this.$store.state.player.characters[index].equipment[endex] = new Item(e)
-          })
-          c.spells.forEach((s, sndex)=> {
-            this.$store.state.player.characters[index].spells[sndex] = new Spell(s)
-          })
+        c.spells.forEach((s, sndex)=> {
+          this.$store.state.player.characters[index].spells[sndex] = new Spell(s)
         })
-        Notify.toast('Game Loaded!', 'success')
+      })
+      Notify.toast('Game Loaded!', 'success')
+    },
+    async rest(){
+      if(!JSON.parse(window.localStorage.getItem("Wild Rest Warning"))){
+        if(!await Notify.confirm('Wild Rest Warning', 'Are you sure you want to rest in the unprotected wild? You may be attacked or robbed? Continue?')){
+          return
+        }
+        window.localStorage.setItem("Wild Rest Warning", JSON.stringify('skip'))
+      }
+      let chance = Math.ceil(Math.random()*100)+($store.state.location*2)
+      let partyLuck = characterService.getPartyLuck()+40
+      if(partyLuck > chance){
+        $store.state.player.characters.forEach(c => {
+          c.hp = c.hp + Math.round(c.baseHp*.25) > c.baseHp ? c.baseHp : c.hp+Math.round(c.baseHp*.25)
+          c.magic = c.baseMagic
+          c.abilities.forEach(a => a.uses = a.baseUses)
+        })
+        Notify.toast('Successfully Rested!', 'success')
+        return
+      }
+      if(chance > 25){
+        router.push({name: 'battleField'})
+      }else{
+        let lostGold = Math.round($store.state.player.gold*(chance/100))
+        Notify.toast('Your rest is interupted by thieves, fornately you are unharmed. Unforunately you lost '+lostGold+' Gold')
+        $store.state.player.gold -= lostGold
+      }
+      // saveGame()
     }
+
   }
 }
 </script>

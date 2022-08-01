@@ -1,8 +1,10 @@
 import { Item } from "@/models/Item"
 import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
+import { abilityList } from "@/utils/abilityChart"
 import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
 import Notify from "@/utils/Notify"
+import { abilitiesService } from "./AbilitiesService"
 import { buffService } from "./BuffService"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
@@ -89,6 +91,10 @@ class GameService{
     if(character.magic > 0){
       let spell = spellsService.findRandomLearnableSpell(character)
       spellsService.learnSpell(spell, character)
+    }
+
+    if(abilityList[character.classType][character.level]){
+      abilitiesService.learnAbility(abilityList[character.classType][character.level], character)
     }
 
     character.hp += character.level*(character.level > 1 ? character.level : 3)

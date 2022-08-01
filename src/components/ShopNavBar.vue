@@ -7,7 +7,8 @@
     </div>
     <div class="mr-3">
       <button v-if="state.healPartyCost > 0" class="btn btn-success mr-2" @click="healParty()" :disabled="state.playersGold < state.healPartyCost">Heal Party ({{state.healPartyCost}} gold)</button>
-      <button v-if="state.restorePartyMagicCost > 0" class="btn btn-primary" @click="RestorePartyMagic()" :disabled="state.playersGold < state.restorePartyMagicCost">Restore Party Magic ({{state.restorePartyMagicCost}} gold)</button>
+      <!-- <button v-if="state.restorePartyMagicCost > 0" class="btn btn-primary" @click="RestorePartyMagic()" :disabled="state.playersGold < state.restorePartyMagicCost">Restore Party Magic ({{state.restorePartyMagicCost}} gold)</button> -->
+      <button class="btn btn-primary" @click="rest()" :disabled="state.playersGold < 50*state.location+50">Rest ({{50*state.location+50}} gold)</button>
       <div v-for="character in state.revive" :key="character.id">
         <button class="btn btn-secondary m-3" @click="reviveCharacter(character.id)" :disabled="state.playersGold <
           character.cost">Revive {{character.name}} ({{(character.hp - character.baseHp)*-10}} gold)</button>
@@ -29,6 +30,7 @@ export default {
       restorePartyMagicCost: computed(()=> Math.round($store.state.player.characters.map(c => c.baseMagic > 0 ? c.baseMagic - c.magic : 0).reduce((a, b) => a+b)*3)),
       revive: computed(()=> $store.state.player.characters.filter(c => c.hp < 1)),
       playersGold: computed(()=> $store.state.player.gold),
+      location: computed(()=> $store.state.location)
     })
     return {
       state
@@ -49,6 +51,13 @@ export default {
       this.$store.commit('reducePlayerGold', this.state.restorePartyMagicCost)
       this.$store.state.player.characters.forEach(c => c.magic < c.baseMagic ? c.magic = c.baseMagic : '')
     },
+    rest(){
+    $store.state.player.characters.forEach(c => {
+      c.hp = c.baseHp
+      c.magic = c.baseMagic
+      c.abilities.forEach(a => a.uses = a.baseUses)
+    })
+    }
   }
 }
 </script>

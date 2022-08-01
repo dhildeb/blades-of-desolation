@@ -117,17 +117,18 @@ class CharacterService{
     let spell = false
     switch(char.classType){
       case 'rogue':
-        char["actions"] += 1
+        char["actions"]++
         char["dodge"] += 5
         break
       case 'ranger':
-        char["actions"] += 1
+        char["actions"]++
         char["hp"] += 5
         break
       case 'bard':
         char["luck"] += 3
         char["dodge"] += 2
         char["magicRegen"] = 1
+        char["magic"]++
         spell = 'vicious mockery'
         break
       case 'barbarian':
@@ -135,34 +136,32 @@ class CharacterService{
         break
       case 'wizard':
         char["magic"] += 3
-        char["dmgType"] = 'magic'
         char["magicRegen"] = 1
         spell = spellsService.findRandomLearnableSpell(char)
         break
       case 'cleric':
-        char["magic"] += 1
+        char["magic"]++
         char["hp"] += 5
-        char["dmgType"] = 'magic'
         char["magicRegen"] = 1
         spell = 'light heal'
         break
       case 'fighter':
-        char["strength"] += 1
-        char["actions"] += 1
+        char["strength"]++
+        char["actions"]++
         break
       case 'monk':
         char["actions"] += 2
         break
       case 'paladin':
-        char["strength"] += 1
-        char["thorns"] += 1
+        char["strength"]++
+        char["thorns"]++
         char["magicRegen"] = 1
+        char["magic"]++
         spell = 'sacred flame'
         break
       case 'warlock':
-        char["magic"] += 1
+        char["magic"]++
         char["lifeSteal"] += 10
-        char["dmgType"] = 'magic'
         char["magicRegen"] = 1
         spell = 'chill touch'
         break
@@ -179,12 +178,12 @@ class CharacterService{
         char["strength"] += 3
         break
       case 'human':
-        char["strength"] += 1
+        char["strength"]++
         char["hp"] += 5
         break
       case 'elf':
-        char["magic"] += 1
-        char["actions"] += 1
+        char["magic"]++
+        char["actions"]++
         break
       case 'dwarf':
         char["hp"] += 10

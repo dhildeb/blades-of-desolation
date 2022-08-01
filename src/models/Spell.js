@@ -14,6 +14,7 @@ export class Spell{
     this.buff = data.buff ?? false
     this.temp = data.temp ?? false
     this.title = data.title ?? null
+    this.reqs = data.reqs ?? {}
   }
   getTitle(){
     let title = ''

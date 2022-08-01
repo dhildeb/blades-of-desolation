@@ -182,7 +182,7 @@ const store = createStore({
       {name: 'wand of the war mage', effect: 'magic', value: 15, type: 'mainHand', price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['warlock', 'cleric', 'wizard']}]},
     ],
     abilities: [
-      {name: 'rage', level: 1, strength: 1, effect: 'physicalResistance', value: 50, buff: true, classType: 'barbarian', uses: 1, baseUses: 1},
+      {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [50, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1}, 
     ],
     spells: [
       //cantrips
