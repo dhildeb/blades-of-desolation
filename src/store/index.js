@@ -283,7 +283,8 @@ const store = createStore({
       gold: 500000,
       items: [],
       kills: {},
-      quest: {}
+      quest: {},
+      explored: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
     },
     location: 0,
     selected: '',

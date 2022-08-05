@@ -86,6 +86,9 @@ class SpellsService{
     Notify.toast(character.name+' Learned '+spellName, 'success')
   }
   canLearnSpell(spellName, character){
+    if(character.baseMagic < 1){
+      return false
+    }
     let spell = character.spells.find(s => s.name == spellName)
     if(!spell){
       spell = $store.state.spells.find(spell => spell.find(s => s.name == spellName)).find(s => s.name == spellName)

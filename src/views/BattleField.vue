@@ -10,7 +10,7 @@
         </div>
       </div>
       <div v-if="monstersWithHp < 1">
-        <button class="btn btn-warning" @click="spawnMonsters">Battle on!</button>
+        <button class="btn btn-warning" @click="adventureOn">Adventure On!</button>
       </div>
     </div>
     <div class="row justify-content-center h-50 bg-img" >
@@ -78,9 +78,8 @@ export default {
     return state
   },
   methods:{
-    spawnMonsters(){
-      gameService.spawnMonsters()
-      characterService.enterBattle()
+    adventureOn(){
+      router.push({name: 'AreaLocation'})
     }
   },
     beforeRouteLeave(){

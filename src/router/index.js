@@ -37,6 +37,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Map.vue')
   },
   {
+    path: '/location',
+    name: 'AreaLocation',
+    component: () => import(/* webpackChunkName: "about" */ '../components/AreaLocation.vue')
+  },
+  {
     path: '/shop',
     name: 'shop',
     component: () => import(/* webpackChunkName: "shop" */ '../views/GeneralShop.vue'),
