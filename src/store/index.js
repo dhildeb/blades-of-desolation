@@ -183,6 +183,12 @@ const store = createStore({
     ],
     abilities: [
       {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [50, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1}, 
+      {name: 'second wind', level: 1, effect: ['hp'], value: [5], buff: false, classType: 'fighter', uses: 1, baseUses: 1}, 
+      {name: 'action surge', level: 2, effect: ['actions'], value: [1], buff: true, classType: 'fighter', uses: 1, baseUses: 1}, 
+      {name: 'quickening heal', level: 4, effect: ['hp'], value: [10], buff: false, classType: 'monk', uses: 1, baseUses: 1}, 
+      {name: 'song of rest', level: 2, effect: ['hp'], value: [6], buff: false, areaEffect: true, classType: 'bard', uses: 1, baseUses: 1}, 
+      {name: 'sneak attack', level: 1, effect: ['strength'], value: [6], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
+      {name: 'cunning action', level: 2, effect: ['dodge'], value: [25], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
     ],
     spells: [
       //cantrips
@@ -280,7 +286,7 @@ const store = createStore({
     combatMonsters: [],
     player: {
       characters: [],
-      gold: 500000,
+      gold: window.location.origin.includes('localhost') ? 500000 : 0,
       items: [],
       kills: {},
       quest: {},
