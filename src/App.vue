@@ -8,7 +8,10 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { computed } from "@vue/runtime-core"
+import { computed, onMounted } from "@vue/runtime-core"
+import firebaseApp from 'firebase/app'
+import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
+import $ from 'jquery'
 import $store from '@/store/index'
 import PlayerStatsSideWindow from "./components/PlayerStatsSideWindow.vue"
 import CharacterDetailsModal from "./components/CharacterDetailsModal.vue"
@@ -16,6 +19,57 @@ import CharacterDetailsModal from "./components/CharacterDetailsModal.vue"
 export default {
   components: { PlayerStatsSideWindow, CharacterDetailsModal },
   setup() {
+    onMounted(()=>{
+      if($store.state.characterImgList.length > 0){
+        return
+      }
+      if(window.location.origin.includes('localhost')){
+        let folder = "assets/characters/"
+        $.ajax({
+          url: folder,
+          async: false,
+          success: function(data){
+            $(data).find("a").attr("href", function (i, val) {
+              if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+                $store.state.characterImgList.push(val)
+              }
+            })
+          }
+        })
+        folder = "assets/locations/"
+        $.ajax({
+          url: folder,
+          async: false,
+          success: function(data){
+            $(data).find("a").attr("href", function (i, val) {
+              if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+                $store.state.locationImgList.push(val)
+              }
+            })
+          }
+        })
+      }else{
+        const storage = getStorage(firebaseApp)
+        listAll(ref(storage, 'characters/')).then((res) => {
+          res.items.forEach((itemRef)=>{
+            getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
+              $store.state.characterImgList.push(url)
+            })
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+        listAll(ref(storage, 'locations/')).then((res) => {
+          res.items.forEach((itemRef)=>{
+            getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
+              $store.state.locationImgList.push(url)
+            })
+          })
+        }).catch((error) => {
+          console.log(error)
+        })
+      }
+    })
     const state = reactive({
       character: computed(()=> $store.state.selected),
     })

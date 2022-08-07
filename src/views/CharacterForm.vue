@@ -1,5 +1,5 @@
 <template>
-<div class="container bg-img" style="background-image: url('/assets/locations/create-bg.jpg')">
+<div class="container bg-img" :style="'background-image: url('+bgImg+')'">
 <h5 class="font-weight-bold text-black">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
   <div class="row justify-content-center">
     <div class="col-10 col-md-8">
@@ -41,46 +41,16 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { computed, onMounted } from "@vue/runtime-core"
 import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
-import firebaseApp from 'firebase/app'
-import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
-import $ from 'jquery'
+import { computed } from "@vue/runtime-core"
 import CombatCharacter from "@/components/CombatCharacter.vue"
 
 export default {
-    components: { CombatCharacter },
+  components: { CombatCharacter },
   name: 'CharacterForm',
   setup(){
-    onMounted(()=>{
-      if(window.location.origin.includes('localhost')){
-        let folder = "assets/characters/"
-        $.ajax({
-          url: folder,
-          async: false,
-          success: function(data){
-            $(data).find("a").attr("href", function (i, val) {
-              if( val.match(/\.(jpe?g|png|gif)$/) ) { 
-                $store.state.characterImgList.push(val)
-              }
-            })
-          }
-        })
-      }else{
-        const storage = getStorage(firebaseApp)
-        listAll(ref(storage, 'characters/')).then((res) => {
-          res.items.forEach((itemRef)=>{
-            getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
-              $store.state.characterImgList.push(url)
-            })
-          })
-        }).catch((error) => {
-          console.log(error)
-        })
-      }
-    })
     const state = reactive({
       classList: ['Barbarian', 'Bard', 'Cleric', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Warlock', 'Wizard'],
       name: '',
@@ -90,7 +60,8 @@ export default {
       imgs: computed(() => $store.state.characterImgList),
       characterCount: computed(()=> $store.state.player.characters.length),
       characters: computed(()=>$store.state.player.characters),
-      selectedCharacter: ''
+      selectedCharacter: '',
+      bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('create-bg')))
     })
     return state
   },

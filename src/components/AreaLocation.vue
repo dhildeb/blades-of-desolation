@@ -1,22 +1,7 @@
 <template>
-  <div class="container area-map map m-1" :style="'background-image: url(../assets/locations/area'+(location+1)+'.jpg)'">
-    <div class="row">
-        <div id="1" class="col-3 bg-shadow" :class="visible >= 1 ? '' : 'bg-dark disabled'" @click="explore(1)"></div>
-        <div id="2" class="col-3 bg-shadow" :class="visible >= 1 ? '' : 'bg-dark disabled'" @click="explore(2)"></div>
-        <div id="3" class="col-3 bg-shadow" :class="visible >= 2 ? '' : 'bg-dark disabled'" @click="explore(3)"></div>
-        <div id="4" class="col-3 bg-shadow" :class="visible >= 4 ? '' : 'bg-dark disabled'" @click="explore(4)"></div>
-    </div>
-    <div class="row">
-        <div id="5" class="col-3 bg-shadow" :class="visible >= 1 ? '' : 'bg-dark disabled'" @click="explore(5)"></div>
-        <div id="6" class="col-3 bg-shadow" :class="visible >= 3 ? '' : 'bg-dark disabled'" @click="explore(6)"></div>
-        <div id="7" class="col-3 bg-shadow" :class="visible >= 2 ? '' : 'bg-dark disabled'" @click="explore(7)"></div>
-        <div id="8" class="col-3 bg-shadow" :class="visible >= 4 ? '' : 'bg-dark disabled'" @click="explore(8)"></div>
-    </div>
-    <div class="row">
-        <div id="9" class="col-3 bg-shadow" :class="visible >= 3 ? '' : 'bg-dark disabled'" @click="explore(9)"></div>
-        <div id="10" class="col-3 bg-shadow" :class="visible >= 3 ? '' : 'bg-dark disabled'" @click="explore(10)"></div>
-        <div id="11" class="col-3 bg-shadow" :class="visible >= 2 ? '' : 'bg-dark disabled'" @click="explore(11)"></div>
-        <div id="12" class="col-3 bg-shadow" :class="visible >= 4 ? '' : 'bg-dark disabled'" @click="explore(12)"></div>
+  <div class="container area-map map" :style="'background-image: url('+bgImg+')'">
+    <div class="row" v-for="row in 10" :key="row">
+        <div :id="location+'-'+row+'-'+col" class="col bg-shadow" :class="findIfVisible(row, col) ? '' : 'bg-dark disabled'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 12" :key="col"></div>
     </div>
   </div>
 </template>
@@ -27,6 +12,8 @@ import $store from '@/store/index'
 import $ from 'jquery'
 import { computed, onMounted } from "@vue/runtime-core"
 import router from "@/router"
+import Notify from "@/utils/Notify"
+import { itemsService } from "@/services/ItemsService"
 
 export default {
     name: 'AreaLocation',
@@ -44,7 +31,8 @@ export default {
         const state = reactive({
             location: computed(()=> $store.state.location),
             visible: computed(()=> Math.floor($store.state.player.explored[$store.state.location].length/3)+1),
-            explored: computed(()=> $store.state.player.explored[$store.state.location])
+            explored: computed(()=> $store.state.player.explored[$store.state.location]),
+            bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('area'+($store.state.location+1)+'.')))
         })
         return state
     },
@@ -54,7 +42,43 @@ export default {
             if(!explored.includes(id)){
                 explored.push(id)
             }
-            router.push({name: 'battleField'})
+            this.getRandomEncounter()
+        },
+        async getRandomEncounter(){
+            let chance = Math.ceil(Math.random()*100)
+            if(chance > 25){
+                router.push({name: 'battleField'})
+            }else if(chance > 5){
+                if(await Notify.confirm('Encounter', 'Hello weary travaler, would you like to buy some wears?')){
+                    router.push({name: 'shop'})
+                }
+            }else{
+                let item = itemsService.findRandomItem()
+                $store.state.player.items.push(item)
+                Notify.toast('You found a '+item.name)
+            }
+        },
+        findIfVisible(row, col){
+            let visible = false
+            if(this.explored.length == 0){
+                return row+col == 2
+            }
+            this.explored.forEach(id => {
+                let rowCol = id.split('-')
+                if(rowCol[1] == row && rowCol[2] == col){
+                    visible = true
+                    return
+                }
+                if((+rowCol[1]+1 == row && +rowCol[2] == col) || (+rowCol[1]-1 == row && +rowCol[2] == col)){
+                    visible = true
+                    return
+                }
+                if((+rowCol[2]+1 == col && +rowCol[1] == row) || (+rowCol[2]-1 == col && +rowCol[1] == row)){
+                    visible = true
+                    return
+                }
+            })
+            return visible
         }
     }
 }
@@ -69,10 +93,10 @@ area{
   background-repeat: no-repeat;
   background-size: 60vw 100vh;
 }
-.col-3{
-    height: 33vh;
+.col{
+    height: 10vh;
 }
-.col-3:hover{
+.col:hover{
     border-style: solid;
 }
 .bg-shadow{

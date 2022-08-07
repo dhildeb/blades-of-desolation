@@ -8,8 +8,8 @@
   </div>
   <div class="row mh-100">
     <div class="col-6">
-      <ul v-for="(spells, index) in spellList" :key="spells">
-        <label for="spells">{{index > 0 ? "Level "+index : 'Cantrip'}} Spells</label>
+      <ul v-for="spells in spellList" :key="spells">
+        <label for="spells" v-if="spells.length > 0">{{spells[0].level > 0 ? "Level "+spells[0].level : 'Cantrip'}} Spells</label>
         <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)" :title="spell.title ?? getTitle(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
       </ul>
     </div>
@@ -31,7 +31,7 @@ components: {
 },
 setup(){
   const state = reactive({
-    spellList: computed(()=> $store.state.spells),
+    spellList: computed(()=> spellsService.getRandomSpellList()),
   })
   return state
 },

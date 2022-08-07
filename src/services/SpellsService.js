@@ -116,6 +116,15 @@ class SpellsService{
     }
     Notify.toast(character.name+' Level up '+spellName, 'success')
   }
+  getRandomSpellList(){
+    let newList = [[],[],[],[],[],[],[],[],[],[]]
+    $store.state.spells.forEach(sl => sl.forEach(s => {
+      if(Math.floor(Math.random()*10) > 8){
+        newList[s.level].push(s)
+      }
+    }))
+    return newList
+  }
 }
 
 export const spellsService = new SpellsService()

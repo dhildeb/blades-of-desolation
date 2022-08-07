@@ -8,21 +8,26 @@ class ItemsService{
     let dropChance = Math.ceil(Math.random()*100)
     let partyLuck = 1+$store.state.location+characterService.getPartyLuck()
     if(partyLuck > dropChance){
-      // c 79.74% un 15% r 5% vr .25% l .01%
-      let dropRarity = Math.ceil(Math.random()*10000)+partyLuck
-      const rarityDictionary = {c: 7974, uc: 9474, r: 9974, vr: 9999, l: 10000}
-      for(let r in rarityDictionary){
-        if(rarityDictionary[r] >= dropRarity){
-          dropRarity = r
-        }
-      }
-      let possibleItems = $store.state.items.filter(i => i.rarity == dropRarity)
-      let index = Math.floor(Math.random()*possibleItems.length)
-      let item = possibleItems[index]
+      let item = this.findRandomItem()
+      console.log(item)
       let creatureDropIndex = Math.floor(Math.random()*$store.state.combatMonsters.length)
       $store.state.combatMonsters[creatureDropIndex].equipment.push(item.name)
       monstersService.addItemStats($store.state.combatMonsters[creatureDropIndex], item.name)
     }
+  }
+  findRandomItem(){
+    let partyLuck = 1+$store.state.location+characterService.getPartyLuck()
+    let dropRarity = Math.ceil(Math.random()*10000)+partyLuck
+    // c 79.74% un 15% r 5% vr .25% l .01%
+    const rarityDictionary = {c: 7974, uc: 9474, r: 9974, vr: 9999, l: 10000}
+    for(let r in rarityDictionary){
+      if(rarityDictionary[r] >= dropRarity){
+        dropRarity = r
+      }
+    }
+    let possibleItems = $store.state.items.filter(i => i.rarity == dropRarity)
+    let index = Math.floor(Math.random()*possibleItems.length)
+    return possibleItems[index]
   }
   equipItem(character, item){
     $store.message = ''

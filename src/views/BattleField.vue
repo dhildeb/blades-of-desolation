@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center align-items-center h-50 bg-battle-img" style="background-image: url('/assets/locations/lvl1-bg.jpg')">
+    <div class="row justify-content-center align-items-center h-50 bg-battle-img" :style="'background-image: url('+bgImg+')'">
       <div class="col-4 col-md-2" v-for="monster in monsters" :key="monster.id">
         <div v-if="monstersWithHp < 1">
           <LootMonster :monster="monster" />
@@ -74,6 +74,7 @@ export default {
       monstersWithHp: computed(()=> state.monsters.filter(m => m.hp > 0).length),
       charactersWithActions: computed(()=> state.characters.filter(c => c.actions > 0 && c.hp > 0 ).length),
       charactersWithHp: computed(()=> state.characters.filter(c => c.hp > 0).length),
+      bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('lvl'+($store.state.location+1)+'-bg')))
     })
     return state
   },

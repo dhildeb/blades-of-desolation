@@ -4,9 +4,7 @@
   <div class="bg-black text-light side-window">
     <nav class="pb-2 d-flex justify-content-center">
       <div v-if="player.characters.length > 0">
-        <router-link to="/battle">Battle</router-link> | 
-        <router-link to="/map">Map</router-link> | 
-        <router-link to="/shop">Shop</router-link>
+        <router-link to="/map">Map</router-link>
         <div v-if="player.characters.length <= 5">
           <router-link to="/">Create</router-link>
         </div>

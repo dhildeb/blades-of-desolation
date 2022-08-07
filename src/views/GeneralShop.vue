@@ -47,7 +47,7 @@ setup(){
   })
   const state = reactive({
     playersGold: computed(()=> $store.state.player.gold),
-    storeItems: computed(()=> $store.state.items.sort((a,b)=> a.price - b.price)),
+    storeItems: computed(()=> $store.state.items.filter(()=> Math.floor(Math.random()*10) > 8).sort((a,b)=> a.price - b.price)),
     quest: null
   })
   return state
