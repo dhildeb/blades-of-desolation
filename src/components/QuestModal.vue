@@ -8,12 +8,16 @@
         </div>
       </div>
       <div class="modal-body container">
-        {{kills[quest.target]}}
-        <div class="row px-3 justify-content-center">
-          {{quest.objective}} {{quest.goal > 0 ? quest.goal - (kills[quest.target] ?? 0) : ''}} {{quest.target}}{{quest.goal > 0 ? '\'s' : ''}}
-        </div>
         <div class="row justify-content-center">
-          Reward: {{quest.reward}}
+          <div class="col-12 px-3">
+            {{quest.objective}} {{quest.goal > 0 ? quest.goal - (kills[quest.target] ?? 0) : ''}} {{quest.target}}{{quest.goal > 0 ? '\'s' : ''}}
+          </div>
+          <div class="col-12">
+            Reward: {{quest.reward}}
+          </div>
+          <span class="border-top p-3">
+            {{Math.round((quest.progress/quest.goal)*100)}}% Complete
+          </span>
         </div>
       </div>
     </div>

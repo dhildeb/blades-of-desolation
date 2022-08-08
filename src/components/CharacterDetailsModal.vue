@@ -14,9 +14,9 @@
             <sup class="col-4">Class</sup>
             <sup class="col-4">Race</sup>
           </div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+          <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close" @click="deleteCharacter" title="Delete Character">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       </div>
       <div class="modal-body container">
@@ -85,8 +85,9 @@
           </div>
         </div>
         <div class="mt-5">
-          <button class="btn btn-outline-danger" @click="deleteCharacter" data-dismiss="modal">Delete</button>
+          <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
           <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
+          <button class="btn btn-outline-primary" @click="nextCharacter">Next</button>
         </div>
       </div>
     </div>
@@ -192,6 +193,12 @@ export default {
       if(await Notify.confirm('Removing Character', 'Are you sure you want to remove '+this.character.name+' from your party?', 'warning', 'Remove')){
         characterService.deleteCharacter(this.character.id)
       }
+    },
+    nextCharacter(){
+      console.log(this.character)
+      let index = $store.state.player.characters.findIndex(c => c.id == this.character.id)
+      let c = $store.state.player.characters[index+1 >= $store.state.player.characters.length ? 0 : index+1]
+      $store.state.selected = c
     }
   }
 }

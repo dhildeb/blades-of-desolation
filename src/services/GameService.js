@@ -23,13 +23,12 @@ class GameService{
     itemsService.randomItemDrop()
   }
   victory(){
-    characterService.resetActions()
     characterService.resetExtraHp()
     this.removeBuffs()
     this.addKillCounts()
     this.handleExpGain()
     this.loot()
-    questService.checkQuest()
+    questService.updateQuest()
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)
@@ -92,7 +91,6 @@ class GameService{
       let spell = spellsService.findRandomLearnableSpell(character)
       spellsService.learnSpell(spell, character)
     }
-
     if(abilityList[character.classType][character.level]){
       abilitiesService.learnAbility(abilityList[character.classType][character.level], character)
     }

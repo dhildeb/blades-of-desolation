@@ -39,6 +39,7 @@ methods: {
   async buySpell(spell){
     let price = spell.price ?? spell.level*1000+1000
     if($store.state.player.gold < price){
+      Notify.toast('Insufficient resources', 'warning')
       return
     }
     let char = await Notify.selectChar(spell.name, price)

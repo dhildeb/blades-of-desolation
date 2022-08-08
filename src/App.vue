@@ -1,7 +1,7 @@
 <template>
 <div class="d-md-flex bg-dark">
   <PlayerStatsSideWindow />
-  <CharacterDetailsModal :character="character" />
+  <CharacterDetailsModal :character="character" ref="characterDetailsModal" />
   <router-view></router-view>
 </div>
 </template>

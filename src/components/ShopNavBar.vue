@@ -6,8 +6,9 @@
       <router-link class="btn btn-sm btn-outline-secondary" to="/shop/magic">Magic Shop</router-link>
     </div>
     <div class="mr-3">
-      <button v-if="state.healPartyCost > 0" class="btn btn-success mr-2" @click="healParty()" :disabled="state.playersGold < state.healPartyCost">Heal Party ({{state.healPartyCost}} gold)</button>
+      <!-- <button v-if="state.healPartyCost > 0" class="btn btn-success mr-2" @click="healParty()" :disabled="state.playersGold < state.healPartyCost">Heal Party ({{state.healPartyCost}} gold)</button> -->
       <!-- <button v-if="state.restorePartyMagicCost > 0" class="btn btn-primary" @click="RestorePartyMagic()" :disabled="state.playersGold < state.restorePartyMagicCost">Restore Party Magic ({{state.restorePartyMagicCost}} gold)</button> -->
+      <button class="btn btn-warning mr-2" @click="adventureOn">Adventure On!</button>
       <button class="btn btn-primary" @click="rest()" :disabled="state.playersGold < 50*state.location+50">Rest ({{50*state.location+50}} gold)</button>
       <div v-for="character in state.revive" :key="character.id">
         <button class="btn btn-secondary m-3" @click="reviveCharacter(character.id)" :disabled="state.playersGold <
@@ -21,6 +22,7 @@
 import { reactive } from '@vue/reactivity'
 import { computed } from "@vue/runtime-core"
 import $store from "@/store/index.js"
+import router from "@/router"
 
 export default {
   name: 'ShopNavBar',
@@ -52,11 +54,14 @@ export default {
       this.$store.state.player.characters.forEach(c => c.magic < c.baseMagic ? c.magic = c.baseMagic : '')
     },
     rest(){
-    $store.state.player.characters.forEach(c => {
-      c.hp = c.baseHp
-      c.magic = c.baseMagic
-      c.abilities.forEach(a => a.uses = a.baseUses)
-    })
+      $store.state.player.characters.forEach(c => {
+        c.hp = c.baseHp
+        c.magic = c.baseMagic
+        c.abilities.forEach(a => a.uses = a.baseUses)
+      })
+    },
+    adventureOn(){
+      router.push({name: 'AreaLocation'})
     }
   }
 }
