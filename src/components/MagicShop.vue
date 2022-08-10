@@ -1,6 +1,4 @@
 <template>
-<ShopNavBar />
-<div class="container pt-5">
   <div class="row pt-5">
     <div class="col-6 text-right">
       <label for="buy">Learn Spells</label>
@@ -14,24 +12,20 @@
       </ul>
     </div>
   </div>
-</div>
 </template>
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { computed } from "@vue/runtime-core"
 import $store from "@/store/index.js"
-import ShopNavBar from "@/components/ShopNavBar.vue"
 import { spellsService } from "@/services/SpellsService"
 import Notify from "@/utils/Notify"
 export default {
 name: 'MagicShop',
-components: {
-  ShopNavBar
+props: {
+    spellList: {type: Object}
 },
 setup(){
   const state = reactive({
-    spellList: computed(()=> spellsService.getRandomSpellList()),
   })
   return state
 },

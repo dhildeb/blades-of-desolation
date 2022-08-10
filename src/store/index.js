@@ -300,6 +300,7 @@ const store = createStore({
       explored: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
     },
     location: 0,
+    shop: 'general',
     selected: '',
     characterImgList: [],
     locationImgList: [],

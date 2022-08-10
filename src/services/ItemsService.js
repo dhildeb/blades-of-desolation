@@ -9,10 +9,10 @@ class ItemsService{
     let partyLuck = 1+$store.state.location+characterService.getPartyLuck()
     if(partyLuck > dropChance){
       let item = this.findRandomItem()
-      console.log(item)
       let creatureDropIndex = Math.floor(Math.random()*$store.state.combatMonsters.length)
       $store.state.combatMonsters[creatureDropIndex].equipment.push(item.name)
       monstersService.addItemStats($store.state.combatMonsters[creatureDropIndex], item.name)
+      $store.state.combatMonsters[creatureDropIndex].hp = $store.state.combatMonsters[creatureDropIndex].baseHp
     }
   }
   findRandomItem(){

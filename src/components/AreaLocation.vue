@@ -50,7 +50,7 @@ export default {
                 router.push({name: 'battleField'})
             }else if(chance > 5){
                 if(await Notify.confirm('Encounter', 'Hello weary travaler, would you like to buy some wears?')){
-                    router.push({name: 'shop'})
+                    router.push({name: 'MainShop'})
                 }
             }else{
                 let item = itemsService.findRandomItem()

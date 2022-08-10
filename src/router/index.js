@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BattleField from '../views/BattleField.vue'
 import BadPageDefault from '../views/BadPageDefault.vue'
 import CharacterForm from '@/views/CharacterForm.vue'
-import MagicShop from '@/views/MagicShop.vue'
 import $store from '@/store/index.js'
 import Notify from "@/utils/Notify"
 
@@ -26,9 +25,6 @@ const routes = [
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
@@ -43,36 +39,14 @@ const routes = [
   },
   {
     path: '/shop',
-    name: 'shop',
-    component: () => import(/* webpackChunkName: "shop" */ '../views/GeneralShop.vue'),
-    beforeEnter: function(){
-      if($store.state.player.characters.length == 0){
-        Notify.toast('You cannot shop without a party.', 'warning')
-        router.push({name: 'CharacterForm'})
-      }
-    }
-  },
-  {
-    path: '/shop/sell',
-    name: 'SellShop',
-    component: () => import(/* webpackChunkName: "SellShop" */ '../views/SellShop.vue'),
-    beforeEnter: function(){
-      if($store.state.player.characters.length == 0){
-        Notify.toast('You cannot shop without a party.', 'warning')
-        router.push({name: 'CharacterForm'})
-      }
-    }
-  },
-  {
-    path: '/shop/magic',
-    name: 'MagicShop',
-    component: MagicShop,
-    beforeEnter: function(){
-      if($store.state.player.characters.length == 0){
-        Notify.toast('You cannot shop without a party.', 'warning')
-        router.push({name: 'CharacterForm'})
-      }
-    }
+    name: 'MainShop',
+    component: () => import(/* webpackChunkName: "about" */ '../views/MainShop.vue'),
+    // beforeEnter: function(){
+    //   if($store.state.player.characters.length == 0){
+    //     Notify.toast('You cannot shop without a party.', 'warning')
+    //     router.push({name: 'CharacterForm'})
+    //   }
+    // }
   },
   {
     path: '/:any(.*)',

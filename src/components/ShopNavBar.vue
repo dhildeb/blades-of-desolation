@@ -1,13 +1,11 @@
 <template>
   <nav class="navbar navbar-dark bg-darker">
     <div class="w-25 d-flex justify-content-between">
-      <router-link class="btn btn-sm btn-outline-secondary" to="/shop/sell">Sell</router-link>
-      <router-link class="btn btn-sm btn-outline-secondary" to="/shop">Items Shop</router-link>
-      <router-link class="btn btn-sm btn-outline-secondary" to="/shop/magic">Magic Shop</router-link>
+      <a class="btn btn-sm btn-outline-secondary" @click="changeShop('sell')">Sell</a>
+      <a class="btn btn-sm btn-outline-secondary" @click="changeShop('general')">Items Shop</a>
+      <a class="btn btn-sm btn-outline-secondary" @click="changeShop('magic')">Magic Shop</a>
     </div>
     <div class="mr-3">
-      <!-- <button v-if="state.healPartyCost > 0" class="btn btn-success mr-2" @click="healParty()" :disabled="state.playersGold < state.healPartyCost">Heal Party ({{state.healPartyCost}} gold)</button> -->
-      <!-- <button v-if="state.restorePartyMagicCost > 0" class="btn btn-primary" @click="RestorePartyMagic()" :disabled="state.playersGold < state.restorePartyMagicCost">Restore Party Magic ({{state.restorePartyMagicCost}} gold)</button> -->
       <button class="btn btn-warning mr-2" @click="adventureOn">Adventure On!</button>
       <button class="btn btn-primary" @click="rest()" :disabled="state.playersGold < 50*state.location+50">Rest ({{50*state.location+50}} gold)</button>
       <div v-for="character in state.revive" :key="character.id">
@@ -62,6 +60,9 @@ export default {
     },
     adventureOn(){
       router.push({name: 'AreaLocation'})
+    },
+    changeShop(shop){
+      $store.state.shop = shop
     }
   }
 }

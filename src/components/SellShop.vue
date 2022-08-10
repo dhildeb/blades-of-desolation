@@ -1,6 +1,4 @@
 <template>
-<ShopNavBar />
-<div class="container pt-5">
   <div class="row pt-5">
     <div class="col-6">
       <label for="sell">Sell Items</label>
@@ -13,7 +11,6 @@
       </ul>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -22,12 +19,8 @@ import { computed } from "@vue/runtime-core"
 import $store from "@/store/index.js"
 import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
-import ShopNavBar from "@/components/ShopNavBar.vue"
 export default {
 name: 'SellSop',
-components: {
-ShopNavBar
-},
 setup(){
   const state = reactive({
     playersGold: computed(()=> $store.state.player.gold),

@@ -24,7 +24,7 @@ class QuestService{
     if(quest.objective == 'explore'){
       let row = Math.ceil(Math.random()*10)
       let col = Math.ceil(Math.random()*12)
-      quest.target = $store.state.player.explored.filter(e => e.length > 0).length
+      quest.target = Math.floor(Math.random()*($store.state.player.explored.filter(e => e.length > 0).length-1))
       quest.goal = quest.target+'-'+row+'-'+col
       quest.reward = (quest.target+1)*row*col
     }
@@ -39,19 +39,34 @@ class QuestService{
         }
       })
       if(quest.progress >= quest.goal){
-        this.completeQuest()
+        Notify.toast('Quest completed!', 'success')
       }
     }
     if(quest.objective == 'find'){
       $store.state.player.items.forEach(i => {
         if(i.name == quest.target){
-          this.completeQuest()
+          quest.progress = 'complete'
+          Notify.toast('Quest completed!', 'success')
         }
       })
     }
     if(quest.objective == 'explore'){
       let currentLocation = $store.state.player.explored[$store.state.location][$store.state.player.explored[$store.state.location].length -1]
       if(quest.goal == currentLocation){
+        quest.progress = 'complete'
+        Notify.toast('Quest completed!', 'success')
+      }
+    }
+  }
+  checkQuestProgress(){
+    let quest = $store.state.player.quest
+    
+    if(quest.objective == 'kill'){
+      if(quest.progress >= quest.goal){
+        this.completeQuest()
+      }
+    }else{
+      if(quest.progress == 'complete'){
         this.completeQuest()
       }
     }

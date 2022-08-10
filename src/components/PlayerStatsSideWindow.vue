@@ -102,6 +102,7 @@ export default {
           c.hp = c.hp + Math.round(c.baseHp*.25) > c.baseHp ? c.baseHp : c.hp+Math.round(c.baseHp*.25)
           c.magic = c.baseMagic
           c.abilities.forEach(a => a.uses = a.baseUses)
+          c.actions = c.baseActions
         })
         Notify.toast('Successfully Rested!', 'success')
         return

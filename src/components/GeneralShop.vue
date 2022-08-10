@@ -1,6 +1,4 @@
 <template>
-<ShopNavBar />
-<div class="container mt-5 pt-5">
   <div class="row">
     <div class="col-6">
       <label for="buy">Buy Items</label>
@@ -13,7 +11,6 @@
       </ul>
     </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -24,13 +21,15 @@ import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
 import { questService } from "@/services/QuestService"
 import { characterService } from "@/services/CharacterService"
-import ShopNavBar from "@/components/ShopNavBar.vue"
 import Notify from "@/utils/Notify"
 import Item from "@/components/Item.vue"
 export default {
 name: 'GeneralShop',
 components: {
-  ShopNavBar, Item
+    Item
+},
+props: {
+    storeItems: {type: Object}
 },
 setup(){
   onMounted(async()=> {
@@ -44,11 +43,12 @@ setup(){
         questService.acceptQuest(newQuest)
       }
     }
+    questService.checkQuestProgress()
   })
   const state = reactive({
     playersGold: computed(()=> $store.state.player.gold),
-    storeItems: computed(()=> $store.state.items.filter(()=> Math.floor(Math.random()*10) > 8).sort((a,b)=> a.price - b.price)),
-    quest: null
+    quest: null,
+    activeShop: computed(()=> $store.state.shop)
   })
   return state
 },
