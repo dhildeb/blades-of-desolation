@@ -49,7 +49,6 @@ export default {
     })
     const state = reactive({
       playersGold: computed(()=> $store.state.player.gold),
-      // TODO make function for getting random items based on rarity and luck
       storeItems: computed(()=> $store.state.shopItems),
       quest: null,
       activeShop: computed(()=> $store.state.shop),

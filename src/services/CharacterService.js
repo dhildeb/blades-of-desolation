@@ -150,7 +150,8 @@ class CharacterService{
         char["actions"]++
         break
       case 'monk':
-        char["actions"] += 2
+        char["actions"]++
+        char["physicalResistance"] += 10
         break
       case 'paladin':
         char["strength"]++
@@ -160,8 +161,10 @@ class CharacterService{
         spell = 'sacred flame'
         break
       case 'warlock':
-        char["magic"]++
-        char["lifeSteal"] += 10
+        char["magic"] += 3
+        if(char.name == 'Grim'){
+          char["lifeSteal"] += 10
+        }
         char["magicRegen"] = 1
         spell = 'chill touch'
         break
@@ -183,7 +186,7 @@ class CharacterService{
         break
       case 'elf':
         char["magic"]++
-        char["actions"]++
+        char["dodge"] += 1
         break
       case 'dwarf':
         char["hp"] += 10

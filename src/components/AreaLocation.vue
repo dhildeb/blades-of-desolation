@@ -1,7 +1,7 @@
 <template>
   <div class="container area-map map" :style="'background-image: url('+bgImg+')'">
     <div class="row" v-for="row in 10" :key="row">
-        <div :id="location+'-'+row+'-'+col" class="col bg-shadow" :class="findIfVisible(row, col) ? '' : 'bg-dark disabled'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 12" :key="col"></div>
+        <div :id="location+'-'+row+'-'+col" class="col bg-shadow" :class="findIfVisible(row, col) ? '' : 'bg-dark disabled'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 6" :key="col"></div>
     </div>
   </div>
 </template>
@@ -27,10 +27,8 @@ export default {
                 $('#'+id).removeClass('bg-shadow')
             })
         })
-            // TODO add logic for treasure vs battles?
         const state = reactive({
             location: computed(()=> $store.state.location),
-            visible: computed(()=> Math.floor($store.state.player.explored[$store.state.location].length/3)+1),
             explored: computed(()=> $store.state.player.explored[$store.state.location]),
             bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('area'+($store.state.location+1)+'.')))
         })

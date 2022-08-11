@@ -64,8 +64,5 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
-// router.afterEach((to) => {
-//   to.meta.transition = to.matched.length == 1 ? 'bounce-right' : 'bounce-left'
-// })
 
 export default router

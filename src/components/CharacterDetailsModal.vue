@@ -66,8 +66,8 @@
           <div class="col-md-6 col-12" v-if="character.equipment.length > 0">
             <strong>Equipment</strong>
             <ul class="border-rounded border py-3">
-              <li v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value">
-                {{equipment.name}} <span class="text-danger click" title="unequip" @click="unequip(character, equipment)">-</span>
+              <li class="equipment click" v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value" @click="unequip(character, equipment)">
+                {{equipment.name}} ({{equipment.type}})
               </li>
             </ul>
           </div>
@@ -218,6 +218,9 @@ span{
 }
 .d-grid{
   display: grid;
+}
+.equipment:hover{
+  color: rgba(255, 0, 0, 0.596);
 }
 @media screen and (min-width: 992px) {
   .text-size{

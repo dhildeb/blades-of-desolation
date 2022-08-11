@@ -16,17 +16,17 @@ export function characterLvlUpStatHelper(classType, race, lvl){
       boosts['classBoost'] = ['baseStrength', 'baseStrength', 'strength', 'strength']
       break
     case 'bard':
-      boosts['classBoost'] = ['dodge', 'luck']
+      boosts['classBoost'] = ['dodge', 'luck', 'magic', 'baseMagic']
       break
     case 'wizard':
       boosts['classBoost'] = ['baseMagic', 'baseMagic', 'magic', 'magic']
-      if(lvl % 2 == 0){
+      if(lvl % 5 == 0){
         boosts['classBoost'].push('magicRegen')
       }
       break
     case 'cleric':
       boosts['classBoost'] = ['baseMagic', 'magic', 'hp']
-      if(lvl % 2 == 0){
+      if(lvl % 5 == 0){
         boosts['classBoost'].push('magicRegen')
       }
       break
@@ -44,13 +44,13 @@ export function characterLvlUpStatHelper(classType, race, lvl){
         if(lvl % 2 == 0){
           boosts['classBoost'].push('magic')
         }
-        if(lvl % 3 == 0){
+        if(lvl % 5 == 0){
           boosts['classBoost'].push('magicRegen')
         }
       break
     case 'warlock':
-      boosts['classBoost'] = ['baseMagic', 'magic', 'lifeSteal']
-      if(lvl % 2 == 0){
+      boosts['classBoost'] = ['baseMagic', 'magic', 'baseMagic', 'magic']
+      if(lvl % 5 == 0){
         boosts['classBoost'].push('magicRegen')
       }
       break
