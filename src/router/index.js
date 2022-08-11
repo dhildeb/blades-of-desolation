@@ -35,18 +35,24 @@ const routes = [
   {
     path: '/location',
     name: 'AreaLocation',
-    component: () => import(/* webpackChunkName: "about" */ '../components/AreaLocation.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../components/AreaLocation.vue'),
+    beforeEnter: function(){
+      if($store.state.player.characters.length == 0){
+        Notify.toast('You cannot shop without a party.', 'warning')
+        router.push({name: 'CharacterForm'})
+      }
+    }
   },
   {
     path: '/shop',
     name: 'MainShop',
     component: () => import(/* webpackChunkName: "about" */ '../views/MainShop.vue'),
-    // beforeEnter: function(){
-    //   if($store.state.player.characters.length == 0){
-    //     Notify.toast('You cannot shop without a party.', 'warning')
-    //     router.push({name: 'CharacterForm'})
-    //   }
-    // }
+    beforeEnter: function(){
+      if($store.state.player.characters.length == 0){
+        Notify.toast('You cannot shop without a party.', 'warning')
+        router.push({name: 'CharacterForm'})
+      }
+    }
   },
   {
     path: '/:any(.*)',
