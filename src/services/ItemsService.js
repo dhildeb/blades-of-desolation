@@ -29,6 +29,14 @@ class ItemsService{
     let index = Math.floor(Math.random()*possibleItems.length)
     return possibleItems[index]
   }
+  getStoreItems(){
+    let itemCount = 10+Math.ceil(Math.random()*15)
+    let storeItems = []
+    for(let i=0; i<itemCount; i++){
+      storeItems.push(this.findRandomItem())
+    }
+    return storeItems.sort((a,b)=> a.price - b.price)
+  }
   equipItem(character, item){
     $store.message = ''
     if(!this.checkItemReqs(character, item)){
@@ -63,6 +71,8 @@ class ItemsService{
   }
   buyItem(item){
     $store.state.player.items.push(new Item(item))
+    let index = $store.state.shopItems.findIndex(si => si.name == item.name)
+    $store.state.shopItems.splice(index, 1)
   }
   checkItemReqs(character, item){
     let canEquip = true

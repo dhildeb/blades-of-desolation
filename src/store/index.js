@@ -301,6 +301,7 @@ const store = createStore({
     },
     location: 0,
     shop: 'general',
+    shopItems: [],
     selected: '',
     characterImgList: [],
     locationImgList: [],

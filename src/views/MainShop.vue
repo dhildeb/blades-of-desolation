@@ -45,11 +45,12 @@ export default {
         }
       }
       questService.checkQuestProgress()
+      $store.state.shopItems = itemsService.getStoreItems()
     })
     const state = reactive({
       playersGold: computed(()=> $store.state.player.gold),
       // TODO make function for getting random items based on rarity and luck
-      storeItems: computed(()=> $store.state.items.filter(()=> Math.floor(Math.random()*10) > 8).sort((a,b)=> a.price - b.price)),
+      storeItems: computed(()=> $store.state.shopItems),
       quest: null,
       activeShop: computed(()=> $store.state.shop),
       spellList: computed(()=> spellsService.getRandomSpellList()),
@@ -57,15 +58,6 @@ export default {
     return state
   },
   methods: {
-    buy(item){
-      if(this.$store.state.player.gold >= item.price){
-        this.$store.commit('reducePlayerGold', item.price)
-        itemsService.buyItem(item)
-        Notify.toast('Purchased '+item.name, 'success')
-      }else{
-        Notify.toast('Insufficient resources', 'warning')
-      }
-    },
     getRarityFullName : getRarityFullName
   }
 }
