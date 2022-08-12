@@ -47,7 +47,6 @@ export default {
   },
   methods: {
     selectCharacter(character){
-      console.log(1)
       if(character.actions > 0){
         this.$store.commit('selectCharacter', character)
       }

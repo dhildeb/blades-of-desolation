@@ -4,7 +4,6 @@ import Notify from "@/utils/Notify"
 
 class AbilitiesService{
   learnAbility(abilityName, character){
-    console.log(abilityName)
     if(!this.canLearnAbility(abilityName, character)){
       return false
     }

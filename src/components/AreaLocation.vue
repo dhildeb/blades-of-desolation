@@ -39,21 +39,28 @@ export default {
             let explored = $store.state.player.explored[$store.state.location]
             if(!explored.includes(id)){
                 explored.push(id)
+                $('#'+id).removeClass('bg-shadow')
             }
             this.getRandomEncounter()
         },
         async getRandomEncounter(){
             let chance = Math.ceil(Math.random()*100)
-            if(chance > 25){
+            if(chance > 40){
                 router.push({name: 'battleField'})
+            }else if(chance > 20){
+                Notify.toast('You found some nice trees')
+            }else if(chance > 10){
+                let gold = Math.round(Math.random()*100)
+                $store.state.player.gold += gold
+                Notify.toast('You found '+gold+'Gold!')
             }else if(chance > 5){
-                if(await Notify.confirm('Encounter', 'Hello weary travaler, would you like to buy some wears?')){
-                    router.push({name: 'MainShop'})
-                }
-            }else{
                 let item = itemsService.findRandomItem()
                 $store.state.player.items.push(item)
                 Notify.toast('You found a '+item.name)
+            }else{
+                if(await Notify.confirm('Encounter', 'Hello weary travaler, would you like to buy some wears?')){
+                    router.push({name: 'MainShop'})
+                }
             }
         },
         findIfVisible(row, col){

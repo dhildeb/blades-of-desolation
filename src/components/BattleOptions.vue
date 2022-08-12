@@ -38,17 +38,17 @@ import { monstersService } from "@/services/MonstersService"
 
 export default {
   name: 'BattleOptions',
-  watch: {
-    selected: function(){
-      if(this.selected?.spells?.length > 0){
-        this.selectSpell(this.selected.spells[0])
-      }
-    },
-  },
+  // watch: {
+  //   selected: function(){
+  //     if(this.selected?.spells?.length > 0){
+  //       this.selectSpell(this.selected.spells[0])
+  //     }
+  //   },
+  // },
   setup(){
     const state = reactive({
       selected: computed(() => $store.state.selected),
-      selectedSpell: {name: 'select spell', level: null},
+      selectedSpell: computed(()=>state.selected?.spells?.length > 0 ? state.selected.spells[0] : {name: 'select spell', level: null}),
       selectedAbility: {name: 'select ability', level: null}
     })
     return state

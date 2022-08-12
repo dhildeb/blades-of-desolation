@@ -33,7 +33,7 @@ class BattleService{
       this.lifeSteal(attacker, dmg)
 
       if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
-        console.log(target.name+' is immune to '+attacker.dmgType)
+        Notify.toast(target.name+' is immune to '+attacker.dmgType)
         dmg = 0
       }
       animationsService.fadeOutUp('hit'+target.id, dmg, '-')
@@ -57,7 +57,7 @@ class BattleService{
   resistance(attack, target){
     let dmg = attack.strength
     if(target.resistances.filter(r => r == attack.dmgType).length > 0){
-      console.log(target.name+' is resistant to '+attack.dmgType)
+      Notify.toast(target.name+' is resistant to '+attack.dmgType)
       dmg = Math.round(dmg/2)
     }
     if(target.physicalResistance > 0 && attack.dmgType == 'melee'){
@@ -73,7 +73,7 @@ class BattleService{
   vulnerable(attack, target){
     let dmg = attack.strength
     if(target.vulnerabilities.filter(v => v == attack.dmgType).length > 0){
-      console.log(target.name+' is vulnerable to '+attack.dmgType)
+      Notify.toast(target.name+' is vulnerable to '+attack.dmgType)
       dmg = Math.round(dmg*2)
     }
     return dmg

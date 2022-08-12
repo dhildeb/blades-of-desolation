@@ -195,7 +195,6 @@ export default {
       }
     },
     nextCharacter(){
-      console.log(this.character)
       let index = $store.state.player.characters.findIndex(c => c.id == this.character.id)
       let c = $store.state.player.characters[index+1 >= $store.state.player.characters.length ? 0 : index+1]
       $store.state.selected = c
