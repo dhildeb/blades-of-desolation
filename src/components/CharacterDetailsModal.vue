@@ -84,7 +84,8 @@
             </ul>
           </div>
         </div>
-        <div class="mt-5">
+        <span class="mt-3" v-if="character.statBonus > 0">Level Up Points: {{character.statBonus}}</span>
+        <div class="mt-2">
           <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
           <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
           <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >Improve Spell</button>
