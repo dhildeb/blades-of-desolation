@@ -69,15 +69,15 @@ export default class Notify {
     }
   }
 
-    static async selectStat(statOptions = {hp: 'hp', strength: 'strength'}) {
+    static async selectOptions(options = {hp: 'hp', strength: 'strength'}, title = 'Level Up', text = 'Select a option to improve.', btnText = 'Improve stat!') {
       try {
         const res = await Swal.fire({
-          title: 'Level Up!',
-          text: 'Select a stat to improve.',
+          title: title,
+          text: text,
           input: 'select',
-          inputOptions: statOptions,
+          inputOptions: options,
           confirmButtonColor: '#3085d6',
-          confirmButtonText: 'Improve stat!'
+          confirmButtonText: btnText
         })
         if (res.isConfirmed) {
           return res.value

@@ -9,7 +9,6 @@ import { buffService } from "./BuffService"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
 import { questService } from "./QuestService"
-import { spellsService } from "./SpellsService"
 class GameService{
 
   spawnMonsters(){
@@ -41,7 +40,7 @@ class GameService{
           this.levelUp(c)
           setTimeout(() => {
             Notify.toast(c.name+' Leveled Up! Go to details to improve stats.', 'success', 'top', 2500)
-          }, delay); 
+          }, delay);
           delay += 2500
         }
       }
@@ -87,18 +86,14 @@ class GameService{
     lvlUpBoosts.classBoost.forEach(stat => character[stat]++)
     lvlUpBoosts.raceBoost.forEach(stat => character[stat]++)
 
-    if(character.magic > 0){
-      let spell = spellsService.findRandomLearnableSpell(character)
-      spellsService.learnSpell(spell, character)
-    }
     if(abilityList[character.classType][character.level]){
       abilitiesService.learnAbility(abilityList[character.classType][character.level], character)
     }
 
     character.hp += character.level*(character.level > 1 ? character.level : 3)
     character.baseHp += character.level*(character.level > 1 ? character.level : 3)
-    
-    character.statBonus++
+
+    character.statBonus += 2
   }
 }
 

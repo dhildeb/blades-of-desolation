@@ -87,6 +87,7 @@
         <div class="mt-5">
           <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
           <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
+          <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >Improve Spell</button>
           <button class="btn btn-outline-primary" @click="nextCharacter">Next</button>
         </div>
       </div>
@@ -102,6 +103,7 @@ import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
 import $store from "@/store/index"
 import { computed } from "@vue/runtime-core"
+import { spellsService } from "@/services/SpellsService"
 export default {
   name: 'CharacterDetailsModal',
   props:{
@@ -109,7 +111,7 @@ export default {
   },
   setup(){
     const state = reactive({
-      levelUpChart:  $store.state.levelUpChart,
+      levelUpChart: $store.state.levelUpChart,
       items: computed(()=> $store.state.player.items.sort((a,b)=>a.name.localeCompare(b.name)).filter(function(item, pos, ary) {return !pos || item.name != ary[pos - 1].name})),
     })
     return state
@@ -176,17 +178,34 @@ export default {
       let options = {}
       for(let stat in character){
         if(character[stat] > 0){
-          if(stat.includes('base') || stat == 'level' || stat == 'exp' || stat == 'actions' || stat == 'inBattle' || stat == 'statBonus'){
+          if(stat.includes('base') || stat == 'level' || stat == 'exp' || stat == 'actions' || stat == 'inBattle' || stat == 'statBonus' || stat == 'magicRegen'){
             continue
           }
           options[stat] = stat
         }
       }
-      let lvlUpStat = await Notify.selectStat(options)
+      let lvlUpStat = await Notify.selectOptions(options)
       if(!lvlUpStat){
         return
       }
       character[lvlUpStat]++
+      character.statBonus--
+    },
+    async improveSpell(character){
+      if(character.statBonus <= 0){
+        return
+      }
+      let options = {}
+      if(character.spells.length > 0){
+        character.spells.forEach(s => options[s.name] = s.name)
+      }else{
+        $store.state.spells[0].forEach(s => options[s.name] = s.name)
+      }
+      let lvlUpSpell = await Notify.selectOptions(options)
+      if(!lvlUpSpell){
+        return
+      }
+      spellsService.learnSpell(lvlUpSpell, character)
       character.statBonus--
     },
     async deleteCharacter(){
