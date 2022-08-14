@@ -10,6 +10,7 @@ export class Item{
     this.type = data.type
     this.price = data.price
     this.rarity = data.rarity
+    this.speed = data.speed ?? 0
   }
   getRandomDmgType(){
     let dmgTypeList = ['lightning', 'melee', 'magic', 'acid', 'necrotic', 'poison', 'fire', 'radiant', 'psychic']

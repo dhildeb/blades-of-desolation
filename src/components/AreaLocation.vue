@@ -1,7 +1,9 @@
 <template>
   <div class="container area-map map" :style="'background-image: url('+bgImg+')'">
     <div class="row" v-for="row in 10" :key="row">
-        <div :id="location+'-'+row+'-'+col" class="col bg-shadow" :class="findIfVisible(row, col) ? '' : 'bg-dark disabled'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 6" :key="col"></div>
+        <div :id="location+'-'+row+'-'+col" class="col bg-shadow disabled" :class="findIfVisible(row, col) ? '' : 'bg-dark'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 6" :key="col">
+            <div v-if="location+'-'+row+'-'+col == currentLocation "><img class="char-icon" :src="charImg" alt="X"></div>
+        </div>
     </div>
   </div>
 </template>
@@ -10,7 +12,7 @@
 import { reactive } from "@vue/reactivity"
 import $store from '@/store/index'
 import $ from 'jquery'
-import { computed, onMounted } from "@vue/runtime-core"
+import { computed, onMounted, watch } from "@vue/runtime-core"
 import router from "@/router"
 import Notify from "@/utils/Notify"
 import { itemsService } from "@/services/ItemsService"
@@ -26,11 +28,35 @@ export default {
             explored.forEach(id => {
                 $('#'+id).removeClass('bg-shadow')
             })
+            setExploreOptions()
         })
         const state = reactive({
             location: computed(()=> $store.state.location),
             explored: computed(()=> $store.state.player.explored[$store.state.location]),
-            bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('area'+($store.state.location+1)+'.')))
+            currentLocation: computed(()=> $store.state.player.currentLocation),
+            bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('area'+($store.state.location+1)+'.'))),
+            charImg: computed(()=> $store.state.player.characters.filter(c => c.hp > 0)[0].img)
+        })
+        function setExploreOptions(){
+            let rowCol = $store.state.player.currentLocation.split('-')
+            setTimeout(()=>{
+                for(let i=-1; i <= 1; i++){
+                    if(i==0){
+                        $(`#${rowCol[0]}-${+rowCol[1]}-${+rowCol[2]}`).removeClass('disabled')
+                        continue
+                    }
+                    $(`#${rowCol[0]}-${+rowCol[1]+i}-${+rowCol[2]+i}`).removeClass('disabled')
+                    $(`#${rowCol[0]}-${+rowCol[1]-i}-${+rowCol[2]+i}`).removeClass('disabled')
+                    $(`#${rowCol[0]}-${+rowCol[1]}-${+rowCol[2]+i}`).removeClass('disabled')
+                    $(`#${rowCol[0]}-${+rowCol[1]+i}-${+rowCol[2]}`).removeClass('disabled')
+                }
+            }, 250)
+        }
+        watch(()=>([state.currentLocation]), ()=>{
+            $('.col').each(function(){
+                $(this).addClass('disabled')
+            })
+            setExploreOptions()
         })
         return state
     },
@@ -41,6 +67,7 @@ export default {
                 explored.push(id)
                 $('#'+id).removeClass('bg-shadow')
             }
+            $store.state.player.currentLocation = id
             this.getRandomEncounter()
         },
         async getRandomEncounter(){
@@ -74,13 +101,23 @@ export default {
                     visible = true
                     return
                 }
-                if((+rowCol[1]+1 == row && +rowCol[2] == col) || (+rowCol[1]-1 == row && +rowCol[2] == col)){
-                    visible = true
-                    return
-                }
-                if((+rowCol[2]+1 == col && +rowCol[1] == row) || (+rowCol[2]-1 == col && +rowCol[1] == row)){
-                    visible = true
-                    return
+                for(let i=-1; i <= 1; i++){
+                    if((+rowCol[2]+i == col && +rowCol[1] == row)){
+                        visible = true
+                        return
+                    }
+                    if((+rowCol[2]+i == col && +rowCol[1]+i == row)){
+                        visible = true
+                        return
+                    }
+                    if((+rowCol[2] == col && +rowCol[1]+i == row)){
+                        visible = true
+                        return
+                    }
+                    if((+rowCol[2]+i == col && +rowCol[1]-i == row)){
+                        visible = true
+                        return
+                    }
                 }
             })
             return visible
@@ -102,12 +139,16 @@ area{
     height: 10vh;
 }
 .col:hover{
-    border-style: solid;
+    cursor: pointer;
+    outline: 2px solid gold;
 }
 .bg-shadow{
     background-color: rgba(0, 0, 0, 0.5);
 }
 .disabled{
     pointer-events: none;
+}
+.char-icon{
+    max-height: 10vh;
 }
 </style>

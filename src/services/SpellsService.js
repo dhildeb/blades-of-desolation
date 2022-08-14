@@ -26,6 +26,7 @@ class SpellsService{
       spell['hp'] = 1
       spell['lifeSteal'] = 0
       spell['luck'] = 0
+      spell['isSpell'] = true
       battleService.handleAttack(spell, target)
       characterService.autoSelect()
     }

@@ -31,6 +31,7 @@ export default {
       }else{
         display = item.effect.replace(/([A-Z])/g, " $1")+' +'+item.value
       }
+      display += item.speed ? ' speed '+item.speed : ''
       return display
     },
     getItemReqsDisplay(item){

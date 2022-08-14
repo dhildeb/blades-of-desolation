@@ -62,6 +62,7 @@ class CharacterService{
     })
   }
   autoSelect(){
+    // TODO look up possible actions and set actions 0 if nothing else to do
     if($store.state.selected?.hp > 0 && $store.state.selected?.actions > 0){
       return
     }
@@ -117,45 +118,70 @@ class CharacterService{
     let spell = false
     switch(char.classType){
       case 'rogue':
+        if(char.name == 'Royce'){
+          char["strength"] += 2
+        }
         char["actions"]++
         char["dodge"] += 5
         break
       case 'ranger':
+        if(char.name == 'Aragorn'){
+          char["regen"] = 1
+        }
         char["actions"]++
         char["hp"] += 5
         break
       case 'bard':
-        char["luck"] += 3
+        if(char.name == 'Thom'){
+          char["luck"] += 3
+        }
         char["dodge"] += 2
         char["magicRegen"] = 1
         char["magic"]++
         spell = 'vicious mockery'
         break
       case 'barbarian':
+        if(char.name == 'Conan'){
+          char["hp"] += 5
+        }
         char["strength"] += 3
         break
       case 'wizard':
+        if(char.name == 'Gandolf'){
+          char["magicResistance"] += 10
+        }
         char["magic"] += 3
         char["magicRegen"] = 1
         spell = spellsService.findRandomLearnableSpell(char)
         break
       case 'cleric':
+        if(char.name == 'Moraine'){
+          char["magicResistance"] += 10
+        }
         char["magic"]++
         char["hp"] += 5
         char["magicRegen"] = 1
         spell = 'light heal'
         break
       case 'fighter':
+        if(char.name == 'Cloud'){
+          char["hp"] += 5
+        }
         char["strength"]++
         char["actions"]++
         break
       case 'monk':
+        if(char.name == 'Lee'){
+          char["actions"] += 2
+        }
         char["actions"]++
         char["physicalResistance"] += 10
         break
       case 'paladin':
+        if(char.name == 'Kaladin'){
+          char["thorns"]++
+        }
         char["strength"]++
-        char["thorns"]++
         char["magicRegen"] = 1
         char["magic"]++
         spell = 'sacred flame'
@@ -166,7 +192,7 @@ class CharacterService{
           char["lifeSteal"] += 10
         }
         char["magicRegen"] = 1
-        spell = 'chill touch'
+        spell = 'edritch blast'
         break
       default:
         char["classType"] = 'unknown'
@@ -185,8 +211,8 @@ class CharacterService{
         char["hp"] += 5
         break
       case 'elf':
-        char["magic"]++
-        char["dodge"] += 1
+        char["magic"] > 0 ? char["magic"]++ : char["dodge"] += 1
+        char["actions"]++
         break
       case 'dwarf':
         char["hp"] += 10

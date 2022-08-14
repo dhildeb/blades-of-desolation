@@ -46,6 +46,16 @@ class GameService{
       }
       })
   }
+  getSpeedCost(attacker, speed = false){
+    let speedCost = speed
+    if(!speed && speed !== 0){
+      speedCost = 2
+      attacker.equipment.forEach(e => {
+        speedCost += e.speed
+      })
+    }
+    return speedCost
+  }
 
   loot(){
     $store.state.combatMonsters.forEach(c => {

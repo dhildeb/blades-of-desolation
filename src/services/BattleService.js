@@ -2,12 +2,13 @@ import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
 import { sleep } from "../utils/sleep"
 import { MonsterFactory } from "../models/MonsterFactory"
+import { gameService } from "./GameService"
 
 class BattleService{
   handleAttack(attacker, target){
     let delay = attacker instanceof MonsterFactory ? 200 : 0
     if(delay == 0){
-      attacker.actions--
+      attacker.actions -= gameService.getSpeedCost(attacker, attacker['isSpell'] ? attacker.speed : false)
     }
     sleep(delay).then(()=>{
       let dmg = attacker.strength

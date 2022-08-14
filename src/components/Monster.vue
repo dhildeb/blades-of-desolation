@@ -16,6 +16,8 @@ import { characterService } from "@/services/CharacterService"
 import { computed, onMounted } from "@vue/runtime-core"
 import 'animate.css'
 import { animationsService } from "@/services/AnimationsService"
+import { gameService } from "@/services/GameService"
+import Notify from "@/utils/Notify"
 
 export default {
   components: { HpBar },
@@ -36,6 +38,10 @@ export default {
   },
   methods: {
     attackMonster(monster){
+      if(this.$store.state.selected.actions < gameService.getSpeedCost(this.$store.state.selected)){
+          Notify.toast('Not enough speed for attack')
+          return
+      }
       characterService.autoSelect()
       animationsService.shake('monster'+monster.id)
       battleService.handleAttack(this.$store.state.selected, monster)

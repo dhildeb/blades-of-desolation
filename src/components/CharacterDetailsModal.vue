@@ -19,7 +19,7 @@
           </button>
         </div>
       </div>
-      <div class="modal-body container">
+      <div class="modal-body container char-bg-img" :style="'background-image: url('+character.img+')'">
         <div class="row">
           <div class="col-md-6 col-12">
             <strong for="stats">Stats</strong>
@@ -67,7 +67,7 @@
             <strong>Equipment</strong>
             <ul class="border-rounded border py-3">
               <li class="equipment click" v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value" @click="unequip(character, equipment)">
-                {{equipment.name}} ({{equipment.type}})
+                {{equipment.name}} ({{equipment.type}}) {{equipment.speed > 0 ? ' (-'+equipment.speed+' speed)' : ''}}
               </li>
             </ul>
           </div>
@@ -89,6 +89,7 @@
           <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
           <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
           <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >Improve Spell</button>
+          <!-- TODO change to arrows -->
           <button class="btn btn-outline-primary" @click="nextCharacter">Next</button>
         </div>
       </div>
@@ -179,7 +180,8 @@ export default {
       let options = {}
       for(let stat in character){
         if(character[stat] > 0){
-          if(stat.includes('base') || stat == 'level' || stat == 'exp' || stat == 'actions' || stat == 'inBattle' || stat == 'statBonus' || stat == 'magicRegen'){
+          // TODO double check these stats, and make sure all base stats are ok to add
+          if(stat == 'level' || stat == 'exp' || stat == 'actions'|| stat == 'hp' || stat == 'strength' || stat == 'inBattle' || stat == 'statBonus' || stat == 'magicRegen'){
             continue
           }
           options[stat] = stat
@@ -229,6 +231,11 @@ span{
 }
 .modal-body{
   overflow-y: auto;
+}
+.char-bg-img{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 .close{
   position: absolute;
