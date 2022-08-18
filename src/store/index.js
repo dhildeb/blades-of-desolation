@@ -303,7 +303,7 @@ const store = createStore({
     combatMonsters: [],
     player: {
       characters: [],
-      gold: window.location.origin.includes('localhost') ? 500000 : 0,
+      gold: window.location.origin.includes('localhost') ? 500 : 0,
       items: [],
       kills: {},
       quest: {},

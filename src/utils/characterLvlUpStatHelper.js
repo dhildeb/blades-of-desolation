@@ -35,9 +35,6 @@ export function characterLvlUpStatHelper(classType, race, lvl){
       break
     case 'monk':
       boosts['classBoost'] = ['physicalResistance', 'magicResistance']
-      if(lvl % 5 == 0){
-        boosts['classBoost'].push('actions')
-      }
       break
       case 'paladin':
         boosts['classBoost'] = ['baseStrength', 'strength', 'thorns']

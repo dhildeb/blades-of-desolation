@@ -5,7 +5,7 @@ export class Spell {
     this.id = generateId()
     this.name = data.name
     this.level = data.level ?? 1
-    this.speed = data.speed ?? Math.ceil(data.level / 2) < 2 ? 2 : Math.ceil(data.level / 2)
+    this.speed = data.speed ?? data.level < 3 ? 3 : data.level
     this.cost = data.cost ?? 1
     this.dmgType = data.dmgType ?? 'magic'
     this.strength = data.strength

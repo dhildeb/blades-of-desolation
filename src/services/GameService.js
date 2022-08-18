@@ -49,7 +49,7 @@ class GameService{
   getSpeedCost(attacker, speed = false){
     let speedCost = speed
     if(!speed && speed !== 0){
-      speedCost = 2
+      speedCost = 3
       attacker.equipment.forEach(e => {
         speedCost += e.speed
       })

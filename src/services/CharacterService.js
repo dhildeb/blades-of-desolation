@@ -30,7 +30,7 @@ class CharacterService{
   }
   resetActions(){
     $store.state.player.characters.forEach(c => {
-      c.actions = c.baseActions
+      c.actions = c.actions >= 0 ? c.baseActions : c.actions+c.baseActions
     })
   }
   resetExtraHp(){
@@ -62,7 +62,6 @@ class CharacterService{
     })
   }
   autoSelect(){
-    // TODO look up possible actions and set actions 0 if nothing else to do
     if($store.state.selected?.hp > 0 && $store.state.selected?.actions > 0){
       return
     }

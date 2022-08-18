@@ -19,11 +19,12 @@
           </button>
         </div>
       </div>
-      <div class="modal-body container char-bg-img" :style="'background-image: url('+character.img+')'">
+      <div class="char-bg-img" :style="'background-image: url('+character.img+')'"></div>
+      <div id="char-details-modal" class="modal-body container position-absolute">
         <div class="row">
           <div class="col-md-6 col-12">
             <strong for="stats">Stats</strong>
-            <div class="mt-3 pl-3 d-grid">
+            <div class="mt-3 pl-3 d-grid bg-darken">
                 <span>HP: {{character.hp}} / {{character.baseHp}}</span>
                 <span>LVL: {{character.level}}</span>
                 <span>EXP: {{Math.round(character.exp)}} / {{levelUpChart[character.level]}}</span>
@@ -56,7 +57,7 @@
           </div>
           <div class="col-md-6 col-12">
             <strong for="items">Items</strong>
-            <ul class="border border-rounded h-100" v-if="items.length > 0">
+            <ul class="border border-rounded h-100 bg-darken" v-if="items.length > 0">
               <li :id="'item'+item.id" class="click" :class="statDiffColor(character, item) ? 'text-success' : statDiffColor(character, item) == null ? '' : 'text-danger'" v-for="item in items" :key="item.id" @click="equip(character, item)" :title="item.effect+' +'+item.value">{{item.name}} {{getStatDiff(character, item)}}</li>
           </ul>
           <p v-else>No items in pouch</p>
@@ -65,7 +66,7 @@
         <div class="row mt-4">
           <div class="col-md-6 col-12" v-if="character.equipment.length > 0">
             <strong>Equipment</strong>
-            <ul class="border-rounded border py-3">
+            <ul class="border-rounded border py-3 bg-darken">
               <li class="equipment click" v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value" @click="unequip(character, equipment)">
                 {{equipment.name}} ({{equipment.type}}) {{equipment.speed > 0 ? ' (-'+equipment.speed+' speed)' : ''}}
               </li>
@@ -73,24 +74,24 @@
           </div>
           <div class="col-6" v-if="character.spells.length > 0">
             <strong>Spells</strong>
-            <ul class="border-rounded border h-75">
+            <ul class="border-rounded border h-75 bg-darken">
               <li v-for="spell in character.spells" :key="spell.name" :title="spell.title ?? spell.getTitle()">{{spell.name}} lvl-{{spell.level}}</li>
             </ul>
           </div>
           <div class="col-6" v-if="character.abilities.length > 0">
             <strong>Spells</strong>
-            <ul class="border-rounded border h-75">
+            <ul class="border-rounded border h-75 bg-darken">
               <li v-for="ability in character.abilities" :key="ability.name" :title="ability.title ?? ability.getTitle()">{{ability.name}} lvl-{{ability.level}}</li>
             </ul>
           </div>
         </div>
         <span class="mt-3" v-if="character.statBonus > 0">Level Up Points: {{character.statBonus}}</span>
         <div class="mt-2">
+          <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(-1)">&#60;</button>
           <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
           <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
           <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >Improve Spell</button>
-          <!-- TODO change to arrows -->
-          <button class="btn btn-outline-primary" @click="nextCharacter">Next</button>
+          <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(1)">></button>
         </div>
       </div>
     </div>
@@ -104,14 +105,20 @@ import { itemsService } from "@/services/ItemsService"
 import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
 import $store from "@/store/index"
-import { computed } from "@vue/runtime-core"
+import $ from 'jquery'
+import { computed, watch } from "@vue/runtime-core"
 import { spellsService } from "@/services/SpellsService"
 export default {
   name: 'CharacterDetailsModal',
   props:{
     character: {require: true, type: Object}
   },
-  setup(){
+  setup(props){
+    watch(() => props.character, () => {
+      setTimeout(() => {
+        $('.char-bg-img').height($('#char-details-modal').height()+65)
+      }, 200)
+    })
     const state = reactive({
       levelUpChart: $store.state.levelUpChart,
       items: computed(()=> $store.state.player.items.sort((a,b)=>a.name.localeCompare(b.name)).filter(function(item, pos, ary) {return !pos || item.name != ary[pos - 1].name})),
@@ -216,9 +223,9 @@ export default {
         characterService.deleteCharacter(this.character.id)
       }
     },
-    nextCharacter(){
+    nextCharacter(dir){
       let index = $store.state.player.characters.findIndex(c => c.id == this.character.id)
-      let c = $store.state.player.characters[index+1 >= $store.state.player.characters.length ? 0 : index+1]
+      let c = $store.state.player.characters[index+dir >= $store.state.player.characters.length ? 0 : index+dir < 0 ? $store.state.player.characters.length-1 : index+dir]
       $store.state.selected = c
     }
   }
@@ -231,11 +238,17 @@ span{
 }
 .modal-body{
   overflow-y: auto;
+  margin-top: 65px;
 }
 .char-bg-img{
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  height: 100%;
+  filter: blur(1px);
+}
+.bg-darken{
+  backdrop-filter: brightness(0.5);
 }
 .close{
   position: absolute;

@@ -24,7 +24,7 @@ export class Character{
     this.strength = data.strength ?? 1
     this.dodge = data.dodge ?? 0
     this.thorns = data.thorns ?? 0
-    this.actions = data.actions ?? 2
+    this.actions = data.actions ?? 6
     this.physicalResistance = data.physicalResistance ?? 0
     this.magicResistance = data.magicResistance ?? 0
     this.immunities = data.immunities ?? []

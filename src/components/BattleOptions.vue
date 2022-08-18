@@ -7,7 +7,6 @@
     </div>
     <div class="body container">
       <div class="btn-group" v-if="selected.spells.length > 0">
-        <!-- TODO disable btn if spell cost is greater than actions -->
         <button type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || selected.magic < 1">{{selectedSpell ? selectedSpell.name : selectSpell(selected.spells[0])}} lvl-{{selectedSpell ? selectedSpell.level : selectSpell(selected.spells[0])}}</button>
         <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="sr-only">Toggle Dropdown</span>
@@ -36,7 +35,6 @@ import Notify from "@/utils/Notify"
 import { characterService } from "@/services/CharacterService"
 import { spellsService } from "@/services/SpellsService"
 import { monstersService } from "@/services/MonstersService"
-import { gameService } from "@/services/GameService"
 
 export default {
   name: 'BattleOptions',
@@ -67,10 +65,6 @@ export default {
       this.selectedAbility = ability
     },
     async castSpell(){
-      if(this.selected.magic < this.selectedSpell.level || this.selected.actions < this.selectedSpell.speed){
-        Notify.toast('Not enough speed that spell')
-        return
-      }
       let target = null
       if(!this.selectedSpell.areaEffect){
         $('[id^=hit]').each(function(){
@@ -90,10 +84,6 @@ export default {
     },
     eventListenerSpell(event){
       event.stopImmediatePropagation()
-      if(this.$store.state.selected.actions < gameService.getSpeedCost(this.$store.state.selected, this.selectedSpell.speed)){
-        Notify.toast('Not enough speed for attack')
-        return
-      }
       let target = monstersService.getMonsterById($(event.target).prop('id').replace(/[^0-9]+/, ''))
       if(!target){
         target = characterService.getCharacterById($(event.target).prop('id').replace(/[^0-9]+/, ''))

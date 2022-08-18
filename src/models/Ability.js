@@ -53,7 +53,7 @@ export class Ability{
       ability['hp'] = 1
       ability['lifeSteal'] = 0
       ability['luck'] = 0
-      ability['speed'] = ability['speed'] ?? 0
+      ability['speed'] = ability['speed'] ?? 1
       ability['isSpell'] = true
       battleService.handleAttack(ability, target)
     }
