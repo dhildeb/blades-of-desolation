@@ -9,8 +9,8 @@ export class Ability{
     this.dmgType = data.dmgType
     this.strength = data.strength
     this.areaEffect = data.areaEffect ?? false
-    this.effect = data.effect ?? []
-    this.value = data.value ?? []
+    this.effect = data.effect
+    this.value = data.value
     this.buff = data.buff ?? false
     this.debuff = data.debuff ?? false
     this.title = data.title ?? null

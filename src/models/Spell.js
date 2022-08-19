@@ -10,8 +10,8 @@ export class Spell {
     this.dmgType = data.dmgType ?? 'magic'
     this.strength = data.strength
     this.areaEffect = data.areaEffect ?? false
-    this.effect = data.effect ?? []
-    this.value = data.value ?? []
+    this.effect = data.effect
+    this.value = data.value
     this.buff = data.buff ?? false
     this.temp = data.temp ?? false
     this.title = data.title ?? null
