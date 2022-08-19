@@ -1,4 +1,4 @@
-# vue-test
+# blades of desolation
 
 ## Project setup
 ```
