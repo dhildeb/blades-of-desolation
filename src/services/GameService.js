@@ -13,7 +13,9 @@ class GameService{
 
   spawnMonsters(){
     $store.state.combatMonsters = []
-    let quantity = Math.ceil(Math.random()*3)
+    let currentLocationSet = $store.state.player.currentLocation.split('-')
+    let maxMonsters = currentLocationSet[1] > 5 || currentLocationSet[2] > 6 ? 6 : 3
+    let quantity = Math.ceil(Math.random()*maxMonsters)
     for(let i=0; i<quantity; i++){
       let monstersList = $store.state.monsters[$store.state.location]
       let index = Math.floor(Math.random()*monstersList.length)

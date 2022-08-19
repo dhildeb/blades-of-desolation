@@ -6,14 +6,15 @@
       </div>
     </div>
     <div class="body container">
-      <div class="btn-group" v-if="selected.spells.length > 0">
-        <button type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || selected.magic < 1">{{selectedSpell ? selectedSpell.name : selectSpell(selected.spells[0])}} lvl-{{selectedSpell ? selectedSpell.level : selectSpell(selected.spells[0])}}</button>
+      <div class="btn-group mb-3" v-if="selected.spells.length > 0">
+        <button id="castSpell" type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || selected.magic < 1">{{selectedSpell ? selectedSpell.name : selectSpell(selected.spells[0])}} lvl-{{selectedSpell ? selectedSpell.level : selectSpell(selected.spells[0])}}</button>
         <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu">
             <button class="dropdown-item" v-for="spell in selected.spells" :key="spell.id" @click="selectSpell(spell)">{{spell.name}} lvl-{{spell.level}}</button>
         </div>
+        <sub>(SPACEBAR)</sub>
       </div>
       <div class="btn-group" v-if="selected.abilities.length > 0">
         <button v-for="ability in selected.abilities" :key="ability.name" type="button" class="btn btn-danger" @click="ability.useAbility(ability, selected)" :disabled="ability.uses <= 0">{{ability.name}} ({{ability.uses}})</button>
@@ -28,7 +29,7 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { computed } from "@vue/runtime-core"
+import { computed, onMounted } from "@vue/runtime-core"
 import $store from "@/store/index"
 import $ from "jquery"
 import Notify from "@/utils/Notify"
@@ -39,6 +40,13 @@ import { monstersService } from "@/services/MonstersService"
 export default {
   name: 'BattleOptions',
   setup(){
+    onMounted(()=>{
+      $(window).on('keypress', function(e){
+        if(e.which == 32){
+          $('#castSpell').trigger('click')
+        }
+      })
+    })
     const state = reactive({
       selected: computed(() => $store.state.selected),
       selectedSpell: computed(()=> $store.state.selected.spells[0]),
@@ -107,5 +115,9 @@ export default {
 </script>
 
 <style scope>
-
+sub{
+  position: absolute;
+  left: 50px;
+  top: 45px;
+}
 </style>
