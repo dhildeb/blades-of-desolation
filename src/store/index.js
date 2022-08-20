@@ -192,13 +192,13 @@ const store = createStore({
       , price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},
     ],
     abilities: [
-      {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [50, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1}, 
+      {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [10, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1}, 
       {name: 'second wind', level: 1, effect: ['hp'], value: [5], buff: false, classType: 'fighter', uses: 1, baseUses: 1}, 
       {name: 'action surge', level: 2, effect: ['actions'], value: [1], buff: true, classType: 'fighter', uses: 1, baseUses: 1}, 
-      {name: 'quickening heal', level: 4, effect: ['hp'], value: [10], buff: false, classType: 'monk', uses: 1, baseUses: 1}, 
-      {name: 'song of rest', level: 2, effect: ['hp'], value: [6], buff: false, areaEffect: true, classType: 'bard', uses: 1, baseUses: 1}, 
-      {name: 'sneak attack', level: 1, effect: ['strength'], value: [6], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
-      {name: 'cunning action', level: 2, effect: ['dodge'], value: [25], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
+      {name: 'quickening heal', level: 4, effect: ['hp'], value: [10], buff: true, classType: 'monk', uses: 1, baseUses: 1}, 
+      {name: 'song of rest', level: 2, effect: ['hp'], value: [3], buff: true, areaEffect: true, classType: 'bard', uses: 1, baseUses: 1}, 
+      {name: 'sneak attack', level: 1, effect: ['strength'], value: [4], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
+      {name: 'cunning action', level: 2, effect: ['dodge'], value: [10], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
     ],
     spells: [
       //cantrips

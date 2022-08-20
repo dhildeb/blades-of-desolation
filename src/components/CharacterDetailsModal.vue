@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="char-bg-img" :style="'background-image: url('+character.img+')'"></div>
-      <div id="char-details-modal" class="modal-body container position-absolute">
+      <div class="modal-body container position-absolute">
         <div class="row">
           <div class="col-md-6 col-12">
             <strong for="stats">Stats</strong>
@@ -29,6 +29,7 @@
                 <span>LVL: {{character.level}}</span>
                 <span>EXP: {{Math.round(character.exp)}} / {{levelUpChart[character.level]}}</span>
                 <span>Speed: {{character.actions}} / {{character.baseActions}}</span>
+                <span title="Actions it takes to make an attack">Attack Speed: {{getAttackSpeed(character)}}</span>
                 <span>STR: {{character.strength}}</span>
                 <span >DMG Type: {{character.dmgType}}</span>
                 <span v-if="character.baseMagic">Magic: {{character.magic}} / {{character.baseMagic}}</span>
@@ -85,14 +86,14 @@
             </ul>
           </div>
         </div>
-        <span class="mt-3" v-if="character.statBonus > 0">Level Up Points: {{character.statBonus}}</span>
-        <div class="mt-2">
-          <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(-1)">&#60;</button>
-          <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
-          <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
-          <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >Improve Spell</button>
-          <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(1)">></button>
-        </div>
+      </div>
+      <span class="mt-3 text-center">{{character.statBonus > 0 ? 'Level Up Points: '+character.statBonus : ''}}</span>
+      <div class="my-2">
+        <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(-1)">&#60;</button>
+        <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+        <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
+        <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >Improve Spell</button>
+        <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(1)">></button>
       </div>
     </div>
   </div>
@@ -103,22 +104,17 @@
 import { reactive } from "@vue/reactivity"
 import { itemsService } from "@/services/ItemsService"
 import { characterService } from "@/services/CharacterService"
+import { gameService } from "@/services/GameService"
 import Notify from "@/utils/Notify"
 import $store from "@/store/index"
-import $ from 'jquery'
-import { computed, watch } from "@vue/runtime-core"
+import { computed } from "@vue/runtime-core"
 import { spellsService } from "@/services/SpellsService"
 export default {
   name: 'CharacterDetailsModal',
   props:{
     character: {require: true, type: Object}
   },
-  setup(props){
-    watch(() => props.character, () => {
-      setTimeout(() => {
-        $('.char-bg-img').height($('#char-details-modal').height()+65)
-      }, 200)
-    })
+  setup(){
     const state = reactive({
       levelUpChart: $store.state.levelUpChart,
       items: computed(()=> $store.state.player.items.sort((a,b)=>a.name.localeCompare(b.name)).filter(function(item, pos, ary) {return !pos || item.name != ary[pos - 1].name})),
@@ -126,6 +122,9 @@ export default {
     return state
   },
   methods: {
+    getAttackSpeed(character){
+      return gameService.getSpeedCost(character)
+    },
     unequip(character, equipment){
       itemsService.unequipItem(character, equipment)
     },
@@ -184,11 +183,11 @@ export default {
       if(character.statBonus <= 0){
         return
       }
-      let options = {}
+      let options = {baseStrength: 'Strength'}
       for(let stat in character){
         if(character[stat] > 0){
           // TODO double check these stats, and make sure all base stats are ok to add
-          if(stat == 'level' || stat == 'exp' || stat == 'actions'|| stat == 'hp' || stat == 'strength' || stat == 'inBattle' || stat == 'magic' || stat == 'statBonus' || stat == 'magicRegen'){
+          if(stat == 'level' || stat == 'exp' || stat == 'actions'|| stat == 'hp' || stat == 'strength' || stat == 'inBattle' || stat == 'magic' || stat == 'statBonus' || stat == 'magicRegen' || stat == 'baseStrength'){
             continue
           }
           options[stat] = stat.replace('base', '')
@@ -199,6 +198,9 @@ export default {
         return
       }
       character[lvlUpStat]++
+      if(character[lvlUpStat.toLowerCase().replace('base', '')]){
+        character[lvlUpStat.toLowerCase().replace('base', '')]++
+      }
       character.statBonus--
     },
     async improveSpell(character){
@@ -215,8 +217,9 @@ export default {
       if(!lvlUpSpell){
         return
       }
-      spellsService.learnSpell(lvlUpSpell, character)
-      character.statBonus--
+      if(spellsService.learnSpell(lvlUpSpell, character)){
+        character.statBonus--
+      }
     },
     async deleteCharacter(){
       if(await Notify.confirm('Removing Character', 'Are you sure you want to remove '+this.character.name+' from your party?', 'warning', 'Remove')){
@@ -239,12 +242,14 @@ span{
 .modal-body{
   overflow-y: auto;
   margin-top: 65px;
+  height: 450px;
 }
 .char-bg-img{
+  overflow-y: auto;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  height: 100%;
+  height: 450px;
   filter: blur(1px);
 }
 .bg-darken{

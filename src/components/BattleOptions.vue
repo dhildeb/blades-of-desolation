@@ -17,7 +17,7 @@
         <sub>(SPACEBAR)</sub>
       </div>
       <div class="btn-group" v-if="selected.abilities.length > 0">
-        <button v-for="ability in selected.abilities" :key="ability.name" type="button" class="btn btn-danger" @click="ability.useAbility(ability, selected)" :disabled="ability.uses <= 0">{{ability.name}} ({{ability.uses}})</button>
+        <button v-for="ability in selected.abilities" :key="ability.name" type="button" class="btn btn-danger" @click="useAbility(ability, selected); ability.uses--" :disabled="ability.uses <= 0">{{ability.name}} ({{ability.uses}})</button>
       </div>
       <div class="row justify-content-center mt-3">
         <button class="btn btn-warning mx-2" @click="waitAction" :disabled="selected.actions < 1">Wait</button>
@@ -36,6 +36,7 @@ import Notify from "@/utils/Notify"
 import { characterService } from "@/services/CharacterService"
 import { spellsService } from "@/services/SpellsService"
 import { monstersService } from "@/services/MonstersService"
+import { abilitiesService } from "@/services/AbilitiesService"
 
 export default {
   name: 'BattleOptions',
@@ -71,6 +72,9 @@ export default {
     },
     selectAbility(ability){
       this.selectedAbility = ability
+    },
+    useAbility(ability, selected){
+      abilitiesService.useAbility(ability, selected)
     },
     async castSpell(){
       let target = null

@@ -69,7 +69,7 @@ export default class Notify {
     }
   }
 
-    static async selectOptions(options = {hp: 'hp', strength: 'strength'}, title = 'Level Up', text = 'Select a option to improve.', btnText = 'Improve stat!') {
+    static async selectOptions(options = {baseHp: 'Hp', baseStrength: 'Strength', baseActions: 'Actions'}, title = 'Level Up', text = 'Select a option to improve.', btnText = 'Improve stat!') {
       try {
         const res = await Swal.fire({
           title: title,

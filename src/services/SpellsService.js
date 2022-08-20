@@ -79,12 +79,12 @@ class SpellsService{
       return false
     }
     if(character.spells.find(s => s.name == spellName)){
-      this.levelUpSpell(spellName, character)
-      return
+      return this.levelUpSpell(spellName, character)
     }
     let spellData = $store.state.spells.find(spells => spells.find(s => s.name == spellName)).find(s => s.name == spellName)
     character.spells.push(new Spell(spellData))
     Notify.toast(character.name+' Learned '+spellName, 'success')
+    return spellData
   }
   canLearnSpell(spellName, character){
     if(character.baseMagic < 1){
@@ -116,6 +116,7 @@ class SpellsService{
       spell.value += originalSpell.value
     }
     Notify.toast(character.name+' Level up '+spellName, 'success')
+    return spell
   }
   getRandomSpellList(){
     let newList = [[],[],[],[],[],[],[],[],[],[]]

@@ -98,6 +98,7 @@ class GameService{
     lvlUpBoosts.classBoost.forEach(stat => character[stat]++)
     lvlUpBoosts.raceBoost.forEach(stat => character[stat]++)
 
+    character.abilities.forEach(ability => abilitiesService.levelUpAbility(ability.name, character))
     if(abilityList[character.classType][character.level]){
       abilitiesService.learnAbility(abilityList[character.classType][character.level], character)
     }
