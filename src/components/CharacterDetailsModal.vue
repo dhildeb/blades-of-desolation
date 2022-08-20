@@ -188,10 +188,10 @@ export default {
       for(let stat in character){
         if(character[stat] > 0){
           // TODO double check these stats, and make sure all base stats are ok to add
-          if(stat == 'level' || stat == 'exp' || stat == 'actions'|| stat == 'hp' || stat == 'strength' || stat == 'inBattle' || stat == 'statBonus' || stat == 'magicRegen'){
+          if(stat == 'level' || stat == 'exp' || stat == 'actions'|| stat == 'hp' || stat == 'strength' || stat == 'inBattle' || stat == 'magic' || stat == 'statBonus' || stat == 'magicRegen'){
             continue
           }
-          options[stat] = stat
+          options[stat] = stat.replace('base', '')
         }
       }
       let lvlUpStat = await Notify.selectOptions(options)

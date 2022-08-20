@@ -50,7 +50,10 @@ methods: {
       Notify.toast('Cannot access this location')
       return
     }
-    $store.state.location = area
+    if($store.state.location != area){
+      $store.state.player.currentLocation = area+'-1-1'
+      $store.state.location = area
+    }
     router.push({name: 'AreaLocation'})
   },
   checkLocationChange(area){
@@ -58,7 +61,7 @@ methods: {
       Notify.toast('Cannot Skip areas in journey')
       return
     }
-    return $store.state.player.explored[$store.state.location].length == 12
+    return $store.state.player.explored[$store.state.location].length >= 60
   }
 }
 }
