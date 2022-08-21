@@ -19,8 +19,8 @@ import { computed } from "@vue/runtime-core"
 import $store from "@/store/index.js"
 import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
-import Notify from "@/utils/Notify"
 import Item from "@/components/Item.vue"
+import { useToast } from "vue-toastification"
 export default {
 name: 'GeneralShop',
 components: {
@@ -39,12 +39,13 @@ setup(){
 },
 methods: {
   buy(item){
+    const toast = useToast()
     if(this.$store.state.player.gold >= item.price){
       this.$store.commit('reducePlayerGold', item.price)
       itemsService.buyItem(item)
-      Notify.toast('Purchased '+item.name, 'success')
+      toast.info('Purchased '+item.name )
     }else{
-      Notify.toast('Insufficient resources', 'warning')
+      toast.warning('Insufficient resources')
     }
   },
   getRarityFullName : getRarityFullName

@@ -29,7 +29,7 @@ export default {
         characterService.autoSelect()
       })
     const state = reactive({
-      deadImg: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904',
+      deadImg: window.location.origin.includes('localhost') ? '../assets/dead.png' : 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904',
       unknown: computed(()=>!$store.state.player.kills[props.monster.name])
     })
     return state

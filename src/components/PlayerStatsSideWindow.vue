@@ -55,6 +55,8 @@ import { characterService } from "@/services/CharacterService"
 import { Spell } from "@/models/Spell"
 import BattleOptions from '@/components/BattleOptions'
 import router from "@/router"
+import { Ability } from "@/models/Ability"
+import { useToast } from "vue-toastification"
 
 export default {
   components: { ItemPouchModal, QuestModal, BattleOptions },
@@ -69,16 +71,21 @@ export default {
       $store.state.selected = character
     },
     saveGame(){
+      const toast = useToast()
       window.localStorage.setItem("player", JSON.stringify(this.$store.state.player))
-      Notify.toast('Game Saved!', 'success')
+      toast.success('Game Saved!')
     },
     loadGame(){
+      const toast = useToast()
       this.$store.state.player = JSON.parse(window.localStorage.getItem("player"))
       this.$store.state.player.items.forEach((i, index) => {
         this.$store.state.player.items[index] = new Item(i)
       })
       this.$store.state.player.characters.forEach((c, index) => {
         characterService.loadCharacter(index, c)
+        c.abilities.forEach((a, andex) => {
+          this.$store.state.player.characters[index].abilities[andex] = new Ability(a)
+        })
         c.equipment.forEach((e, endex) => {
           this.$store.state.player.characters[index].equipment[endex] = new Item(e)
         })
@@ -86,9 +93,10 @@ export default {
           this.$store.state.player.characters[index].spells[sndex] = new Spell(s)
         })
       })
-      Notify.toast('Game Loaded!', 'success')
+      toast.success('Game Loaded!')
     },
     async rest(){
+      const toast = useToast()
       if(!JSON.parse(window.localStorage.getItem("Wild Rest Warning"))){
         if(!await Notify.confirm('Wild Rest Warning', 'Are you sure you want to rest in the unprotected wild? You may be attacked or robbed? Continue?')){
           return
@@ -104,14 +112,14 @@ export default {
           c.abilities.forEach(a => a.uses = a.baseUses)
           c.actions = c.baseActions
         })
-        Notify.toast('Successfully Rested!', 'success')
+        toast.success('Successfully Rested!', {timeout: 3000})
         return
       }
       if(chance > 25){
         router.push({name: 'battleField'})
       }else{
         let lostGold = Math.round($store.state.player.gold*(chance/100))
-        Notify.toast('Your rest is interupted by thieves, fornately you are unharmed. Unforunately you lost '+lostGold+' Gold')
+        toast.warning('Your rest is interupted by thieves, fornately you are unharmed. Unforunately you lost '+lostGold+' Gold', {timeout: 5000})
         $store.state.player.gold -= lostGold
       }
       // saveGame()

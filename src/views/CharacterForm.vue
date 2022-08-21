@@ -43,9 +43,9 @@
 import { reactive } from "@vue/reactivity"
 import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
-import Notify from "@/utils/Notify"
 import { computed } from "@vue/runtime-core"
 import CombatCharacter from "@/components/CombatCharacter.vue"
+import { useToast } from "vue-toastification"
 
 export default {
   components: { CombatCharacter },
@@ -67,9 +67,10 @@ export default {
   },
   methods: {
     createCharacter(){
+      const toast = useToast()
       let charData = {name: this.name, classType: this.classType.toLowerCase(), race: this.race, img: this.selectedImg, actions: 6, dodge: 0, hp: 5, luck: 0, strength: 0, magic: 0, thorns: 0, lifeSteal: 0, physicalResistance: 0, magicResistance: 0}
       characterService.createCharacter(charData)
-      Notify.toast(charData.name+' was created!', 'success')
+      toast.success(charData.name+' was created!')
       this.name = ''
       this.classType = ''
       this.race = ''

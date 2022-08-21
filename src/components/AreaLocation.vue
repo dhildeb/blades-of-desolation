@@ -16,6 +16,7 @@ import { computed, onMounted, watch } from "@vue/runtime-core"
 import router from "@/router"
 import Notify from "@/utils/Notify"
 import { itemsService } from "@/services/ItemsService"
+import { useToast } from "vue-toastification"
 
 export default {
     name: 'AreaLocation',
@@ -71,21 +72,22 @@ export default {
             this.getRandomEncounter()
         },
         async getRandomEncounter(){
+            const toast = useToast()
             let chance = Math.ceil(Math.random()*100)
             if(chance > 40){
                 router.push({name: 'battleField'})
             }else if(chance > 20){
-                Notify.toast('You found some nice trees')
+                toast.info('You found some nice trees', {timeout: 4000})
             }else if(chance > 10){
-                let gold = Math.round(Math.random()*100)
+                let gold = Math.round(Math.random()*100)*($store.state.location+1)
                 $store.state.player.gold += gold
-                Notify.toast('You found '+gold+'Gold!')
+                toast.success('You found '+gold+'Gold!', {timeout: 4000})
             }else if(chance > 5){
                 let item = itemsService.findRandomItem()
                 $store.state.player.items.push(item)
-                Notify.toast('You found a '+item.name)
+                toast.success('You found a '+item.name, {timeout: 4000})
             }else{
-                if(await Notify.confirm('Encounter', 'Hello weary travaler, would you like to buy some wears?')){
+                if(await Notify.confirm('Encounter', 'Hello weary traveler, would you like to buy some wears?')){
                     router.push({name: 'MainShop'})
                 }
             }

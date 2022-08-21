@@ -1,9 +1,11 @@
 import $store from "@/store/index"
 import { Ability } from "@/models/Ability"
-import Notify from "@/utils/Notify"
 import { battleService } from "./BattleService"
+import { useToast } from "vue-toastification"
 
 class AbilitiesService{
+  toast = useToast()
+
   learnAbility(abilityName, character){
     if(!this.canLearnAbility(abilityName, character)){
       return false
@@ -14,7 +16,7 @@ class AbilitiesService{
     }
     let abilityData = $store.state.abilities.find(a => a.name == abilityName)
     character.abilities.push(new Ability(abilityData))
-    Notify.toast(character.name+' Learned '+abilityName, 'success')
+    this.toast.success(character.name+' Learned '+abilityName, {timeout: 5000})
   }
   canLearnAbility(abilityName, character){
     let ability = character.abilities.find(a => a.name == abilityName)
@@ -39,7 +41,7 @@ class AbilitiesService{
       ability.baseUses++
     }
     ability.level++
-    Notify.toast(character.name+' Level up '+abilityName, 'success')
+    this.toast.success(character.name+' Level up '+abilityName, {timeout: 5000})
   }
   useAbility(Ability, target){
     let ability = Object.assign({}, Ability)

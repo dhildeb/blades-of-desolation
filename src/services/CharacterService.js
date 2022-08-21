@@ -1,11 +1,13 @@
 import { Character } from "@/models/Character"
 import $store from '@/store/index.js'
 import { getRandomAbility } from "@/utils/getRandomAbility"
-import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
 import { animationsService } from "./AnimationsService"
 import { monstersService } from "./MonstersService"
 import { spellsService } from "./SpellsService"
 class CharacterService{
+  toast = useToast()
+
   getCharacterById(id){
     return $store.state.player.characters.find(c => c.id == id)
   }
@@ -57,7 +59,7 @@ class CharacterService{
     $store.state.player.characters.forEach(c => {
       if(c.hp < c.baseHp*-2){
         $store.commit('destroyCharacter', c.id)
-        Notify.toast(c.name+' was destroyed', 'error')
+        this.toast.error(c.name+' was destroyed')
       }
     })
   }
@@ -96,9 +98,9 @@ class CharacterService{
     let fail = Math.random()
     if(chance > fail){
       character.inBattle = false
-      Notify.toast(character.name+' got away', 'success')
+      this.toast.success(character.name+' got away')
     }else{
-      Notify.toast('Failed to escape')
+      this.toast.error('Failed to escape')
     }
   }
   enterBattle(){
@@ -120,6 +122,7 @@ class CharacterService{
         if(char.name == 'Royce'){
           char["strength"] += 2
         }
+        char["strength"]++
         char["actions"]++
         char["dodge"] += 5
         break
@@ -127,6 +130,7 @@ class CharacterService{
         if(char.name == 'Aragorn'){
           char["regen"] = 1
         }
+        char["strength"]++
         char["actions"]++
         char["hp"] += 5
         break
@@ -134,6 +138,7 @@ class CharacterService{
         if(char.name == 'Thom'){
           char["luck"] += 3
         }
+        char["strength"]++
         char["dodge"] += 2
         char["magicRegen"] = 1
         char["magic"]++
@@ -173,6 +178,7 @@ class CharacterService{
         if(char.name == 'Lee'){
           char["actions"] += 2
         }
+        char["strength"]++
         char["actions"]++
         char["physicalResistance"] += 10
         break

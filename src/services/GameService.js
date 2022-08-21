@@ -3,14 +3,14 @@ import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
 import { abilityList } from "@/utils/abilityChart"
 import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
-import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
 import { abilitiesService } from "./AbilitiesService"
 import { buffService } from "./BuffService"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
 import { questService } from "./QuestService"
 class GameService{
-
+  toast = useToast()
   spawnMonsters(){
     $store.state.combatMonsters = []
     let currentLocationSet = $store.state.player.currentLocation.split('-')
@@ -41,7 +41,7 @@ class GameService{
         if(c.exp >= $store.state.levelUpChart[c.level]){
           this.levelUp(c)
           setTimeout(() => {
-            Notify.toast(c.name+' Leveled Up! Go to details to improve stats.', 'success', 'top', 2500)
+            this.toast.success(c.name+' Leveled Up! Go to details to improve stats.')
           }, delay);
           delay += 2500
         }

@@ -32,8 +32,8 @@ import $store from '@/store/index.js'
 import { computed, onMounted } from "@vue/runtime-core"
 import { gameService } from "@/services/GameService"
 import router from "@/router"
-import Notify from "@/utils/Notify"
 import { characterService } from "@/services/CharacterService"
+import { useToast } from "vue-toastification"
 
 
 export default {
@@ -48,18 +48,20 @@ export default {
       }
     },
     charactersWithHp: function(){
+      const toast = useToast()
       if(this.characters.length < 1){
         router.push({name: 'MapLocation'})
-        Notify.toast('You fled from battle', 'info', 'top-end')
+        toast.success('You fled from battle')
       }else if(this.charactersWithHp < 1){
         router.push({name: 'CharacterForm'})
-        Notify.toast('Your party is dead, revive or start over', 'error', 'top-end')
+        toast.error('Your party is dead, revive or start over')
       }
     },
     monstersWithHp: function(){
+      const toast = useToast()
       if(this.monstersWithHp < 1 && this.charactersWithHp > 0){
         gameService.victory()
-        Notify.toast('Victory!', 'success')
+        toast.success('Victory!')
       }
     }
   },
@@ -84,9 +86,10 @@ export default {
     }
   },
     beforeRouteLeave(){
+      const toast = useToast()
       if(this.charactersWithHp > 0){
         if(this.monstersWithHp > 0){
-          Notify.toast('Can\'t flee from battle.', 'info')
+          toast.warning('Can\'t flee from battle.')
           return false
         }
       }

@@ -19,6 +19,7 @@ import { reactive } from "@vue/reactivity"
 import $store from "@/store/index.js"
 import { spellsService } from "@/services/SpellsService"
 import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
 export default {
 name: 'MagicShop',
 props: {
@@ -31,9 +32,10 @@ setup(){
 },
 methods: {
   async buySpell(spell){
+    const toast = useToast()
     let price = spell.price ?? spell.level*1000+1000
     if($store.state.player.gold < price){
-      Notify.toast('Insufficient resources', 'warning')
+      toast.warning('Insufficient resources')
       return
     }
     let char = await Notify.selectChar(spell.name, price)

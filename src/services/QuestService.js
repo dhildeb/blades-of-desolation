@@ -1,8 +1,9 @@
 import { Item } from "@/models/Item"
 import $store from '@/store/index'
-import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
 import { characterService } from "./CharacterService"
 class QuestService{
+  toast = useToast()
   acceptQuest(newQuest){
     let quest = Object.assign({}, newQuest)
     let lvl = characterService.getAverageCharacterLvl()
@@ -39,14 +40,14 @@ class QuestService{
         }
       })
       if(quest.progress >= quest.goal){
-        Notify.toast('Quest completed!', 'success')
+        this.toast.success('Quest completed!')
       }
     }
     if(quest.objective == 'find'){
       $store.state.player.items.forEach(i => {
         if(i.name == quest.target){
           quest.progress = 'complete'
-          Notify.toast('Quest completed!', 'success')
+          this.toast.success('Quest completed!')
         }
       })
     }
@@ -54,7 +55,7 @@ class QuestService{
       let currentLocation = $store.state.player.explored[$store.state.location][$store.state.player.explored[$store.state.location].length -1]
       if(quest.goal == currentLocation){
         quest.progress = 'complete'
-        Notify.toast('Quest completed!', 'success')
+        this.toast.success('Quest completed!')
       }
     }
   }
@@ -84,7 +85,7 @@ class QuestService{
     if(quest.objective == 'explore'){
       $store.state.player.characters.forEach(c => c.exp += quest.reward)
     }
-    Notify.toast('Quest Complete', 'success')
+    this.toast.success('Quest Complete')
     $store.state.player.quest = {}
   }
 }

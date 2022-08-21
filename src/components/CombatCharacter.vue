@@ -41,7 +41,7 @@ export default {
     const state = reactive({
       selected: computed(() => $store.state.selected),
       hp: computed(() => props.character.hp),
-      deadImg: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904',
+      deadImg: window.location.origin.includes('localhost') ? '../assets/dead.png' : 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904',
     })
     return state
   },

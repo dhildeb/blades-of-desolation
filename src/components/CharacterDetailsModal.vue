@@ -76,7 +76,7 @@
           <div class="col-6" v-if="character.spells.length > 0">
             <strong>Spells</strong>
             <ul class="border-rounded border h-75 bg-darken">
-              <li v-for="spell in character.spells" :key="spell.name" :title="spell.title ?? spell.getTitle()">{{spell.name}} lvl-{{spell.level}}</li>
+              <li v-for="(spell, index) in character.spells" :key="spell.name" :title="spell.title ?? spell.getTitle()" @click="setSpellDefault(spell, index)">{{spell.name}} lvl-{{spell.level}}</li>
             </ul>
           </div>
           <div class="col-6" v-if="character.abilities.length > 0">
@@ -225,6 +225,10 @@ export default {
       if(await Notify.confirm('Removing Character', 'Are you sure you want to remove '+this.character.name+' from your party?', 'warning', 'Remove')){
         characterService.deleteCharacter(this.character.id)
       }
+    },
+    setSpellDefault(spell, index){
+      this.$props.character.spells.splice(index, 1)
+      this.$props.character.spells.unshift(spell)
     },
     nextCharacter(dir){
       let index = $store.state.player.characters.findIndex(c => c.id == this.character.id)

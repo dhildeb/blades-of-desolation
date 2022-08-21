@@ -3,7 +3,9 @@ import BattleField from '../views/BattleField.vue'
 import BadPageDefault from '../views/BadPageDefault.vue'
 import CharacterForm from '@/views/CharacterForm.vue'
 import $store from '@/store/index.js'
-import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
+
+const toast = useToast()
 
 const routes = [
   {
@@ -12,7 +14,7 @@ const routes = [
     component: BattleField,
     beforeEnter: function(){
       if($store.state.player.characters.length == 0){
-        Notify.toast('You cannot battle without a party.', 'warning')
+        toast.warning('You cannot battle without a party.', {timeout: 3000})
         router.push({name: 'CharacterForm'})
       }
     }
@@ -38,7 +40,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../components/AreaLocation.vue'),
     beforeEnter: function(){
       if($store.state.player.characters.length == 0){
-        Notify.toast('You cannot shop without a party.', 'warning')
+        toast.warning('You cannot shop without a party.', {timeout: 3000})
         router.push({name: 'CharacterForm'})
       }
     }
@@ -49,7 +51,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/MainShop.vue'),
     beforeEnter: function(){
       if($store.state.player.characters.length == 0){
-        Notify.toast('You cannot shop without a party.', 'warning')
+        toast.warning('You cannot shop without a party.', {timeout: 3000})
         router.push({name: 'CharacterForm'})
       }
     }

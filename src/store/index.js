@@ -103,29 +103,44 @@ const store = createStore({
     // price ranges c: 100-1000, uc: 1000-4000, r: 4000-10000, vr: 10000-25000
     // TODO consumables: manual of bodily health, Manual of Gainful Exercise
     // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting, ring of resistance
-    itemReqs:[
-
-    ],
-    reqs: [
-
-    ],
     items: [
       // Common
       {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', speed: 1, price: 400, rarity: 'c'},
+      {name: 'quarterstaff', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'classType', req: 'monk'}]},
+      {name: 'longsword', effect: 'strength', value: 4, type: 'mainHand', speed: 2, price: 750, rarity: 'c'},
       {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c'},
       {name: 'spear', effect: 'strength', value: 1, type: 'mainHand', speed: 1, price: 200, rarity: 'c'},
-      {name: 'shortbow', effect: ['strength', 'dmgType'], value: [1, 'range'], type: 'mainHand', speed: 2, price: 200, rarity: 'c'},
-      {name: 'sticky shield', effect: 'baseHp', value: 3, type: 'offHand', price: 600, rarity: 'c'},
+      {name: 'shortbow', effect: ['strength', 'dmgType'], value: [2, 'range'], type: 'mainHand', speed: 2, price: 200, rarity: 'c'},
+      {name: 'shortbow', effect: ['strength', 'dmgType'], value: [4, 'range'], type: 'mainHand', speed: 2, price: 600, rarity: 'c'},
+      {name: 'light crossbow', effect: ['strength', 'dmgType'], value: [2, 'range'], type: 'mainHand', speed: 1, price: 400, rarity: 'c'},
+      {name: 'Heavy crossbow', effect: ['strength', 'dmgType'], value: [5, 'range'], type: 'mainHand', speed: 3, price: 800, rarity: 'c'},
+      {name: 'hand crossbow', effect: ['strength', 'dmgType'], value: [1, 'range'], type: 'offHand', speed: 1, price: 400, rarity: 'c'},
+      {name: 'sticky shield', effect: 'baseHp', value: 3, type: 'offHand', price: 300, rarity: 'c'},
       {name: 'battleaxe', effect: 'strength', value: 3, type: 'mainHand', speed: 2, price: 600, rarity: 'c', requirements: [{stat: 'baseStrength', req: 2}]},
-      {name: 'scimitar', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c'},
+      {name: 'scimitar', effect: 'strength', value: 2, type: 'mainHand', price: 800, rarity: 'c'},
       {name: 'handaxe', effect: 'strength', value: 1, type: 'mainHand', speed: 1, price: 200, rarity: 'c'},
-      {name: 'greatclub', effect: 'strength', value: 4, type: 'mainHand', speed: 3, price: 400, rarity: 'c'},
-      {name: 'morningstar', effect: 'strength', value: 3, type: 'mainHand', speed: 1, price: 400, rarity: 'c'},
+      {name: 'greatclub', effect: 'strength', value: 5, type: 'mainHand', speed: 3, price: 300, rarity: 'c'},
+      {name: 'morningstar', effect: 'strength', value: 3, type: 'mainHand', speed: 1, price: 800, rarity: 'c'},
       {name: 'javelin', effect: 'strength', value: 1, type: 'mainHand', price: 200, rarity: 'c'},
       {name: 'shield', effect: 'physicalResistance', value: 10, type: 'offHand', price: 500, rarity: 'c'},
-
+      {name: 'padded armor', effect: 'baseHp', value: 4, type: 'armor', price: 400, rarity: 'c'},
+      {name: 'leather armor', effect: 'baseHp', value: 8, type: 'armor', price: 800, rarity: 'c'},
+      {name: 'spiked armor', effect: ['baseHp', 'thorns'], value: [5, 1], type: 'armor', price: 900, rarity: 'c'},
+      {name: 'chain mail', effect: ['baseHp', 'baseActions'], value: [12, -1], type: 'armor', price: 1000, rarity: 'c'},
+      {name: 'robe', effect: 'hp', value: 2, type: 'cloak', price: 500, rarity: 'c'},
+      {name: 'cape', effect: 'physicalResistance', value: 2, type: 'cloak', price: 500, rarity: 'c'},
+      {name: 'wand', effect: 'baseMagic', value: 1, type: 'mainHand', price: 500, rarity: 'c'},
+      
       // Uncommon
+      {name: 'plate', effect: ['baseHp', 'physicalResistance', 'baseActions'], value: [15, 15, -3], type: 'armor', price: 2500, rarity: 'uc'},
       {name: 'ring of warmth', effect: 'resistances', value: 'cold', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'ring of winter', effect: 'resistances', value: 'fire', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'ring of mind', effect: 'resistances', value: 'psychic', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'ring of conduction', effect: 'resistances', value: 'lightning', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'ring of ooze', effect: 'resistances', value: 'acid', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'ring of light', effect: 'resistances', value: 'necrotic', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'ring of darkness', effect: 'resistances', value: 'radiant', type: 'accessory', price: 1500, rarity: 'uc'},
+      {name: 'ring of antidote', effect: 'resistances', value: 'poison', type: 'accessory', price: 1500, rarity: 'uc'},
       {name: 'shield +1', effect: 'physicalResistance', value: 20, type: 'offHand', price: 5000, rarity: 'uc'},
       {name: 'greataxe', effect: 'strength', type: 'mainHand', value: 6, requirements: [{stat: 'baseStrength', req: 4}], speed: 3, price: 1200, rarity: 'uc'},
       {name: 'adamantine armor', effect: ['immunities', 'baseActions'], value: ['crit', -1], type: 'armor', price: 4000, rarity: 'uc'},
@@ -140,6 +155,7 @@ const store = createStore({
       {name: 'luckstone', effect: 'luck', value: 2, type: 'accessory', price: 2000, rarity: 'uc'},
 
       // Rare
+      {name: 'gloves of speed', effect: 'strength', value: 1, type: 'offHand', price: 5000, rarity: 'r', speed: -1},
       {name: 'displacer cloak', effect: 'dodge', value: 25, type: 'cloak', price: 5000, rarity: 'r'},
       {name: 'amulent of health', effect: 'baseHp', value: 19, type: 'accessory', price: 5000, rarity: 'r'},
       {name: 'armor +1', effect: ['physicalResistance', 'baseActions'], value: [25, -1], type: 'armor', price: 5000, rarity: 'r'},
@@ -303,7 +319,7 @@ const store = createStore({
     combatMonsters: [],
     player: {
       characters: [],
-      gold: window.location.origin.includes('localhost') ? 500 : 0,
+      gold: 500,
       items: [],
       kills: {},
       quest: {},

@@ -20,6 +20,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig)
 
-createApp(App).use(store).use(router).use(Toast).use(firebaseApp).mount('#app')
+const options = {
+  timeout: 3000
+}
+
+createApp(App).use(store).use(router).use(Toast, options).use(firebaseApp).mount('#app')

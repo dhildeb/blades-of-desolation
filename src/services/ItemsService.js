@@ -1,9 +1,10 @@
 import { Item } from "@/models/Item"
 import $store from '@/store/index.js'
-import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
 import { characterService } from "./CharacterService"
 import { monstersService } from "./MonstersService"
 class ItemsService{
+  toast = useToast()
   randomItemDrop(){
     let dropChance = Math.ceil(Math.random()*100)
     let partyLuck = 1+$store.state.location+characterService.getPartyLuck()
@@ -40,7 +41,7 @@ class ItemsService{
   equipItem(character, item){
     $store.message = ''
     if(!this.checkItemReqs(character, item)){
-      Notify.toast($store.message, 'warning')
+      this.toast.warning($store.message)
       return
     }
     $store.message = ''

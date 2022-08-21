@@ -2,9 +2,12 @@ import { battleService } from "./BattleService"
 import $store from "@/store/index"
 import { Spell } from "@/models/Spell"
 import { characterService } from "./CharacterService"
-import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
+import { animationsService } from "./AnimationsService"
 
 class SpellsService{
+  toast = useToast()
+
   castSpell(castSpell, target){
     let spell = Object.assign({}, castSpell)
     if(spell.areaEffect){
@@ -38,6 +41,7 @@ class SpellsService{
       }else{
         if(spell.buff){
           target[spell.effect] += spell.value
+          animationsService.fadeOutUp('hit'+target.id, spell.value, '+')
         }else{
           target[spell.effect] -= spell.value
         }
@@ -83,7 +87,7 @@ class SpellsService{
     }
     let spellData = $store.state.spells.find(spells => spells.find(s => s.name == spellName)).find(s => s.name == spellName)
     character.spells.push(new Spell(spellData))
-    Notify.toast(character.name+' Learned '+spellName, 'success')
+    this.toast.success(character.name+' Learned '+spellName)
     return spellData
   }
   canLearnSpell(spellName, character){
@@ -115,7 +119,7 @@ class SpellsService{
     if(spell.value){
       spell.value += originalSpell.value
     }
-    Notify.toast(character.name+' Level up '+spellName, 'success')
+    this.toast.success(character.name+' Level up '+spellName)
     return spell
   }
   getRandomSpellList(){

@@ -31,7 +31,7 @@
 import { reactive } from "@vue/reactivity"
 import router from "@/router"
 import $store from '@/store/index'
-import Notify from "@/utils/Notify"
+import { useToast } from "vue-toastification"
 
 export default {
 name: 'MapLocation',
@@ -46,8 +46,9 @@ setup(){
 },
 methods: {
   locationChange(area){
+    const toast = useToast()
     if(!this.checkLocationChange(area) && area != 0){
-      Notify.toast('Cannot access this location')
+      toast.warning('Cannot access this location')
       return
     }
     if($store.state.location != area){
@@ -57,8 +58,9 @@ methods: {
     router.push({name: 'AreaLocation'})
   },
   checkLocationChange(area){
+    const toast = useToast()
     if(Math.abs($store.state.location - area) > 1){
-      Notify.toast('Cannot Skip areas in journey')
+      toast.warning('Cannot Skip areas in journey')
       return
     }
     return $store.state.player.explored[$store.state.location].length >= 60

@@ -12,7 +12,7 @@
           <span class="sr-only">Toggle Dropdown</span>
         </button>
         <div class="dropdown-menu">
-            <button class="dropdown-item" v-for="spell in selected.spells" :key="spell.id" @click="selectSpell(spell)">{{spell.name}} lvl-{{spell.level}}</button>
+            <button class="dropdown-item" v-for="(spell, index) in selected.spells" :key="spell.id" @click="selectSpell(index)">{{spell.name}} lvl-{{spell.level}}</button>
         </div>
         <sub>(SPACEBAR)</sub>
       </div>
@@ -29,14 +29,14 @@
 
 <script>
 import { reactive } from "@vue/reactivity"
-import { computed, onMounted } from "@vue/runtime-core"
+import { computed, onMounted, watch } from "@vue/runtime-core"
 import $store from "@/store/index"
 import $ from "jquery"
-import Notify from "@/utils/Notify"
 import { characterService } from "@/services/CharacterService"
 import { spellsService } from "@/services/SpellsService"
 import { monstersService } from "@/services/MonstersService"
 import { abilitiesService } from "@/services/AbilitiesService"
+import { useToast } from "vue-toastification"
 
 export default {
   name: 'BattleOptions',
@@ -50,8 +50,12 @@ export default {
     })
     const state = reactive({
       selected: computed(() => $store.state.selected),
-      selectedSpell: computed(()=> $store.state.selected.spells[0]),
+      selectedSpellIndex: 0,
+      selectedSpell: computed(()=> $store.state.selected.spells[state.selectedSpellIndex]),
       selectedAbility: {name: 'select ability', level: null}
+    })
+    watch(()=>([state.selected]), ()=>{
+      state.selectedSpellIndex = 0
     })
     return state
   },
@@ -67,8 +71,8 @@ export default {
         characterService.autoSelect()
       }
     },
-    selectSpell(spell){
-      this.selectedSpell = spell
+    selectSpell(spellIndex){
+      this.selectedSpellIndex = spellIndex
     },
     selectAbility(ability){
       this.selectedAbility = ability
@@ -95,6 +99,7 @@ export default {
       }
     },
     eventListenerSpell(event){
+      const toast = useToast()
       event.stopImmediatePropagation()
       let target = monstersService.getMonsterById($(event.target).prop('id').replace(/[^0-9]+/, ''))
       if(!target){
@@ -106,7 +111,7 @@ export default {
         $('#monster'+id).removeClass('selectable click')
       })
       if(!target){
-        Notify.toast('Cant cast spell without proper target.')
+        toast.warning('Cant cast spell without proper target.')
         return
       }
       this.selected.magic -= this.selectedSpell.level

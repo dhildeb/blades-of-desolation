@@ -1,12 +1,15 @@
-import Notify from "@/utils/Notify"
 import { animationsService } from "./AnimationsService"
 import { sleep } from "../utils/sleep"
 import { MonsterFactory } from "../models/MonsterFactory"
 import { gameService } from "./GameService"
+import { TYPE, useToast } from "vue-toastification"
 
 class BattleService{
+  toast = useToast()
   handleAttack(attacker, target){
-    let delay = attacker instanceof MonsterFactory ? 200 : 0
+    let attackerIsFoe = attacker instanceof MonsterFactory
+    let type = attackerIsFoe ? TYPE.ERROR : TYPE.SUCCESS
+    let delay = attackerIsFoe ? 200 : 0
     if(delay == 0){
       attacker.actions -= gameService.getSpeedCost(attacker, attacker['isSpell'] ? attacker.speed : false)
     }
@@ -16,7 +19,7 @@ class BattleService{
         dmg = this.crit(attacker, dmg)
       }
       if(this.dodge(target)){
-        Notify.toast(target.name+' dodged the attack', 'info')
+        this.toast(target.name+' dodged the attack', {timeout: 3000, type: type})
         return
       }
 
@@ -34,7 +37,7 @@ class BattleService{
       this.lifeSteal(attacker, dmg)
 
       if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
-        Notify.toast(target.name+' is immune to '+attacker.dmgType)
+        this.toast(target.name+' is immune to '+attacker.dmgType, {timeout: 3000, type: type})
         dmg = 0
       }
       animationsService.fadeOutUp('hit'+target.id, dmg, '-')
@@ -56,25 +59,29 @@ class BattleService{
     return dodge >= chance
   }
   resistance(attack, target){
+    let targetIsFoe = target instanceof MonsterFactory
+    let type = targetIsFoe ? TYPE.ERROR : TYPE.SUCCESS
     let dmg = attack.strength
     if(target.resistances.filter(r => r == attack.dmgType).length > 0){
-      Notify.toast(target.name+' is resistant to '+attack.dmgType)
+      this.toast(target.name+' is resistant to '+attack.dmgType, {timeout: 3000, type: type})
       dmg = Math.round(dmg/2)
     }
     if(target.physicalResistance > 0 && attack.dmgType == 'melee'){
-      Notify.toast(target.name+' is resistant to '+attack.dmgType, 'info')
+      this.toast(target.name+' is resistant to '+attack.dmgType, {timeout: 3000, type: type})
       dmg = dmg - Math.round(dmg * (target.physicalResistance/100))
     }
     if(target.magicResistance > 0 && attack.dmgType == 'magic'){
-      Notify.toast(target.name+' is resistant to '+attack.dmgType, 'info')
+      this.toast(target.name+' is resistant to '+attack.dmgType, {timeout: 3000, type: type})
       dmg = dmg - Math.round(dmg * (target.magicResistance/100))
     }
     return dmg < 0 ? 0 : dmg
   }
   vulnerable(attack, target){
+    let targetIsFoe = target instanceof MonsterFactory
+    let type = targetIsFoe ? TYPE.SUCCESS : TYPE.ERROR
     let dmg = attack.strength
     if(target.vulnerabilities.filter(v => v == attack.dmgType).length > 0){
-      Notify.toast(target.name+' is vulnerable to '+attack.dmgType)
+      this.toast(target.name+' is vulnerable to '+attack.dmgType, {timeout: 3000, type: type})
       dmg = Math.round(dmg*2)
     }
     return dmg
@@ -100,11 +107,13 @@ class BattleService{
   }
 
   crit(attacker, dmg){
+    let attackerIsFoe = attacker instanceof MonsterFactory
+    let type = attackerIsFoe ? TYPE.ERROR : TYPE.SUCCESS
     let crit = Math.ceil(Math.random()*400)
     let chance = 1+Math.round(attacker.luck)
     if(chance >= crit){
       dmg *= 2
-      Notify.toast(attacker.name+' CRIT HIT', 'info')
+      this.toast(attacker.name+' CRIT HIT', {timeout: 3000, type: type})
     }
     return dmg
   }
