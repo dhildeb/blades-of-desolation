@@ -17,6 +17,7 @@ import router from "@/router"
 import Notify from "@/utils/Notify"
 import { itemsService } from "@/services/ItemsService"
 import { useToast } from "vue-toastification"
+import { Item } from "@/models/Item"
 
 export default {
     name: 'AreaLocation',
@@ -84,7 +85,7 @@ export default {
                 toast.success('You found '+gold+'Gold!', {timeout: 4000})
             }else if(chance > 5){
                 let item = itemsService.findRandomItem()
-                $store.state.player.items.push(item)
+                $store.state.player.items.push(new Item(item))
                 toast.success('You found a '+item.name, {timeout: 4000})
             }else{
                 if(await Notify.confirm('Encounter', 'Hello weary traveler, would you like to buy some wears?')){
@@ -128,7 +129,7 @@ export default {
 }
 </script>
 
-<style>
+<style scope>
 area{
   cursor: pointer;
 }

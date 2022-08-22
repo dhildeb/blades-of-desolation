@@ -1,11 +1,11 @@
 <template>
-  <div class="row">
-    <div class="col-6">
-      <label for="buy">Buy Items</label>
+  <div class="row pt-2">
+    <div class="col-md-6 col-12">
+      <h1 for="buy">Buy Items</h1>
     </div>
   </div>
   <div class="row mh-100">
-    <div class="col-6">
+    <div class="col-md-6 col-12">
       <ul>
         <Item :class="getRarityFullName(item.rarity)" v-for="item in storeItems" :key="item.id" :item="item" display="shop" @click="buy(item)" />
       </ul>

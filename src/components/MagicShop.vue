@@ -1,11 +1,11 @@
 <template>
-  <div class="row pt-5">
-    <div class="col-6 text-right">
-      <label for="buy">Learn Spells</label>
+  <div class="row pt-2">
+    <div class="col-12">
+      <h1 for="buy">Learn Spells</h1>
     </div>
   </div>
   <div class="row mh-100">
-    <div class="col-6">
+    <div class="col-md-6 col-12">
       <ul v-for="spells in spellList" :key="spells">
         <label for="spells" v-if="spells.length > 0">{{spells[0].level > 0 ? "Level "+spells[0].level : 'Cantrip'}} Spells</label>
         <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)" :title="spell.title ?? getTitle(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>

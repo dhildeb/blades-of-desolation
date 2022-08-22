@@ -1,11 +1,11 @@
 <template>
-  <div class="row pt-5">
-    <div class="col-6">
-      <label for="sell">Sell Items</label>
+  <div class="row pt-2">
+    <div class="col-md-6 col-12">
+      <h1 for="sell">Sell Items</h1>
     </div>
   </div>
   <div class="row mh-100">
-    <div class="col-6">
+    <div class="col-md-6 col-12">
       <ul>
         <li :class="getRarityFullName(item.rarity)" v-for="item in playerItems" :key="item.id" @click="sell(item)">{{item.name}} - {{item.price/10}}gold</li>
       </ul>

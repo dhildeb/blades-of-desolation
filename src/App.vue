@@ -1,5 +1,6 @@
 <template>
 <div class="d-md-flex bg-dark" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
+  <ShopNavBar v-if="this.$route.name == 'MainShop'" />
   <CharacterDetailsModal :character="character" ref="characterDetailsModal" />
   <router-view class="order-2 order-md-1"></router-view>
   <PlayerStatsSideWindow class="order-1 order-md-2" />
@@ -15,9 +16,10 @@ import $ from 'jquery'
 import $store from '@/store/index'
 import PlayerStatsSideWindow from "./components/PlayerStatsSideWindow.vue"
 import CharacterDetailsModal from "./components/CharacterDetailsModal.vue"
+import ShopNavBar from "./components/ShopNavBar.vue"
 
 export default {
-  components: { PlayerStatsSideWindow, CharacterDetailsModal },
+  components: { PlayerStatsSideWindow, CharacterDetailsModal, ShopNavBar },
   setup() {
     onMounted(()=>{
       if($store.state.characterImgList.length > 0){

@@ -1,6 +1,5 @@
 <template>
-  <ShopNavBar />
-  <div class="container mt-5 pt-5">
+  <div class="container mt-5">
     <div v-if="activeShop == 'general'">
       <GeneralShop :storeItems="storeItems" />
     </div>
@@ -21,7 +20,6 @@ import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
 import { questService } from "@/services/QuestService"
 import { characterService } from "@/services/CharacterService"
-import ShopNavBar from "@/components/ShopNavBar.vue"
 import Notify from "@/utils/Notify"
 import { spellsService } from "@/services/SpellsService"
 import SellShop from "@/components/SellShop.vue"
@@ -30,7 +28,7 @@ import MagicShop from "@/components/MagicShop.vue"
 export default {
   name: 'MainShop',
   components: {
-    ShopNavBar, SellShop, GeneralShop, MagicShop
+   SellShop, GeneralShop, MagicShop
   },
   setup(){
     onMounted(async()=> {

@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-dark bg-darker">
+  <nav class="navbar navbar-dark bg-darker sticky-top">
     <div class="w-25 d-flex justify-content-between">
       <a class="btn btn-sm btn-outline-secondary" @click="changeShop('sell')">Sell</a>
       <a class="btn btn-sm btn-outline-secondary" @click="changeShop('general')">Items Shop</a>
@@ -72,9 +72,11 @@ export default {
 .bg-darker{
   background-color: rgb(15, 15, 15);
 }
-.navbar{
-  position: fixed;
-  width: 80vw;
-  left: 20vw;
+@media screen and (min-width: 992px) {
+  .navbar{
+    position: fixed;
+    width: 80vw;
+    left: 20vw;
+  }
 }
 </style>
