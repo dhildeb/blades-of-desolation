@@ -1,6 +1,6 @@
 <template>
-<div class="container bg-img" :style="'background-image: url('+bgImg+')'">
-<h5 class="font-weight-bold text-black">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
+<div class="container-fluid bg-img" :style="'background-image: url('+bgImg+')'">
+  <h5 class="font-weight-bold text-black">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
   <div class="row justify-content-center">
     <div class="col-10 col-md-8">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">

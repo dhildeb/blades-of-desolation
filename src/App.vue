@@ -1,8 +1,8 @@
 <template>
-<div class="d-md-flex bg-dark">
-  <PlayerStatsSideWindow />
+<div class="d-md-flex bg-dark" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
   <CharacterDetailsModal :character="character" ref="characterDetailsModal" />
-  <router-view></router-view>
+  <router-view class="order-2 order-md-1"></router-view>
+  <PlayerStatsSideWindow class="order-1 order-md-2" />
 </div>
 </template>
 

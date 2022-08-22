@@ -1,7 +1,7 @@
 <template>
   <ItemPouchModal />
   <QuestModal />
-  <div class="bg-black text-light side-window">
+  <div class="bg-black text-light side-window" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
     <nav class="pb-2 d-flex justify-content-center">
       <div v-if="player.characters.length > 0">
         <router-link to="/map">Map</router-link>
@@ -93,6 +93,7 @@ export default {
           this.$store.state.player.characters[index].spells[sndex] = new Spell(s)
         })
       })
+      this.$store.state.location = parseInt(this.$store.state.player.currentLocation[0])
       toast.success('Game Loaded!')
     },
     async rest(){
@@ -112,7 +113,7 @@ export default {
           c.abilities.forEach(a => a.uses = a.baseUses)
           c.actions = c.baseActions
         })
-        toast.success('Successfully Rested!', {timeout: 3000})
+        toast.success('Successfully Rested!')
         return
       }
       if(chance > 25){
@@ -139,6 +140,9 @@ export default {
 @media screen and (max-width: 992px) {
   .side-window{
     width: 100vw;
+  }
+  .window-fluid-sm{
+    width: 1100px;
   }
 }
 .bg-black{

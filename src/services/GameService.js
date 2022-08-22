@@ -41,7 +41,7 @@ class GameService{
         if(c.exp >= $store.state.levelUpChart[c.level]){
           this.levelUp(c)
           setTimeout(() => {
-            this.toast.success(c.name+' Leveled Up! Go to details to improve stats.')
+            this.toast.success(c.name+' Leveled Up! Go to details to improve stats.', {timeout: 10000})
           }, delay);
           delay += 2500
         }

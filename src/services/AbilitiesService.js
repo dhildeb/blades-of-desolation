@@ -16,7 +16,7 @@ class AbilitiesService{
     }
     let abilityData = $store.state.abilities.find(a => a.name == abilityName)
     character.abilities.push(new Ability(abilityData))
-    this.toast.success(character.name+' Learned '+abilityName, {timeout: 5000})
+    this.toast.success(character.name+' Learned '+abilityName, {timeout: 10000})
   }
   canLearnAbility(abilityName, character){
     let ability = character.abilities.find(a => a.name == abilityName)
@@ -41,7 +41,7 @@ class AbilitiesService{
       ability.baseUses++
     }
     ability.level++
-    this.toast.success(character.name+' Level up '+abilityName, {timeout: 5000})
+    this.toast.success(character.name+' Level up '+abilityName, {timeout: 10000})
   }
   useAbility(Ability, target){
     let ability = Object.assign({}, Ability)

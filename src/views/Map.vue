@@ -1,5 +1,5 @@
 <template>
-  <div class="container map">
+  <div class="container-fluid map">
     <img class="" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/imageedit_1_8804535635.png?alt=media&token=d39097b7-e9a9-42dc-8ad9-580d7daab080" width="1000" height="840" usemap="#world-map" />
     <map name="world-map" id="world-map">
       <area id="area-1" shape="circle" coords="708,238,10" alt="1" title="Area 1" @click="locationChange(0)" />
@@ -47,7 +47,8 @@ setup(){
 methods: {
   locationChange(area){
     const toast = useToast()
-    if(!this.checkLocationChange(area) && area != 0){
+    // TODO only access world map in certain case scenerios...
+    if(!this.checkLocationChange(area) && area != $store.state.location){
       toast.warning('Cannot access this location')
       return
     }
@@ -63,7 +64,8 @@ methods: {
       toast.warning('Cannot Skip areas in journey')
       return
     }
-    return $store.state.player.explored[$store.state.location].length >= 60
+    let loc = area-1 >= 0 ? area-1 : 0
+    return $store.state.player.explored[loc].length >= 60
   }
 }
 }

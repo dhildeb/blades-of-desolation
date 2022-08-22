@@ -1,5 +1,5 @@
 <template>
-  <div class="container area-map map" :style="'background-image: url('+bgImg+')'">
+  <div class="container-fluid area-map map" :style="'background-image: url('+bgImg+')'">
     <div class="row" v-for="row in 10" :key="row">
         <div :id="location+'-'+row+'-'+col" class="col bg-shadow disabled" :class="findIfVisible(row, col) ? '' : 'bg-dark'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 6" :key="col">
             <div v-if="location+'-'+row+'-'+col == currentLocation "><img class="char-icon" :src="charImg" alt="X"></div>
@@ -135,7 +135,16 @@ area{
 .area-map{
   background-size: contain;
   background-repeat: no-repeat;
-  background-size: 60vw 100vh;
+}
+@media screen and (min-width: 992px) {
+    .area-map{
+      background-size: 84vw 100vh;
+  }
+}
+@media screen and (max-width: 992px) {
+  .area-map{
+    background-size: 100vw 100vh;
+  }
 }
 .col{
     height: 10vh;
