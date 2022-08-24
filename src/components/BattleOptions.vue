@@ -8,7 +8,7 @@
     <div class="body container">
       <div class="row justify-content-center">
         <div class="btn-group mb-3" v-if="selected.spells.length > 0">
-          <button id="castSpell" type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || selected.magic < 1">{{selectedSpell ? selectedSpell.name : selectSpell(selected.spells[0])}} lvl-{{selectedSpell ? selectedSpell.level : selectSpell(selected.spells[0])}}</button>
+          <button id="castSpell" type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || (selected.magic < 1 && selectedSpell.level > 0)">{{selectedSpell ? selectedSpell.name : selectSpell(selected.spells[0])}} lvl-{{selectedSpell ? selectedSpell.level : selectSpell(selected.spells[0])}}</button>
           <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
           </button>

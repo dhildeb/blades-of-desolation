@@ -8,11 +8,12 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { getRarityFullName } from "@/utils/getRarityFullName"
+import { Item } from "@/models/Item"
 
 export default {
   name: 'EquipmentItem',
     props: {
-    item: {type: Object, required: true},
+    item: {type: Item, required: true},
     display: {type: String, default: 'full'}
   },
   setup(){

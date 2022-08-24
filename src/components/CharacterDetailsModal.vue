@@ -80,7 +80,7 @@
             </ul>
           </div>
           <div class="col-6" v-if="character.abilities.length > 0">
-            <strong>Spells</strong>
+            <strong>Abilities</strong>
             <ul class="border-rounded border h-75 bg-darken">
               <li v-for="ability in character.abilities" :key="ability.name" :title="ability.title ?? ability.getTitle()">{{ability.name}} lvl-{{ability.level}}</li>
             </ul>
@@ -92,7 +92,7 @@
         <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(-1)">&#60;</button>
         <button class="btn btn-outline-danger" data-dismiss="modal">Close</button>
         <button class="btn btn-outline-success" @click="improveStat(character)" v-if="character.statBonus > 0" >Improve Stat</button>
-        <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >Improve Spell</button>
+        <button class="btn btn-outline-success" @click="improveSpell(character)" v-if="character.statBonus > 0 && character.baseMagic > 0" >{{character.spells.lenght > 0 ? 'Improve Spell' : 'Learn Spell'}}</button>
         <button class="btn btn-outline-secondary mx-3" @click="nextCharacter(1)">></button>
       </div>
     </div>

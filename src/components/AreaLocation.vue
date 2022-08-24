@@ -63,13 +63,44 @@ export default {
         return state
     },
     methods: {
-        explore(id){
+       async explore(id){
             let explored = $store.state.player.explored[$store.state.location]
             if(!explored.includes(id)){
                 explored.push(id)
                 $('#'+id).removeClass('bg-shadow')
             }
             $store.state.player.currentLocation = id
+            if(explored.length == 60 && $store.state.player.explored[$store.state.location+1].length == 0){
+                const toast = useToast()
+                let options = {gold: 'Wealth', power: 'Power', item: 'Treasure'}
+                let boon = await Notify.selectOptions(options, 'Choose your Reward!', 'Well done adventures! For completing this area you are granted a boon!', 'Confirm')
+                let reward
+                switch(boon){
+                    case 'gold':
+                        reward = Math.round(Math.random()*500*($store.state.location+1)+500*($store.state.location+1))
+                        $store.state.player.gold += reward
+                        toast.success('You recieved '+reward+' Gold')
+                    break
+                    case 'power':
+                        $store.state.player.characters.forEach(c => c.statBonus++)
+                        toast.success('Your party feels more powerful')
+                    break
+                    case 'item':
+                        if($store.state.location < 5){
+                            reward = 'uc'
+                        }else if($store.state.location < 10){
+                            reward = 'r'
+                        }else if($store.state.location < 15){
+                            reward = 'vr'
+                        }else{
+                            reward = 'l'
+                        }
+                        reward = itemsService.findRandomItem(reward)
+                        $store.state.player.items.push(new Item(reward))
+                        toast.success('You recieved '+reward.name)
+                }
+                $store.state.player.explored[$store.state.location].push('reward recieved')
+            }
             this.getRandomEncounter()
         },
         async getRandomEncounter(){

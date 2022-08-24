@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-dark bg-darker sticky-top">
-    <div class="w-25 d-flex justify-content-between">
+    <div class="d-flex justify-content-between">
       <a class="btn btn-sm btn-outline-secondary" @click="changeShop('sell')">Sell</a>
-      <a class="btn btn-sm btn-outline-secondary" @click="changeShop('general')">Items Shop</a>
-      <a class="btn btn-sm btn-outline-secondary" @click="changeShop('magic')">Magic Shop</a>
+      <a class="btn btn-sm btn-outline-secondary" @click="changeShop('general')">Items</a>
+      <a class="btn btn-sm btn-outline-secondary" @click="changeShop('magic')">Magic</a>
     </div>
     <div class="mr-3">
       <button class="btn btn-warning mr-2" @click="adventureOn">Adventure On!</button>

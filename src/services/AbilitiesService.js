@@ -72,7 +72,7 @@ class AbilitiesService{
       battleService.handleAttack(ability, target)
     }
     if(ability.effect){
-      // TODO refactor all effect/value pairs, instead do arrayEffects, stringEffects, numEffects key: value pairs
+      // TODO refactor all effect/value pairs, instead do arrayEffects, stringEffects, numEffects USE-> key: value pairs
       // ex. numEffect: {hp: 5}, arrayEffect: {resistence: cold}, stringEffect: {dmgType: necrotic}
       ability.effect.forEach(function(e, i){
         if(Array.isArray(target[e])){

@@ -16,11 +16,12 @@ class ItemsService{
       $store.state.combatMonsters[creatureDropIndex].hp = $store.state.combatMonsters[creatureDropIndex].baseHp
     }
   }
-  findRandomItem(){
-    let partyLuck = 1+$store.state.location+characterService.getPartyLuck()
-    let dropRarity = Math.ceil(Math.random()*10000)+partyLuck
+  findRandomItem(rarity = false){
     // c 79.74% un 15% r 5% vr .25% l .01%
     const rarityDictionary = {c: 7974, uc: 9474, r: 9974, vr: 9999, l: 10000}
+    let partyLuck = 1+$store.state.location+characterService.getPartyLuck()
+    let dropRarity = rarity ? rarityDictionary[rarity] : Math.ceil(Math.random()*10000)+partyLuck
+    
     for(let r in rarityDictionary){
       if(rarityDictionary[r] >= dropRarity){
         dropRarity = r
@@ -103,7 +104,6 @@ class ItemsService{
   }
   checkSingleReq(character, r){
     let pass = false
-
     if(Array.isArray(character[r.stat])){
       character[r.stat].forEach(s => {
         if(typeof s === "object"){
@@ -117,10 +117,10 @@ class ItemsService{
       })
     }else if(character[r.stat] >= r.req){
         pass = true
-    }else{
+    }
+    if(!pass){
       $store.message += ' requires '+r.stat.replace(/([A-Z])/g, " $1")+' to be '+r.req
     }
-
     return pass
   }
   unequipReqMissingItems(character){

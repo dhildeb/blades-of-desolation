@@ -39,7 +39,7 @@
     <button v-if="this.$route.name !== 'battleField'" class="btn btn-success float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="saveGame">Save</button>
     <button class="btn btn-success float-bottom" :class="player.characters.length < 1 ? '' : 'd-none'" @click="loadGame">Load Game</button>
     <button v-if="this.$route.name !== 'battleField'" class="btn btn-primary float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="rest">Rest (unsafe)</button>
-    <BattleOptions v-if="$route.name == 'battleField'" />
+    <BattleOptions v-if="$route.name == 'battleField' && monstersWithHp > 0" />
   </div>
 </template>
 
@@ -63,6 +63,7 @@ export default {
   setup(){
     const state = reactive({
       player: computed(()=> $store.state.player),
+      monstersWithHp: computed(()=> $store.state.combatMonsters.filter(m => m.hp > 0).length),
     })
     return state
   },
