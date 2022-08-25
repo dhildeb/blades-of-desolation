@@ -18,6 +18,7 @@ class BattleService{
       if(target.immunities.filter(i => i == 'crit').length < 1){
         dmg = this.crit(attacker, dmg)
       }
+
       if(this.dodge(target)){
         this.toast(target.name+' dodged the attack', {timeout: 3000, type: type})
         return
@@ -36,10 +37,8 @@ class BattleService{
 
       this.lifeSteal(attacker, dmg)
 
-      if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
-        this.toast(target.name+' is immune to '+attacker.dmgType, {timeout: 3000, type: type})
-        dmg = 0
-      }
+      dmg = this.immunities(target, attacker, dmg)
+
       animationsService.fadeOutUp('hit'+target.id, dmg, '-')
       sleep(200).then(()=>{
         animationsService.shake('charImg'+target.id)
@@ -49,8 +48,12 @@ class BattleService{
   }
   thorns(attacker, target){
       if(target.thorns > 0 && attacker.dmgType == 'melee'){
-        attacker.hp -= target.thorns
-        animationsService.fadeOutUp('hit'+attacker.id, target.thorns, '-')
+        let dmg = target.thorns
+        dmg = this.immunities(attacker, target, dmg)
+        dmg = this.resistance({strength: dmg, dmgType: target.dmgType}, attacker)
+        dmg = this.vulnerable({strength: dmg, dmgType: target.dmgType}, attacker)
+        attacker.hp -= dmg
+        animationsService.fadeOutUp('hit'+attacker.id, dmg, '-')
     }
   }
   dodge(target){
@@ -83,6 +86,15 @@ class BattleService{
     if(target.vulnerabilities.filter(v => v == attack.dmgType).length > 0){
       this.toast(target.name+' is vulnerable to '+attack.dmgType, {timeout: 3000, type: type})
       dmg = Math.round(dmg*2)
+    }
+    return dmg
+  }
+  immunities(target, attacker, dmg){
+    let attackerIsFoe = attacker instanceof MonsterFactory
+    let type = attackerIsFoe ? TYPE.ERROR : TYPE.SUCCESS
+    if(target.immunities.filter(i => i == attacker.dmgType).length > 0){
+      this.toast(target.name+' is immune to '+attacker.dmgType, {timeout: 3000, type: type})
+      return 0
     }
     return dmg
   }

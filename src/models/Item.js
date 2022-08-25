@@ -4,12 +4,12 @@ export class Item{
   constructor(data){
     this.id = generateId()
     this.name = data.name
-    this.requirements = data.requirements
-    this.effect = data.effect
-    this.value = data.value == 'randomDmgType' ? this.getRandomDmgType() : data.value
-    this.type = data.type
-    this.price = data.price
-    this.rarity = data.rarity
+    this.requirements = data.requirements ?? []
+    this.effect = data.effect ?? 'none'
+    this.value = data.value == 'randomDmgType' ? this.getRandomDmgType() : data.value ?? 0
+    this.type = data.type ?? 'none'
+    this.price = data.price ?? 0
+    this.rarity = data.rarity ?? 'none'
     this.speed = data.speed ?? 0
   }
   getRandomDmgType(){

@@ -106,7 +106,7 @@ export default {
         window.localStorage.setItem("Wild Rest Warning", JSON.stringify('skip'))
       }
       let chance = Math.ceil(Math.random()*100)+($store.state.location*2)
-      let partyLuck = characterService.getPartyLuck()+40
+      let partyLuck = characterService.getPartyLuck()+50
       if(partyLuck > chance){
         $store.state.player.characters.forEach(c => {
           c.hp = c.hp + Math.round(c.baseHp*.25) > c.baseHp ? c.baseHp : c.hp+Math.round(c.baseHp*.25)
@@ -117,12 +117,19 @@ export default {
         toast.success('Successfully Rested!')
         return
       }
-      if(chance > 25){
+      if((chance-partyLuck) > 15 && $store.state.player.gold > 0){
         router.push({name: 'battleField'})
-      }else{
-        let lostGold = Math.round($store.state.player.gold*(chance/100))
-        toast.warning('Your rest is interupted by thieves, fornately you are unharmed. Unforunately you lost '+lostGold+' Gold', {timeout: 5000})
+      }else if((chance-partyLuck) > 1 && $store.state.player.items.length > 0){
+        let lostGold = Math.round($store.state.player.gold*((chance-partyLuck)/100))
+        toast.warning('Your rest is interupted by thieves, fornately you are unharmed. Unforunately you lost '+lostGold+' Gold', {timeout: 10000})
         $store.state.player.gold -= lostGold
+      }else{
+        let itemIndex = Math.floor(Math.random()*$store.state.player.items.length)
+        let lostItem = $store.state.player.items[itemIndex]
+        let locIndex = Math.floor(Math.random()*$store.state.player.explored[$store.state.location].length)
+        $store.state.player.currentLocation = $store.state.player.explored[$store.state.location][locIndex]
+        toast.warning('Your rest turns out to be full of nightmares and vivid dreams, it appears you wondered off in your sleep. You also realize you are missing '+lostItem.name, {timeout: 10000})
+        $store.state.player.items.splice(itemIndex, 1)
       }
       // saveGame()
     }
