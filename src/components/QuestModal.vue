@@ -10,7 +10,7 @@
       <div class="modal-body container">
         <div class="row justify-content-center">
           <div class="col-12 px-3">
-            {{quest.objective}} {{quest.objective == 'explore' ? ' area ' : quest.goal}} {{quest.target}}{{quest.goal > 0 ? '\'s' : ''}}
+            {{quest.objective}} {{quest.target}}{{quest.goal > 0 ? '\'s' : ''}}
           </div>
           <div class="col-12">
             Reward: {{quest.reward}} {{quest.objective == 'explore' ? 'EXP' : quest.objective == 'kill' ? 'Gold' : ''}}

@@ -1,18 +1,16 @@
 import { Item } from "@/models/Item"
 import $store from '@/store/index'
 import { useToast } from "vue-toastification"
-import { characterService } from "./CharacterService"
 class QuestService{
   toast = useToast()
-  acceptQuest(newQuest){
+  getQuest(newQuest){
     let quest = Object.assign({}, newQuest)
-    let lvl = characterService.getAverageCharacterLvl()
     if(quest.objective == 'kill'){
-      let monstersList = $store.state[quest.target][lvl]
+      let monstersList = $store.state[quest.target][$store.state.location]
       let index = Math.floor(Math.random()*monstersList.length)
       quest.target = monstersList[index].name
-      quest.goal += ($store.state.player.kills[quest.target] ?? 0)*(lvl > 0 ? lvl : 1)
-      quest.reward = quest.reward*(lvl > 0 ? lvl : 1)
+      quest.objective += ' X'+quest.goal
+      quest.reward = quest.reward*(index > 0 ? index : 1)
     }
     if(quest.objective == 'find'){
       let itemList = $store.state[quest.target+'s'].filter(i => i.rarity == quest.goal)
@@ -29,13 +27,14 @@ class QuestService{
       quest.goal = quest.target+'-'+row+'-'+col
       quest.reward = (quest.target+1)*row*col
     }
-    $store.state.player.quest = quest
+    return quest
   }
+
   updateQuest(){
     let quest = $store.state.player.quest
-    if(quest.objective == 'kill'){
+    if(quest.objective.includes('kill')){ 
       $store.state.combatMonsters.forEach(m => {
-        if(m.name == quest.objective && quest.goal < quest.progress){
+        if(m.name == quest.target){
           quest.progress++
         }
       })

@@ -24,12 +24,12 @@ class GameService{
     itemsService.randomItemDrop()
   }
   victory(){
+    questService.updateQuest()
     characterService.resetExtraHp()
     this.removeBuffs()
     this.addKillCounts()
     this.handleExpGain()
     this.loot()
-    questService.updateQuest()
   }
   handleExpGain(){
     let totalExp = $store.state.combatMonsters.map(m => m.exp).reduce((previous, current) => previous + current)

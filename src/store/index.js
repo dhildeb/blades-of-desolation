@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 
 const store = createStore({
   state: {
-    // all monster stats: {name: 'any', classType: '', race: '', img: '', spells: [], equipment: [], dmgType: '', hp: 5, magic: 0, luck: 0, strength: 1, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal:  0, absorb: '', level: 1, loot: {gold: 0, items: []}, exp: 50}
+    // all monster stats: {name: 'any', race: '', img: '', spells: [], equipment: [], dmgType: '', hp: 5, magic: 0, luck: 0, strength: 1, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal:  0, absorb: '', level: 1, loot: {gold: 0, items: []}, exp: 50}
       monsters: [
         //0
         [{name: 'goblin', actions: 1, strength: 2, hp: 7, loot: {gold: 5, items: ['dagger']}, exp: 50, dodge: 10, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgoblin.png?alt=media&token=92f9a971-2733-42a9-b616-563ffcbe86dc'},
@@ -11,28 +11,28 @@ const store = createStore({
         {name: 'giant bat', actions: 1, strength: 3, lifeSteal: 20, hp: 15, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-bat.png?alt=media&token=09a1bbb5-aea2-42ff-afbd-34c420a23b52'},
         {name: 'giant rat', actions: 1, strength: 1, hp: 7, loot: {gold: 2, items: []}, exp: 25, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-rat.png?alt=media&token=c09b17a6-58da-4efc-b5e0-77f8ff3d5323'},
         {name: 'kuo toa', actions: 1, strength: 2, hp: 18, loot: {gold: 5, items: ['spear', 'sticky shield']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fkuo-toa.png?alt=media&token=d4184eda-e4f2-4c13-8015-74abea6980ae'},
-        {name: 'seedling', actions: 1, strength: 2, hp: 8, thorns: 1, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fseedling.png?alt=media&token=4e357d83-5c08-45d2-940e-7ae302b26366'},
-        {name: 'skeleton', actions: 1, strength: 4, hp: 9, loot: {gold: 5, items: ['shortsword', 'shortbow']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fundead-barbarian.png?alt=media&token=8f7d9113-6d7f-4c60-b74e-a30cf4cb9ed5'},
+        {name: 'seedling', actions: 1, strength: 2, hp: 8, vulnerabilities: ['fire'], thorns: 1, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fseedling.png?alt=media&token=4e357d83-5c08-45d2-940e-7ae302b26366'},
+        {name: 'skeleton', actions: 1, strength: 4, hp: 9, immunities: ['necrotic', 'psychic'], vulnerabilities: ['radiant'], loot: {gold: 5, items: ['shortsword', 'shortbow']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fundead-barbarian.png?alt=media&token=8f7d9113-6d7f-4c60-b74e-a30cf4cb9ed5'},
         ],
         //1
-        [{name: 'fire snake', actions: 2, strength: 3, hp: 22, loot: {gold: 20, items: ['fire snake hide']}, absorb: 'fire', dmgType: 'fire', thorns: 5, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ffiresnake.png?alt=media&token=7a25d2f1-6c6d-4508-a200-57f324e360ba'},
-        {name: 'ghoul', actions: 1, strength: 8, hp: 22, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fghoul.png?alt=media&token=c5ac81a3-433a-4890-8272-5a4daa4d1b4d'},
-        {name: 'bugbear', actions: 1, strength: 9, hp: 27, loot: {gold: 20, items: ['javelin', 'morningstar']}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbugbear.png?alt=media&token=811edeb1-3376-4259-a175-089015c51cb9'},
-        {name: 'giant spider', actions: 1, strength: 16, hp: 26, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-spider.png?alt=media&token=944f50cb-b41b-4865-9a28-9078cd65540c'},
-        {name: 'imp', actions: 1, strength: 15, magicResistance: 25, physicalResistance: 25, hp: 10, absorb: 'fire', dmgType: 'fire', loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fimp.png?alt=media&token=f2938d88-c399-4e6a-a6a4-1a99555bef25'},
-        {name: 'multi-armed skeleton', actions: 4, strength: 3, hp: 26, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fmulti-armed-skeleton.png?alt=media&token=33e98e78-25d8-4582-aff0-55b2588178ef'},
-        {name: 'myconid', actions: 2, strength: 8, hp: 22, dmgType: 'poison', loot: {gold: 10, items: []}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fmyconid.png?alt=media&token=dd0ae0f4-3860-4588-a876-738efb16c0be'},
-        {name: 'ooze', actions: 1, strength: 11, hp: 22, thorns: 3, magicResistance: 25, dmgType: 'acid', loot: {gold: 10, items: []}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fooze.png?alt=media&token=6d011360-3e02-42f8-b960-1ad823fbd0ab'},
-        {name: 'orc', actions: 1, strength: 7, hp: 15, loot: {gold: 10, items: ['greataxe', 'javelin']}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Forc.png?alt=media&token=f011fcb1-d057-490c-b599-350229676f87'},
+        [{name: 'fire snake', actions: 2, strength: 3, hp: 22, loot: {gold: 20, items: ['fire snake hide']}, absorb: 'fire', vulnerabilities: ['cold'], dmgType: 'fire', thorns: 5, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ffiresnake.png?alt=media&token=7a25d2f1-6c6d-4508-a200-57f324e360ba'},
+        {name: 'ghoul', actions: 1, strength: 8, hp: 22, loot: {gold: 20, items: []}, exp: 200, resistances: ['necrotic'], vulnerabilities: ['radiant'], img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fghoul.png?alt=media&token=c5ac81a3-433a-4890-8272-5a4daa4d1b4d'},
+        {name: 'bugbear', actions: 1, strength: 9, hp: 27, loot: {gold: 20, items: ['morningstar']}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbugbear.png?alt=media&token=811edeb1-3376-4259-a175-089015c51cb9'},
+        {name: 'giant spider', actions: 1, dmgType: 'poison', immunities: ['poison'], vulnerabilities: ['fire'], strength: 16, hp: 26, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-spider.png?alt=media&token=944f50cb-b41b-4865-9a28-9078cd65540c'},
+        {name: 'imp', actions: 1, strength: 15, magicResistance: 25, physicalResistance: 25, hp: 10, absorb: 'fire', dmgType: 'fire', vulnerabilities: ['cold'], loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fimp.png?alt=media&token=f2938d88-c399-4e6a-a6a4-1a99555bef25'},
+        {name: 'multi-armed skeleton', actions: 4, strength: 3, hp: 26, loot: {gold: 20, items: []}, exp: 200, immunities: ['necrotic', 'psychic'], vulnerabilities: ['radiant'], img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fmulti-armed-skeleton.png?alt=media&token=33e98e78-25d8-4582-aff0-55b2588178ef'},
+        {name: 'myconid', actions: 2, strength: 8, hp: 22, dmgType: 'poison', immunities: ['posion'], loot: {gold: 10, items: []}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fmyconid.png?alt=media&token=d9a68eb5-6170-448f-a987-89cf76b27c95'},
+        {name: 'ooze', actions: 1, strength: 11, hp: 22, thorns: 3, magicResistance: 25, dmgType: 'acid', immunities: ['acid', 'psychic'], vulnerabilities: ['poison'], loot: {gold: 10, items: []}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fooze.png?alt=media&token=6d011360-3e02-42f8-b960-1ad823fbd0ab'},
+        {name: 'orc', actions: 1, strength: 14, hp: 20, thorns: 1, loot: {gold: 10, items: ['greataxe', 'dagger', 'spiked armor']}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Forc.png?alt=media&token=f011fcb1-d057-490c-b599-350229676f87'},
         {name: 'shadow', actions: 1, strength: 9, lifeSteal: 50, physicalResistance: 50, absorb: 'necrotic', vulnerabilities: ['radiant'], dmgType: 'necrotic', hp: 16, loot: {gold: 10, items: []}, exp: 100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fshadow.png?alt=media&token=9442e3ed-56f0-4782-b2ce-62d14975eeda'},
         {name: 'scarecrow', actions: 2, strength: 6, physicalResistance: 20, hp: 36, loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fscarecrow.png?alt=media&token=b005ab31-b378-4cef-b1af-10fdf8ba91c2'},
-        {name: 'pseudodragon', actions: 2, strength: 5, magicResistance: 25, physicalResistance: 25, hp: 30, dmgType: 'cold', loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpseudodragon.png?alt=media&token=0e439993-9b35-42f0-99ff-9483d8bfbd25'},
+        {name: 'pseudodragon', actions: 2, strength: 5, magicResistance: 25, physicalResistance: 25, hp: 30, dmgType: 'cold', resistances: ['cold'], vulnerabilities: ['fire'], loot: {gold: 20, items: []}, exp: 200, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpseudodragon.png?alt=media&token=0e439993-9b35-42f0-99ff-9483d8bfbd25'},
         ],
         //2
-        [{name: 'gelatinous cube', classType: '', race: 'ooze', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgelatinous-cube.png?alt=media&token=c6d9255b-de4f-4fe8-9e5d-66464bd29119', spells: [], equipment: [], dmgType: 'acid', hp: 84, magic: 0, luck: 0, strength: 10, dodge: 0, thorns: 10, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 25, absorb: 'acid', level: 2, loot: {gold: 45, items: []}, exp: 450},
-        {name: 'gibbering mouther', classType: '', race: 'aberration', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fmouther.png?alt=media&token=7927b7ad-4059-410c-b21f-fc57a5485955', spells: [], equipment: [], dmgType: 'acid', hp: 67, magic: 0, luck: 0, strength: 17, dodge: 25, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 0, absorb: '', level: 2, loot: {gold: 45, items: []}, exp: 450},
-        {name: 'nothic', classType: '', race: 'aberration', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fnothic.png?alt=media&token=a4f68856-cc22-45df-90ba-11e3142ab915', spells: [], equipment: [], dmgType: 'magic', hp: 45, magic: 0, luck: 0, strength: 8, dodge: 0, thorns: 0, actions: 2, physicalResistance: 0, magicResistance: 0, lifeSteal: 0, absorb: '', level: 2, loot: {gold: 45, items: []}, exp: 450},
-        {name: 'ogre', classType: '', race: 'giant', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fogre.png?alt=media&token=dc59cd31-1642-455c-910c-989836b155eb', spells: [], equipment: [], dmgType: '', hp: 59, magic: 0, luck: 0, strength: 12, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 0, absorb: '', level: 2, loot: {gold: 45, items: ['greatclub', 'javelin']}, exp: 450},
+        [{name: 'gelatinous cube', race: 'ooze', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgelatinous-cube.png?alt=media&token=c6d9255b-de4f-4fe8-9e5d-66464bd29119', dmgType: 'acid', vulnerabilities: ['poison'], hp: 84, magic: 0, luck: 0, strength: 10, dodge: 0, thorns: 10, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 25, absorb: 'acid', level: 2, loot: {gold: 45, items: []}, exp: 450},
+        {name: 'gibbering mouther', race: 'aberration', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fmouther.png?alt=media&token=7927b7ad-4059-410c-b21f-fc57a5485955', dmgType: 'acid', resistances: ['acid'], vulnerabilities: ['radiant'], hp: 67, magic: 0, luck: 0, strength: 17, dodge: 25, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 0, absorb: '', level: 2, loot: {gold: 45, items: []}, exp: 450},
+        {name: 'nothic', race: 'aberration', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fnothic.png?alt=media&token=a4f68856-cc22-45df-90ba-11e3142ab915', dmgType: 'magic', vulnerabilities: ['radiant'], resistances: ['magic', 'necrotic'], hp: 45, magic: 0, luck: 0, strength: 8, dodge: 0, thorns: 0, actions: 2, physicalResistance: 0, magicResistance: 0, lifeSteal: 0, absorb: '', level: 2, loot: {gold: 45, items: []}, exp: 450},
+        {name: 'ogre', race: 'giant', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fogre.png?alt=media&token=dc59cd31-1642-455c-910c-989836b155eb', dmgType: '', hp: 59, magic: 0, luck: 0, strength: 12, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal: 0, absorb: '', level: 2, loot: {gold: 45, items: ['greatclub']}, exp: 450},
         ],
         //3
         [{name: 'displacer beast', dodge: 50, actions: 2, strength: 7, hp: 85, loot: {gold: 70, items: ['displacer cloak']}, exp: 700, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdisplacer-beast.png?alt=media&token=c177fa03-5378-4692-be8b-e52c794599c9'},
@@ -41,12 +41,12 @@ const store = createStore({
         {name: 'werewolf', actions: 2, strength: 7, hp: 58, absorb: 'melee', loot: {gold: 70, items: ['handaxe', 'shortsword']}, exp: 700, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fwolfman.png?alt=media&token=fde92071-b1ab-4372-bb41-cfdd574aa1ec'},
         ],
         //4
-        [{name: 'ettin', actions: 2, strength: 14, hp: 85, loot: {gold: 110, items: ['battleaxe', 'morningstar']}, exp: 1100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fettin.png?alt=media&token=d08052f2-8965-460f-b745-2a3d04890b0a'},
+        [{name: 'ettin', actions: 2, strength: 14, hp: 85, loot: {gold: 110, items: ['morningstar', 'morningstar']}, exp: 1100, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fettin.png?alt=media&token=d08052f2-8965-460f-b745-2a3d04890b0a'},
         {name: 'flameskull', actions: 2, strength: 10, hp: 40, loot: {gold: 110, items: []}, exp: 1100, absorb: 'magic', dmgType: 'magic', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fflameskull.png?alt=media&token=c580f87e-37a5-426f-868d-2283d230adf5'},
         {name: 'young phoenix', actions: 1, strength: 26, hp: 45, loot: {gold: 110, items: []}, exp: 1100, absorb: 'fire', dmgType: 'fire', physicalResistance: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpheonix.png?alt=media&token=a8d21857-1c00-4c11-ad1b-6bb5456a5220'},
         ],
         //5
-        [{name: 'barbed devil', actions: 3, strength: 10, hp: 110, loot: {gold: 180, items: []}, exp: 1800, thorns: 5, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbarbed-devil.png?alt=media&token=b3c691e9-93f9-45ca-867d-30965616026a'},
+        [{name: 'barbed devil', actions: 3, strength: 10, hp: 110, loot: {gold: 180, items: []}, immunities: ['fire'], exp: 1800, thorns: 5, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbarbed-devil.png?alt=media&token=b3c691e9-93f9-45ca-867d-30965616026a'},
         {name: 'flesh golem', actions: 2, strength: 13, hp: 93, loot: {gold: 180, items: []}, exp: 1800, absorb: 'lightning', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fflesh-golem.png?alt=media&token=4c36dfad-d0b6-434f-9fd9-97976ef0d97d'},
         {name: 'troll', actions: 3, strength: 9, lifeSteal: 40, regen: 10, hp: 84, loot: {gold: 180, items: []}, exp: 1800, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Ftroll.png?alt=media&token=17bcb389-591b-4404-bfba-516529ee9e11'},
         ],
@@ -54,7 +54,7 @@ const store = createStore({
         [{name: 'sorcerer beast', actions: 1, strength: 45, hp: 58, loot: {gold: 230, items: []}, exp: 2300, dmgType: 'magic', img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fsorcerer-beastman.png?alt=media&token=b8e28940-d354-45c6-a433-d90979e7ae22'}
         ],
         //7
-        [{name: 'shield guardian', actions: 2, strength: 11, lifeSteal: 50, hp: 142, physicalResistance: 75, loot: {gold: 290, items: []}, exp: 2900, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpngwing.com%20(71).png?alt=media&token=7ea84b7f-3825-4c13-8527-d1e8d1d58fb7'}
+        [{name: 'shield guardian', actions: 2, strength: 25, lifeSteal: 50, hp: 142, physicalResistance: 75, loot: {gold: 290, items: ['spear', 'longsword +1']}, exp: 2900, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpngwing.com%20(71).png?alt=media&token=7ea84b7f-3825-4c13-8527-d1e8d1d58fb7'}
         ],
         //8
         [{name: 'hydra', actions: 5, strength: 10, lifeSteal: 20, hp: 172, loot: {gold: 390, items: []}, exp: 3900, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fpngwing.com%20(72).png?alt=media&token=ff66a119-8295-4532-afa7-73de03d564ac'},
@@ -241,15 +241,14 @@ const store = createStore({
         {name: 'weaken', effect: 'strength', value: -3, buff: true, temp: true, level: 1},
         {name: 'power up', effect: 'strength', value: 3, buff: true, temp: true, level: 1},
       ],
-      //2
+      //2 : lesser restoration-remove all defuffs
       [
-        {name: 'cure wounds', effect: 'hp', value: 10, buff: true, level: 2, reqs: {classType: 'cleric'}},
         {name: 'acid arrow', strength: 18, dmgType: 'acid', level: 2},
         {name: 'scorching ray', areaEffect: true, strength: 6, dmgType: 'fire', level: 2},
         {name: 'shatter', areaEffect: true, strength: 8, dmgType: 'melee', level: 2},
         {name: 'branding smite', strength: 18, dmgType: 'radiant', level: 2},
         {name: 'moonbeam', areaEffect: true, strength: 6, dmgType: 'radiant', level: 2},
-        {name: 'prayer of healing', areaEffect: true, effect: 'hp', value: 4, buff: true, level: 2, reqs: {classType: 'cleric'}},
+        {name: 'prayer of healing', areaEffect: true, effect: 'hp', value: 5, buff: true, level: 2, reqs: {classType: 'cleric'}},
       ],
       //3
       [
@@ -259,7 +258,7 @@ const store = createStore({
         {name: 'lightning bolt', strength: 24, dmgType: 'lightning', level: 3},
         {name: 'haste', effect: 'actions', value: 1, buff: true, level: 3},
         {name: 'slow', effect: 'actions', value: 1, level: 3},
-        {name: 'mass healing word', effect: 'hp', value: 8, buff: true, level: 3, reqs: {classType: 'cleric'}},
+        {name: 'mass healing word', areaEffect: true, effect: 'hp', value: 8, buff: true, level: 3, reqs: {classType: 'cleric'}},
       ],
       //4
       [
@@ -274,7 +273,7 @@ const store = createStore({
         {name: 'flame strike', strength: 48, dmgType: 'fire', level: 5},
         {name: 'insect plague', areaEffect: true, strength: 20, dmgType: 'melee', level: 5},
         {name: 'greater restoration', effect: 'hp', value: 55, buff: true, level: 5, reqs: {classType: 'cleric'}},
-        {name: 'mass cure wounds', areaEffect: true, effect: 'hp', value: 17, buff: true, level: 5, reqs: {classType: 'cleric'}},
+        {name: 'mass cure wounds', areaEffect: true, effect: 'hp', value: 25, buff: true, level: 5, reqs: {classType: 'cleric'}},
       ],
       //6
       [
@@ -314,7 +313,7 @@ const store = createStore({
       {objective: 'find', target: 'item', goal: 'c', reward: 'uc', progress: 0}, 
       {objective: 'find', target: 'item', goal: 'uc', reward: 'r', progress: 0}, 
       {objective: 'find', target: 'item', goal: 'r', reward: 'vr', progress: 0},
-      {objective: 'explore', target: 0, goal: '0-10-12', reward: 'exp', progress: 0},
+      {objective: 'explore', target: 0, goal: '0-5-3', reward: 'exp', progress: 0},
     ],
     combatMonsters: [],
     player: {

@@ -115,7 +115,7 @@ export default {
                 if(!random){
                     router.push({name: 'MainShop'})
                 }
-                if(await Notify.confirm('Encounter', 'Hello weary traveler, would you like to buy some wears?')){
+                else if(await Notify.confirm('Encounter', 'Hello weary traveler, would you like to buy some wears?')){
                     router.push({name: 'MainShop'})
                 }
             }

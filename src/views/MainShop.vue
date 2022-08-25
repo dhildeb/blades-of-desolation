@@ -32,14 +32,14 @@ export default {
   },
   setup(){
     onMounted(async()=> {
-      // random chance to get a quest request
+      // random chance to get a quest request 
       let luck = 1+characterService.getPartyLuck()
       let chance = Math.ceil(Math.random()*25)
       if(luck > chance){
         let index = Math.floor(Math.random()*$store.state.quests.length)
-        let newQuest = $store.state.quests[index]
+        let newQuest = questService.getQuest($store.state.quests[index])
         if(await Notify.confirm(newQuest.objective, newQuest.target)){
-          questService.acceptQuest(newQuest)
+              $store.state.player.quest = newQuest
         }
       }
       questService.checkQuestProgress()

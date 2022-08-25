@@ -37,9 +37,8 @@ class AbilitiesService{
     if(ability.level % 2 == 0){
       ability.value.forEach((v, i)=> v += originalAbility.value[i])
     }
-    if(ability % 3 == 0){
-      ability.baseUses++
-    }
+    ability.baseUses++
+    ability.uses++
     ability.level++
     this.toast.success(character.name+' Level up '+abilityName, {timeout: 10000})
   }
