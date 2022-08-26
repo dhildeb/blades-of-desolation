@@ -1,5 +1,6 @@
 <template>
 <div class="container-fluid bg-img" :style="'background-image: url('+bgImg+')'">
+  <i class="fal fa-alicorn position-absolute left text-dark" @click="cheat" v-if="!cheated"></i>
   <h5 class="font-weight-bold text-black">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
   <div class="row justify-content-center">
     <div class="col-10 col-md-8">
@@ -43,14 +44,20 @@
 import { reactive } from "@vue/reactivity"
 import $store from '@/store/index.js'
 import { characterService } from "@/services/CharacterService"
-import { computed } from "@vue/runtime-core"
+import { computed, onMounted } from "@vue/runtime-core"
 import CombatCharacter from "@/components/CombatCharacter.vue"
 import { useToast } from "vue-toastification"
+import Notify from "@/utils/Notify"
+import { Item } from "@/models/Item"
+import { setItem, getItem } from "../utils/tempLocalStorage.js"
 
 export default {
   components: { CombatCharacter },
   name: 'CharacterForm',
   setup(){
+    onMounted(()=>{
+      state.cheated = getItem('cheated')
+    })
     const state = reactive({
       classList: ['Barbarian', 'Bard', 'Cleric', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Warlock', 'Wizard'],
       name: '',
@@ -61,7 +68,8 @@ export default {
       characterCount: computed(()=> $store.state.player.characters.length),
       characters: computed(()=>$store.state.player.characters),
       selectedCharacter: '',
-      bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('create-bg')))
+      bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('create-bg'))),
+      cheated: false
     })
     return state
   },
@@ -81,6 +89,17 @@ export default {
     },
     selectCharacter(character){
       this.selectedCharacter = character
+    },
+    async cheat(){
+      if(this.cheated){return}
+      const toast = useToast()
+      let cheat = await Notify.cheat()
+      let item = $store.state.items.find(i => i.name == cheat)
+      if(!item){return}
+      $store.state.player.items.push(new Item(item))
+      toast.success('You got a '+item.name+'! cheater')
+      setItem('cheated', true, 1000*60*60*24)
+      this.cheated = getItem('cheated')
     }
   }
 }
@@ -94,5 +113,8 @@ export default {
 }
 .text-black{
   color: #000;
+}
+.left{
+  left: 98vw
 }
 </style>

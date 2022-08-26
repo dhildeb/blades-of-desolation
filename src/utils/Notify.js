@@ -49,6 +49,21 @@ export default class Notify {
       return false
     }
   }
+  static async cheat() {
+    try {
+      const res = await Swal.fire({
+        input: 'text',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: '???'
+      })
+      if (res.isConfirmed) {
+        return res.value
+      }
+      return false
+    } catch (error) {
+      return false
+    }
+  }
   static async selectTarget(title = 'Select Target', confirmText = 'Cast Spell') {
     try {
       const res = await Swal.fire({

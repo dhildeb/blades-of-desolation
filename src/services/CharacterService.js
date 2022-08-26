@@ -210,6 +210,7 @@ class CharacterService{
     switch(char.race){
       case 'dragonborn':
         char["strength"] += 3
+        //TODO breath attack
         break
       case 'human':
         char["strength"]++
@@ -221,9 +222,10 @@ class CharacterService{
         break
       case 'dwarf':
         char["hp"] += 10
+        char["resistances"] = ["poison"]
         break
       case 'halfling':
-        char["luck"] += 3
+        char["luck"] += 5
         break
       default:
         char["race"] = 'unknown'

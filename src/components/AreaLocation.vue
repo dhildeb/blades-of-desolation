@@ -2,9 +2,9 @@
   <div class="container-fluid area-map map" :style="'background-image: url('+bgImg+')'">
     <div class="row" v-for="row in 10" :key="row">
         <div :id="location+'-'+row+'-'+col" class="col bg-shadow disabled" :class="findIfVisible(row, col) ? '' : 'bg-dark'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 6" :key="col">
-            <div v-if="row == 5 && col == 3"><img class="char-icon" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/locations%2Ftavern2.png?alt=media&token=a5cd38b2-39fe-4150-a500-5b59306b3857" alt="Tavern"></div>
+            <div v-if="row == 5 && col == 3" :class="findIfVisible(row, col) ? '' : 'd-none'"><img class="char-icon" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/locations%2Ftavern2.png?alt=media&token=a5cd38b2-39fe-4150-a500-5b59306b3857" alt="Tavern"></div>
             <div v-else-if="location+'-'+row+'-'+col == currentLocation"><img class="char-icon" :src="charImg" alt="X"></div>
-            <div v-if="row == 10 && col == 6 && !areaCompleted"><img class="char-icon" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/locations%2Fchest.png?alt=media&token=907bdd99-f504-4857-a27c-8056ebc72a0a" alt="Tavern"></div>
+            <div v-if="row == 10 && col == 6 && !areaCompleted" :class="findIfVisible(row, col) ? '' : 'd-none'"><img class="char-icon" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/locations%2Fchest.png?alt=media&token=907bdd99-f504-4857-a27c-8056ebc72a0a" alt="Tavern"></div>
         </div>
     </div>
   </div>
@@ -85,7 +85,7 @@ export default {
                 toast.success('You found a key!')
             }
             if(explored.length == 60 && !this.areaCompleted && rowCol[1] == 10 && rowCol[2] == 6 && this.hasKey){
-                $store.state.player.items.filter(i => i.name != 'key')
+                $store.state.player.items = $store.state.player.items.filter(i => i.name != 'key')
                await this.completeArea()
                return
             }

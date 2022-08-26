@@ -18,7 +18,7 @@ class MonstersService {
     $('#app').css('pointer-events', 'none')
     $('*').css('cursor', 'progress')
     $store.state.combatMonsters.forEach(m => {
-      if (m.actions <= 0 && m.hp <= 0) {
+      if (m.actions <= 0 || m.hp <= 0) {
         return
       }
       for (m.actions; m.actions > 0; m.actions--) {

@@ -17,7 +17,7 @@ const firebaseConfig = {
   messagingSenderId: "105661301499",
   appId: "1:105661301499:web:5e3588750185de5833e65e",
   measurementId: "G-QE7VMGPJB9"
-};
+}
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig)
@@ -25,5 +25,6 @@ const firebaseApp = initializeApp(firebaseConfig)
 const options = {
   timeout: 3000
 }
+
 
 createApp(App).use(store).use(router).use(Toast, options).use(firebaseApp).mount('#app')

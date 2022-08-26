@@ -2,7 +2,7 @@ import { getRandomAbility } from "./getRandomAbility"
 
 export function characterLvlUpStatHelper(classType, race, lvl){
   let boosts = {}
-  let magical = classType == 'rogue' || classType == 'barbarian' || classType == 'fighter' || classType == 'monk'
+  let magical = classType == 'bard' || classType == 'cleric' || classType == 'ranger' || classType == 'warlock' || classType == 'wizard'
   switch(classType){
     case 'rogue':
       boosts['classBoost'] = ['baseStrength', 'strength', 'dodge']

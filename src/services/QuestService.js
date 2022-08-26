@@ -32,6 +32,7 @@ class QuestService{
 
   updateQuest(){
     let quest = $store.state.player.quest
+    if(!quest.objective){return}
     if(quest.objective.includes('kill')){ 
       $store.state.combatMonsters.forEach(m => {
         if(m.name == quest.target){

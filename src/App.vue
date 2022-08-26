@@ -1,7 +1,7 @@
 <template>
 <div class="d-md-flex bg-dark" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
   <ShopNavBar v-if="this.$route.name == 'MainShop'" />
-  <CharacterDetailsModal :character="character" ref="characterDetailsModal" />
+  <CharacterDetailsModal :character="character" ref="characterDetailsModal" v-if="character" />
   <router-view class="order-2 order-md-1"></router-view>
   <PlayerStatsSideWindow class="order-1 order-md-2" />
 </div>
