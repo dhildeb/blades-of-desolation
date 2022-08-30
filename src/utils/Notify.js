@@ -30,16 +30,17 @@ export default class Notify {
       return false
     }
   }
-  static async selectChar(title = 'Learn spell', cost = 1000) {
+  static async selectChar(title = 'Learn spell', cost = 1000, description = '') {
     try {
       const res = await Swal.fire({
-        title: 'Learn spell '+title,
+        title: 'Learn '+title,
+        text: description,
         input: 'select',
         inputOptions: getCharOptions(title),
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Learn Spells('+cost+')'
+        confirmButtonText: 'Learn Spell('+cost+'gp)'
       })
       if (res.isConfirmed) {
         return res.value

@@ -47,7 +47,7 @@ class BattleService{
     })
   }
   thorns(attacker, target){
-      if(target.thorns > 0 && attacker.dmgType == 'melee'){
+      if(target.thorns > 0 && attacker.dmgType == 'melee' && !attacker['isSpell']){
         let dmg = target.thorns
         dmg = this.immunities(attacker, target, dmg)
         dmg = this.resistance({strength: dmg, dmgType: target.dmgType}, attacker)

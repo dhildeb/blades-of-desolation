@@ -151,11 +151,11 @@ class CharacterService{
         char["strength"] += 3
         break
       case 'wizard':
-        if(char.name == 'Gandolf'){
-          char["magicResistance"] += 10
-        }
         char["magic"] += 3
         char["magicRegen"] = 1
+        if(char.name == 'Gandolf'){
+          char["magicRegen"]++
+        }
         spell = spellsService.findRandomLearnableSpell(char)
         break
       case 'cleric':

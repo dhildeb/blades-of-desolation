@@ -105,17 +105,17 @@ const store = createStore({
     // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting, ring of resistance
     items: [
       // Common
-      {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', speed: 1, price: 400, rarity: 'c'},
-      {name: 'quarterstaff', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'classType', req: 'monk'}]},
-      {name: 'longsword', effect: 'strength', value: 4, type: 'mainHand', speed: 2, price: 750, rarity: 'c'},
-      {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c'},
-      {name: 'spear', effect: 'strength', value: 1, type: 'mainHand', speed: 1, price: 200, rarity: 'c'},
-      {name: 'shortbow', effect: ['strength', 'dmgType'], value: [2, 'range'], type: 'mainHand', speed: 2, price: 200, rarity: 'c'},
-      {name: 'shortbow', effect: ['strength', 'dmgType'], value: [4, 'range'], type: 'mainHand', speed: 2, price: 600, rarity: 'c'},
-      {name: 'light crossbow', effect: ['strength', 'dmgType'], value: [2, 'range'], type: 'mainHand', speed: 1, price: 400, rarity: 'c'},
-      {name: 'Heavy crossbow', effect: ['strength', 'dmgType'], value: [5, 'range'], type: 'mainHand', speed: 3, price: 800, rarity: 'c'},
-      {name: 'hand crossbow', effect: ['strength', 'dmgType'], value: [1, 'range'], type: 'offHand', speed: 1, price: 400, rarity: 'c'},
-      {name: 'sticky shield', effect: 'baseHp', value: 3, type: 'offHand', price: 300, rarity: 'c'},
+      {name: 'shortsword', effect: 'strength', value: 2, type: 'mainHand', speed: 1, price: 400, rarity: 'c', description: 'Bigger than a dagger shorter than a longsword'},
+      {name: 'quarterstaff', effect: 'strength', value: 2, type: 'mainHand', price: 400, rarity: 'c', requirements: [{stat: 'classType', req: 'monk'}], description: 'The weapon of a monk'},
+      {name: 'longsword', effect: 'strength', value: 4, type: 'mainHand', speed: 2, price: 750, rarity: 'c', description: 'Longer than a shortsword'},
+      {name: 'dagger', effect: 'strength', value: 1, type: 'offHand', price: 200, rarity: 'c', description: 'A good off hand weapon'},
+      {name: 'spear', effect: 'strength', value: 1, type: 'mainHand', speed: 1, price: 200, rarity: 'c', description: 'Most basic of weapons for beginners'},
+      {name: 'shortbow', effect: ['strength', 'dmgType'], value: [2, 'range'], type: 'mainHand', speed: 2, price: 200, rarity: 'c', description: 'A good ranged weapon for beginners'},
+      {name: 'longbow', effect: ['strength', 'dmgType'], value: [4, 'range'], type: 'mainHand', speed: 2, price: 600, rarity: 'c', description: 'The longer version of the shortbow'},
+      {name: 'light crossbow', effect: ['strength', 'dmgType'], value: [2, 'range'], type: 'mainHand', speed: 1, price: 400, rarity: 'c', description: 'Faster than a bow'},
+      {name: 'Heavy crossbow', effect: ['strength', 'dmgType'], value: [5, 'range'], type: 'mainHand', speed: 3, price: 800, rarity: 'c', description: 'Forget speed we\'re going for power here'},
+      {name: 'hand crossbow', effect: ['strength', 'dmgType'], value: [1, 'range'], type: 'offHand', speed: 1, price: 400, rarity: 'c', description: 'A off hand weapon'},
+      {name: 'sticky shield', effect: 'baseHp', value: 3, type: 'offHand', price: 300, rarity: 'c', description: 'Easy to use, hard to remove'},
       {name: 'battleaxe', effect: 'strength', value: 3, type: 'mainHand', speed: 2, price: 600, rarity: 'c', requirements: [{stat: 'baseStrength', req: 2}]},
       {name: 'scimitar', effect: 'strength', value: 2, type: 'mainHand', price: 800, rarity: 'c'},
       {name: 'handaxe', effect: 'strength', value: 1, type: 'mainHand', speed: 1, price: 200, rarity: 'c'},
@@ -148,7 +148,7 @@ const store = createStore({
       {name: 'boots of elvenkind', effect: ['dodge', 'baseActions'], value: [10, 1], type: 'accessory', price: 1500, rarity: 'uc'},
       {name: 'boots of the winterlands', effect: 'resistances', value: 'cold', type: 'accessory', price: 2000, rarity: 'uc'},
       {name: 'bracers of archery', effect: 'strength', value: 2, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'equipment', req: 'bow'}]},
-      {name: 'bracers of defense', effect: 'strength', value: 2, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'armor', req: null}]},
+      {name: 'bracers of defense', effect: 'physicalResistance', value: 15, type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'armor', req: null}]},
       {name: 'cloak of protection', effect: 'physicalResistance', value: 20, type: 'cloak', price: 2500, rarity: 'uc'},
       {name: 'gauntlets of ogre power', effect: ['strength', 'baseActions'], value: [3, -1], type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'baseHp', req: 15}]},
       {name: 'javelin of lightning', effect: ['strength', 'dmgType'], value: [3, 'lightning'], type: 'mainHand', price: 4000, rarity: 'uc'},
@@ -208,13 +208,13 @@ const store = createStore({
       , price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},
     ],
     abilities: [
-      {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [10, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1}, 
-      {name: 'second wind', level: 1, effect: ['hp'], value: [5], buff: false, classType: 'fighter', uses: 1, baseUses: 1}, 
-      {name: 'action surge', level: 2, effect: ['actions'], value: [1], buff: true, classType: 'fighter', uses: 1, baseUses: 1}, 
-      {name: 'quickening heal', level: 4, effect: ['hp'], value: [10], buff: true, classType: 'monk', uses: 1, baseUses: 1}, 
-      {name: 'song of rest', level: 2, effect: ['hp'], value: [3], buff: true, areaEffect: true, classType: 'bard', uses: 1, baseUses: 1}, 
-      {name: 'sneak attack', level: 1, effect: ['strength'], value: [4], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
-      {name: 'cunning action', level: 2, effect: ['dodge'], value: [10], buff: true, classType: 'rogue', uses: 1, baseUses: 1}, 
+      {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [10, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1, description: 'Reduces physical damage and increases your strength'}, 
+      {name: 'second wind', level: 1, effect: ['hp'], value: [5], buff: false, classType: 'fighter', uses: 1, baseUses: 1, description: 'Restores some hp'}, 
+      {name: 'action surge', level: 2, effect: ['actions'], value: [1], buff: true, classType: 'fighter', uses: 1, baseUses: 1, description: 'Regain some actions'}, 
+      {name: 'quickening heal', level: 4, effect: ['hp'], value: [10], buff: true, classType: 'monk', uses: 1, baseUses: 1, description: 'Restore some hp'}, 
+      {name: 'song of rest', level: 2, effect: ['hp'], value: [3], buff: true, areaEffect: true, classType: 'bard', uses: 1, baseUses: 1, description: 'Restores some of your party\'s hp'}, 
+      {name: 'sneak attack', level: 1, effect: ['strength'], value: [4], buff: true, classType: 'rogue', uses: 1, baseUses: 1, description: 'Increases strength'}, 
+      {name: 'cunning action', level: 2, effect: ['dodge'], value: [10], buff: true, classType: 'rogue', uses: 1, baseUses: 1, description: 'Increases dodge chance'}, 
     ],
     spells: [
       //cantrips
@@ -228,7 +228,7 @@ const store = createStore({
         {name: 'sacred flame', strength: 5, dmgType: 'radiant', level: 0},
         {name: 'shocking grasp', strength: 5, dmgType: 'lightning', level: 0},
         {name: 'vicious mockery', strength: 5, dmgType: 'psychic', level: 0},
-        {name: 'light heal', effect: 'hp', value: 2, buff: true, level: 0},
+        {name: 'light heal', effect: 'hp', value: 2, buff: true, level: 0, description: 'Heals target +2'},
       ],
       //1
       [
@@ -237,9 +237,9 @@ const store = createStore({
         {name: 'inflict wounds', strength: 15, dmgType: 'necrotic', reqs: {classType: 'warlock'}, level: 1},
         {name: 'guided bolt', strength: 12, dmgType: 'radiant', level: 1},
         {name: 'magic missile', areaEffect: true, strength: 4, dmgType: 'melee', level: 1},
-        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 1, reqs: {classType: 'cleric'}},
-        {name: 'weaken', effect: 'strength', value: -3, buff: true, temp: true, level: 1},
-        {name: 'power up', effect: 'strength', value: 3, buff: true, temp: true, level: 1},
+        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 1, reqs: {classType: 'cleric'}, description: 'Heal Party +2'},
+        {name: 'weaken', effect: 'strength', value: -3, buff: true, temp: true, level: 1, description: 'Reduces targets strength by -3'},
+        {name: 'power up', effect: 'strength', value: 3, buff: true, temp: true, level: 1, description: 'Increases strength of target by +3'},
       ],
       //2 : lesser restoration-remove all defuffs
       [
@@ -248,7 +248,7 @@ const store = createStore({
         {name: 'shatter', areaEffect: true, strength: 8, dmgType: 'melee', level: 2},
         {name: 'branding smite', strength: 18, dmgType: 'radiant', level: 2},
         {name: 'moonbeam', areaEffect: true, strength: 6, dmgType: 'radiant', level: 2},
-        {name: 'prayer of healing', areaEffect: true, effect: 'hp', value: 5, buff: true, level: 2, reqs: {classType: 'cleric'}},
+        {name: 'prayer of healing', areaEffect: true, effect: 'hp', value: 5, buff: true, level: 2, reqs: {classType: 'cleric'}, description: 'Heal Party +5'},
       ],
       //3
       [
@@ -256,9 +256,9 @@ const store = createStore({
         {name: 'call lightning', strength: 22, dmgType: 'lightning', level: 3},
         {name: 'fireball', strength: 24, dmgType: 'fire', level: 3},
         {name: 'lightning bolt', strength: 24, dmgType: 'lightning', level: 3},
-        {name: 'haste', effect: 'actions', value: 1, buff: true, level: 3},
-        {name: 'slow', effect: 'actions', value: 1, level: 3},
-        {name: 'mass healing word', areaEffect: true, effect: 'hp', value: 8, buff: true, level: 3, reqs: {classType: 'cleric'}},
+        {name: 'haste', effect: 'actions', value: 3, buff: true, level: 3, description: 'Increases party\'s actions +3'},
+        {name: 'slow', effect: 'actions', value: 1, level: 3, description: 'Reduces targets actions by 1'},
+        {name: 'mass healing word', areaEffect: true, effect: 'hp', value: 8, buff: true, level: 3, reqs: {classType: 'cleric'}, description: 'Heal Party +8'},
       ],
       //4
       [
@@ -272,8 +272,8 @@ const store = createStore({
         {name: 'cone of cold', strength: 48, dmgType: 'cold', level: 5},
         {name: 'flame strike', strength: 48, dmgType: 'fire', level: 5},
         {name: 'insect plague', areaEffect: true, strength: 20, dmgType: 'melee', level: 5},
-        {name: 'greater restoration', effect: 'hp', value: 55, buff: true, level: 5, reqs: {classType: 'cleric'}},
-        {name: 'mass cure wounds', areaEffect: true, effect: 'hp', value: 25, buff: true, level: 5, reqs: {classType: 'cleric'}},
+        {name: 'greater restoration', effect: 'hp', value: 55, buff: true, level: 5, reqs: {classType: 'cleric'}, description: 'Heal target by +55'},
+        {name: 'mass cure wounds', areaEffect: true, effect: 'hp', value: 25, buff: true, level: 5, reqs: {classType: 'cleric'}, description: 'Heal Party +25'},
       ],
       //6
       [
@@ -283,13 +283,13 @@ const store = createStore({
         {name: 'sunbeam', strength: 65, dmgType: 'radiant', level: 6},
         {name: 'freezing sphere', areaEffect: true, strength: 60, dmgType: 'cold', level: 6},
         {name: 'harm', strength: 60, dmgType: 'necrotic', level: 6},
-        {name: 'heal', effect: 'hp', value: 70, buff: true, level: 6, reqs: {classType: 'cleric'}},
+        {name: 'heal', effect: 'hp', value: 70, buff: true, level: 6, reqs: {classType: 'cleric'}, description: 'Heal target +70'},
       ],
       //7
       [
         {name: 'finger of death', strength: 86, dmgType: 'necrotic', level: 7},
         {name: 'fire storm', areaEffect: true, strength: 35, dmgType: 'necrotic', level: 7},
-        {name: 'teleport', areaEffect: true, effect: 'inBattle', value: false, title: 'Party flee battle', level: 7},
+        {name: 'teleport', areaEffect: true, effect: 'inBattle', value: false, level: 7, description: 'Flee from battle'},
         {name: 'prasmatic spray', areaEffect: true, strength: 35, dmgType: getRandomDmgType(), level: 7},
       ],
       //8
@@ -300,8 +300,8 @@ const store = createStore({
       ],
       //9
       [
-        {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, buff: true, level: 9, reqs: {classType: 'cleric'}},
-        {name: 'mass haste', areaEffect: true, effect: 'actions', value: 1, buff: true, level: 9},
+        {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, buff: true, level: 9, reqs: {classType: 'cleric'}, description: 'Heal Party +116'},
+        {name: 'mass haste', areaEffect: true, effect: 'actions', value: 6, buff: true, level: 9, description: 'Party gains speed +6'},
         {name: 'meteor storm', areaEffect: true, strength: 120, dmgType: 'fire', level: 9},
         {name: 'power word kill', strength: 100, dmgType: 'fire', level: 9},
         {name: 'weird', areaEffect: true, strength: 75, dmgType: 'psychic', level: 9},
@@ -332,7 +332,7 @@ const store = createStore({
     characterImgList: [],
     locationImgList: [],
     // max exp til next lvl
-    levelUpChart: [30, 90, 2700, 6500, 14000, 23000, 34000, 48000, 64000, 85000, 100000, 120000, 140000, 165000, 195000, 225000, 265000, 305000, 355000],
+    levelUpChart: [300, 900, 2700, 5000, 8100, 15000, 24300, 48600, 97200, 194400, 388800, 777600, 1555200, 3110400, 6220800, 12441600, 24883200, 49766400, 99532800],
     message: ''
   },
   getters: {

@@ -48,6 +48,7 @@ import { computed, onMounted } from "@vue/runtime-core"
 import CombatCharacter from "@/components/CombatCharacter.vue"
 import { useToast } from "vue-toastification"
 import Notify from "@/utils/Notify"
+import $ from 'jquery'
 import { Item } from "@/models/Item"
 import { setItem, getItem } from "../utils/tempLocalStorage.js"
 
@@ -77,6 +78,12 @@ export default {
     createCharacter(){
       const toast = useToast()
       let charData = {name: this.name, classType: this.classType.toLowerCase(), race: this.race, img: this.selectedImg, actions: 6, dodge: 0, hp: 5, luck: 0, strength: 0, magic: 0, thorns: 0, lifeSteal: 0, physicalResistance: 0, magicResistance: 0}
+      if($store.state.player.characters.find(c => c.name == this.name)){
+        toast.warning('Too confusing to have two members with the same name, lets give you a nickname...', {timeout: 5000})
+        this.name = ''
+        $('#name').focus()
+        return
+      }
       characterService.createCharacter(charData)
       toast.success(charData.name+' was created!')
       this.name = ''
@@ -97,6 +104,7 @@ export default {
       let item = $store.state.items.find(i => i.name == cheat)
       if(!item){return}
       $store.state.player.items.push(new Item(item))
+      $store.state.player.gold -= item.price
       toast.success('You got a '+item.name+'! cheater')
       setItem('cheated', true, 1000*60*60*24)
       this.cheated = getItem('cheated')

@@ -28,7 +28,7 @@ class ItemsService{
       }
     }
     let possibleItems = $store.state.items.filter(i => i.rarity == dropRarity)
-    let index = Math.floor(Math.random()*possibleItems.length)
+    let index = Math.ceil(Math.random()*possibleItems.length-1)
     return possibleItems[index]
   }
   getStoreItems(){

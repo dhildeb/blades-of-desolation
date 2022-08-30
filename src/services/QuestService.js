@@ -1,5 +1,6 @@
 import { Item } from "@/models/Item"
 import $store from '@/store/index'
+import Notify from "@/utils/Notify"
 import { useToast } from "vue-toastification"
 class QuestService{
   toast = useToast()
@@ -59,15 +60,10 @@ class QuestService{
       }
     }
   }
-  checkQuestProgress(){
+  async checkQuestProgress(){
     let quest = $store.state.player.quest
-    
-    if(quest.objective == 'kill'){
-      if(quest.progress >= quest.goal){
-        this.completeQuest()
-      }
-    }else{
-      if(quest.progress == 'complete'){
+    if((quest.progress >= quest.goal || quest.progress == 'complete') && quest.objective){
+      if(await Notify.confirm('Quest Completed!', 'Turn in quest for reward?')){
         this.completeQuest()
       }
     }
@@ -79,13 +75,16 @@ class QuestService{
       let item = $store.state.items.filter(i => i.name == quest.reward)
       $store.state.player.items.push(new Item(item[0]))
     }
-    if(quest.objective == 'kill'){
-      $store.state.player.gold += quest.goal
+    if(quest.objective.includes('kill')){
+      $store.state.player.gold += quest.reward
     }
     if(quest.objective == 'explore'){
       $store.state.player.characters.forEach(c => c.exp += quest.reward)
     }
     this.toast.success('Quest Complete')
+    $store.state.player.quest = {}
+  }
+  deleteQuest(){
     $store.state.player.quest = {}
   }
 }

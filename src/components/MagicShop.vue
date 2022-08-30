@@ -38,7 +38,8 @@ methods: {
       toast.warning('Insufficient resources')
       return
     }
-    let char = await Notify.selectChar(spell.name, price)
+    let description = spell.description ?? `Deals ${spell.strength} ${spell.dmgType} DMG to ${spell.areaEffect ? 'each ' : ''}enemy`
+    let char = await Notify.selectChar(spell.name, price, description)
     if(char == 0 || !char){
       return
     }

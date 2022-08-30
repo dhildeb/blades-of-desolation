@@ -103,8 +103,8 @@ class GameService{
       abilitiesService.learnAbility(abilityList[character.classType][character.level], character)
     }
 
-    character.hp += character.level*(character.level > 1 ? character.level : 3)
-    character.baseHp += character.level*(character.level > 1 ? character.level : 3)
+    character.hp += character.level*3
+    character.baseHp += character.level*3
 
     character.statBonus += 2
   }

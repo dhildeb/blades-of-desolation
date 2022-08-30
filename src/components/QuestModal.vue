@@ -5,6 +5,9 @@
       <div class="modal-header">
         <div class="modal-title container">
           <h5>Quest</h5>
+            <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close" @click="deleteQuest" title="Delete Quest">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       </div>
       <div class="modal-body container">
@@ -19,6 +22,7 @@
             {{quest.goal > 1 ? Math.round((quest.progress/quest.goal)*100)+'%' : quest.progress != 'complete' ? 'Not' : ''}} Complete
           </span>
         </div>
+        <button class="btn btn-outline-success" @click="completeQuest" v-if="this.$route.name == 'MainShop' && (quest.progress >= quest.goal || quest.progress == 'complete')">Complete Quest</button>
       </div>
     </div>
   </div>
@@ -29,6 +33,8 @@
 import { reactive } from "@vue/reactivity"
 import { computed } from "@vue/runtime-core"
 import $store from "@/store/index"
+import { questService } from "@/services/QuestService"
+import Notify from "@/utils/Notify"
 
 export default {
   name: 'QuestModal',
@@ -40,7 +46,14 @@ export default {
     return state
   },
   methods: {
-
+    completeQuest(){
+      questService.completeQuest()
+    },
+    async deleteQuest(){
+      if(await Notify.confirm('Give up on Quest', 'Quest too tough for you, huh?')){
+        questService.deleteQuest()
+      }
+    }
   }
 }
 </script>

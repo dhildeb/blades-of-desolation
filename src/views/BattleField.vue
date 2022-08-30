@@ -2,6 +2,7 @@
   <div class="container">
     <div class="row justify-content-center align-items-center h-50 bg-battle-img" :style="'background-image: url('+bgImg+')'">
       <div class="col-4 col-md-2" v-for="monster in monsters" :key="monster.id">
+        <div class="position-absolute hit" :id="'hit'+monster.id"></div>
         <div v-if="monstersWithHp < 1">
           <LootMonster :monster="monster" />
         </div>
