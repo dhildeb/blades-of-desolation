@@ -11,6 +11,7 @@ class MonstersService {
   }
   prepPhase() {
     this.resetActions()
+    this.triggerStatusEffects()
   }
   attackPhase() {
     let numTargets = $store.state.player.characters.filter(c => c.inBattle).length
@@ -48,6 +49,17 @@ class MonstersService {
         animationsService.fadeOutUp('hit' + m.id, m.regen, '+')
         m.hp += m.regen
       }
+    })
+  }
+  triggerStatusEffects(){
+    $store.state.combatMonsters.forEach(cm => {
+      cm.statusEffects.forEach(se => {
+        if(!se.negative || typeof se.value !== 'number'){return}
+        cm[se.effect] = se.value > 0 ? cm[se.effect] - se.value : se.value
+        if(se.effect == 'hp'){
+          animationsService.fadeOutUp('hit'+cm.id, se.value, '-')
+        }
+      })
     })
   }
   resetActions() {

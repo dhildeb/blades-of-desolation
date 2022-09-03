@@ -18,6 +18,7 @@ class CharacterService{
   
   prepPhase(){
     this.removeDestroyedCharacters()
+    this.triggerStatusEffects()
     this.resetActions()
     this.autoSelect()
   }
@@ -88,6 +89,18 @@ class CharacterService{
         c.magic += c.magicRegen
         c.magic = c.magic > c.baseMagic ? c.baseMagic : c.magic
       }
+    })
+  }
+
+  triggerStatusEffects(){
+    $store.state.player.characters.forEach(c => {
+      c.statusEffects.forEach(se => {
+        if(!se.negative || typeof se.value !== 'number'){return}
+        c[se.effect] = se.value > 0 ? c[se.effect] - se.value : se.value
+        if(se.effect == 'hp'){
+          animationsService.fadeOutUp('hit'+c.id, se.value, '-')
+        }
+      })
     })
   }
   attemptToFlee(character){

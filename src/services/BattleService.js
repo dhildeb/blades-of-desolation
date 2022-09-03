@@ -39,6 +39,8 @@ class BattleService{
 
       dmg = this.immunities(target, attacker, dmg)
 
+      this.statusEffects(target, attacker)
+
       animationsService.fadeOutUp('hit'+target.id, dmg, '-')
       sleep(200).then(()=>{
         animationsService.shake('charImg'+target.id)
@@ -128,6 +130,30 @@ class BattleService{
       this.toast(attacker.name+' CRIT HIT', {timeout: 3000, type: type})
     }
     return dmg
+  }
+
+  statusEffects(target, attacker){
+    attacker.statusEffects.forEach(se => {
+      let status = Object.assign({}, se)
+      let chance = Math.ceil(Math.random()*100)
+      let immune = target.immunities.find(i => i == status.name)
+      let resistant = target.resistances.find(r => r == status.name)
+      let vulnerable = target.vulnerabilities.find(v => v == status.name)
+
+      chance *= vulnerable ? 2 : 1
+      chance *= resistant ? .5 : 1
+      
+      if(status.chance < chance || status.negative || immune){return}
+      if(target['statusEffects'].find(e => e.name == status.name && e.negative)){
+        target['statusEffects'].filter(e => e.name == status.name && e.negative)[0].value += status.value
+        this.toast.error(target.name+' got '+status.name+' again!')
+        return
+      }
+
+      status.negative = true
+      target['statusEffects'].push(status)
+      this.toast.error(target.name+' got '+status.name)
+    })
   }
 }
 

@@ -30,6 +30,7 @@ export class Character{
     this.immunities = data.immunities ?? []
     this.vulnerabilities = data.vulnerabilities ?? []
     this.resistances = data.resistances ?? []
+    this.statusEffects = data.statusEffects ?? []
     this.lifeSteal = data.lifeSteal ?? 0
     this.regen = data.regen ?? 0
     this.magicRegen = data.magicRegen ?? 0

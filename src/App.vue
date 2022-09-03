@@ -129,6 +129,12 @@ nav a.router-link-exact-active {
 .legendary{
   color: #ffd700d9;
 }
+.poison{
+  filter: hue-rotate(90deg);
+}
+.petrify{
+  filter: grayscale(1)
+}
 ::-webkit-scrollbar {
   width: 1rem;
 }

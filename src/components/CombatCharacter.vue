@@ -10,7 +10,7 @@
       {{character.name}}
     </strong>
     <div>
-      <img :id="'charImg'+character.id" :class="selected?.id == character.id ? 'animate__animated animate__slow animate__pulse animate__infinite' : ''" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
+      <img :id="'charImg'+character.id" :class="dynamicClasses(character, selected)" class="img-fluid w-75 click " :src="character.img" @click="selectCharacter(character)">
     </div>
     <div class="d-flex">
       <p class="border rounded-circle text-light h-25 w-25" title="Strength">
@@ -51,6 +51,12 @@ export default {
         this.$store.commit('selectCharacter', character)
       }
     },
+    dynamicClasses(character, selected){
+      let classes = ''
+      classes += character.statusEffects.map(e => e.negative ? e.name : '').join(' ') 
+      classes += selected?.id == character.id ? ' animate__animated animate__slow animate__pulse animate__infinite' : ''
+      return classes
+    }
   }
 }
 </script>

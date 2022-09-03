@@ -21,6 +21,7 @@ import { reactive } from '@vue/reactivity'
 import { computed } from "@vue/runtime-core"
 import $store from "@/store/index.js"
 import router from "@/router"
+import { useToast } from "vue-toastification"
 
 export default {
   name: 'ShopNavBar',
@@ -52,11 +53,15 @@ export default {
       this.$store.state.player.characters.forEach(c => c.magic < c.baseMagic ? c.magic = c.baseMagic : '')
     },
     rest(){
+      const toast = useToast()
       $store.state.player.characters.forEach(c => {
         c.hp = c.baseHp
         c.magic = c.baseMagic
         c.abilities.forEach(a => a.uses = a.baseUses)
+        c.actions = c.baseActions
+        c.statusEffects = c.statusEffects.filter(se => !se.negative)
       })
+      toast.success('Your party is Fully Rested!')
     },
     adventureOn(){
       router.push({name: 'AreaLocation'})

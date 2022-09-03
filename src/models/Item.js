@@ -5,6 +5,7 @@ export class Item{
     this.id = generateId()
     this.name = data.name
     this.requirements = data.requirements ?? []
+    this.statusEffects = data.statusEffects ?? []
     this.effect = data.effect ?? 'none'
     this.value = data.value == 'randomDmgType' ? this.getRandomDmgType() : data.value ?? 0
     this.type = data.type ?? 'none'
