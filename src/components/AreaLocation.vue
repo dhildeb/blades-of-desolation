@@ -20,6 +20,8 @@ import Notify from "@/utils/Notify"
 import { itemsService } from "@/services/ItemsService"
 import { useToast } from "vue-toastification"
 import { Item } from "@/models/Item"
+import { spellsService } from "@/services/SpellsService"
+import { characterService } from "@/services/CharacterService"
 
 export default {
     name: 'AreaLocation',
@@ -115,9 +117,9 @@ export default {
                 if(!random){
                     router.push({name: 'MainShop'})
                 }
-                else if(await Notify.confirm('Encounter', 'Hello weary traveler, would you like to buy some wears?')){
-                    router.push({name: 'MainShop'})
-                }
+                let spellName = spellsService.findRandomLearnableSpell($store.state.selected)
+                $store.state.player.items.push(new Item({name: spellName, scroll: true, value: 1, effect: 'Learn spell', price: characterService.getAverageCharacterLvl()*250+500}))
+                toast.success('You found a '+spellName+' scroll', {timeout: 4000})
             }
         },
         async completeArea(){

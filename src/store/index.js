@@ -222,7 +222,7 @@ const store = createStore({
       //cantrips
       [
         {name: 'acid splash', strength: 5, dmgType: 'acid', level: 0},
-        {name: 'poison spray', strength: 6, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 1, chance: 10, negative: false}], level: 0},
+        {name: 'poison spray', strength: 6, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 3, chance: 10, negative: false}], level: 0},
         {name: 'chill touch', strength: 5, dmgType: 'necrotic', level: 0},
         {name: 'edritch blast', strength: 6, dmgType: 'melee', level: 0},
         {name: 'fire bolt', strength: 5, dmgType: 'fire', level: 0},
@@ -240,13 +240,14 @@ const store = createStore({
         {name: 'guided bolt', strength: 12, dmgType: 'radiant', level: 1},
         {name: 'magic missile', areaEffect: true, strength: 4, dmgType: 'melee', level: 1},
         {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 1, reqs: {classType: 'cleric'}, description: 'Heal Party +2'},
-        {name: 'weaken', effect: 'strength', value: -3, buff: true, temp: true, level: 1, description: 'Reduces targets strength by -3'},
-        {name: 'power up', effect: 'strength', value: 3, buff: true, temp: true, level: 1, description: 'Increases strength of target by +3'},
+        {name: 'weaken', effect: 'strength', value: -3, buff: true, level: 1, description: 'Reduces targets strength by -3'},
+        {name: 'power up', effect: 'strength', value: 3, buff: true, level: 1, description: 'Increases strength of target by +3'},
       ],
       //2 : lesser restoration-remove all statusEffects and debuffs
       [
+        {name: 'shield', effect: 'physicalResistance', value: 50, buff: true, level: 2, description: 'Increases physical resistance of target by 50%'},
         {name: 'acid arrow', strength: 18, dmgType: 'acid', level: 2},
-        {name: 'poison arrow', strength: 10, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 2, chance: 25, negative: false}], level: 2},
+        {name: 'poison arrow', strength: 10, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 5, chance: 25, negative: false}], level: 2},
         {name: 'scorching ray', areaEffect: true, strength: 6, dmgType: 'fire', level: 2},
         {name: 'shatter', areaEffect: true, strength: 8, dmgType: 'melee', level: 2},
         {name: 'branding smite', strength: 18, dmgType: 'radiant', level: 2},
@@ -265,13 +266,15 @@ const store = createStore({
       ],
       //4
       [
+        {name: 'grant death touch', effect: ['strength', 'dmgType', 'lifeSteal'], value: [5, 'necrotic', 20], buff: true, level: 4, description: 'Give target 20% life steal'},
         {name: 'blight', strength: 32, dmgType: 'necrotic', level: 4},
         {name: 'ice storm', strength: 16, areaEffect: true, dmgType: 'cold', level: 4},
         {name: 'phantasmal killer', strength: 40, dmgType: 'psychic', level: 4},
+        {name: 'poison', strength: 1, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 10, chance: 100, negative: false}], level: 4},
       ],
       //5
       [
-        {name: 'cloud kill', areaEffect: true, strength: 20, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 2, chance: 25, negative: false}], level: 5},
+        {name: 'cloud kill', areaEffect: true, strength: 20, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 10, chance: 25, negative: false}], level: 5},
         {name: 'cone of cold', strength: 48, dmgType: 'cold', level: 5},
         {name: 'flame strike', strength: 48, dmgType: 'fire', level: 5},
         {name: 'insect plague', areaEffect: true, strength: 20, dmgType: 'melee', level: 5},
@@ -298,6 +301,7 @@ const store = createStore({
       //8
       [
         {name: 'earthquake', areaEffect: true, strength: 50, dmgType: 'melee', level: 8},
+        {name: 'poison fog', areaEffect: true, strength: 40, statusEffects: [{name: 'poison', effect: 'hp', value: 20, chance: 50, negative: false}], dmgType: 'poison', level: 8},
         {name: 'incendiary cloud', areaEffect: true, strength: 50, dmgType: 'fire', level: 8},
         {name: 'sunburst', areaEffect: true, strength: 56, dmgType: 'radiant', level: 8},
       ],

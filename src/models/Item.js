@@ -12,6 +12,7 @@ export class Item{
     this.price = data.price ?? 0
     this.rarity = data.rarity ?? 'none'
     this.speed = data.speed ?? 0
+    this.scroll = data.scroll ?? false
   }
   getRandomDmgType(){
     let dmgTypeList = ['lightning', 'melee', 'magic', 'acid', 'necrotic', 'poison', 'fire', 'radiant', 'psychic']

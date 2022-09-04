@@ -129,6 +129,10 @@ export default {
       itemsService.unequipItem(character, equipment)
     },
     equip(character, item){
+      if(item.scroll){
+        this.useScroll(item.name, character)
+        return
+      }
       itemsService.equipItem(character, item)
     },
     getStatDiff(character, item){
@@ -219,6 +223,12 @@ export default {
       }
       if(spellsService.learnSpell(lvlUpSpell, character)){
         character.statBonus--
+      }
+    },
+    useScroll(spellName, character){
+      if(spellsService.learnSpell(spellName, character)){
+        let index = $store.state.player.items.findIndex(i => i.name == spellName)
+        $store.state.player.items.splice(index, 1)
       }
     },
     async deleteCharacter(){
