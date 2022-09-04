@@ -87,15 +87,17 @@ class AbilitiesService{
         }
       })
     }
-    if(ability.debuff){
-      ability.effect.forEach(function(e, i){
-        target['debuffs'].push({effect: e, value: ability.value[i]})
-      })
-    }
-    if(ability.buff){
-      ability.effect.forEach(function(e, i){
-        target['buffs'].push({effect: e, value: ability.value[i]})
-      })
+    if(ability.temp){
+      if(ability.debuff){
+        ability.effect.forEach(function(e, i){
+          target['debuffs'].push({effect: e, value: ability.value[i]})
+        })
+      }
+      if(ability.buff){
+        ability.effect.forEach(function(e, i){
+          target['buffs'].push({effect: e, value: ability.value[i]})
+        })
+      }
     }
   }
 }

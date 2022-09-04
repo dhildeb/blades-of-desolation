@@ -98,8 +98,7 @@ class CharacterService{
         if(!se.negative || typeof se.value !== 'number'){return}
         c[se.effect] = se.value > 0 ? c[se.effect] - se.value : se.value
         if(se.effect == 'hp'){
-          console.log('taking poison dmg')
-          animationsService.fadeOutUp('hit'+c.id, se.value, '-')
+          animationsService.fadeOutUp('hit'+c.id, se.value, '-', 'poison')
         }
       })
     })

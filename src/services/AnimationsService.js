@@ -1,4 +1,5 @@
 import { generateId } from "@/utils/generateId"
+import { getDmgTypeIcon } from "@/utils/getDmgTypeIcon"
 import $ from 'jquery'
 class AnimationsService{
   shake(id){
@@ -25,10 +26,11 @@ class AnimationsService{
       charImgElem.on('animationend', handleAnimationEnd)
     })
   }
-  fadeOutUp(id, dmg, operator){
+  fadeOutUp(id, dmg, operator, dmgType = ''){
     let elem = $('#'+id)
     let tempId = generateId()
-    elem.append('<h3 id="'+tempId+'" class="position-absolute">'+operator+dmg+'</h3>')
+    let icon = getDmgTypeIcon(dmgType)
+    elem.append('<h3 id="'+tempId+'" class="position-absolute d-flex">'+operator+dmg+icon+'</h3>')
     elem = $('#'+tempId)
     new Promise((resolve) => {
       elem.addClass(operator == '-' ? 'text-danger' : 'text-success')

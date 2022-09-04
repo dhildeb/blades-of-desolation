@@ -14,6 +14,7 @@ export class Ability{
     // this.arrayEffect = data.arrayEffect // {resistence: cold}
     this.buff = data.buff ?? false
     this.debuff = data.debuff ?? false
+    this.temp = data.temp ?? true
     this.title = data.title ?? null
     this.classType = data.classType ?? 'any'
     this.uses = data.uses ?? 1

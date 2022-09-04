@@ -41,7 +41,7 @@ class BattleService{
 
       this.statusEffects(target, attacker)
 
-      animationsService.fadeOutUp('hit'+target.id, dmg, '-')
+      animationsService.fadeOutUp('hit'+target.id, dmg, '-', attacker.dmgType)
       sleep(200).then(()=>{
         animationsService.shake('charImg'+target.id)
       })
@@ -55,7 +55,7 @@ class BattleService{
         dmg = this.resistance({strength: dmg, dmgType: target.dmgType}, attacker)
         dmg = this.vulnerable({strength: dmg, dmgType: target.dmgType}, attacker)
         attacker.hp -= dmg
-        animationsService.fadeOutUp('hit'+attacker.id, dmg, '-')
+        animationsService.fadeOutUp('hit'+attacker.id, dmg, '-', target.dmgType)
     }
   }
   dodge(target){
@@ -140,9 +140,9 @@ class BattleService{
       let resistant = target.resistances.find(r => r == status.name)
       let vulnerable = target.vulnerabilities.find(v => v == status.name)
 
-      chance *= vulnerable ? 2 : 1
-      chance *= resistant ? .5 : 1
-      
+      chance *= vulnerable ? .5 : 1
+      chance *= resistant ? 2 : 1
+
       if(status.chance < chance || status.negative || immune){return}
       if(target['statusEffects'].find(e => e.name == status.name && e.negative)){
         target['statusEffects'].filter(e => e.name == status.name && e.negative)[0].value += status.value

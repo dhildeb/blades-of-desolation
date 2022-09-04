@@ -116,10 +116,11 @@ export default {
             }else{
                 if(!random){
                     router.push({name: 'MainShop'})
+                }else{
+                    let spellName = spellsService.findRandomLearnableSpell($store.state.selected)
+                    $store.state.player.items.push(new Item({name: spellName, scroll: true, value: 1, effect: 'Learn spell', price: characterService.getAverageCharacterLvl()*250+500}))
+                    toast.success('You found a '+spellName+' scroll', {timeout: 4000})
                 }
-                let spellName = spellsService.findRandomLearnableSpell($store.state.selected)
-                $store.state.player.items.push(new Item({name: spellName, scroll: true, value: 1, effect: 'Learn spell', price: characterService.getAverageCharacterLvl()*250+500}))
-                toast.success('You found a '+spellName+' scroll', {timeout: 4000})
             }
         },
         async completeArea(){
