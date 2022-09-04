@@ -239,13 +239,13 @@ const store = createStore({
         {name: 'inflict wounds', strength: 15, dmgType: 'necrotic', reqs: {classType: 'warlock'}, level: 1},
         {name: 'guided bolt', strength: 12, dmgType: 'radiant', level: 1},
         {name: 'magic missile', areaEffect: true, strength: 4, dmgType: 'melee', level: 1},
-        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 1, reqs: {classType: 'cleric'}, description: 'Heal Party +2'},
-        {name: 'weaken', effect: 'strength', value: -3, buff: true, level: 1, description: 'Reduces targets strength by -3'},
+        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, temp: true, level: 1, reqs: {classType: 'cleric'}, description: 'Heal Party +2'},
+        {name: 'weaken', effect: 'strength', value: -3, buff: true, temp: true, level: 1, description: 'Reduces targets strength by -3'},
         {name: 'power up', effect: 'strength', value: 3, buff: true, level: 1, description: 'Increases strength of target by +3'},
       ],
       //2 : lesser restoration-remove all statusEffects and debuffs
       [
-        {name: 'shield', effect: 'physicalResistance', value: 50, buff: true, level: 2, description: 'Increases physical resistance of target by 50%'},
+        {name: 'shield', effect: 'physicalResistance', value: 50, buff: true, temp: true, level: 2, description: 'Increases physical resistance of target by 50%'},
         {name: 'acid arrow', strength: 18, dmgType: 'acid', level: 2},
         {name: 'poison arrow', strength: 10, dmgType: 'poison', statusEffects: [{name: 'poison', effect: 'hp', value: 5, chance: 25, negative: false}], level: 2},
         {name: 'scorching ray', areaEffect: true, strength: 6, dmgType: 'fire', level: 2},
@@ -266,7 +266,7 @@ const store = createStore({
       ],
       //4
       [
-        {name: 'grant death touch', effect: ['strength', 'dmgType', 'lifeSteal'], value: [5, 'necrotic', 20], buff: true, level: 4, description: 'Give target 20% life steal'},
+        {name: 'grant death touch', effect: ['strength', 'dmgType', 'lifeSteal'], value: [5, 'necrotic', 20], buff: true, temp: true, level: 4, description: 'Give target 20% life steal'},
         {name: 'blight', strength: 32, dmgType: 'necrotic', level: 4},
         {name: 'ice storm', strength: 16, areaEffect: true, dmgType: 'cold', level: 4},
         {name: 'phantasmal killer', strength: 40, dmgType: 'psychic', level: 4},
@@ -297,6 +297,8 @@ const store = createStore({
         {name: 'fire storm', areaEffect: true, strength: 35, dmgType: 'necrotic', level: 7},
         {name: 'teleport', areaEffect: true, effect: 'inBattle', value: false, level: 7, description: 'Flee from battle'},
         {name: 'prasmatic spray', areaEffect: true, strength: 35, dmgType: getRandomDmgType(), level: 7},
+        {name: 'mass slow', areaEffect: true, effect: 'actions', value: 1, debuff: true, level: 6, description: 'Reduces enemies actions for a turn'},
+        {name: 'mass haste', areaEffect: true, effect: 'actions', value: 6, buff: true, temp: true, level: 6, description: 'Party gains speed +6'},
       ],
       //8
       [
@@ -308,7 +310,6 @@ const store = createStore({
       //9
       [
         {name: 'mass heal', areaEffect: true, effect: 'hp', value: 116, buff: true, level: 9, reqs: {classType: 'cleric'}, description: 'Heal Party +116'},
-        {name: 'mass haste', areaEffect: true, effect: 'actions', value: 6, buff: true, level: 9, description: 'Party gains speed +6'},
         {name: 'meteor storm', areaEffect: true, strength: 120, dmgType: 'fire', level: 9},
         {name: 'power word kill', strength: 100, dmgType: 'fire', level: 9},
         {name: 'weird', areaEffect: true, strength: 75, dmgType: 'psychic', level: 9},

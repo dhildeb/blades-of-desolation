@@ -47,11 +47,14 @@ class SpellsService{
         }
       }
     }
-    if(spell.debuff){
-      target['debuffs'].push({effect: spell.effect, value: spell.value})
-    }
-    if(spell.buff){
-      target['buffs'].push({effect: spell.effect, value: spell.value})
+    // buffs/debuffs are removed at end of battle, not all buff/debuffs are temporary ex. healing
+    if(spell.temp){
+      if(spell.debuff){
+        target['debuffs'].push({effect: spell.effect, value: spell.value})
+      }
+      if(spell.buff){
+        target['buffs'].push({effect: spell.effect, value: spell.value})
+      }
     }
   }
   findRandomLearnableSpell(character){

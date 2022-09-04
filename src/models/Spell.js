@@ -15,6 +15,7 @@ export class Spell {
     this.value = data.value
     this.buff = data.buff ?? false
     this.debuff = data.debuff ?? false
+    this.temp = data.temp ?? false
     this.title = data.title ?? null
     this.reqs = data.reqs ?? {}
   }
