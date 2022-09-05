@@ -133,6 +133,10 @@ export default {
         this.useScroll(item.name, character)
         return
       }
+      if(item.type == 'consumable'){
+        itemsService.useConsumableItem(item, character)
+        return
+      }
       itemsService.equipItem(character, item)
     },
     getStatDiff(character, item){

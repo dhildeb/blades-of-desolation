@@ -49,14 +49,15 @@ class BattleService{
     })
   }
   thorns(attacker, target){
-      if(target.thorns > 0 && attacker.dmgType == 'melee' && !attacker['isSpell']){
-        let dmg = target.thorns
-        dmg = this.immunities(attacker, target, dmg)
-        dmg = this.resistance({strength: dmg, dmgType: target.dmgType}, attacker)
-        dmg = this.vulnerable({strength: dmg, dmgType: target.dmgType}, attacker)
-        attacker.hp -= dmg
-        animationsService.fadeOutUp('hit'+attacker.id, dmg, '-', target.dmgType)
-    }
+      if(target.thorns <= 0 || attacker.dmgType == 'range' || attacker['isSpell']){
+        return
+      }
+      let dmg = target.thorns
+      dmg = this.immunities(attacker, target, dmg)
+      dmg = this.resistance({strength: dmg, dmgType: target.dmgType}, attacker)
+      dmg = this.vulnerable({strength: dmg, dmgType: target.dmgType}, attacker)
+      attacker.hp -= dmg
+      animationsService.fadeOutUp('hit'+attacker.id, dmg, '-', target.dmgType)
   }
   dodge(target){
     let chance = Math.floor(Math.random()*100)+1
@@ -67,17 +68,17 @@ class BattleService{
     let targetIsFoe = target instanceof MonsterFactory
     let type = targetIsFoe ? TYPE.ERROR : TYPE.SUCCESS
     let dmg = attack.strength
-    if(target.resistances.filter(r => r == attack.dmgType).length > 0){
-      this.toast(target.name+' is resistant to '+attack.dmgType, {timeout: 3000, type: type})
+    if(target.resistances.filter(r => r == attack.dmgType).length > 0 || (target.resistances.find(r => r == 'melee') && attack.dmgType == 'range')){
       dmg = Math.round(dmg/2)
-    }
-    if(target.physicalResistance > 0 && attack.dmgType == 'melee'){
       this.toast(target.name+' is resistant to '+attack.dmgType, {timeout: 3000, type: type})
-      dmg = dmg - Math.round(dmg * (target.physicalResistance/100))
-    }
-    if(target.magicResistance > 0 && attack.dmgType == 'magic'){
+    } 
+    if(target.physicalResistance > 0 && attack.dmgType == 'melee' || (target.physicalResistance > 0 && attack.dmgType == 'range')){
+      dmg = dmg - Math.round(dmg * (target.physicalResistance/100)*10)/10
       this.toast(target.name+' is resistant to '+attack.dmgType, {timeout: 3000, type: type})
-      dmg = dmg - Math.round(dmg * (target.magicResistance/100))
+    }
+    if(target.magicResistance > 0 && attack.dmgType != 'melee' && attack.dmgType != 'range'){
+      dmg = dmg - Math.round(dmg * (target.magicResistance/100)*10)/10
+      this.toast(target.name+' is resistant to '+attack.dmgType, {timeout: 3000, type: type})
     }
     return dmg < 0 ? 0 : dmg
   }

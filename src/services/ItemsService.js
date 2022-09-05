@@ -130,6 +130,11 @@ class ItemsService{
       }
     })
   }
+  useConsumableItem(item, character){
+    character[item.effect] += item.value
+    let index = $store.state.player.items.findIndex(i => i.id == item.id)
+    $store.state.player.items.splice(index, 1)
+  }
 }
 
 export const itemsService = new ItemsService()

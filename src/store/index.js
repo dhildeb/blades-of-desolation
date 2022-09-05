@@ -6,10 +6,10 @@ const store = createStore({
     // all monster stats: {name: 'any', race: '', img: '', spells: [], equipment: [], dmgType: '', hp: 5, magic: 0, luck: 0, strength: 1, dodge: 0, thorns: 0, actions: 1, physicalResistance: 0, magicResistance: 0, lifeSteal:  0, absorb: '', level: 1, loot: {gold: 0, items: []}, exp: 50}
       monsters: [
         //0
-        [{name: 'goblin', actions: 1, strength: 2, hp: 7, loot: {gold: 5, items: ['dagger']}, exp: 50, dodge: 10, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgoblin.png?alt=media&token=92f9a971-2733-42a9-b616-563ffcbe86dc'},
+        [{name: 'goblin', actions: 1, strength: 2, hp: 7, loot: {gold: 5, items: ['dagger']}, exp: 50, physicalResistance: 10, dodge: 10, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgoblin.png?alt=media&token=92f9a971-2733-42a9-b616-563ffcbe86dc'},
         {name: 'bullywug', actions: 2, strength: 1, hp: 11, loot: {gold: 5, items: ['spear']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fbullywug.png?alt=media&token=b29b3455-f4ca-4c97-918c-fd20fb8946d0', statusEffects: [{name: 'poison', effect: 'hp', value: 1, chance: 10, negative: false}]},
         {name: 'giant bat', actions: 1, strength: 3, lifeSteal: 20, hp: 15, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-bat.png?alt=media&token=09a1bbb5-aea2-42ff-afbd-34c420a23b52'},
-        {name: 'giant rat', actions: 1, strength: 1, hp: 7, loot: {gold: 2, items: []}, exp: 25, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-rat.png?alt=media&token=c09b17a6-58da-4efc-b5e0-77f8ff3d5323'},
+        {name: 'giant rat', actions: 1, strength: 1, hp: 7, resistances: ['melee'], loot: {gold: 2, items: []}, exp: 25, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fgiant-rat.png?alt=media&token=c09b17a6-58da-4efc-b5e0-77f8ff3d5323'},
         {name: 'kuo toa', actions: 1, strength: 2, hp: 18, loot: {gold: 5, items: ['spear', 'sticky shield']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fkuo-toa.png?alt=media&token=d4184eda-e4f2-4c13-8015-74abea6980ae'},
         {name: 'seedling', actions: 1, strength: 2, hp: 8, vulnerabilities: ['fire'], thorns: 1, loot: {gold: 5, items: []}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fseedling.png?alt=media&token=4e357d83-5c08-45d2-940e-7ae302b26366'},
         {name: 'skeleton', actions: 1, strength: 4, hp: 9, immunities: ['necrotic', 'psychic', 'petrify', 'poison'], vulnerabilities: ['radiant'], loot: {gold: 5, items: ['shortsword', 'shortbow']}, exp: 50, img: 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fundead-barbarian.png?alt=media&token=8f7d9113-6d7f-4c60-b74e-a30cf4cb9ed5'},
@@ -101,7 +101,6 @@ const store = createStore({
         ]
     ],
     // price ranges c: 100-1000, uc: 1000-4000, r: 4000-10000, vr: 10000-25000
-    // TODO consumables: manual of bodily health, Manual of Gainful Exercise
     // TODO add: armor of resistance, armor of vulnerability, brooch of shielding, demon armor, dragon slayer, holy avenger, mace of smiting, ring of resistance
     items: [
       // Common
@@ -130,6 +129,8 @@ const store = createStore({
       {name: 'robe', effect: 'hp', value: 2, type: 'cloak', price: 500, rarity: 'c'},
       {name: 'cape', effect: 'physicalResistance', value: 2, type: 'cloak', price: 500, rarity: 'c'},
       {name: 'wand', effect: 'baseMagic', value: 1, type: 'mainHand', price: 500, rarity: 'c'},
+      {name: 'health potion', effect: 'hp', value: 10, type: 'consumable', price: 50, rarity: 'c'},
+      {name: 'mana potion', effect: 'magic', value: 2, type: 'consumable', price: 50, rarity: 'c'},
       
       // Uncommon
       {name: 'plate', effect: ['baseHp', 'physicalResistance', 'baseActions'], value: [15, 15, -3], type: 'armor', price: 2500, rarity: 'uc'},
@@ -154,7 +155,9 @@ const store = createStore({
       {name: 'gauntlets of ogre power', effect: ['strength', 'baseActions'], value: [3, -1], type: 'accessory', price: 2000, rarity: 'uc', requirements: [{stat: 'baseHp', req: 15}]},
       {name: 'javelin of lightning', effect: ['strength', 'dmgType', 'statusEffects'], value: [3, 'lightning', {name: 'petrify', effect: 'actions', value: 0, chance: 10, negative: false}], type: 'mainHand', price: 4000, rarity: 'uc'},
       {name: 'luckstone', effect: 'luck', value: 2, type: 'accessory', price: 2000, rarity: 'uc'},
-
+      {name: 'health potion', effect: 'hp', value: 25, type: 'consumable', price: 250, rarity: 'uc'},
+      {name: 'mana potion', effect: 'magic', value: 5, type: 'consumable', price: 250, rarity: 'uc'},
+      
       // Rare
       {name: 'gloves of speed', effect: 'strength', value: 1, type: 'offHand', price: 5000, rarity: 'r', speed: -1},
       {name: 'displacer cloak', effect: 'dodge', value: 25, type: 'cloak', price: 5000, rarity: 'r'},
@@ -173,6 +176,9 @@ const store = createStore({
       {name: 'shield +2', effect: 'physicalResistance', value: 40, type: 'offHand', price: 10000, rarity: 'r'},
       {name: 'sun blade', effect: ['strength', 'dmgType'], value: [5, 'radiant'], type: 'mainHand', speed: 1, price: 10000, rarity: 'r'},
       {name: 'sword of life stealing', effect: ['strength', 'dmgType', 'lifeSteal'], value: [5, 'necrotic', 25], type: 'mainHand', speed: 3, price: 10000, rarity: 'r'},
+      {name: 'health potion', effect: 'hp', value: 50, type: 'consumable', price: 500, rarity: 'r'},
+      {name: 'mana potion', effect: 'magic', value: 10, type: 'consumable', price: 500, rarity: 'r'},
+      {name: 'potion of speed', effect: 'actions', value: 10, type: 'consumable', price: 2000, rarity: 'r'},
       
       // Very Rare
       {name: 'purple dragon scalemail', effect: ['baseHp', 'resistances', 'baseActions'], value: [50, 'psychic', -1], type: 'armor', price: 10000, rarity: 'vr'},
@@ -198,7 +204,9 @@ const store = createStore({
       {name: 'staff of withering', effect: ['magic', 'dmgType', 'resistances'], value: [10, 'necrotic', 'necrotic'], type: 'mainHand', speed: 2, price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['cleric', 'warlock']}]},
       {name: 'sword of sharpness', effect: 'strength', value: 15, type: 'mainHand', speed: 2, price: 25000, rarity: 'vr', requirements: [{stat: 'baseStrength', req: 10}]},
       {name: 'wand of the war mage', effect: 'magic', value: 15, type: 'mainHand', speed: 2, price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['warlock', 'cleric', 'wizard']}]},
-
+      {name: 'health potion', effect: 'hp', value: 100, type: 'consumable', price: 1000, rarity: 'vr'},
+      {name: 'mana potion', effect: 'magic', value: 20, type: 'consumable', price: 1000, rarity: 'vr'},
+      
       // Legendary
       {name: 'armor of invulnerability', effect: ['physicalResistance', 'baseActions'], value: [100, -3], type: 'armor', price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},
       {name: 'luck blade', effect: ['strength', 'luck'], value: [5, 10], type: 'mainHand', speed: 2, price: 100000, rarity: 'l'},
@@ -208,6 +216,10 @@ const store = createStore({
       {name: 'sword of extra sharpness', effect: 'strength', value: 25, type: 'mainHand', speed: 2, price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},
       {name: 'sword petrification', effect: ['strength', 'statusEffects'], value: [5, {name: 'petrify', effect: 'actions', value: 0, chance: 50, negative: false}], type: 'mainHand', speed: 3, price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},
       {name: 'sword poison', effect: ['strength', 'statusEffects'], value: [5, {name: 'poison', effect: 'hp', value: 10, chance: 50, negative: false}], type: 'mainHand', speed: 3, price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},
+      {name: 'manual of bodily health', effect: 'baseHp', value: 25, type: 'consumable', price: 10000, rarity: 'l'},
+      {name: 'tome of magic', effect: 'baseMagic', value: 3, type: 'consumable', price: 10000, rarity: 'l'},
+      {name: 'Manual Of Gainful Exercise', effect: 'baseStrength', value: 5, type: 'consumable', price: 10000, rarity: 'l'},
+      {name: 'manual of quickness of action', effect: 'baseActions', value: 2, type: 'consumable', price: 10000, rarity: 'l'},
     ],
     abilities: [
       {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [10, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1, description: 'Reduces physical damage and increases your strength'}, 

@@ -3,6 +3,7 @@ import $store from '@/store/index.js'
 import { getRandomAbility } from "@/utils/getRandomAbility"
 import { useToast } from "vue-toastification"
 import { animationsService } from "./AnimationsService"
+import { gameService } from "./GameService"
 import { monstersService } from "./MonstersService"
 import { spellsService } from "./SpellsService"
 class CharacterService{
@@ -29,6 +30,7 @@ class CharacterService{
     this.regen()
     this.magicRegen()
     $store.state.selected = ''
+    this.resetExtraStats()
     monstersService.takeTurn()
   }
   resetActions(){
@@ -36,10 +38,13 @@ class CharacterService{
       c.actions = c.actions >= 0 ? c.baseActions : c.actions+c.baseActions
     })
   }
-  resetExtraHp(){
+  resetExtraStats(){
     $store.state.player.characters.forEach(c => {
       if(c.hp > c.baseHp){
         c.hp = c.baseHp
+      }
+      if(c.magic > c.baseMagic){
+        c.magic = c.baseMagic
       }
     })
   }
@@ -252,6 +257,7 @@ class CharacterService{
       spellsService.learnSpell(spell, newChar)
     }
     $store.state.player.characters.push(newChar)
+    gameService.addHealthPot()
   }
   deleteCharacter(characterId){
     $store.state.player.characters = $store.state.player.characters.filter(c => c.id !== characterId)

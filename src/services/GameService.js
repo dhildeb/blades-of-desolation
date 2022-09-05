@@ -33,7 +33,7 @@ class GameService{
   }
   victory(){
     questService.updateQuest()
-    characterService.resetExtraHp()
+    characterService.resetExtraStats()
     this.removeBuffs()
     this.addKillCounts()
     this.handleExpGain()
@@ -115,6 +115,10 @@ class GameService{
     character.baseHp += character.level*3
 
     character.statBonus += 2
+  }
+  addHealthPot(){
+    let item = $store.state.items.find(i => i.name == 'health potion' && i.rarity == 'c')
+    $store.state.player.items.push(new Item(item))
   }
 }
 
