@@ -19,7 +19,15 @@ class GameService{
     for(let i=0; i<quantity; i++){
       let monstersList = $store.state.monsters[$store.state.location]
       let index = Math.floor(Math.random()*monstersList.length)
-      $store.state.combatMonsters.push(new MonsterFactory(monstersList[index]))
+      let newMonster = Object.assign({}, monstersList[index])
+      // dereference statusEffects object
+      if(newMonster['statusEffects']){
+        newMonster['statusEffects'] = []
+        for(let i = 0; i < monstersList[index].statusEffects.length; i++){
+          newMonster['statusEffects'].push(Object.assign({}, monstersList[index].statusEffects[i]))
+        }
+      }
+      $store.state.combatMonsters.push(new MonsterFactory(newMonster))
     }
     itemsService.randomItemDrop()
   }

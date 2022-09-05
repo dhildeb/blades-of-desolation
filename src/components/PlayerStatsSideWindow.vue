@@ -60,6 +60,7 @@ import { useToast } from "vue-toastification"
 
 export default {
   components: { ItemPouchModal, QuestModal, BattleOptions },
+  inheritAttrs: false,
   setup(){
     const state = reactive({
       player: computed(()=> $store.state.player),
