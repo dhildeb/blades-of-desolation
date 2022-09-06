@@ -93,34 +93,29 @@ export default {
             }
             // Tavern
             if(rowCol[1] == 5 && rowCol[2] == 3){
-                this.getEncounter(false)
-                return
+                router.push({name: 'MainShop'})
             }
             this.getEncounter()
         },
-        async getEncounter(random = true){
+        getEncounter(){
             const toast = useToast()
             let chance = Math.ceil(Math.random()*100)
-            if(chance > 40 && random){
+            if(chance > 40){
                 router.push({name: 'battleField'})
-            }else if(chance > 20 && random){
-                toast.info('You found some nice trees', {timeout: 4000})
-            }else if(chance > 10 & random){
+            }else if(chance > 20){
+                //nothing
+            }else if(chance > 10){
                 let gold = Math.round(Math.random()*100)*($store.state.location+1)
                 $store.state.player.gold += gold
                 toast.success('You found '+gold+'Gold!', {timeout: 4000})
-            }else if(chance > 5 && random){
+            }else if(chance > 2){
                 let item = itemsService.findRandomItem()
                 $store.state.player.items.push(new Item(item))
                 toast.success('You found a '+item.name, {timeout: 4000})
             }else{
-                if(!random){
-                    router.push({name: 'MainShop'})
-                }else{
-                    let spellName = spellsService.findRandomLearnableSpell($store.state.selected)
-                    $store.state.player.items.push(new Item({name: spellName, scroll: true, value: 1, effect: 'Learn spell', price: characterService.getAverageCharacterLvl()*250+500}))
-                    toast.success('You found a '+spellName+' scroll', {timeout: 4000})
-                }
+                let spellName = spellsService.findRandomLearnableSpell($store.state.selected)
+                $store.state.player.items.push(new Item({name: spellName, scroll: true, value: 1, effect: 'Learn spell', price: characterService.getAverageCharacterLvl()*250+500}))
+                toast.success('You found a '+spellName+' scroll', {timeout: 4000})
             }
         },
         async completeArea(){
