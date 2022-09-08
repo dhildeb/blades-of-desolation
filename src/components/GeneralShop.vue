@@ -21,6 +21,7 @@ import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
 import Item from "@/components/Item.vue"
 import { useToast } from "vue-toastification"
+import Notify from "@/utils/Notify"
 export default {
 name: 'GeneralShop',
 components: {
@@ -38,8 +39,11 @@ setup(){
   return state
 },
 methods: {
-  buy(item){
+  async buy(item){
     const toast = useToast()
+    if(!(await Notify.confirm('Buy '+item.name, itemsService.getItemEffectsDisplay(item), 'question', 'Buy'))){
+      return
+    }
     if(this.$store.state.player.gold >= item.price){
       this.$store.commit('reducePlayerGold', item.price)
       itemsService.buyItem(item)

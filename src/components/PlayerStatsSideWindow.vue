@@ -4,8 +4,10 @@
   <div class="bg-black text-light side-window" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
     <nav class="pb-2 d-flex justify-content-center">
       <div v-if="player.characters.length > 0">
-        <router-link to="/map">Map</router-link>
-        <div v-if="player.characters.length <= 5">
+        <div v-if="this.$route.name != 'MapLocation'">
+          <router-link to="/map">Map</router-link>
+        </div>
+        <div v-if="player.characters.length <= 5 && this.$route.name == 'MapLocation'">
           <router-link to="/">Create</router-link>
         </div>
       </div>
@@ -38,7 +40,7 @@
     </div>
     <button v-if="this.$route.name !== 'battleField'" class="btn btn-success float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="saveGame">Save</button>
     <button class="btn btn-success float-bottom" :class="player.characters.length < 1 ? '' : 'd-none'" @click="loadGame">Load Game</button>
-    <button v-if="this.$route.name !== 'battleField'" class="btn btn-primary float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="rest">Rest (unsafe)</button>
+    <button v-if="this.$route.name !== 'battleField' && this.$route.name !== 'MainShop'" class="btn btn-primary float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="rest">Rest (unsafe)</button>
     <BattleOptions v-if="$route.name == 'battleField' && monstersWithHp > 0" />
   </div>
 </template>
@@ -97,6 +99,7 @@ export default {
       })
       this.$store.state.location = parseInt(this.$store.state.player.currentLocation[0])
       toast.success('Game Loaded!')
+      router.push({name: 'AreaLocation'})
     },
     async rest(){
       const toast = useToast()

@@ -8,6 +8,7 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { getRarityFullName } from "@/utils/getRarityFullName"
+import { itemsService } from "@/services/ItemsService"
 
 export default {
   name: 'EquipmentItem',
@@ -23,16 +24,7 @@ export default {
   methods: {
     getRarityFullName : getRarityFullName,
     getItemEffectsDisplay(item){
-      let display = ''
-      if(Array.isArray(item.effect)){
-        for(let i=0; i<item.effect.length; i++){
-          display += item.effect[i].replace(/([A-Z])/g, " $1")+' +'+item.value[i]+' '
-        }
-      }else{
-        display = item.effect.replace(/([A-Z])/g, " $1")+' +'+item.value
-      }
-      display += item.speed ? ' speed '+item.speed : ''
-      return display
+      itemsService.getItemEffectsDisplay(item)
     },
     getItemReqsDisplay(item){
       let display = 'Pre-reqs: '

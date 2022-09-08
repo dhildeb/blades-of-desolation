@@ -87,13 +87,13 @@ export default {
                 toast.success('You found a key!')
             }
             if(explored.length == 60 && !this.areaCompleted && rowCol[1] == 10 && rowCol[2] == 6 && this.hasKey){
-                $store.state.player.items = $store.state.player.items.filter(i => i.name != 'key')
                await this.completeArea()
                return
             }
             // Tavern
             if(rowCol[1] == 5 && rowCol[2] == 3){
                 router.push({name: 'MainShop'})
+                return
             }
             this.getEncounter()
         },
@@ -123,9 +123,10 @@ export default {
             let options = {gold: 'Wealth', power: 'Power', item: 'Treasure'}
             let boon = await Notify.selectOptions(options, 'Choose your Reward!', 'Well done adventures! For completing this area you are granted a boon!', 'Confirm')
             let reward
+            let chance = Math.ceil(Math.random()*40)+$store.state.location
             switch(boon){
                 case 'gold':
-                    reward = Math.round(Math.random()*500*($store.state.location+1)+500*($store.state.location+1))
+                    reward = Math.round(Math.random()*(4000*($store.state.location+1)))+1000
                     $store.state.player.gold += reward
                     toast.success('You recieved '+reward+' Gold')
                 break
@@ -134,11 +135,11 @@ export default {
                     toast.success('Your party feels more powerful')
                 break
                 case 'item':
-                    if($store.state.location < 5){
+                    if(chance < 15){
                         reward = 'uc'
-                    }else if($store.state.location < 10){
+                    }else if(chance < 35){
                         reward = 'r'
-                    }else if($store.state.location < 15){
+                    }else if(chance < 40){
                         reward = 'vr'
                     }else{
                         reward = 'l'
@@ -148,6 +149,7 @@ export default {
                     toast.success('You recieved '+reward.name)
             }
             if(boon){
+                $store.state.player.items = $store.state.player.items.filter(i => i.name != 'key')
                 $store.state.player.explored[$store.state.location].push('reward recieved')
             }
         },

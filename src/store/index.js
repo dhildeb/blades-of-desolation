@@ -130,6 +130,8 @@ const store = createStore({
       {name: 'cape', effect: 'physicalResistance', value: 2, type: 'cloak', price: 500, rarity: 'c'},
       {name: 'wand', effect: 'baseMagic', value: 1, type: 'mainHand', price: 500, rarity: 'c'},
       {name: 'health potion', effect: 'hp', value: 10, type: 'consumable', price: 50, rarity: 'c'},
+      {name: 'antidote', effect: 'statusEffects', value: 'poison', type: 'consumable', price: 50, rarity: 'c'},
+      {name: 'soft', effect: 'statusEffects', value: 'petrify', type: 'consumable', price: 50, rarity: 'c'},
       {name: 'mana potion', effect: 'magic', value: 2, type: 'consumable', price: 50, rarity: 'c'},
       
       // Uncommon
@@ -157,6 +159,7 @@ const store = createStore({
       {name: 'luckstone', effect: 'luck', value: 2, type: 'accessory', price: 2000, rarity: 'uc'},
       {name: 'health potion', effect: 'hp', value: 25, type: 'consumable', price: 250, rarity: 'uc'},
       {name: 'mana potion', effect: 'magic', value: 5, type: 'consumable', price: 250, rarity: 'uc'},
+      {name: 'restoration potion', effect: ['magic', 'hp'], value: [2, 10], type: 'consumable', price: 250, rarity: 'uc'},
       
       // Rare
       {name: 'gloves of speed', effect: 'strength', value: 1, type: 'offHand', price: 5000, rarity: 'r', speed: -1},
@@ -179,6 +182,8 @@ const store = createStore({
       {name: 'health potion', effect: 'hp', value: 50, type: 'consumable', price: 500, rarity: 'r'},
       {name: 'mana potion', effect: 'magic', value: 10, type: 'consumable', price: 500, rarity: 'r'},
       {name: 'potion of speed', effect: 'actions', value: 10, type: 'consumable', price: 2000, rarity: 'r'},
+      {name: 'restoration potion', effect: ['magic', 'hp'], value: [5, 25], type: 'consumable', price: 500, rarity: 'r'},
+
       
       // Very Rare
       {name: 'purple dragon scalemail', effect: ['baseHp', 'resistances', 'baseActions'], value: [50, 'psychic', -1], type: 'armor', price: 10000, rarity: 'vr'},
@@ -187,7 +192,7 @@ const store = createStore({
       {name: 'armor +2', effect: ['physicalResistance', 'baseActions'], value: [50, -1], type: 'armor', price: 10000, rarity: 'vr'},
       {name: 'belt of storm giant strength', effect: 'strength', value: 9, type: 'accessory', price: 15000, rarity: 'vr', requirements: [{stat: 'baseHp', req: 35}]},
       {name: 'belt of dwarvenkind', effect: ['baseHp', 'resistances'], value: [2, 'poison'], type: 'accessory', price: 5000, rarity: 'vr'},
-      {name: 'dancing sword', effect: ['baseActions', 'strength'], value: [1, 5], type: '', speed: 1, price: 10000, rarity: 'vr'},
+      {name: 'dancing sword', effect: ['baseActions', 'strength'], value: [1, 5], type: '', speed: 0, price: 10000, rarity: 'vr'},
       {name: 'defender', effect: ['strength', 'physicalResistance'], value: [10, 50], type: 'mainHand', speed: 2, price: 100000, rarity: 'l', requirements: [{stat: 'classType', req: 'paladin'}]},
       {name: 'dwarven plate', effect: ['baseHp', 'physicalResistance', 'baseActions'], value: [50, 50, -2], type: 'armor', price: 25000, rarity: 'vr', requirements: [{stat: 'race', req: 'dwarf'}]},
       {name: 'dwarven hammer', effect: 'strength', value: 15, type: 'mainHand', speed: 3, price: 15000, rarity: 'vr', requirements: [{stat: 'race', req: 'dwarf'}]},
@@ -206,6 +211,7 @@ const store = createStore({
       {name: 'wand of the war mage', effect: 'magic', value: 15, type: 'mainHand', speed: 2, price: 25000, rarity: 'vr', requirements: [{stat: 'classType', req: ['warlock', 'cleric', 'wizard']}]},
       {name: 'health potion', effect: 'hp', value: 100, type: 'consumable', price: 1000, rarity: 'vr'},
       {name: 'mana potion', effect: 'magic', value: 20, type: 'consumable', price: 1000, rarity: 'vr'},
+      {name: 'restoration potion', effect: ['magic', 'hp'], value: [10, 50], type: 'consumable', price: 1000, rarity: 'vr'},
       
       // Legendary
       {name: 'armor of invulnerability', effect: ['physicalResistance', 'baseActions'], value: [100, -3], type: 'armor', price: 100000, rarity: 'l', requirements: [{stat: 'baseStrength', req: 15}]},

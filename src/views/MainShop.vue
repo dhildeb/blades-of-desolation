@@ -38,7 +38,7 @@ export default {
       if(luck > chance && !$store.state.player.quest.objective){
         let index = Math.floor(Math.random()*$store.state.quests.length)
         let newQuest = questService.getQuest($store.state.quests[index])
-        // TODO make good description for new quests && ability to accept up to 3 quests
+        // TODO make ability to accept up to 3 quests
         if(await Notify.confirm(newQuest.objective, newQuest.target+' | Reward: '+newQuest.reward)){
           $store.state.player.quest = newQuest
         }

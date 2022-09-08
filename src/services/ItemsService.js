@@ -131,9 +131,48 @@ class ItemsService{
     })
   }
   useConsumableItem(item, character){
-    character[item.effect] += item.value
+    if(Array.isArray(item.effect)){
+      item.effect.forEach((e, index) => {
+        this.doItemEffect(e, item.value[index], character)
+      })
+    }else{
+      this.doItemEffect(item.effect, item.value, character)
+    }
     let index = $store.state.player.items.findIndex(i => i.id == item.id)
     $store.state.player.items.splice(index, 1)
+  }
+  doItemEffect(effect, value, character){
+    if(effect == 'statusEffects'){
+      let seIndex = character.statusEffects.findIndex(se => se.name == value && se.negative)
+      character.statusEffects.splice(seIndex, 1)
+    }else{
+      character[effect] += value
+    }
+  }
+  getItemEffectsDisplay(item){
+    let display = ''
+    if(Array.isArray(item.effect)){
+      for(let i=0; i<item.effect.length; i++){
+        let operator = item.value[i] <= 0 ? '' : '+'
+        display += i > 0 ? ' | ' : ''
+        display += item.effect[i].replace(/([A-Z])/g, " $1")
+        if(typeof item.value[i] == 'object'){
+          display += ' +'+item.value[i].name+' +'+item.value[i].chance+'% '
+        }else{
+          display += operator+item.value[i]+' '
+        }
+      }
+    }else{
+      let operator = item.value <= 0 ? '' : '+'
+      display = item.effect.replace(/([A-Z])/g, " $1")
+      if(typeof item.value == 'object'){
+        display += item.value.name+' +'+item.value.chance+'% '
+      }else{
+        display += operator+item.value+' '
+      }
+    }
+    display += item.speed ? '| speed '+item.speed : ''
+    return display
   }
 }
 

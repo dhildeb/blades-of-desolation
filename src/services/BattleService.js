@@ -79,17 +79,9 @@ class BattleService{
     }
     if(target.physicalResistance > 0 && attack.dmgType == 'melee' || (target.physicalResistance > 0 && attack.dmgType == 'range')){
       dmg = dmg - Math.round(dmg * (target.physicalResistance/100)*10)/10
-      setTimeout(() => {
-        animationsService.fadeOutUp('hit'+target.id, '<span>resistant</span>', operator)
-      }, this.animationDelay)
-      this.animationDelay += 750
     }
     if(target.magicResistance > 0 && attack.dmgType != 'melee' && attack.dmgType != 'range'){
       dmg = dmg - Math.round(dmg * (target.magicResistance/100)*10)/10
-      setTimeout(() => {
-        animationsService.fadeOutUp('hit'+target.id, '<span>resistant</span>', operator)
-      }, this.animationDelay)
-      this.animationDelay += 750
     }
     return dmg < 0 ? 0 : dmg
   }
