@@ -18,6 +18,7 @@ class CharacterService{
   }
   
   prepPhase(){
+    gameService.setTimer()
     this.removeDestroyedCharacters()
     this.resetActions()
     this.triggerStatusEffects()

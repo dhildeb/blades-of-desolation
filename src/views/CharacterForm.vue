@@ -98,9 +98,12 @@ export default {
       this.selectedCharacter = character
     },
     async cheat(){
+      let cheat = await Notify.cheat()
+      if(cheat == 'easy'){
+        $store.state.player.options.difficulty = cheat
+      }
       if(this.cheated){return}
       const toast = useToast()
-      let cheat = await Notify.cheat()
       let item = $store.state.items.find(i => i.name == cheat)
       if(!item){return}
       $store.state.player.items.push(new Item(item))

@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <div class="bg-danger timer" :style="'width: '+timerWidth+'vw'" v-if="$store.state.player?.options?.difficulty != 'easy'"></div>
     <div class="row justify-content-center align-items-center h-50 bg-battle-img" :style="'background-image: url('+bgImg+')'">
       <div class="col-4 col-md-2" v-for="monster in monsters" :key="monster.id">
         <div class="position-absolute hit" :id="'hit'+monster.id"></div>
@@ -48,6 +49,11 @@ export default {
         characterService.endPhase()
       }
     },
+    timer: function(){
+      if(this.timer <= 0 && this.monstersWithHp > 0){
+        characterService.endPhase()
+      }
+    },
     charactersWithHp: function(){
       const toast = useToast()
       if(this.characters.length < 1){
@@ -70,6 +76,7 @@ export default {
     onMounted(()=>{
       gameService.spawnMonsters()
       characterService.enterBattle()
+      gameService.setTimer()
     })
     const state = reactive({
       monsters: computed(()=> $store.state.combatMonsters),
@@ -77,7 +84,9 @@ export default {
       monstersWithHp: computed(()=> state.monsters.filter(m => m.hp > 0).length),
       charactersWithActions: computed(()=> state.characters.filter(c => c.actions > 0 && c.hp > 0 ).length),
       charactersWithHp: computed(()=> state.characters.filter(c => c.hp > 0).length),
-      bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('lvl'+($store.state.location+1)+'-bg')))
+      bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('lvl'+($store.state.location+1)+'-bg'))),
+      timer: computed(()=> $store.state.timer),
+      timerWidth: computed(()=> (state.timer/60000)*(window.innerWidth > 992 ? 80 : 100))
     })
     return state
   },
@@ -107,5 +116,8 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: bottom;
+}
+.timer{
+  height: 15px;
 }
 </style>

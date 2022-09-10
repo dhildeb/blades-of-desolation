@@ -66,7 +66,16 @@ class GameService{
     }
     return speedCost
   }
-
+  setTimer(){
+    if($store.state.player?.options && $store.state.player.options?.difficulty == 'easy'){return}
+    $store.state.timer = 60000
+    let timer = setInterval(()=>{
+      $store.state.timer -= 100
+      if($store.state.timer <= 0){
+        clearInterval(timer)
+      }
+    }, 100)
+  }
   loot(){
     $store.state.combatMonsters.forEach(c => {
       $store.state.player.gold += c.loot.gold
