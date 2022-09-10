@@ -1,5 +1,5 @@
 import { generateId } from "@/utils/generateId"
-import { getDmgTypeIcon } from "@/utils/getDmgTypeIcon"
+import { getDmgTypeIcon } from "@/utils/getIcon"
 import $ from 'jquery'
 class AnimationsService{
   shake(id){

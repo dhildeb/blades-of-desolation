@@ -411,7 +411,9 @@ const store = createStore({
             let index = char[data.item.effect[i]].indexOf(data.item.value[i])
             char[data.item.effect[i]].splice(index, 1)
           }else if(typeof char[data.item.effect[i]] === 'string'){
-            char[data.item.effect[i]] = data.item.effect[i] == 'dmgType' ? 'melee' : null
+            let index = char.equipment.find(e => e.effect.includes('dmgType'))?.effect.indexOf('dmgType')
+
+            char[data.item.effect[i]] = data.item.effect[i] == 'dmgType' ? char.equipment.find(e => e.effect.includes('dmgType'))?.value[index] ?? 'melee' : null
           }else{
             char[data.item.effect[i]] -= data.item.value[i]
           }
@@ -421,7 +423,8 @@ const store = createStore({
           let index = char[data.item.effect].indexOf(data.item.value)
           char[data.item.effect].splice(index, 1)
         }else if(typeof char[data.item.effect] === 'string'){
-          char[data.item.effect] = data.item.effect == 'dmgType' ? 'melee' : null
+          let index = char.equipment.find(e => e.effect.includes('dmgType'))?.effect.indexOf('dmgType')
+          char[data.item.effect] = data.item.effect == 'dmgType' ? char.equipment.find(e => e.effect.includes('dmgType'))?.value[index] ?? 'melee' : null
         }else{
           char[data.item.effect] -= data.item.value
         }

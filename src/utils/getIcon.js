@@ -34,3 +34,28 @@ export function getDmgTypeIcon(dmgType){
     }
     return icon
 }
+
+export function getItemIcon(itemType){
+    let icon = ''
+    switch(itemType){
+        case 'mainHand':
+            icon = '<i class="fas fa-sword"></i>'
+        break
+        case 'offHand':
+            icon = '<i class="far fa-shield-alt"></i>'
+        break
+        case 'accessory':
+            icon = '<i class="fad fa-ring"></i>'
+        break
+        case 'armor':
+            icon = '<i class="far fa-tshirt"></i>'
+        break
+        case 'cloak':
+            icon = '<i class="fad fa-hood-cloak"></i>'
+        break
+        case 'consumable':
+            icon = '<i class="fad fa-flask-potion"></i>'
+        break
+    }
+    return icon
+}

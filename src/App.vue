@@ -2,6 +2,7 @@
 <div class="d-md-flex bg-dark" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
   <ShopNavBar v-if="this.$route.name == 'MainShop'" />
   <CharacterDetailsModal :character="character" ref="characterDetailsModal" v-if="character" />
+  <div class="bg-danger position-absolute timer" :style="'width: '+((timer/60000)*100)+'vw'" v-if="$store.state.player?.options?.difficulty != 'easy' && this.$route.name == 'battleField'"></div>
   <router-view class="order-2 order-md-1"></router-view>
   <PlayerStatsSideWindow class="order-1 order-md-2" />
 </div>
@@ -74,6 +75,7 @@ export default {
     })
     const state = reactive({
       character: computed(()=> $store.state.selected),
+      timer: computed(()=> $store.state.timer),
     })
   return state
   },
@@ -134,6 +136,9 @@ nav a.router-link-exact-active {
 }
 .petrify{
   filter: grayscale(1)
+}
+.timer{
+  height: 15px;
 }
 ::-webkit-scrollbar {
   width: 1rem;

@@ -59,7 +59,7 @@
           <div class="col-md-6 col-12">
             <strong for="items">Items</strong>
             <ul class="border border-rounded h-100 bg-darken" v-if="items.length > 0">
-              <li :id="'item'+item.id" class="click" :class="statDiffColor(character, item) ? 'text-success' : statDiffColor(character, item) == null ? '' : 'text-danger'" v-for="item in items" :key="item.id" @click="equip(character, item)" :title="item.effect+' +'+item.value">{{item.name}} {{getStatDiff(character, item)}}</li>
+              <li :id="'item'+item.id" class="click" :class="statDiffColor(character, item) ? 'text-success' : statDiffColor(character, item) == null ? '' : 'text-danger'" v-for="item in items" :key="item.id" @click="equip(character, item)" :title="getItemEffectsDisplay(item)">{{item.name}} {{getStatDiff(character, item)}}</li>
           </ul>
           <p v-else>No items in pouch</p>
           </div>
@@ -68,8 +68,8 @@
           <div class="col-md-6 col-12" v-if="character.equipment.length > 0">
             <strong>Equipment</strong>
             <ul class="border-rounded border py-3 bg-darken">
-              <li class="equipment click" v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value" @click="unequip(character, equipment)">
-                {{equipment.name}} ({{equipment.type}}) {{equipment.speed > 0 ? ' (-'+equipment.speed+' speed)' : ''}}
+              <li class="equipment click" :class="getRarityFullName(equipment.rarity)" v-for="equipment in character.equipment" :key="equipment.id" :title="equipment.effect+' +'+equipment.value" @click="unequip(character, equipment)">
+                {{equipment.name}} <span v-html="getItemIcon(equipment.type)"></span> {{equipment.speed > 0 ? ' (-'+equipment.speed+' speed)' : ''}}
               </li>
             </ul>
           </div>
@@ -109,6 +109,8 @@ import Notify from "@/utils/Notify"
 import $store from "@/store/index"
 import { computed } from "@vue/runtime-core"
 import { spellsService } from "@/services/SpellsService"
+import { getItemIcon } from "@/utils/getIcon"
+import { getRarityFullName } from "@/utils/getRarityFullName"
 export default {
   name: 'CharacterDetailsModal',
   props:{
@@ -122,6 +124,11 @@ export default {
     return state
   },
   methods: {
+    getItemIcon : getItemIcon,
+    getRarityFullName : getRarityFullName,
+    getItemEffectsDisplay(item){
+      itemsService.getItemEffectsDisplay(item)
+    },
     getAttackSpeed(character){
       return gameService.getSpeedCost(character)
     },
@@ -153,6 +160,9 @@ export default {
     compareEffectDiff(equipment, item){
       let equipItem = equipment.filter(e => e.type === item.type)[0]
       if(!equipItem){
+        if(typeof item.value == 'object'){
+          return item.value.name+' +'+item.value.chance+'% '
+        }
         return `+${item.value} ${item.effect} `
       }
       let matchingEffect = equipItem.effect
@@ -164,6 +174,9 @@ export default {
         matchingEffect = matchingEffect == item.effect
       }
       if(!matchingEffect){
+        if(typeof item.value == 'object'){
+          return item.value.name+' +'+item.value.chance+'% '
+        }
         return `+${item.value} ${item.effect} `
       }
       let equipValue = equipItem.value[index] ?? equipItem.value
@@ -173,6 +186,9 @@ export default {
       }
       if(typeof item.value == 'string'){
         return `+${item.value} ${item.effect} `
+      }
+      if(typeof item.value == 'object'){
+        return item.value.name+' +'+item.value.chance+'% '
       }
       let effectDiff = item.value - equipValue
       let operator = effectDiff > 0 ? '+' : ''

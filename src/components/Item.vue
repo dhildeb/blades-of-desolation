@@ -1,7 +1,7 @@
 <template>
   <li :id="'item'+item.id" class="click d-flex" :class="getRarityFullName(item.rarity)" :title="display == 'full' ? getItemReqsDisplay(item): getItemEffectsDisplay(item)">
-    {{item.name}} - {{display == 'full' ? getItemEffectsDisplay(item) : item.price+' gold'}}
-      &nbsp;({{item.type}})&nbsp;
+    {{item.name}} &nbsp;<span v-html="getItemIcon(item.type)"></span>&nbsp;
+    {{display == 'full' ? getItemEffectsDisplay(item) : " - "+item.price+' gold'}}
   </li>
 </template>
 
@@ -9,6 +9,7 @@
 import { reactive } from "@vue/reactivity"
 import { getRarityFullName } from "@/utils/getRarityFullName"
 import { itemsService } from "@/services/ItemsService"
+import { getItemIcon } from "@/utils/getIcon"
 
 export default {
   name: 'EquipmentItem',
@@ -23,6 +24,7 @@ export default {
   },
   methods: {
     getRarityFullName : getRarityFullName,
+    getItemIcon : getItemIcon,
     getItemEffectsDisplay(item){
       itemsService.getItemEffectsDisplay(item)
     },
