@@ -356,6 +356,7 @@ const store = createStore({
     shop: 'general',
     shopItems: [],
     timer: 60000,
+    timerInterval: null,
     selected: '',
     characterImgList: [],
     locationImgList: [],

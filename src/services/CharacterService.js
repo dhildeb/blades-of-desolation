@@ -18,7 +18,9 @@ class CharacterService{
   }
   
   prepPhase(){
-    gameService.setTimer()
+    if($store.state.combatMonsters.filter(m => m.hp > 0).length > 0){
+      gameService.setTimer()
+    }
     this.removeDestroyedCharacters()
     this.resetActions()
     this.triggerStatusEffects()
@@ -28,6 +30,8 @@ class CharacterService{
     
   }
   endPhase(){
+    clearInterval($store.state.timerInterval)
+    $store.state.timer = 10000*$store.state.player.characters.length
     this.regen()
     this.magicRegen()
     $store.state.selected = ''

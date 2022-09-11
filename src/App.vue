@@ -2,7 +2,7 @@
 <div class="d-md-flex bg-dark" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
   <ShopNavBar v-if="this.$route.name == 'MainShop'" />
   <CharacterDetailsModal :character="character" ref="characterDetailsModal" v-if="character" />
-  <div class="bg-danger position-absolute timer" :style="'width: '+((timer/60000)*100)+'vw'" v-if="$store.state.player?.options?.difficulty != 'easy' && this.$route.name == 'battleField'"></div>
+  <div class="bg-danger position-absolute timer" :style="'width: '+((timer/(10000*$store.state.player.characters.length))*100)+'vw'" v-if="$store.state.player?.options?.difficulty != 'easy' && this.$route.name == 'battleField'"></div>
   <router-view class="order-2 order-md-1"></router-view>
   <PlayerStatsSideWindow class="order-1 order-md-2" />
 </div>

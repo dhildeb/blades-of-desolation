@@ -45,12 +45,11 @@ export default {
   watch: {
     charactersWithActions: function(){
       if(this.charactersWithActions < 1 && this.characters.length > 0){
-        $store.state.timer = 0
+        characterService.endPhase()
       }
     },
     timer: function(){
       if(this.timer <= 0 && this.monstersWithHp > 0){
-        $store.state.timer = 60000
         characterService.endPhase()
       }
     },
@@ -67,6 +66,8 @@ export default {
     monstersWithHp: function(){
       const toast = useToast()
       if(this.monstersWithHp < 1 && this.charactersWithHp > 0){
+        clearInterval($store.state.timerInterval)
+        $store.state.timer = 10000*$store.state.player.characters.length
         gameService.victory()
         toast.success('Victory!')
       }
