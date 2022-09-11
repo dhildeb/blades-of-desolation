@@ -8,7 +8,7 @@
     <div class="col-md-6 col-12">
       <ul v-for="spells in spellList" :key="spells">
         <label for="spells" v-if="spells.length > 0">{{spells[0].level > 0 ? "Level "+spells[0].level : 'Cantrip'}} Spells</label>
-        <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)" :title="spell.title ?? getTitle(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}}gold</li>
+        <li v-for="spell in spells" :key="spell.name" @click="buySpell(spell)" :title="spell.title ?? getTitle(spell)">{{spell.name}} - {{spell.price ?? spell.level*1000+1000}} <i class="fad fa-coins"></i></li>
       </ul>
     </div>
   </div>

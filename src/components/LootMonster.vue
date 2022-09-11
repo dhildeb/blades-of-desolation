@@ -1,13 +1,13 @@
 <template>
 <div class="blur-box text-light font-weight-bold h-50">
   <p class="border-bottom">{{ monster.name }}'s Loot!</p>
-  <p class="">Gold: {{ monster.loot.gold }}</p>
+  <p class="">{{ monster.loot.gold }} <i class="fad fa-coins"></i></p>
   <ul v-if="monster.loot.items.length > 0">
-    <li :class="getRarityFullName(this.$store.state.items.filter(i => i.name == item)[0].rarity)" v-for="item in monster.loot.items" :key="item">
-      {{item}}
+    <li :class="getRarityFullName(this.$store.state.items.filter(i => i.name == item)[0].rarity)" v-for="item in monster.loot.items" :key="item" :title="getItemEffectsDisplay(this.$store.state.items.filter(i => i.name == item)[0])">
+      {{item}} <span v-html="getItemIcon(this.$store.state.items.filter(i => i.name == item)[0].type)"></span>
     </li>
-    <li :class="getRarityFullName(this.$store.state.items.filter(i => i.name == item)[0].rarity)" v-for="item in monster.equipment" :key="item">
-      {{item}}
+    <li :class="getRarityFullName(this.$store.state.items.filter(i => i.name == item)[0].rarity)" v-for="item in monster.equipment" :key="item" :title="getItemEffectsDisplay(this.$store.state.items.filter(i => i.name == item)[0])">
+      {{item}} <span v-html="getItemIcon(this.$store.state.items.filter(i => i.name == item)[0].type)"></span>
     </li>
     </ul>
 </div>
@@ -16,6 +16,8 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { getRarityFullName } from "@/utils/getRarityFullName"
+import { getItemIcon } from "@/utils/getIcon"
+import { itemsService } from "@/services/ItemsService"
 export default {
   name: 'LootMonster',
   props: {
@@ -28,7 +30,13 @@ export default {
     return state
   },
   methods: {
-    getRarityFullName: getRarityFullName
+    getRarityFullName: getRarityFullName,
+    getItemIcon(itemType){
+      return getItemIcon(itemType)
+    },
+    getItemEffectsDisplay(item){
+      return itemsService.getItemEffectsDisplay(item)
+    }
   }
 }
 </script>

@@ -22,7 +22,7 @@
     </div>
     <div class="collapse" id="collapsePouch">
       <div class="d-flex d-md-block justify-content-around h-100">
-        <span>Gold: {{player.gold}}</span>
+        <span>{{player.gold}} <i class="fad fa-coins"></i></span>
         <p class="click" data-toggle="modal" data-target="#itemPouchModal" title="items">
           Items
         </p>

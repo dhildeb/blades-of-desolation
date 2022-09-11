@@ -31,7 +31,7 @@
                 <span>Speed: {{character.actions}} / {{character.baseActions}}</span>
                 <span title="Actions it takes to make an attack">Attack Speed: {{getAttackSpeed(character)}}</span>
                 <span>STR: {{character.strength}}</span>
-                <span >DMG Type: {{character.dmgType}}</span>
+                <span >DMG Type: {{character.dmgType}} <span v-html="getDmgTypeIcon(character.dmgType)"></span></span>
                 <span v-if="character.baseMagic">Magic: {{character.magic}} / {{character.baseMagic}}</span>
                 <span v-if="character.regen" title="HP is retored by this amount at the end of each turn in battle">Regen: {{character.regen}}</span>
                 <span v-if="character.magicRegen" title="Magic is retored by this amount at the end of each turn in battle">Magic Regen: {{character.magicRegen}}</span>
@@ -109,7 +109,7 @@ import Notify from "@/utils/Notify"
 import $store from "@/store/index"
 import { computed } from "@vue/runtime-core"
 import { spellsService } from "@/services/SpellsService"
-import { getItemIcon } from "@/utils/getIcon"
+import { getItemIcon, getDmgTypeIcon } from "@/utils/getIcon"
 import { getRarityFullName } from "@/utils/getRarityFullName"
 export default {
   name: 'CharacterDetailsModal',
@@ -126,6 +126,7 @@ export default {
   methods: {
     getItemIcon : getItemIcon,
     getRarityFullName : getRarityFullName,
+    getDmgTypeIcon : getDmgTypeIcon,
     getItemEffectsDisplay(item){
       itemsService.getItemEffectsDisplay(item)
     },

@@ -7,7 +7,7 @@
   <div class="row mh-100">
     <div class="col-md-6 col-12">
       <ul>
-        <li :class="item.price ? getRarityFullName(item.rarity) : 'd-none'" v-for="item in playerItems" :key="item.id" @click="sell(item)">{{item.name}} - {{item.price/10}}gold</li>
+        <li :class="item.price ? getRarityFullName(item.rarity) : 'd-none'" v-for="item in playerItems" :key="item.id" @click="sell(item)">{{item.name}} - {{item.price/10}} <i class="fad fa-coins"></i></li>
       </ul>
     </div>
   </div>

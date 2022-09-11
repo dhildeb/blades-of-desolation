@@ -100,9 +100,9 @@ export default {
         getEncounter(){
             const toast = useToast()
             let chance = Math.ceil(Math.random()*100)
-            if(chance > 40){
+            if(chance > 35){
                 router.push({name: 'battleField'})
-            }else if(chance > 20){
+            }else if(chance > 25){
                 //nothing
             }else if(chance > 10){
                 let gold = Math.round(Math.random()*100)*($store.state.location+1)

@@ -40,7 +40,7 @@ export default class Notify {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Learn Spell('+cost+'gp)'
+        confirmButtonText: 'Learn Spell('+cost+'<i class="fad fa-coins"></i>)'
       })
       if (res.isConfirmed) {
         return res.value
