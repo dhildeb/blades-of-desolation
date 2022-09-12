@@ -100,7 +100,8 @@ export default {
         getEncounter(){
             const toast = useToast()
             let chance = Math.ceil(Math.random()*100)
-            if(chance > 35){
+            let rowCol = $store.state.player.currentLocation.split('-')
+            if(chance > 35 || (rowCol[1] == 1 && rowCol[2] == 1)){
                 router.push({name: 'battleField'})
             }else if(chance > 25){
                 //nothing
@@ -147,6 +148,9 @@ export default {
                     reward = itemsService.findRandomItem(reward)
                     $store.state.player.items.push(new Item(reward))
                     toast.success('You recieved '+reward.name)
+                    $store.state.location++
+                    await Notify.confirm('Next Area', 'You continue on your adventure to another area now that you have completed your mission here.', 'info', 'ok')
+                    this.explore($store.state.location+'-1-1')
             }
             if(boon){
                 $store.state.player.items = $store.state.player.items.filter(i => i.name != 'key')

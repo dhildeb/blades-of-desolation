@@ -43,7 +43,7 @@ class AbilitiesService{
     this.toast.success(character.name+' Level up '+abilityName, {timeout: 10000})
   }
   useAbility(Ability, target){
-    let ability = Object.assign({}, Ability)
+    let ability = {...Ability}
     if(ability.uses <= 0){
       return
     }

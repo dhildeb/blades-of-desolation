@@ -9,7 +9,7 @@ class SpellsService{
   toast = useToast()
 
   castSpell(castSpell, target){
-    let spell = Object.assign({}, castSpell)
+    let spell = {...castSpell}
     if(spell.areaEffect){
       if(target == 'enemies'){
         $store.state.combatMonsters.forEach(m => {

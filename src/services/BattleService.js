@@ -147,7 +147,7 @@ class BattleService{
     let targetIsFoe = target instanceof MonsterFactory
     let operator = targetIsFoe ? '+' : '-'
     attacker.statusEffects.forEach(se => {
-      let status = Object.assign({}, se)
+      let status = {...se}
       let chance = Math.ceil(Math.random()*100)
       let immune = target.immunities.find(i => i == status.name)
       let resistant = target.resistances.find(r => r == status.name)

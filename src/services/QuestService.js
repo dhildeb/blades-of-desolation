@@ -5,7 +5,7 @@ import { useToast } from "vue-toastification"
 class QuestService{
   toast = useToast()
   getQuest(newQuest){
-    let quest = Object.assign({}, newQuest)
+    let quest = {...newQuest}
     if(quest.objective == 'kill'){
       let monstersList = $store.state[quest.target][$store.state.location]
       let index = Math.floor(Math.random()*monstersList.length)

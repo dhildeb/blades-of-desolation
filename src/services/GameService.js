@@ -19,12 +19,19 @@ class GameService{
     for(let i=0; i<quantity; i++){
       let monstersList = $store.state.monsters[$store.state.location]
       let index = Math.floor(Math.random()*monstersList.length)
-      let newMonster = Object.assign({}, monstersList[index])
+      let newMonster = {...monstersList[index]}
+      if(newMonster.loot.items.length > 0){
+        newMonster.loot = {...newMonster.loot}
+        newMonster.loot.items = newMonster.loot.items.filter((item, index) => {
+          let chance = Math.ceil(Math.random()*100)-characterService.getPartyLuck()
+          return newMonster.loot.chance[index] > chance
+        })
+      }
       // dereference statusEffects object
       if(newMonster['statusEffects']){
         newMonster['statusEffects'] = []
         for(let i = 0; i < monstersList[index].statusEffects.length; i++){
-          newMonster['statusEffects'].push(Object.assign({}, monstersList[index].statusEffects[i]))
+          newMonster['statusEffects'].push({...monstersList[index].statusEffects[i]})
         }
       }
       $store.state.combatMonsters.push(new MonsterFactory(newMonster))
