@@ -159,6 +159,16 @@ const store = createStore({
       {name: 'health potion', effect: 'hp', value: 25, type: 'consumable', price: 250, rarity: 'uc'},
       {name: 'mana potion', effect: 'magic', value: 5, type: 'consumable', price: 250, rarity: 'uc'},
       {name: 'restoration potion', effect: ['magic', 'hp'], value: [2, 10], type: 'consumable', price: 250, rarity: 'uc'},
+      {name: 'Berserkers headgear', effect: ['baseHp', 'hp'], value: [5, 5], type: 'cloak', price: 2500, rarity: 'uc', requirements: [{stat: 'classType', req: 'barbarian'}], set: 'berserkers'},
+      {name: 'Berserkers hauberk', effect: ['physicalResistance', 'baseHp', 'hp'], value: [5, 5, 5], type: 'armor', price: 2500, rarity: 'uc', requirements: [{stat: 'classType', req: 'barbarian'}], set: 'berserkers'},
+      {name: 'Berserkers hatchet', effect: ['strength', 'baseActions'], value: [2, 1], speed: 1, type: 'mainHand', price: 2500, rarity: 'uc', requirements: [{stat: 'classType', req: 'barbarian'}], set: 'berserkers'},
+      {name: 'isenhart\'s lightbrand', effect: ['strength', 'baseActions'], value: [4, 1], speed: 2, type: 'mainHand', price: 2500, rarity: 'uc', set: 'isenhart\'s'},
+      {name: 'isenhart\'s parry', effect: ['physicalResistance'], value: [15], type: 'offHand', price: 2500, rarity: 'uc', set: 'isenhart\'s'},
+      {name: 'isenhart\'s case', effect: ['baseHp', 'baseActions'], value: [18, -1], type: 'armor', price: 2500, rarity: 'uc', set: 'isenhart\'s'},
+      {name: 'isenhart\'s horns', effect: ['physicalResistance'], value: [10], type: 'cloak', price: 2500, rarity: 'uc', set: 'isenhart\'s'},
+      {name: 'deaths hand', effect: ['resistances'], value: ['poison'], type: 'accessory', price: 2500, rarity: 'uc', set: 'deaths'},
+      {name: 'deaths touch', effect: ['lifeSteal', 'dmgType', 'strength'], value: [5, 'necrotic', 4], type: 'mainHand', speed: 2, price: 2500, rarity: 'uc', set: 'deaths'},
+      {name: 'deaths guard', effect: ['resistances', 'physicalResistance'], value: ['cold', 10], type: 'accessory', speed: 2, price: 2500, rarity: 'uc', set: 'offHand'},
       
       // Rare
       {name: 'javelin of lightning', effect: ['strength', 'dmgType', 'statusEffects'], value: [5, 'lightning', {name: 'petrify', effect: 'actions', value: 0, chance: 15, negative: false}], type: 'mainHand', price: 8000, rarity: 'r'},
@@ -182,14 +192,22 @@ const store = createStore({
       {name: 'mana potion', effect: 'magic', value: 10, type: 'consumable', price: 500, rarity: 'r'},
       {name: 'potion of speed', effect: 'actions', value: 10, type: 'consumable', price: 2000, rarity: 'r'},
       {name: 'restoration potion', effect: ['magic', 'hp'], value: [5, 25], type: 'consumable', price: 500, rarity: 'r'},
-      {name: 'ring of lesser regeneration', effect: 'regen', value: 1, type: 'accessory', price: 8000, rarity: 'r'},
+      {name: 'ring of lesser regeneration', effect: 'regen', value: 2, type: 'accessory', price: 8000, rarity: 'r'},
       {name: 'wand of fire', effect: ['baseMagic', 'dmgType', 'resistances'], value: [10, 'fire', 'fire'], type: 'mainHand', speed: 2, price: 25000, rarity: 'r', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
       {name: 'wand of frost', effect: ['baseMagic', 'dmgType'], value: [3, 'cold'], type: 'mainHand', speed: 2, price: 10000, rarity: 'r', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
       {name: 'wand of force', effect: ['baseMagic', 'dmgType'], value: [3, 'melee'], type: 'mainHand', speed: 2, price: 10000, rarity: 'r', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
       {name: 'wand of lightning', effect: ['baseMagic', 'dmgType', 'statusEffects'], value: [3, 'lightning', {name: 'petrify', effect: 'actions', value: 0, chance: 15, negative: false}], type: 'mainHand', speed: 2, price: 10000, rarity: 'r', requirements: [{stat: 'classType', req: ['wizard', 'warlock']}]},
       {name: 'wand of withering', effect: ['baseMagic', 'dmgType'], value: [3, 'necrotic'], type: 'mainHand', speed: 2, price: 10000, rarity: 'r', requirements: [{stat: 'classType', req: ['cleric', 'warlock']}]},
       {name: 'wand of magic', effect: ['baseMagic', 'magicRegen'], value: [3, 1], type: 'mainHand', speed: 2, price: 15000, rarity: 'r', requirements: [{stat: 'baseMagic', req: 3}]},
-
+      {name: 'agenlic sickle', effect: ['dmgType', 'strength'], value: ['radiant', 4], type: 'mainHand', price: 20000, rarity: 'r', set: 'angelic raiment'},
+      {name: 'agenlic mantle', effect: ['magicResistance', 'baseHp', 'baseActions'], value: [5, 24, -1], type: 'armor', price: 20000, rarity: 'r', set: 'angelic raiment'},
+      {name: 'agenlic halo', effect: ['baseHp', 'strength', 'regen'], value: [5, 2, 1], type: 'accessory', price: 20000, rarity: 'r', set: 'angelic raiment'},
+      {name: 'agenlic wings', effect: ['magicResistance', 'baseMagic'], value: [5, 2], type: 'cloak', price: 20000, rarity: 'r', set: 'angelic raiment'},
+      {name: 'cathans rule', effect: ['strength', 'dmgType'], value: [5, 'fire'], type: 'mainHand', price: 20000, rarity: 'r', set: 'cathans traps'},
+      {name: 'cathans mesh', effect: ['thorns', 'dmgType', 'baseHp', 'baseActions'], value: [6, 'fire', 24, -1], type: 'armor', price: 20000, rarity: 'r', set: 'cathans traps'},
+      {name: 'cathans visage', effect: ['magicResistance', 'physicalResistance'], value: [5, 10], type: 'cloak', price: 20000, rarity: 'r', set: 'cathans traps'},
+      {name: 'cathans sigil', effect: ['statusEffects', 'physicalResistance'], value: [{name: 'petrify', effect: 'actions', value: 0, chance: 15, negative: false}, 10], type: 'offHand', price: 20000, rarity: 'r', set: 'cathans traps'},
+      {name: 'cathans seal', effect: ['regen'], value: [2], type: 'accessory', price: 20000, rarity: 'r', set: 'cathans traps'},
       
       // Very Rare
       {name: 'sword of life stealing', effect: ['strength', 'dmgType', 'lifeSteal'], value: [5, 'necrotic', 25], type: 'mainHand', speed: 3, price: 25000, rarity: 'vr'},
@@ -410,7 +428,9 @@ const store = createStore({
           char[data.item.effect] += data.item.value
         }
       }
-      char[data.item.type] = data.item.id
+      if(data.item.type){
+        char[data.item.type] = data.item.id
+      }
     },
     unequipItem(state, data){
       let char = state.player.characters.find(c => c.id == data.characterId)
@@ -438,7 +458,9 @@ const store = createStore({
           char[data.item.effect] -= data.item.value
         }
       }
-      char[data.item.type] = null
+      if(data.item.type){
+        char[data.item.type] = null
+      }
     },
     addStatsToMonster(state, data){
       let item = state.items.filter(i => i.name == data.item)

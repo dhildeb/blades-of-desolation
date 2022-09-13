@@ -6,6 +6,8 @@ import { animationsService } from "./AnimationsService"
 import { gameService } from "./GameService"
 import { monstersService } from "./MonstersService"
 import { spellsService } from "./SpellsService"
+import { setBonus } from "@/utils/setBonus"
+import { itemsService } from "./ItemsService"
 class CharacterService{
   toast = useToast()
 
@@ -134,6 +136,36 @@ class CharacterService{
   }
   removeItemStats(character, item){
     $store.commit('unequipItem', {characterId: character.id, item: item})
+  }
+  addSetBonuses(character){
+    let setCounts = {}
+    character.equipment.forEach(item => {
+      if(item.set){
+        setCounts[item.set] = setCounts[item.set] > 0 ? setCounts[item.set]+1 : 1
+      }
+    })
+    for(let set in setCounts){
+      if(setCounts[set] <= 1){return}
+      for(let i=0; i < setCounts[set]-1; i++){
+        this.addItemStats(character, setBonus[set][i])
+        character.sets.push(itemsService.getItemEffectsDisplay(setBonus[set][i]))
+      }
+    }
+  }
+  removeSetBonuses(character){
+    let setCounts = {}
+    character.equipment.forEach(item => {
+      if(item.set){
+        setCounts[item.set] = setCounts[item.set] > 0 ? setCounts[item.set]+1 : 1
+      }
+    })
+    for(let set in setCounts){
+      if(setCounts[set] <= 1){return}
+      character.sets = []
+      for(let i=0; i < setCounts[set]-1; i++){
+        this.removeItemStats(character, setBonus[set][i])
+      }
+    }
   }
   loadCharacter(index, char){
     $store.state.player.characters[index] = new Character(char)

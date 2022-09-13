@@ -17,6 +17,7 @@ export class Character{
     this.armor = data.armor ?? null
     this.cloak = data.cloak ?? null
     this.accessory = data.accessory ?? null
+    this.sets = data.sets ?? []
     this.dmgType = data.dmgType ?? 'melee' 
     this.hp = data.hp ?? 5
     this.magic = data.magic ?? 0

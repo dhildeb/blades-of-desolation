@@ -40,6 +40,9 @@ class ItemsService{
     return storeItems.sort((a,b)=> a.price - b.price)
   }
   equipItem(character, item){
+    if(item.set){
+      characterService.removeSetBonuses(character)
+    }
     $store.message = ''
     if(!this.checkItemReqs(character, item)){
       this.toast.warning($store.message)
@@ -57,14 +60,24 @@ class ItemsService{
     $store.state.player.items.splice(index, 1)
     character.equipment.push(item)
     characterService.addItemStats(character, item)
+    if(item.set){
+      characterService.addSetBonuses(character)
+    }
     this.unequipReqMissingItems(character)
   }
   unequipItem(character, item){
+    // method here is to remove all set bonuses and re-add them when changing set items
+    if(item.set){
+      characterService.removeSetBonuses(character)
+    }
     let index = character.equipment.indexOf(item)
     character.equipment.splice(index, 1)
     $store.state.player.items.push(item)
     characterService.removeItemStats(character, item)
     this.unequipReqMissingItems(character)
+    if(item.set){
+      characterService.addSetBonuses(character)
+    }
   }
   sellItem(item){
     let index = $store.state.player.items.indexOf(item)

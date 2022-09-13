@@ -73,6 +73,14 @@
               </li>
             </ul>
           </div>
+          <div class="col-md-6 col-12" v-if="character.sets.length > 0">
+            <strong>Set Bonus</strong>
+            <ul class="border-rounded border py-3 bg-darken">
+              <li v-for="set in character.sets" :key="set">
+                {{set}}
+              </li>
+            </ul>
+          </div>
           <div class="col-6" v-if="character.spells.length > 0">
             <strong>Spells</strong>
             <ul class="border-rounded border h-75 bg-darken">
