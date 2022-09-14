@@ -145,10 +145,11 @@ class CharacterService{
       }
     })
     for(let set in setCounts){
-      if(setCounts[set] <= 1){return}
-      for(let i=0; i < setCounts[set]-1; i++){
-        this.addItemStats(character, setBonus[set][i])
-        character.sets.push(itemsService.getItemEffectsDisplay(setBonus[set][i]))
+      if(setCounts[set] > 1){
+        for(let i=0; i < setCounts[set]-1; i++){
+          this.addItemStats(character, setBonus[set][i])
+          character.sets.push(itemsService.getItemEffectsDisplay(setBonus[set][i]))
+        }
       }
     }
   }
@@ -160,10 +161,11 @@ class CharacterService{
       }
     })
     for(let set in setCounts){
-      if(setCounts[set] <= 1){return}
-      character.sets = []
-      for(let i=0; i < setCounts[set]-1; i++){
-        this.removeItemStats(character, setBonus[set][i])
+      if(setCounts[set] > 1){
+        character.sets = []
+        for(let i=0; i < setCounts[set]-1; i++){
+          this.removeItemStats(character, setBonus[set][i])
+        }
       }
     }
   }

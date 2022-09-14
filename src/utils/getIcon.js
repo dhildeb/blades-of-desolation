@@ -56,6 +56,12 @@ export function getItemIcon(itemType){
         case 'consumable':
             icon = '<i class="fad fa-flask-potion"></i>'
         break
+        case 'key':
+            icon = '<i class="fas fa-key-skeleton"></i>'
+        break
+        default:
+            icon = '<i class="fad fa-scroll-old"></i>'
+        break
     }
     return icon
 }

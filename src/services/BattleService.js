@@ -64,6 +64,9 @@ class BattleService{
   dodge(target){
     let chance = Math.floor(Math.random()*100)+1
     let dodge = target.dodge+target.luck
+    if(target['statusEffects'].find(e => e.name == 'petrify' && e.negative)){
+      return false
+    }
     return dodge >= chance
   }
   resistance(attack, target){

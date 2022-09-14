@@ -59,7 +59,7 @@
           <div class="col-md-6 col-12">
             <strong for="items">Items</strong>
             <ul class="border border-rounded h-100 bg-darken" v-if="items.length > 0">
-              <li :id="'item'+item.id" class="click" :class="statDiffColor(character, item) ? 'text-success' : statDiffColor(character, item) == null ? '' : 'text-danger'" v-for="item in items" :key="item.id" @click="equip(character, item)" :title="getItemEffectsDisplay(item)">{{item.name}} {{getStatDiff(character, item)}}</li>
+              <li :id="'item'+item.id" class="click" :class="statDiffColor(character, item) ? 'text-success' : statDiffColor(character, item) == null ? '' : 'text-danger'" v-for="item in items" :key="item.id" @click="equip(character, item)" :title="getItemEffectsDisplay(item)">{{item.name}}<span v-html="getItemIcon(item.type)"></span> {{getStatDiff(character, item)}}</li>
           </ul>
           <p v-else>No items in pouch</p>
           </div>

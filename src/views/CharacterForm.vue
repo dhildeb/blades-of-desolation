@@ -1,34 +1,25 @@
 <template>
 <div class="container-fluid bg-img" :style="'background-image: url('+bgImg+')'">
   <i class="fal fa-alicorn position-absolute left text-dark" @click="cheat" v-if="!cheated"></i>
-  <h5 class="font-weight-bold text-black">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
+  <h5 class="font-weight-bold text-black label w-title-auto m-auto">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
   <div class="row justify-content-center">
     <div class="col-10 col-md-8">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">
-        <div class="form-group">
+        <div class="form-group mt-3">
           <input type="text" class="form-control" id="name" placeholder="Name" v-model="name">
         </div>
-        <div class="form-group">
-          <select class="custom-select" id="classType" v-model="classType">
-            <option disabled value="">Select a Class</option>
-            <option v-for="classType in classList" :key="classType" :value="classType"
-            >{{classType}}</option>
-          </select>
+         <label class="label px-2">Choose a Class</label>
+        <div id="classType" class="scrollable row">
+          <span class="col click d-flex justify-content-center p-3" :class="selectedClassType == classType.name ? 'border border-warning ' : ''" :value="classType.name" v-for="classType in classList" :key="classType.name" @click="selectClassType(classType.name)" :title="classType.name" v-html="classType.icon"></span>
         </div>
-        <div class="form-group">
-          <select class="custom-select" id="race" v-model="race">
-            <option disabled value="">Select a Race</option>
-            <option value="dragonborn">Dragonborn</option>
-            <option value="dwarf">dwarf</option>
-            <option value="elf">Elf</option>
-            <option value="halfling">Halfling</option>
-            <option value="human">Human</option>
-          </select>
+         <label class="label px-2 mt-2">Choose a Race</label>
+        <div id="race" class="scrollable row">
+          <span class="col click d-flex justify-content-center p-3" :class="selectedRace == race.name ? 'border border-warning ' : ''" :value="race.name" v-for="race in raceList" :key="race.name" @click="selectRace(race.name)" :title="race.name" v-html="race.icon"></span>
         </div>
-        <div id="imgSelect" class="scrollable row">
+        <div id="imgSelect" class="scrollable row mt-3">
           <img class="img-fluid col-lg-3 col-md-6 col-12 click " :class="selectedImg == img ? 'border border-warning ' : ''" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
         </div>
-        <button class="btn btn-primary float-left" type="submit">Create</button>
+        <button class="btn btn-warning btn-block mt-2" type="submit" title="create"><i class="fas fa-torah"></i></button>
       </form>
       <div class="row" v-else>
         <div class="col-4 click" v-for="character in characters" :key="character.id" data-toggle="modal" data-target="#characterDetailsModal" title="stats">
@@ -60,10 +51,11 @@ export default {
       state.cheated = getItem('cheated')
     })
     const state = reactive({
-      classList: ['Barbarian', 'Bard', 'Cleric', 'Fighter', 'Monk', 'Paladin', 'Ranger', 'Rogue', 'Warlock', 'Wizard'],
+      classList: [{name: 'Barbarian', icon: '<i class="fal fa-axe-battle fa-3x"></i>'}, {name: 'Bard', icon: '<i class="fal fa-mandolin fa-3x"></i>'}, {name: 'Cleric', icon: '<i class="far fa-plus-octagon fa-3x"></i>'}, {name: 'Fighter', icon: '<i class="fal fa-swords fa-3x"></i>'}, {name: 'Monk', icon: '<i class="fal fa-fist-raised fa-3x"></i>'}, {name: 'Paladin', icon: '<i class="far fa-helmet-battle fa-3x"></i>'}, {name: 'Ranger', icon: '<i class="far fa-bow-arrow fa-3x"></i>'}, {name: 'Rogue', icon: '<i class="far fa-dagger fa-3x"></i>'}, {name: 'Warlock', icon: '<i class="fas fa-skull fa-3x"></i>'}, {name: 'Wizard', icon: '<i class="fal fa-hat-wizard fa-3x"></i>'}],
+      raceList: [{name: 'dragonborn', icon: '<i class="fas fa-dragon fa-3x"></i>'}, {name: 'dwarf', icon: '<i class="fas fa-hammer-war fa-3x"></i>'}, {name: 'elf', icon: '<i class="fas fa-leaf fa-3x"></i>'}, {name: 'halfling', icon: '<i class="fas fa-child fa-3x"></i>'}, {name: 'human', icon: '<i class="fas fa-user-alt fa-3x"></i>'}],
       name: '',
-      classType: '',
-      race: '',
+      selectedClassType: '',
+      selectedRace: '',
       selectedImg: '',
       imgs: computed(() => $store.state.characterImgList),
       characterCount: computed(()=> $store.state.player.characters.length),
@@ -94,8 +86,14 @@ export default {
     selectImg(img){
         this.selectedImg = img
     },
+    selectClassType(classType){
+      this.selectedClassType = classType
+    },
     selectCharacter(character){
       this.selectedCharacter = character
+    },
+    selectRace(race){
+      this.selectedRace = race
     },
     async cheat(){
       let cheat = await Notify.cheat()
@@ -127,5 +125,18 @@ export default {
 }
 .left{
   left: 98vw
+}
+.label{
+  backdrop-filter: brightness(.5);
+}
+@media screen and (min-width: 992px) {
+  .w-title-auto{
+    width: 25vw;
+}
+}
+@media screen and (max-width: 992px) {
+  .w-title-auto{
+    width: 90vw;
+  }
 }
 </style>

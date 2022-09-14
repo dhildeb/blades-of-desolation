@@ -40,9 +40,6 @@ class ItemsService{
     return storeItems.sort((a,b)=> a.price - b.price)
   }
   equipItem(character, item){
-    if(item.set){
-      characterService.removeSetBonuses(character)
-    }
     $store.message = ''
     if(!this.checkItemReqs(character, item)){
       this.toast.warning($store.message)
@@ -56,6 +53,9 @@ class ItemsService{
         this.unequipItem(character, e)
       }
     })
+    if(item.set){
+      characterService.removeSetBonuses(character)
+    }
     let index = $store.state.player.items.indexOf(item)
     $store.state.player.items.splice(index, 1)
     character.equipment.push(item)

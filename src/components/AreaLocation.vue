@@ -83,7 +83,7 @@ export default {
             }
             $store.state.player.currentLocation = id
             if(explored.length >= 59 && !this.hasKey && !this.areaCompleted){
-                $store.state.player.items.push(new Item({name: 'key'}))
+                $store.state.player.items.push(new Item({name: 'key', type: 'key'}))
                 toast.success('You found a key!')
             }
             if(explored.length == 60 && !this.areaCompleted && rowCol[1] == 10 && rowCol[2] == 6 && this.hasKey){
