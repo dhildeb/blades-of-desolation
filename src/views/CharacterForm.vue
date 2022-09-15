@@ -51,8 +51,8 @@ export default {
       state.cheated = getItem('cheated')
     })
     const state = reactive({
-      classList: [{name: 'Barbarian', icon: '<i class="fal fa-axe-battle fa-3x"></i>'}, {name: 'Bard', icon: '<i class="fal fa-mandolin fa-3x"></i>'}, {name: 'Cleric', icon: '<i class="far fa-plus-octagon fa-3x"></i>'}, {name: 'Fighter', icon: '<i class="fal fa-swords fa-3x"></i>'}, {name: 'Monk', icon: '<i class="fal fa-fist-raised fa-3x"></i>'}, {name: 'Paladin', icon: '<i class="far fa-helmet-battle fa-3x"></i>'}, {name: 'Ranger', icon: '<i class="far fa-bow-arrow fa-3x"></i>'}, {name: 'Rogue', icon: '<i class="far fa-dagger fa-3x"></i>'}, {name: 'Warlock', icon: '<i class="fas fa-skull fa-3x"></i>'}, {name: 'Wizard', icon: '<i class="fal fa-hat-wizard fa-3x"></i>'}],
-      raceList: [{name: 'dragonborn', icon: '<i class="fas fa-dragon fa-3x"></i>'}, {name: 'dwarf', icon: '<i class="fas fa-hammer-war fa-3x"></i>'}, {name: 'elf', icon: '<i class="fas fa-leaf fa-3x"></i>'}, {name: 'halfling', icon: '<i class="fas fa-child fa-3x"></i>'}, {name: 'human', icon: '<i class="fas fa-user-alt fa-3x"></i>'}],
+      classList: [{name: 'Barbarian', icon: '<i class="fal fa-axe-battle icon-fluid"></i>'}, {name: 'Bard', icon: '<i class="fal fa-mandolin icon-fluid"></i>'}, {name: 'Cleric', icon: '<i class="far fa-plus-octagon icon-fluid"></i>'}, {name: 'Fighter', icon: '<i class="fal fa-swords icon-fluid"></i>'}, {name: 'Monk', icon: '<i class="fal fa-fist-raised icon-fluid"></i>'}, {name: 'Paladin', icon: '<i class="far fa-helmet-battle icon-fluid"></i>'}, {name: 'Ranger', icon: '<i class="far fa-bow-arrow icon-fluid"></i>'}, {name: 'Rogue', icon: '<i class="far fa-dagger icon-fluid"></i>'}, {name: 'Warlock', icon: '<i class="fas fa-skull icon-fluid"></i>'}, {name: 'Wizard', icon: '<i class="fal fa-hat-wizard icon-fluid"></i>'}],
+      raceList: [{name: 'dragonborn', icon: '<i class="fas fa-dragon icon-fluid"></i>'}, {name: 'dwarf', icon: '<i class="fas fa-hammer-war icon-fluid"></i>'}, {name: 'elf', icon: '<i class="fas fa-leaf icon-fluid"></i>'}, {name: 'halfling', icon: '<i class="fas fa-child icon-fluid"></i>'}, {name: 'human', icon: '<i class="fas fa-user-alt icon-fluid"></i>'}],
       name: '',
       selectedClassType: '',
       selectedRace: '',
@@ -69,7 +69,7 @@ export default {
   methods: {
     createCharacter(){
       const toast = useToast()
-      let charData = {name: this.name, classType: this.classType.toLowerCase(), race: this.race, img: this.selectedImg, actions: 6, dodge: 0, hp: 5, luck: 0, strength: 0, magic: 0, thorns: 0, lifeSteal: 0, physicalResistance: 0, magicResistance: 0}
+      let charData = {name: this.name, classType: this.selectedClassType.toLowerCase(), race: this.selectedRace, img: this.selectedImg, actions: 6, dodge: 0, hp: 5, luck: 0, strength: 0, magic: 0, thorns: 0, lifeSteal: 0, physicalResistance: 0, magicResistance: 0}
       if($store.state.player.characters.find(c => c.name == this.name)){
         toast.warning('Too confusing to have two members with the same name, lets give you a nickname...', {timeout: 5000})
         this.name = ''
@@ -114,7 +114,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .scrollable{
   max-height: 56vh;
   overflow-y: auto;
@@ -128,6 +128,9 @@ export default {
 }
 .label{
   backdrop-filter: brightness(.5);
+}
+.icon-fluid{
+  font-size: 3vw;
 }
 @media screen and (min-width: 992px) {
   .w-title-auto{

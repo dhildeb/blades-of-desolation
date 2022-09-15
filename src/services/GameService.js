@@ -3,6 +3,7 @@ import { MonsterFactory } from "@/models/MonsterFactory"
 import $store from '@/store/index.js'
 import { abilityList } from "@/utils/abilityChart"
 import { characterLvlUpStatHelper } from "@/utils/characterLvlUpStatHelper"
+import { determineRaceClassItem } from "@/utils/determineRaceClassItem"
 import { useToast } from "vue-toastification"
 import { abilitiesService } from "./AbilitiesService"
 import { buffService } from "./BuffService"
@@ -132,6 +133,14 @@ class GameService{
   addHealthPot(){
     let item = $store.state.items.find(i => i.name == 'health potion' && i.rarity == 'c')
     $store.state.player.items.push(new Item(item))
+  }
+  getRaceClassSpecificItem(char){
+    let itemName = determineRaceClassItem(char.race, char.classType)
+    let item = new Item($store.state.items.find(i => i.name == itemName))
+    $store.state.player.items.push(item)
+    if(item.type != 'consumable'){
+      itemsService.equipItem(char, item)
+    }
   }
 }
 

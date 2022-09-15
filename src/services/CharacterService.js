@@ -178,6 +178,7 @@ class CharacterService{
       case 'rogue':
         if(char.name == 'Royce'){
           char["strength"] += 2
+          char["hp"] += 5
         }
         char["strength"]++
         char["actions"]++
@@ -185,7 +186,7 @@ class CharacterService{
         break
       case 'ranger':
         if(char.name == 'Aragorn'){
-          char["regen"] = 1
+          char["regen"] = 2
         }
         char["strength"]++
         char["actions"]++
@@ -193,7 +194,7 @@ class CharacterService{
         break
       case 'bard':
         if(char.name == 'Thom'){
-          char["luck"] += 3
+          char["luck"] += 5
         }
         char["strength"]++
         char["dodge"] += 2
@@ -203,9 +204,10 @@ class CharacterService{
         break
       case 'barbarian':
         if(char.name == 'Conan'){
-          char["hp"] += 5
+          char["strength"] += 3
         }
-        char["strength"] += 3
+        char["strength"] += 2
+        char["physicalResistance"] += 5
         break
       case 'wizard':
         char["magic"] += 3
@@ -226,7 +228,7 @@ class CharacterService{
         break
       case 'fighter':
         if(char.name == 'Cloud'){
-          char["hp"] += 5
+          char["hp"] += 15
         }
         char["strength"]++
         char["actions"]++
@@ -241,7 +243,7 @@ class CharacterService{
         break
       case 'paladin':
         if(char.name == 'Kaladin'){
-          char["thorns"]++
+          char["thorns"] += 3
         }
         char["strength"]++
         char["magicRegen"] = 1
@@ -266,7 +268,7 @@ class CharacterService{
     }
     switch(char.race){
       case 'dragonborn':
-        char["strength"] += 3
+        char["strength"] += 2
         //TODO breath attack
         break
       case 'human':
@@ -278,7 +280,7 @@ class CharacterService{
         char["actions"]++
         break
       case 'dwarf':
-        char["hp"] += 10
+        char["hp"] += 5
         char["resistances"] = ["poison"]
         break
       case 'halfling':
@@ -297,6 +299,7 @@ class CharacterService{
     }
     $store.state.player.characters.push(newChar)
     gameService.addHealthPot()
+    gameService.getRaceClassSpecificItem(newChar)
   }
   deleteCharacter(characterId){
     $store.state.player.characters = $store.state.player.characters.filter(c => c.id !== characterId)
