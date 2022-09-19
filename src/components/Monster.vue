@@ -29,7 +29,7 @@ export default {
         characterService.autoSelect()
       })
     const state = reactive({
-      deadImg: '../assets/images/dead.png',
+      deadImg: '../assets/img/dead.png',
       unknown: computed(()=>!$store.state.player.kills[props.monster.name]),
       img: computed(()=>$store.state.monsterImgList.find(m => m.includes(props.monster.img)) ?? props.monster.img)
     })
