@@ -24,7 +24,7 @@ export default {
       if($store.state.characterImgList.length > 0){
         return
       }
-      let folder = "assets/characters/"
+      let folder = "assets/images/characters/"
       $.ajax({
         url: folder,
         async: false,
@@ -36,7 +36,7 @@ export default {
           })
         }
       })
-      folder = "assets/locations/"
+      folder = "assets/images/locations/"
       $.ajax({
         url: folder,
         async: false,
@@ -48,7 +48,7 @@ export default {
           })
         }
       })
-      folder = "assets/monsters/"
+      folder = "assets/images/monsters/"
       $.ajax({
         url: folder,
         async: false,
@@ -60,7 +60,7 @@ export default {
           })
         }
       })
-      folder = "assets/"
+      folder = "assets/images/"
       $.ajax({
         url: folder,
         async: false,
@@ -163,13 +163,13 @@ nav a.router-link-exact-active {
  }
 ::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.5);
-  background-image: url('../public/assets/sword-bar.png');
+  background-image: url('../public/assets/images/sword-bar.png');
   background-size: contain;
   background-repeat: no-repeat;
 } 
 ::-webkit-scrollbar-button:vertical:decrement{
   background-color: rgba(0, 0, 0, 0.5);
-  background-image: url('../public/assets/shield-bar.png');
+  background-image: url('../public/assets/images/shield-bar.png');
   background-size: contain;
   background-repeat: no-repeat;
 }
