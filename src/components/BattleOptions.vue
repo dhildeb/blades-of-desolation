@@ -25,7 +25,7 @@
       </div>
       <div class="row justify-content-center mt-3">
         <button class="btn btn-warning mx-2" @click="waitAction" :disabled="selected.actions < 1">Wait</button>
-        <button class="btn btn-secondary" @click="fleeAction" :disabled="selected.actions < 1">Flee</button>
+        <button class="btn btn-secondary" @click="fleeAction" :disabled="selected.actions < 1" v-if="!route.params.boss">Flee</button>
       </div>
     </div>
   </div>
@@ -41,6 +41,7 @@ import { spellsService } from "@/services/SpellsService"
 import { monstersService } from "@/services/MonstersService"
 import { abilitiesService } from "@/services/AbilitiesService"
 import { useToast } from "vue-toastification"
+import { useRoute } from "vue-router"
 
 export default {
   name: 'BattleOptions',
@@ -57,7 +58,8 @@ export default {
       selected: computed(() => $store.state.selected),
       selectedSpellIndex: 0,
       selectedSpell: computed(()=> $store.state.selected.spells[state.selectedSpellIndex]),
-      selectedAbility: {name: 'select ability', level: null}
+      selectedAbility: {name: 'select ability', level: null},
+      route: useRoute(),
     })
     watch(()=>([state.selected]), ()=>{
       state.selectedSpellIndex = 0

@@ -40,6 +40,7 @@ class MonstersService {
     }, delay)
   }
   endPhase() {
+    clearInterval($store.state.timerInterval)
     this.regen()
     characterService.takeTurn()
   }

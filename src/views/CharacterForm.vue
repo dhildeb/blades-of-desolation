@@ -77,7 +77,7 @@ export default {
         return
       }
       characterService.createCharacter(charData)
-      toast.success(charData.name+' was created!')
+      toast.success(charData.name+' has joined your party!')
       this.name = ''
       this.classType = ''
       this.race = ''
@@ -124,13 +124,13 @@ export default {
   color: #000;
 }
 .left{
-  left: 98vw
+  left: 97vw
 }
 .label{
   backdrop-filter: brightness(.5);
 }
 .icon-fluid{
-  font-size: 3vw;
+  font-size: 6vh;
 }
 @media screen and (min-width: 992px) {
   .w-title-auto{

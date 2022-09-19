@@ -35,6 +35,7 @@ import { gameService } from "@/services/GameService"
 import router from "@/router"
 import { characterService } from "@/services/CharacterService"
 import { useToast } from "vue-toastification"
+import { useRoute } from "vue-router"
 
 
 export default {
@@ -75,7 +76,8 @@ export default {
   },
   setup(){
     onMounted(()=>{
-      gameService.spawnMonsters()
+      let route = useRoute()
+      gameService.spawnMonsters(route.params.monsterLvl, route.params.numMonsters)
       characterService.enterBattle()
       gameService.setTimer()
     })

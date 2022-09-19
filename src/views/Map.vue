@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid map">
-    <img class="" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/imageedit_1_8804535635.png?alt=media&token=d39097b7-e9a9-42dc-8ad9-580d7daab080" width="1000" height="840" usemap="#world-map" />
+    <img class="" :src="mapImg" width="1000" height="840" usemap="#world-map" />
     <map name="world-map" id="world-map">
       <area id="area-1" shape="circle" coords="708,238,10" alt="1" title="Area 1" @click="locationChange(0)" />
       <area id="area-2" shape="circle" coords="733,336,10" alt="2" title="Area 2" @click="locationChange(1)" />
@@ -32,6 +32,7 @@ import { reactive } from "@vue/reactivity"
 import router from "@/router"
 import $store from '@/store/index'
 import { useToast } from "vue-toastification"
+import { computed } from "@vue/runtime-core"
 
 export default {
 name: 'MapLocation',
@@ -40,7 +41,7 @@ components: {
 },
 setup(){
   const state = reactive({
-
+    mapImg: computed(()=>$store.state.assetsImgList.find(m => m.includes('Map')))
   })
   return state
 },

@@ -10,15 +10,16 @@ import { buffService } from "./BuffService"
 import { characterService } from "./CharacterService"
 import { itemsService } from "./ItemsService"
 import { questService } from "./QuestService"
+import $ from 'jquery'
 class GameService{
   toast = useToast()
-  spawnMonsters(){
+  spawnMonsters(monsterLvl = $store.state.location, numMonsters = null){
     $store.state.combatMonsters = []
     let currentLocationSet = $store.state.player.currentLocation.split('-')
     let maxMonsters = currentLocationSet[1] > 5 || currentLocationSet[2] > 6 ? 6 : 3
-    let quantity = Math.ceil(Math.random()*maxMonsters)
+    let quantity = numMonsters ?? Math.ceil(Math.random()*maxMonsters)
     for(let i=0; i<quantity; i++){
-      let monstersList = $store.state.monsters[$store.state.location]
+      let monstersList = $store.state.monsters[monsterLvl]
       let index = Math.floor(Math.random()*monstersList.length)
       let newMonster = {...monstersList[index]}
       if(newMonster.loot.items.length > 0){
@@ -76,6 +77,11 @@ class GameService{
   }
   setTimer(){
     if($store.state.player?.options && $store.state.player.options?.difficulty == 'easy'){return}
+    $('.modal').each(function(){
+      $(this).hide()
+      $('.modal-backdrop').remove()
+    })
+    clearInterval($store.state.timerInterval)
     $store.state.timer = 10000*$store.state.player.characters.length
     $store.state.timerInterval = setInterval(()=>{
       $store.state.timer -= 100

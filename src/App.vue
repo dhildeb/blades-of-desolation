@@ -1,8 +1,8 @@
 <template>
-<div class="d-md-flex bg-dark" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
+<div class="d-md-flex bg-dark h-100v" :class="this.$route.name == 'MapLocation' ? 'window-fluid-sm' : ''">
   <ShopNavBar v-if="this.$route.name == 'MainShop'" />
   <CharacterDetailsModal :character="character" ref="characterDetailsModal" v-if="character" />
-  <div class="bg-danger position-absolute timer" :style="'width: '+((timer/(10000*$store.state.player.characters.length))*100)+'vw'" v-if="$store.state.player?.options?.difficulty != 'easy' && this.$route.name == 'battleField'"></div>
+  <div class="bg-danger timer" :style="'width: '+((timer/(10000*$store.state.player.characters.length))*100)+'vw'" v-if="$store.state.player?.options?.difficulty != 'easy' && this.$route.name == 'battleField'"></div>
   <router-view class="order-2 order-md-1"></router-view>
   <PlayerStatsSideWindow class="order-1 order-md-2" />
 </div>
@@ -11,8 +11,6 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { computed, onMounted } from "@vue/runtime-core"
-import firebaseApp from 'firebase/app'
-import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
 import $ from 'jquery'
 import $store from '@/store/index'
 import PlayerStatsSideWindow from "./components/PlayerStatsSideWindow.vue"
@@ -26,52 +24,54 @@ export default {
       if($store.state.characterImgList.length > 0){
         return
       }
-      if(window.location.origin.includes('localhost')){
-        let folder = "assets/characters/"
-        $.ajax({
-          url: folder,
-          async: false,
-          success: function(data){
-            $(data).find("a").attr("href", function (i, val) {
-              if( val.match(/\.(jpe?g|png|gif)$/) ) { 
-                $store.state.characterImgList.push(val)
-              }
-            })
-          }
-        })
-        folder = "assets/locations/"
-        $.ajax({
-          url: folder,
-          async: false,
-          success: function(data){
-            $(data).find("a").attr("href", function (i, val) {
-              if( val.match(/\.(jpe?g|png|gif)$/) ) { 
-                $store.state.locationImgList.push(val)
-              }
-            })
-          }
-        })
-      }else{
-        const storage = getStorage(firebaseApp)
-        listAll(ref(storage, 'characters/')).then((res) => {
-          res.items.forEach((itemRef)=>{
-            getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
-              $store.state.characterImgList.push(url)
-            })
+      let folder = "assets/characters/"
+      $.ajax({
+        url: folder,
+        async: false,
+        success: function(data){
+          $(data).find("a").attr("href", function (i, val) {
+            if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+              $store.state.characterImgList.push(val)
+            }
           })
-        }).catch((error) => {
-          console.log(error)
-        })
-        listAll(ref(storage, 'locations/')).then((res) => {
-          res.items.forEach((itemRef)=>{
-            getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
-              $store.state.locationImgList.push(url)
-            })
+        }
+      })
+      folder = "assets/locations/"
+      $.ajax({
+        url: folder,
+        async: false,
+        success: function(data){
+          $(data).find("a").attr("href", function (i, val) {
+            if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+              $store.state.locationImgList.push(val)
+            }
           })
-        }).catch((error) => {
-          console.log(error)
-        })
-      }
+        }
+      })
+      folder = "assets/monsters/"
+      $.ajax({
+        url: folder,
+        async: false,
+        success: function(data){
+          $(data).find("a").attr("href", function (i, val) {
+            if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+              $store.state.monsterImgList.push(val)
+            }
+          })
+        }
+      })
+      folder = "assets/"
+      $.ajax({
+        url: folder,
+        async: false,
+        success: function(data){
+          $(data).find("a").attr("href", function (i, val) {
+            if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+              $store.state.assetsImgList.push(val)
+            }
+          })
+        }
+      })
     })
     const state = reactive({
       character: computed(()=> $store.state.selected),
@@ -105,11 +105,24 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
-
+@media screen and (min-width: 992px) {
+  .timer{
+    height: 15px;
+    position: absolute;
+  }
+}
+@media screen and (max-width: 992px) {
+  .timer{
+    height: 15px;
+    position: sticky;
+  }
+}
 .modal-content{
   background-color: black;
 }
-
+.h-100v{
+  height: 100vh;
+}
 .bg-img{
   background-size: cover;
 }

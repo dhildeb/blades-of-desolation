@@ -2,9 +2,9 @@
   <div class="container-fluid area-map map" :style="'background-image: url('+bgImg+')'">
     <div class="row" v-for="row in 10" :key="row">
         <div :id="location+'-'+row+'-'+col" class="col bg-shadow disabled" :class="findIfVisible(row, col) ? '' : 'bg-dark'" @click="explore(location+'-'+row+'-'+col)" v-for="col in 6" :key="col">
-            <div v-if="row == 5 && col == 3" :class="findIfVisible(row, col) ? '' : 'd-none'"><img class="char-icon" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/locations%2Ftavern2.png?alt=media&token=a5cd38b2-39fe-4150-a500-5b59306b3857" alt="Tavern"></div>
+            <div v-if="row == 5 && col == 3" :class="findIfVisible(row, col) ? '' : 'd-none'"><img class="char-icon" :src="tavernImg" alt="Tavern"></div>
             <div v-else-if="location+'-'+row+'-'+col == currentLocation"><img class="char-icon" :src="charImg" alt="X"></div>
-            <div v-if="row == 10 && col == 6 && !areaCompleted" :class="findIfVisible(row, col) ? '' : 'd-none'"><img class="char-icon" src="https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/locations%2Fchest.png?alt=media&token=907bdd99-f504-4857-a27c-8056ebc72a0a" alt="Tavern"></div>
+            <div v-if="row == 10 && col == 6 && !areaCompleted" :class="findIfVisible(row, col) ? '' : 'd-none'"><img class="char-icon" :src="chestImg" alt="treasure-chest"></div>
         </div>
     </div>
   </div>
@@ -43,7 +43,9 @@ export default {
             areaCompleted: computed(()=> state.explored.find(e => e == 'reward recieved')),
             currentLocation: computed(()=> $store.state.player.currentLocation),
             bgImg: computed(()=> $store.state.locationImgList.find(l => l.includes('area'+($store.state.location+1)+'.'))),
-            charImg: computed(()=> $store.state.player.characters.filter(c => c.hp > 0)[0].img)
+            charImg: computed(()=> $store.state.player.characters.filter(c => c.hp > 0)[0].img),
+            tavernImg: $store.state.assetsImgList.find(m => m.includes('tavern2')),
+            chestImg: $store.state.assetsImgList.find(m => m.includes('chest')),
         })
         function setExploreOptions(){
             let rowCol = $store.state.player.currentLocation.split('-')
@@ -83,8 +85,10 @@ export default {
             }
             $store.state.player.currentLocation = id
             if(explored.length >= 59 && !this.hasKey && !this.areaCompleted){
+                // TODO can't just add 2 when higher lvl
                 $store.state.player.items.push(new Item({name: 'key', type: 'key'}))
                 toast.success('You found a key!')
+                router.push({name: 'battleField', params: {monsterLvl: $store.state.location+2, numMonsters: 1, boss: true}})
             }
             if(explored.length == 60 && !this.areaCompleted && rowCol[1] == 10 && rowCol[2] == 6 && this.hasKey){
                await this.completeArea()
@@ -123,6 +127,10 @@ export default {
             const toast = useToast()
             let options = {gold: 'Wealth', power: 'Power', item: 'Treasure'}
             let boon = await Notify.selectOptions(options, 'Choose your Reward!', 'Well done adventures! For completing this area you are granted a boon!', 'Confirm')
+            if(boon){
+                $store.state.player.items = $store.state.player.items.filter(i => i.name != 'key')
+                $store.state.player.explored[$store.state.location].push('reward recieved')
+            }
             let reward
             let chance = Math.ceil(Math.random()*40)+$store.state.location
             switch(boon){
@@ -148,13 +156,11 @@ export default {
                     reward = itemsService.findRandomItem(reward)
                     $store.state.player.items.push(new Item(reward))
                     toast.success('You recieved '+reward.name)
-                    $store.state.location++
-                    await Notify.confirm('Next Area', 'You continue on your adventure to another area now that you have completed your mission here.', 'info', 'ok')
-                    this.explore($store.state.location+'-1-1')
-            }
-            if(boon){
-                $store.state.player.items = $store.state.player.items.filter(i => i.name != 'key')
-                $store.state.player.explored[$store.state.location].push('reward recieved')
+                    if(await Notify.confirm('Next Area', 'You continue on your adventure to another area now that you have completed your mission here.', 'info', 'ok')){
+                        $store.state.location++
+                        this.explore($store.state.location+'-1-1')
+                    }
+                    break
             }
         },
         findIfVisible(row, col){

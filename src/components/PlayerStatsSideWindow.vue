@@ -146,7 +146,7 @@ export default {
 @media screen and (min-width: 992px) {
   .side-window{
     width: 20vw;
-    height: 100vh;
+    min-height: 100%;
   }
 }
 @media screen and (max-width: 992px) {

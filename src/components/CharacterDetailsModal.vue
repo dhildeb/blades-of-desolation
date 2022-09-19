@@ -25,7 +25,7 @@
           <div class="col-md-6 col-12">
             <strong for="stats">Stats</strong>
             <div class="mt-3 pl-3 d-grid bg-darken">
-                <span>HP: {{character.hp}} / {{character.baseHp}}</span>
+                <span>HP: {{Math.round(character.hp*10)/10}} / {{character.baseHp}}</span>
                 <span>LVL: {{character.level}}</span>
                 <span>EXP: {{Math.round(character.exp)}} / {{levelUpChart[character.level]}}</span>
                 <span>Speed: {{character.actions}} / {{character.baseActions}}</span>

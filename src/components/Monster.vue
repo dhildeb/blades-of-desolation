@@ -2,7 +2,7 @@
   <HpBar :hp="monster.hp" :baseHp="monster.baseHp" :unknown="unknown" />
 <div>
   <div class="position-absolute hit" :id="'hit'+monster.id"></div>
-  <img :id="'monster'+monster.id" v-if="monster.hp > 0" class="img-fluid monster-img attack-cursor" :class="monster.statusEffects.map(e => e.negative ? e.name : '').join(' ')" @click="attackMonster(monster)" :src="monster.img" />
+  <img :id="'monster'+monster.id" v-if="monster.hp > 0" class="img-fluid monster-img attack-cursor" :class="monster.statusEffects.map(e => e.negative ? e.name : '').join(' ')" @click="attackMonster(monster)" :src="img" />
   <img v-else class="img-fluid monster-img" :src="deadImg" />
 </div>
 </template>
@@ -29,8 +29,9 @@ export default {
         characterService.autoSelect()
       })
     const state = reactive({
-      deadImg: window.location.origin.includes('localhost') ? '../assets/dead.png' : 'https://firebasestorage.googleapis.com/v0/b/game-pics.appspot.com/o/monsters%2Fdead.png?alt=media&token=028e4092-cca1-42d5-a38f-99c60d034904',
-      unknown: computed(()=>!$store.state.player.kills[props.monster.name])
+      deadImg: '../assets/dead.png',
+      unknown: computed(()=>!$store.state.player.kills[props.monster.name]),
+      img: computed(()=>$store.state.monsterImgList.find(m => m.includes(props.monster.img)) ?? props.monster.img)
     })
     return state
   },

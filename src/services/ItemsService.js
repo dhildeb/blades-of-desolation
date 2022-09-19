@@ -153,6 +153,7 @@ class ItemsService{
     }
     let index = $store.state.player.items.findIndex(i => i.id == item.id)
     $store.state.player.items.splice(index, 1)
+    this.toast.success(character.name+' '+this.getItemEffectsDisplay(item))
   }
   doItemEffect(effect, value, character){
     if(effect == 'statusEffects'){
@@ -170,7 +171,7 @@ class ItemsService{
         display += i > 0 ? ' | ' : ''
         display += item.effect[i].replace(/([A-Z])/g, " $1")
         if(typeof item.value[i] == 'object'){
-          display += ' +'+item.value[i].name+' +'+item.value[i].chance+'% '
+          display += ' +'+item.value[i].name+' + '+item.value[i].chance+'% '
         }else{
           display += operator+item.value[i]+' '
         }
@@ -179,7 +180,7 @@ class ItemsService{
       let operator = item.value <= 0 ? '' : '+'
       display = item.effect.replace(/([A-Z])/g, " $1")
       if(typeof item.value == 'object'){
-        display += item.value.name+' +'+item.value.chance+'% '
+        display += item.value.name+' + '+item.value.chance+'% '
       }else{
         display += operator+item.value+' '
       }

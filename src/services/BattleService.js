@@ -29,7 +29,7 @@ class BattleService{
 
       if(target.absorb == attacker.dmgType && target.absorb != ''){
         target.hp += attacker.strength
-        animationsService.fadeOutUp('hit'+target.id, attacker.strength, operator)
+        animationsService.fadeOutUp('hit'+target.id, attacker.strength, '+')
         return
       }
 
