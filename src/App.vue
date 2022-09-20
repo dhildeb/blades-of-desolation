@@ -24,7 +24,7 @@ export default {
       if($store.state.characterImgList.length > 0){
         return
       }
-      let folder = (window.origin.include('localhost') ? "assets/" : "")+"img/characters/"
+      let folder = (window.origin.includes('localhost') ? "assets/" : "")+"img/characters/"
       $.ajax({
         url: folder,
         async: false,
@@ -36,7 +36,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.include('localhost') ? "assets/" : "")+"img/locations/"
+      folder = (window.origin.includes('localhost') ? "assets/" : "")+"img/locations/"
       $.ajax({
         url: folder,
         async: false,
@@ -48,7 +48,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.include('localhost') ? "assets/" : "")+"img/monsters/"
+      folder = (window.origin.includes('localhost') ? "assets/" : "")+"img/monsters/"
       $.ajax({
         url: folder,
         async: false,
@@ -60,7 +60,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.include('localhost') ? "assets/" : "")+"img/"
+      folder = (window.origin.includes('localhost') ? "assets/" : "")+"img/"
       $.ajax({
         url: folder,
         async: false,
