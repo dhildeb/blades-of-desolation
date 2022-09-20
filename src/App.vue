@@ -36,7 +36,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.includes('localhost') ? "assets/" : "")+"img/locations/"
+      folder = (window.origin.includes('localhost') ? "assets/img/locations/" : "assets/locations/")
       $.ajax({
         url: folder,
         async: false,
@@ -48,7 +48,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.includes('localhost') ? "assets/" : "")+"img/monsters/"
+      folder = (window.origin.includes('localhost') ? "assets/img/monsters/" : "img/monsters/")
       $.ajax({
         url: folder,
         async: false,
@@ -60,7 +60,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.includes('localhost') ? "assets/" : "")+"img/"
+      folder = (window.origin.includes('localhost') ? "assets/img/" : "assets")
       $.ajax({
         url: folder,
         async: false,
