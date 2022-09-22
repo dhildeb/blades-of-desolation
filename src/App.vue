@@ -24,6 +24,7 @@ export default {
       if($store.state.characterImgList.length > 0){
         return
       }
+      setTimeout(()=>{
       let folder = (window.origin.includes('localhost') ? "assets/img/characters" : "docs/assets/characters/")
       $.ajax({
         url: folder,
@@ -72,6 +73,8 @@ export default {
           })
         }
       })
+      }, 30000)
+
     })
     const state = reactive({
       character: computed(()=> $store.state.selected),
