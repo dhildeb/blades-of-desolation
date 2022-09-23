@@ -25,11 +25,11 @@ export default {
   },
   setup(props){
     onMounted(()=> {
-        state.monsterPreHp = props.monster.hp
-        characterService.autoSelect()
-      })
+      state.monsterPreHp = props.monster.hp
+      characterService.autoSelect()
+    })
     const state = reactive({
-      deadImg: '../assets/img/dead.png',
+      deadImg: computed(()=>$store.state.assetsImgList.find(img => img.includes('dead'))),
       unknown: computed(()=>!$store.state.player.kills[props.monster.name]),
       img: computed(()=>$store.state.monsterImgList.find(m => m.includes(props.monster.img)) ?? props.monster.img)
     })

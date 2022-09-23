@@ -41,7 +41,7 @@ export default {
     const state = reactive({
       selected: computed(() => $store.state.selected),
       hp: computed(() => props.character.hp),
-      deadImg: computed(()=>$store.state.monsterImgList.find(m => m.includes('dead'))),
+      deadImg: computed(()=>$store.state.assetsImgList.find(img => img.includes('dead'))),
     })
     return state
   },
