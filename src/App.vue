@@ -13,6 +13,8 @@ import { reactive } from "@vue/reactivity"
 import { computed, onMounted } from "@vue/runtime-core"
 import $ from 'jquery'
 import $store from '@/store/index'
+import firebaseApp from 'firebase/app'
+import {getDownloadURL, getStorage, listAll, ref} from 'firebase/storage'
 import PlayerStatsSideWindow from "./components/PlayerStatsSideWindow.vue"
 import CharacterDetailsModal from "./components/CharacterDetailsModal.vue"
 import ShopNavBar from "./components/ShopNavBar.vue"
@@ -34,6 +36,16 @@ export default {
               $store.state.characterImgList.push(val)
             }
           })
+        },
+        error: function(){
+          const storage = getStorage(firebaseApp)
+          listAll(ref(storage, 'characters/')).then((res) => {
+            res.items.forEach((itemRef)=>{
+              getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
+                $store.state.characterImgList.push(url)
+              })
+            })
+          })
         }
       })
       folder = "assets/img/locations/"
@@ -45,6 +57,16 @@ export default {
             if( val.match(/\.(jpe?g|png|gif)$/) ) { 
               $store.state.locationImgList.push(val)
             }
+          })
+        },
+        error: function(){
+          const storage = getStorage(firebaseApp)
+          listAll(ref(storage, 'locations/')).then((res) => {
+            res.items.forEach((itemRef)=>{
+              getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
+                $store.state.locationImgList.push(url)
+              })
+            })
           })
         }
       })
@@ -58,6 +80,16 @@ export default {
               $store.state.monsterImgList.push(val)
             }
           })
+        },
+        error: function(){
+          const storage = getStorage(firebaseApp)
+          listAll(ref(storage, 'monsters/')).then((res) => {
+            res.items.forEach((itemRef)=>{
+              getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
+                $store.state.monsterImgList.push(url)
+              })
+            })
+          })
         }
       })
       folder = "assets/img/"
@@ -69,6 +101,16 @@ export default {
             if( val.match(/\.(jpe?g|png|gif)$/) ) { 
               $store.state.assetsImgList.push(val)
             }
+          })
+        },
+        error: function(){
+          const storage = getStorage(firebaseApp)
+          listAll(ref(storage, '/')).then((res) => {
+            res.items.forEach((itemRef)=>{
+              getDownloadURL(ref(storage, '/'+itemRef._location.path_)).then((url)=>{
+                $store.state.assetsImgList.push(url)
+              })
+            })
           })
         }
       })
