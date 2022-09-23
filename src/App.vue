@@ -24,8 +24,7 @@ export default {
       if($store.state.characterImgList.length > 0){
         return
       }
-      setTimeout(()=>{
-      let folder = (window.origin.includes('localhost') ? "assets/img/characters" : "docs/assets/characters/")
+      let folder = "assets/img/characters"
       $.ajax({
         url: folder,
         async: false,
@@ -37,7 +36,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.includes('localhost') ? "assets/img/locations/" : "docs/assets/locations/")
+      folder = "assets/img/locations/"
       $.ajax({
         url: folder,
         async: false,
@@ -49,7 +48,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.includes('localhost') ? "assets/img/monsters/" : "docs/assets/monsters/")
+      folder = "assets/img/monsters/"
       $.ajax({
         url: folder,
         async: false,
@@ -61,7 +60,7 @@ export default {
           })
         }
       })
-      folder = (window.origin.includes('localhost') ? "assets/img/" : "docs/assets/")
+      folder = "assets/img/"
       $.ajax({
         url: folder,
         async: false,
@@ -73,8 +72,6 @@ export default {
           })
         }
       })
-      }, 30000)
-
     })
     const state = reactive({
       character: computed(()=> $store.state.selected),
