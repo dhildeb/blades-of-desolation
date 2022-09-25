@@ -1,7 +1,8 @@
 class BuffService{
   removeBuff(target, buff){
     if(Array.isArray(target[buff.effect])){
-      target[buff.effect] = target[buff.effect].filter(t => t != buff.value)
+      let index = target[buff.effect].findIndex(stat => stat == buff.value)
+      target[buff.effect].splice(index, 1)
     }else if(typeof buff.value !== 'number'){
       target[buff.effect] = null
     }else{
@@ -10,7 +11,8 @@ class BuffService{
   }
   removeDebuff(target, debuff){
     if(Array.isArray(target[debuff.effect])){
-      target[debuff.effect].push(debuff.value)
+      let index = target[debuff.effect].findIndex(stat => stat == debuff.value)
+      target[debuff.effect].splice(index, 1)
     }else if(typeof debuff.value !== 'number'){
       target[debuff.effect] = debuff.value
     }else{

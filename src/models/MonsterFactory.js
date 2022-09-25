@@ -41,5 +41,6 @@ export class MonsterFactory {
     this.baseMagic = this.magic
     this.basePhysicalResistance = this.physicalResistance
     this.baseMagicResistance = this.magicResistance
+    this.abilities = data.abilities ?? []
   }
 }

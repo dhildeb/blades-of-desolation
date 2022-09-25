@@ -3,6 +3,7 @@ import { sleep } from "../utils/sleep"
 import { MonsterFactory } from "../models/MonsterFactory"
 import { gameService } from "./GameService"
 import { useToast } from "vue-toastification"
+import { monstersService } from "./MonstersService"
 
 class BattleService{
   toast = useToast()
@@ -48,7 +49,10 @@ class BattleService{
       })
       target.hp -= dmg
     })
-    this.animationDelay = 750 
+    this.animationDelay = 750
+    if(attacker instanceof MonsterFactory){
+      monstersService.triggerAbilities(attacker, target)
+    }
   }
   thorns(attacker, target){
       if(target.thorns <= 0 || attacker.dmgType == 'range' || attacker['isSpell']){

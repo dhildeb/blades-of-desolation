@@ -76,5 +76,36 @@ class MonstersService {
   getMonsterById(id) {
     return $store.state.combatMonsters.find(m => m.id == id)
   }
+
+  triggerAbilities(monster, target){
+    monster.abilities.forEach(ability => {
+      let random = Math.ceil(Math.random()*100)
+      if(random > ability.chance){return}
+      ability.effect.forEach(function(e, i){
+        if(Array.isArray(target[e])){
+          target[e].push(ability.value[i])
+        }else if(typeof ability.value[i] !== 'number'){
+          target[e] = ability.value[i]
+        }else{
+          if(ability.buff){
+            monster[e] += ability.value[i]
+          }else{
+            target[e] -= ability.value[i]
+          }
+        }
+      })
+      if(ability.buff){
+        ability.effect.forEach(function(e, i){
+          monster['buffs'].push({effect: e, value: ability.value[i]})
+        })
+        animationsService.fadeOutUp('hit'+monster.id, ability.name, '+')
+      }else{
+        ability.effect.forEach(function(e, i){
+          target['debuffs'].push({effect: e, value: ability.value[i]})
+        })
+        animationsService.fadeOutUp('hit'+target.id, ability.name, '-')
+      }
+    })
+  }
 }
 export const monstersService = new MonstersService()

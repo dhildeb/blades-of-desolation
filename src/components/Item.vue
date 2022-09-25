@@ -32,7 +32,8 @@ export default {
       let display = 'Pre-reqs: '
       if(item?.requirements?.length > 0){
         for(let i=0; i<item.requirements.length; i++){
-          display += item.requirements[i].stat+' +'+(item.requirements[i].req)
+          let reqs = Array.isArray(item.requirements[i].req) ? item.requirements[i].req.join(' or ') : item.requirements[i].req
+          display += item.requirements[i].stat+' +'+reqs
         }
       }else{
         display += 'none'
