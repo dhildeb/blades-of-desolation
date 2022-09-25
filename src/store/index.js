@@ -40,7 +40,7 @@ const store = createStore({
         {name: 'lizardman', img: 'lizard', hp: 52, strength: 3, actions: 3, level: 2, physicalResistance: 20, statusEffects: [{name: 'petrify', effect: 'actions', value: 0, chance: 8, negative: false}], loot: {gold: 45, items: ['spear', 'health potion'], chance: [75, 50]}, exp: 450},
         {name: 'hyena', img: 'hyena', hp: 47, strength: 8, actions: 2, level: 2, loot: {gold: 45, items: [], chance: []}, exp: 450, abilities: [{name: 'expose', effect: ['dodge'], value: [5], chance: 25, buff: false}]},
         {name: 'fairy', actions: 1, strength: 20, hp: 5, dmgType: 'magic', dodge: 75, loot: {gold: 56, items: [], chance: []}, exp: 450, img: 'fairy'},
-        {name: 'goblin shaman', actions: 1, strength: 13, hp: 31, dmgType: 'necrotic', loot: {gold: 45, items: ['bone wand', 'health potion'], chance: [75, 5]}, exp: 450, dodge: 10, img: 'goblin-shaman', abilities: [{name: 'hide', effect: ['dodge'], value: [10], chance: 10, buff: true}]},
+        {name: 'goblin shaman', actions: 1, strength: 13, hp: 31, dmgType: 'necrotic', loot: {gold: 45, items: ['bone wand', 'health potion'], chance: [75, 5]}, exp: 450, dodge: 10, img: 'goblin-shaman', abilities: [{name: 'hide', effect: ['dodge'], value: [10], chance: 10, buff: true}, {name: 'summon', monsters: ['goblin', 'goblin sorcerer', 'trickster goblin', 'goblin archer', 'mad golbin'], monsterLvl: [0, 0, 0, 0, 3], qty: 2, chance: 75}]},
         {name: 'kreen', actions: 4, strength: 4, physicalResistance: 10, hp: 42, loot: {gold: 20, items: [], chance: []}, exp: 200, img: 'insect1'},
         ],
         //3
@@ -106,7 +106,7 @@ const store = createStore({
         ],
         //12
         [{name: 'archmage', actions: 1, strength: 60, hp: 499, physicalResistance: 25, magicResistance: 50, dmgType: 'magic', statusEffects: [{name: 'poison', effect: 'hp', value: 10, chance: 25, negative: false}, {name: 'petrify', effect: 'actions', value: 0, chance: 25, negative: false}], loot: {gold: 840, items: ['robe of the archmagi', 'staff of the magi'], chance: [1, 1]}, exp: 8400, img: 'archmage', abilities: [{name: 'curse', effect: ['strength', 'hp', 'luck', 'dodge', 'physicalResistance', 'actions'], value: [3, 6, 2, 5, 10, 1], chance: 10, buff: false}]},
-        {name: 'orc necromancer', actions: 2, strength: 25, hp: 575, lifesteal: 25, dmgType: 'necrotic', loot: {gold: 840, items: [], chance: []}, exp: 8400, img: 'orc-necromancer', abilities: [{name: 'curse', effect: ['strength', 'hp', 'luck', 'dodge', 'physicalResistance', 'actions'], value: [3, 6, 2, 5, 10, 1], chance: 10, buff: false}]},
+        {name: 'orc necromancer', actions: 2, strength: 25, hp: 575, lifesteal: 25, dmgType: 'necrotic', loot: {gold: 840, items: [], chance: []}, exp: 8400, img: 'orc-necromancer', abilities: [{name: 'curse', effect: ['strength', 'hp', 'luck', 'dodge', 'physicalResistance', 'actions'], value: [3, 6, 2, 5, 10, 1], chance: 10, buff: false}, {name: 'summon', monsters: ['flameskull', 'shadow', 'multi-armed skeleton', 'ghoul', 'skeleton'], monsterLvl: [4, 1, 1, 1, 0], qty: 2, chance: 75}]},
         {name: 'yeti', actions: 1, strength: 34, hp: 2800, loot: {gold: 1300, items: [], chance: []}, statusEffects: [{name: 'petrify', effect: 'hp', value: 0, chance: 5, negative: false}], exp: 13000, dmgType: 'cold', absorb: 'cold', img: 'yeti', abilities: [{name: 'freeze', effect: ['actions'], value: [2], chance: 15, buff: false}]},
         ],
         //13

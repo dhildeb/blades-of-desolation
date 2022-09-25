@@ -19,26 +19,40 @@ class GameService{
     let maxMonsters = currentLocationSet[1] > 5 || currentLocationSet[2] > 6 ? 6 : 3
     let quantity = numMonsters ?? Math.ceil(Math.random()*maxMonsters)
     for(let i=0; i<quantity; i++){
-      let monstersList = $store.state.monsters[monsterLvl]
-      let index = Math.floor(Math.random()*monstersList.length)
-      let newMonster = {...monstersList[index]}
-      if(newMonster.loot.items.length > 0){
-        newMonster.loot = {...newMonster.loot}
-        newMonster.loot.items = newMonster.loot.items.filter((item, index) => {
-          let chance = Math.ceil(Math.random()*100)-characterService.getPartyLuck()
-          return newMonster.loot.chance[index] > chance
-        })
-      }
-      // dereference statusEffects object
-      if(newMonster['statusEffects']){
-        newMonster['statusEffects'] = []
-        for(let i = 0; i < monstersList[index].statusEffects.length; i++){
-          newMonster['statusEffects'].push({...monstersList[index].statusEffects[i]})
-        }
-      }
-      $store.state.combatMonsters.push(new MonsterFactory(newMonster))
+      this.addMonsterToBattleField(null, monsterLvl)
     }
     itemsService.randomItemDrop()
+  }
+
+  addMonsterToBattleField(monsterName, monsterLvl){
+    let newMonster
+    let index
+    let monstersList = $store.state.monsters[monsterLvl]
+    console.log(monsterLvl)
+    console.log(monsterName) 
+    if(monsterName){
+      newMonster = monstersList.find(m => m.name == monsterName)
+      index = monstersList.findIndex(m => m.name == monsterName)
+    }else{
+      index = Math.floor(Math.random()*monstersList.length)
+      newMonster = {...monstersList[index]}
+    }
+    console.log(newMonster)
+    if(newMonster.loot.items.length > 0){
+      newMonster.loot = {...newMonster.loot}
+      newMonster.loot.items = newMonster.loot.items.filter((item, index) => {
+        let chance = Math.ceil(Math.random()*100)-characterService.getPartyLuck()
+        return newMonster.loot.chance[index] > chance
+      })
+    }
+    // dereference statusEffects object
+    if(newMonster['statusEffects']){
+      newMonster['statusEffects'] = []
+      for(let i = 0; i < monstersList[index].statusEffects.length; i++){
+        newMonster['statusEffects'].push({...monstersList[index].statusEffects[i]})
+      }
+    }
+    $store.state.combatMonsters.push(new MonsterFactory(newMonster))
   }
   victory(){
     questService.updateQuest()

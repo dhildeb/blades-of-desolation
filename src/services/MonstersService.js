@@ -4,6 +4,7 @@ import { battleService } from "./BattleService"
 import { characterService } from "./CharacterService"
 import { sleep } from "../utils/sleep"
 import $ from "jquery"
+import { gameService } from "./GameService"
 class MonstersService {
   takeTurn() {
     this.prepPhase()
@@ -81,6 +82,10 @@ class MonstersService {
     monster.abilities.forEach(ability => {
       let random = Math.ceil(Math.random()*100)
       if(random > ability.chance){return}
+      if(ability.name == 'summon'){
+        this.summon(ability)
+        return
+      }
       ability.effect.forEach(function(e, i){
         if(Array.isArray(target[e])){
           target[e].push(ability.value[i])
@@ -106,6 +111,12 @@ class MonstersService {
         animationsService.fadeOutUp('hit'+target.id, ability.name, '-')
       }
     })
+  }
+  summon(ability){
+    for(let i = 0; i < ability.qty; i++){
+      let index = Math.floor(Math.random()*ability.monsters.length)
+      gameService.addMonsterToBattleField(ability.monsters[index], ability.monsterLvl[index])
+    }
   }
 }
 export const monstersService = new MonstersService()
