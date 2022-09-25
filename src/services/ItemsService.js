@@ -113,6 +113,11 @@ class ItemsService{
         pass = true
       }
     })
+    if(!pass && $store.message == ''){
+      let reqsDisplay = Array.isArray(reqs.req) ? reqs.req.join(' or ') : reqs.req
+      // regex seperates camelCased words and makes all lowercase
+      $store.message += ' requires '+reqs.stat.replace(/([A-Z])/g, " $1")+' to be '+reqsDisplay
+    }
     return pass
   }
   checkSingleReq(character, r){
@@ -132,7 +137,9 @@ class ItemsService{
         pass = true
     }
     if(!pass){
-      $store.message += ' requires '+r.stat.replace(/([A-Z])/g, " $1")+' to be '+r.req
+      let reqs = Array.isArray(r.req) ? r.req.join(' or ') : r.req
+      // regex seperates camelCased words and makes all lowercase
+      $store.message += ' requires '+r.stat.replace(/([A-Z])/g, " $1")+' to be '+reqs
     }
     return pass
   }
