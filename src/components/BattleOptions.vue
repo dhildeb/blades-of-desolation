@@ -95,6 +95,7 @@ export default {
     async castSpell(){
       let target = null
       if(this.selected.hp <= 0){return}
+      if(this.selected.magic < this.selectedSpell.level && this.selectedSpell.level > 0){return}
       if(!this.selectedSpell.areaEffect){
         $('[id^=hit]').each(function(){
           let id = $(this).prop('id').replace(/[^0-9]+/, '')

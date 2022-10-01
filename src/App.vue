@@ -135,6 +135,7 @@ export default {
   text-align: center;
   color: #f8f9fa;
   user-select: none;
+  overflow-x: hidden;
 }
 
 nav {

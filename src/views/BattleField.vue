@@ -14,7 +14,7 @@
         <button class="btn btn-warning" @click="adventureOn">Adventure On!</button>
       </div>
     </div>
-    <div class="row justify-content-center h-50 bg-img" >
+    <div class="row justify-content-center h-50 bg-img contain" >
       <div class="col-4 col-md-2" v-for="character in characters" :key="character.id">
         <div v-if="character.inBattle">
           <CombatCharacter :character="character" />
@@ -122,5 +122,8 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: bottom;
+}
+.contain{
+  contain: content;
 }
 </style>

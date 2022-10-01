@@ -19,7 +19,7 @@ props: {
 }
 </script>
 
-<style scoped>
+<style>
 .hp-bar{
   height: 15px;
 }

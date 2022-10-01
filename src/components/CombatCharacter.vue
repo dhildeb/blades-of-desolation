@@ -4,7 +4,14 @@
      <img :id="'charImg'+character.id" class="img-fluid w-75 events-none" :src="deadImg" @click="selectCharacter(character)">
   </div>
   <div v-else>
-      <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected?.id == character.id" />
+    <HpBar :hp="character.hp" :baseHp="character.baseHp" :selected="selected?.id == character.id" />
+    <div class="border border-primary w-100 hp-bar rounded-pill align-items-center d-flex" v-if="character.baseMagic > 0">
+      <div class="bg-primary hp-bar text-absolute-center rounded-pill" :style="'width: '+(character.magic > 0 ? (character.magic/character.baseMagic)*100 : 0)+'%'">
+        <span class="text-light pb-1 fs-sm">
+          {{Math.round(character.magic*10)/10}}/{{character.baseMagic}}
+        </span>
+      </div>
+    </div>
     <div class="position-absolute hit selectable" :id="'hit'+character.id"></div>
     <strong class="d-flex text-light" :class="character.actions < 1 ? 'text-danger' : ''">
       {{character.name}}
@@ -18,9 +25,6 @@
       </p>
       <p class="border rounded-circle text-light h-25 w-25" title="Actions">
         {{character.actions}}
-      </p>
-      <p class="border rounded-circle text-light h-25 w-25" title="Magic" v-if="character.magic">
-        {{character.magic}}
       </p>
     </div>
   </div>
@@ -87,5 +91,8 @@ strong{
 }
 .events-none{
   pointer-events: none;
+}
+.fs-sm{
+  font-size: small;
 }
 </style>
