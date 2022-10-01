@@ -64,6 +64,11 @@ export default {
     watch(()=>([state.selected]), ()=>{
       state.selectedSpellIndex = 0
     })
+    watch(()=>([state.selected.magic]), ()=>{
+      if(!state.selected){return}
+      state.selectedSpellIndex = state.selected.spells.findIndex(s => s.cost <= state.selected.magic || s.level == 0)
+      state.selectedSpellIndex = state.selectedSpellIndex >= 0 ? state.selectedSpellIndex : 0
+    })
     return state
   },
   methods: {

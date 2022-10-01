@@ -19,7 +19,7 @@
           </button>
         </div>
       </div>
-      <div class="char-bg-img" :style="'background-image: url('+character.img+')'"></div>
+      <div class="char-bg-img" :class="character.statusEffects.map(e => e.negative ? e.name : '').join(' ')" :style="'background-image: url('+character.img+')'"></div>
       <div class="modal-body container position-absolute">
         <div class="row">
           <div class="col-md-6 col-12">

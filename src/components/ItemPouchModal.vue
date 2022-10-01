@@ -10,7 +10,7 @@
       <div class="modal-body container">
         <div class="row px-3">
           <ul v-if="items.length > 0" >
-            <Item v-for="item in items" :key="item.id" :item="item"/>
+            <Item v-for="item in filteredItems" :key="item.id" :item="item" :qty="$store.state.player.items.filter(i => i.name == item.name).length"/>
           </ul>
           <p v-else>No items in pouch</p>
         </div>
@@ -32,6 +32,7 @@ export default {
   setup(){
     const state = reactive({
       items: computed(()=> $store.state.player.items),
+      filteredItems: computed(()=> $store.state.player.items.filter((fi,i)=> $store.state.player.items[i+1]?.name != fi.name))
     })
     return state
   },

@@ -28,8 +28,6 @@ class GameService{
     let newMonster
     let index
     let monstersList = $store.state.monsters[monsterLvl]
-    console.log(monsterLvl)
-    console.log(monsterName) 
     if(monsterName){
       newMonster = monstersList.find(m => m.name == monsterName)
       index = monstersList.findIndex(m => m.name == monsterName)
@@ -37,7 +35,6 @@ class GameService{
       index = Math.floor(Math.random()*monstersList.length)
       newMonster = {...monstersList[index]}
     }
-    console.log(newMonster)
     if(newMonster.loot.items.length > 0){
       newMonster.loot = {...newMonster.loot}
       newMonster.loot.items = newMonster.loot.items.filter((item, index) => {

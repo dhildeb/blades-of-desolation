@@ -1,7 +1,7 @@
 <template>
   <li :id="'item'+item.id" class="click d-flex pb-2" :class="getRarityFullName(item.rarity)" :title="display == 'full' ? getItemReqsDisplay(item): getItemEffectsDisplay(item)">
     {{item.name}} &nbsp;<span v-html="getItemIcon(item.type)"></span>&nbsp;
-    {{display == 'full' ? getItemEffectsDisplay(item) : " - "+item.price}} <i v-if="display != 'full'" class="fad fa-coins"></i>
+    {{display == 'full' ? getItemEffectsDisplay(item) : " - "+item.price}} <i v-if="display != 'full'" class="fad fa-coins"></i> <span v-if="qty > 1">&nbsp; ({{qty}})</span>
   </li>
 </template>
 
@@ -15,7 +15,8 @@ export default {
   name: 'EquipmentItem',
     props: {
     item: {type: Object, required: true},
-    display: {type: String, default: 'full'}
+    display: {type: String, default: 'full'},
+    qty: {type: Number, default: 0}
   },
   setup(){
     const state = reactive({

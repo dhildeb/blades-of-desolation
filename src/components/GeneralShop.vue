@@ -7,7 +7,7 @@
   <div class="row mh-100">
     <div class="col-md-6 col-12">
       <ul>
-        <Item :class="getRarityFullName(item.rarity)" v-for="item in storeItems" :key="item.id" :item="item" display="shop" @click="buy(item)" />
+        <Item :class="getRarityFullName(item.rarity)" v-for="item in filteredItems" :key="item.id" :item="item" :qty="storeItems.filter(i => i.name == item.name).length" display="shop" @click="buy(item)" />
       </ul>
     </div>
   </div>
@@ -25,16 +25,17 @@ import Notify from "@/utils/Notify"
 export default {
 name: 'GeneralShop',
 components: {
-    Item
+  Item
 },
 props: {
-    storeItems: {type: Object}
+  storeItems: {type: Object}
 },
-setup(){
+setup(props){
   const state = reactive({
     playersGold: computed(()=> $store.state.player.gold),
     quest: null,
-    activeShop: computed(()=> $store.state.shop)
+    activeShop: computed(()=> $store.state.shop),
+    filteredItems: computed(()=> props.storeItems.filter((fi,i)=> props.storeItems[i+1]?.name != fi.name))
   })
   return state
 },

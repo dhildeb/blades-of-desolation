@@ -33,13 +33,13 @@ class AbilitiesService{
   levelUpAbility(abilityName, character){
     let ability = character.abilities.find(a => a.name == abilityName)
     let originalAbility = $store.state.abilities.find(a => a.name == abilityName)
-
-    if(ability.level % 2 == 0){
-      ability.value.forEach((v, i)=> v += originalAbility.value[i])
-    }
-    ability.baseUses++
-    ability.uses++
     ability.level++
+    if(ability.level % 2 == 0){
+      ability.value.forEach((v, i)=> ability.value[i] += Math.round(originalAbility.value[i]/2))
+    }else{
+      ability.baseUses++
+      ability.uses++
+    }
     this.toast.success(character.name+' Level up '+abilityName, {timeout: 10000})
   }
   useAbility(Ability, target){

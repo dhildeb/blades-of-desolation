@@ -57,9 +57,13 @@ export default {
     charactersWithHp: function(){
       const toast = useToast()
       if(this.characters.length < 1){
+        clearInterval($store.state.timerInterval)
+        $store.state.timer = 10000*$store.state.player.characters.length
         router.push({name: 'MapLocation'})
         toast.success('You fled from battle')
       }else if(this.charactersWithHp < 1){
+        clearInterval($store.state.timerInterval)
+        $store.state.timer = 10000*$store.state.player.characters.length
         router.push({name: 'CharacterForm'})
         toast.error('Your party is dead, revive or start over')
       }
