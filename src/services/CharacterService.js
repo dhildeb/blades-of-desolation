@@ -43,7 +43,12 @@ class CharacterService{
   resetActions(){
     $store.state.player.characters.forEach(c => {
       c.actions = c.actions >= 0 ? c.baseActions : c.actions+c.baseActions
+      const getAbilityChance = Math.ceil(Math.random()*100)+c.luck
+      if(getAbilityChance > 90){
+        c.abilities.forEach(a => a.uses = a.baseUses)
+      }
     })
+
   }
   resetExtraStats(){
     $store.state.player.characters.forEach(c => {

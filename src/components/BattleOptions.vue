@@ -8,7 +8,7 @@
     <div class="body container">
       <div class="row justify-content-center">
         <div class="btn-group mb-3" v-if="selected.spells.length > 0">
-          <button id="castSpell" type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || (selected.magic < 1 && selectedSpell.level > 0)">{{selectedSpell ? selectedSpell.name : selectSpell(selected.spells[0])}} lvl-{{selectedSpell ? selectedSpell.level : selectSpell(selected.spells[0])}}</button>
+          <button id="castSpell" type="button" class="btn btn-danger" @click="castSpell" :disabled="selected.actions < 1 || (selected.magic < selectedSpell.level)">{{selectedSpell ? selectedSpell.name : selectSpell(selected.spells[0])}} lvl-{{selectedSpell ? selectedSpell.level : selectSpell(selected.spells[0])}}</button>
           <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="sr-only">Toggle Dropdown</span>
           </button>
@@ -56,17 +56,21 @@ export default {
     })
     const state = reactive({
       selected: computed(() => $store.state.selected),
-      selectedSpellIndex: 0,
+      selectedSpellIndex: $store.state.selected.baseMagic > 0 ? $store.state.selected.spells.findIndex(s => s.level <= $store.state.selected.magic || s.level == 0) : 0,
       selectedSpell: computed(()=> $store.state.selected.spells[state.selectedSpellIndex]),
       selectedAbility: {name: 'select ability', level: null},
       route: useRoute(),
     })
     watch(()=>([state.selected]), ()=>{
-      state.selectedSpellIndex = 0
+      if(state.selected.baseMagic > 0){
+        state.selectedSpellIndex = state.selected.spells.findIndex(s => s.level <= state.selected.magic || s.level == 0)
+      }else{
+        state.selectedSpellIndex = 0
+      }
     })
     watch(()=>([state.selected.magic]), ()=>{
       if(!state.selected){return}
-      state.selectedSpellIndex = state.selected.spells.findIndex(s => s.cost <= state.selected.magic || s.level == 0)
+      state.selectedSpellIndex = state.selected.spells.findIndex(s => s.level <= state.selected.magic || s.level == 0)
       state.selectedSpellIndex = state.selectedSpellIndex >= 0 ? state.selectedSpellIndex : 0
     })
     return state

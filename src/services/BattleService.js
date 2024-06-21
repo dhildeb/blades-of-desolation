@@ -23,6 +23,9 @@ class BattleService{
 
       if(this.dodge(target)){
         animationsService.fadeOutUp('hit'+target.id, '<span>dodged</span>', operator)
+        if(!targetIsFoe && target.classType === 'rogue') {
+          target.abilities.forEach(a => a.name === 'sneak attack' ? a.uses = a.baseUses : null);
+        }
         return
       }
 

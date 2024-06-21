@@ -72,7 +72,11 @@ methods: {
 }
 </script>
 
-<style>
+<style scope>
+#app{
+  overflow-x: auto;
+}
+
 area{
   cursor: pointer;
 }
