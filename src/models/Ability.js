@@ -9,6 +9,7 @@ export class Ability{
     this.areaEffect = data.areaEffect ?? false
     this.effect = data.effect
     this.value = data.value
+    this.targetsEnemy = data.targetsEnemy ?? false
     // this.numEffect = data.numEffect //{hp: 5}
     // this.stringEffect = data.stringEffect // {dmgType: necrotic}
     // this.arrayEffect = data.arrayEffect // {resistence: cold}

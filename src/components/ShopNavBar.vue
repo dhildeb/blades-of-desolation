@@ -7,7 +7,7 @@
     </div>
     <div class="mr-3">
       <button class="btn btn-warning mr-2" @click="adventureOn">Adventure On!</button>
-      <button class="btn btn-primary" @click="rest()" :disabled="state.playersGold < 50*state.location+50">Rest ({{50*state.location+50}} <i class="fad fa-coins"></i>)</button>
+      <button class="btn btn-primary" @click="rest(50*state.location+50)" :disabled="state.playersGold < 50*state.location+50">Rest ({{50*state.location+50}} <i class="fad fa-coins"></i>)</button>
       <div v-for="character in state.revive" :key="character.id">
         <button class="btn btn-secondary m-3" @click="reviveCharacter(character.id)" :disabled="state.playersGold <
           character.cost">Revive {{character.name}} ({{(character.hp - character.baseHp)*-10}} <i class="fad fa-coins"></i>)</button>
@@ -52,8 +52,9 @@ export default {
       this.$store.commit('reducePlayerGold', this.state.restorePartyMagicCost)
       this.$store.state.player.characters.forEach(c => c.magic < c.baseMagic ? c.magic = c.baseMagic : '')
     },
-    rest(){
+    rest(cost){
       const toast = useToast()
+      $store.state.player.gold -= cost;
       $store.state.player.characters.forEach(c => {
         c.hp = c.baseHp
         c.magic = c.baseMagic

@@ -48,7 +48,7 @@ class AbilitiesService{
       return
     }
     if(ability.areaEffect){
-      if(target == 'enemies'){
+      if(target == 'enemies' || ability?.targetsEnemy){
         $store.state.combatMonsters.forEach(m => {
           ability['areaEffect'] = false
           this.useAbility(ability, m)

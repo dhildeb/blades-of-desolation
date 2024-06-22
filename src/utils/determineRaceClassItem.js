@@ -192,6 +192,5 @@ export function determineRaceClassItem(race, classType){
             itemName = itemsService.findRandomItem().name
         break
     }
-    console.log(itemName)
     return itemName
 }

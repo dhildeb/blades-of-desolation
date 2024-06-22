@@ -178,7 +178,7 @@ class CharacterService{
     $store.state.player.characters[index] = new Character(char)
   }
   createCharacter(char){
-    let spell = false
+    let spells = []
     switch(char.classType){
       case 'rogue':
         if(char.name == 'Royce'){
@@ -205,7 +205,7 @@ class CharacterService{
         char["dodge"] += 2
         char["magicRegen"] = 1
         char["magic"]++
-        spell = 'vicious mockery'
+        spells.push('vicious mockery')
         break
       case 'barbarian':
         if(char.name == 'Conan'){
@@ -220,7 +220,7 @@ class CharacterService{
         if(char.name == 'Gandolf'){
           char["magicRegen"]++
         }
-        spell = spellsService.findRandomLearnableSpell(char)
+        spells.push(spellsService.findRandomLearnableSpell(char))
         break
       case 'cleric':
         if(char.name == 'Moraine'){
@@ -229,7 +229,7 @@ class CharacterService{
         char["magic"]++
         char["hp"] += 5
         char["magicRegen"] = 1
-        spell = 'light heal'
+        spells.push('light heal')
         break
       case 'fighter':
         if(char.name == 'Cloud'){
@@ -253,7 +253,7 @@ class CharacterService{
         char["strength"]++
         char["magicRegen"] = 1
         char["magic"]++
-        spell = 'sacred flame'
+        spells.push('sacred flame')
         break
       case 'warlock':
         char["magic"] += 3
@@ -261,14 +261,14 @@ class CharacterService{
           char["lifeSteal"] += 10
         }
         char["magicRegen"] = 1
-        spell = 'edritch blast'
+        spells.push('edritch blast')
         break
       default:
         char["classType"] = 'unknown'
         char[getRandomAbility()] += 3
         char[getRandomAbility()] += 3
         char["magicRegen"] = char.magic > 0 ? 1 : 0
-        spell = char.magic > 0 ? spellsService.findRandomLearnableSpell(char) : false
+        char.magic > 0 && spells.push(spellsService.findRandomLearnableSpell(char))
         break
     }
     switch(char.race){
@@ -295,13 +295,12 @@ class CharacterService{
         char["race"] = 'unknown'
         char[getRandomAbility()] += 3
         char[getRandomAbility()] += 3
-        spell = char.magic > 0 ? spellsService.findRandomLearnableSpell(char) : false
+        char.magic > 0 && spells.push(spellsService.findRandomLearnableSpell(char))
         break
     }
     let newChar = new Character(char)
-    if(spell){
-      spellsService.learnSpell(spell, newChar)
-    }
+    spells.forEach((spell) => spellsService.learnSpell(spell, newChar))
+    
     $store.state.player.characters.push(newChar)
     gameService.addHealthPot()
     gameService.getRaceClassSpecificItem(newChar)
