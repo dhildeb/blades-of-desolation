@@ -37,11 +37,7 @@ methods: {
     itemsService.sellItem(item)
   },
   sellAll(item){
-    this.playerItems.forEach(i => {
-      if(i.name == item.name && i.rarity == item.rarity){
-        this.sell(i)
-      }
-    })
+    itemsService.sellAll(item)
   }
 }
 }

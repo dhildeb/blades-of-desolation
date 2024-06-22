@@ -322,11 +322,13 @@ const store = createStore({
     abilities: [
       {name: 'rage', level: 1, effect: ['physicalResistance', 'strength'], value: [10, 2], buff: true, classType: 'barbarian', uses: 1, baseUses: 1, description: 'Reduces physical damage and increases your strength'}, 
       {name: 'second wind', level: 1, effect: ['hp'], value: [5], temp: false, buff: true, classType: 'fighter', uses: 1, baseUses: 1, description: 'Restores some hp'}, 
-      {name: 'action surge', level: 2, effect: ['actions'], value: [1], buff: true, classType: 'fighter', uses: 1, baseUses: 1, description: 'Regain some actions'}, 
-      {name: 'quickening heal', level: 4, effect: ['hp'], value: [10], temp: false, buff: true, classType: 'monk', uses: 1, baseUses: 1, description: 'Restore some hp'}, 
-      {name: 'song of rest', level: 2, effect: ['hp'], value: [3], temp: false, buff: true, areaEffect: true, classType: 'bard', uses: 1, baseUses: 1, description: 'Restores some of your party\'s hp'}, 
+      {name: 'action surge', level: 1, effect: ['actions'], value: [3], buff: true, classType: 'fighter', uses: 1, baseUses: 1, description: 'Regain some actions'}, 
+      {name: 'quickening heal', level: 1, effect: ['hp'], value: [10], temp: false, buff: true, classType: 'monk', uses: 1, baseUses: 1, description: 'Restore some hp'}, 
+      {name: 'song of rest', level: 1, effect: ['hp'], value: [3], temp: false, buff: true, areaEffect: true, classType: 'bard', uses: 1, baseUses: 1, description: 'Restores some of your party\'s hp'}, 
       {name: 'sneak attack', level: 1, effect: ['strength'], value: [4], buff: true, classType: 'rogue', uses: 1, baseUses: 1, description: 'Increases strength'}, 
-      {name: 'cunning action', level: 2, effect: ['dodge'], value: [10], buff: true, classType: 'rogue', uses: 1, baseUses: 1, description: 'Increases dodge chance'}, 
+      {name: 'evasion', level: 1, effect: ['dodge'], value: [10], buff: true, classType: 'rogue', uses: 1, baseUses: 1, description: 'Increases dodge chance'}, 
+      {name: 'arcane recovery', level: 1, effect: ['magic'], value: [1], buff: true, classType: 'wizard', uses: 1, baseUses: 1, description: 'Recovers some magic'}, 
+      {name: 'vanish', level: 1, effect: ['dodge'], value: [100], buff: true, temp: true, classType: 'ranger', uses: 1, baseUses: 1, description: 'Become hidden and imposible to hit'}, 
     ],
     spells: [
       //cantrips

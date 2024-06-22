@@ -6,6 +6,12 @@ export function characterLvlUpStatHelper(classType, race, lvl){
   switch(classType){
     case 'rogue':
       boosts['classBoost'] = ['baseStrength', 'strength', 'dodge']
+      if(lvl === 2) {
+        boosts['classBoost'] = ['actions', 'actions']
+      }
+      if(lvl === 5){
+        boosts['classBoost'] = ['physicalResistance', 'physicalResistance', 'physicalResistance', 'physicalResistance', 'physicalResistance']
+      }
       if(lvl % 3 == 0){
         boosts['classBoost'].push('luck')
       }

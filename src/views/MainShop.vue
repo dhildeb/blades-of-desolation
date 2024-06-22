@@ -19,7 +19,6 @@ import $store from "@/store/index.js"
 import { itemsService } from "@/services/ItemsService"
 import { getRarityFullName } from '@/utils/getRarityFullName'
 import { questService } from "@/services/QuestService"
-import { characterService } from "@/services/CharacterService"
 import Notify from "@/utils/Notify"
 import { spellsService } from "@/services/SpellsService"
 import SellShop from "@/components/SellShop.vue"
@@ -33,9 +32,8 @@ export default {
   setup(){
     onMounted(async()=> {
       // random chance to get a quest request 
-      let luck = 1+characterService.getPartyLuck()
-      let chance = Math.ceil(Math.random()*25)
-      if(luck > chance && !$store.state.player.quest.objective){
+      let chance = Math.ceil(Math.random()*10)
+      if(9 < chance && !$store.state.player.quest.objective){
         let index = Math.floor(Math.random()*$store.state.quests.length)
         let newQuest = questService.getQuest($store.state.quests[index])
         // TODO make ability to accept up to 3 quests

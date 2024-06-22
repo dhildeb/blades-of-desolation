@@ -84,6 +84,11 @@ class ItemsService{
     $store.state.player.items.splice(index, 1)
     $store.state.player.gold += item.price/10
   }
+  sellAll(item){
+    const count = $store.state.player.items.filter((i) => i.name === item.name).length
+    $store.state.player.items = $store.state.player.items.filter((i) => i.name !== item.name)
+    $store.state.player.gold += (item.price/10)*count
+  }
   buyItem(item){
     $store.state.player.items.push(new Item(item))
     let index = $store.state.shopItems.findIndex(si => si.name == item.name)
@@ -176,9 +181,11 @@ class ItemsService{
       for(let i=0; i<item.effect.length; i++){
         let operator = item.value[i] <= 0 ? '' : '+'
         display += i > 0 ? ' | ' : ''
+        // seperates combined words into multiple
         display += item.effect[i].replace(/([A-Z])/g, " $1")
         if(typeof item.value[i] == 'object'){
-          display += ' +'+item.value[i].name+' + '+item.value[i].chance+'% '
+          // remove + if effect is negative
+          display += (!item.value[i].name.includes('-') ? ' +' : ' ')+item.value[i].name+' + '+item.value[i].chance+'% '
         }else{
           display += operator+item.value[i]+' '
         }

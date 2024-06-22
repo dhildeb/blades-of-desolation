@@ -5,8 +5,8 @@ export const abilityList = {
     fighter: {1: 'second wind', 2: 'action surge'},
     monk: {4: 'quickening heal'},
     paladin: {},
-    ranger: {},
-    rogue: {1: 'sneak attack', 2: 'cunning action'},
+    ranger: {14: 'vanish'},
+    rogue: {1: 'sneak attack', 7: 'evasion'},
     warlock: {},
-    wizard: {}
+    wizard: {1: 'arcane recovery'}
 }

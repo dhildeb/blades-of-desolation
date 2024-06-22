@@ -1,7 +1,7 @@
 <template>
   <li :id="'item'+item.id" class="click d-flex pb-2" :class="getRarityFullName(item.rarity)" :title="display == 'full' ? getItemReqsDisplay(item): getItemEffectsDisplay(item)">
     {{item.name}} &nbsp;<span v-html="getItemIcon(item.type)"></span>&nbsp;
-    {{display == 'full' ? getItemEffectsDisplay(item) : " - "+item.price}} <i v-if="display != 'full'" class="fad fa-coins"></i> <span v-if="qty > 1">&nbsp; ({{qty}})</span>
+    {{display == 'full' ? getItemEffectsDisplay(item) : " - "+item.price}} <i v-if="display != 'full'" class="fad fa-coins pl-1"></i> <span v-if="qty > 1">&nbsp; ({{qty}})</span>
   </li>
 </template>
 
