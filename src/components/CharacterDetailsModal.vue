@@ -14,9 +14,6 @@
             <sup class="col-4">Class</sup>
             <sup class="col-4">Race</sup>
           </div>
-          <button type="button" class="close text-danger" data-dismiss="modal" aria-label="Close" @click="deleteCharacter" title="Delete Character">
-            <span aria-hidden="true">&times;</span>
-          </button>
         </div>
       </div>
       <div class="char-bg-img" :class="character.statusEffects.map(e => e.negative ? e.name : '').join(' ')" :style="'background-image: url('+character.img+')'"></div>
@@ -111,7 +108,6 @@
 <script>
 import { reactive } from "@vue/reactivity"
 import { itemsService } from "@/services/ItemsService"
-import { characterService } from "@/services/CharacterService"
 import { gameService } from "@/services/GameService"
 import Notify from "@/utils/Notify"
 import $store from "@/store/index"
@@ -258,11 +254,6 @@ export default {
       if(spellsService.learnSpell(spellName, character)){
         let index = $store.state.player.items.findIndex(i => i.name == spellName)
         $store.state.player.items.splice(index, 1)
-      }
-    },
-    async deleteCharacter(){
-      if(await Notify.confirm('Removing Character', 'Are you sure you want to remove '+this.character.name+' from your party?', 'warning', 'Remove')){
-        characterService.deleteCharacter(this.character.id)
       }
     },
     setSpellDefault(spell, index){

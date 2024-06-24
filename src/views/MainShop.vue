@@ -31,14 +31,18 @@ export default {
   },
   setup(){
     onMounted(async()=> {
+      // FIXME some quests are broken
       // random chance to get a quest request 
       let chance = Math.ceil(Math.random()*10)
+      console.log(chance)
       if(9 < chance && !$store.state.player.quest.objective){
         let index = Math.floor(Math.random()*$store.state.quests.length)
+        console.log($store.state.quests[index])
         let newQuest = questService.getQuest($store.state.quests[index])
         // TODO make ability to accept up to 3 quests
         if(await Notify.confirm(newQuest.objective, newQuest.target+' | Reward: '+newQuest.reward)){
           $store.state.player.quest = newQuest
+          console.log($store.state.player.quest)
         }
       }
       questService.checkQuestProgress()

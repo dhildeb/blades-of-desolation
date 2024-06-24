@@ -64,6 +64,7 @@ export function characterLvlUpStatHelper(classType, race, lvl){
         boosts['classBoost'] = ['baseStrength', 'strength', 'thorns']
         if(lvl % 2 == 0){
           boosts['classBoost'].push('magic')
+          boosts['classBoost'].push('baseMagic')
         }
         if(lvl % 5 == 0){
           boosts['classBoost'].push('magicRegen')

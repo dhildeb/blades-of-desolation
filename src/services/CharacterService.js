@@ -305,8 +305,8 @@ class CharacterService{
     gameService.addHealthPot()
     gameService.getRaceClassSpecificItem(newChar)
   }
-  deleteCharacter(characterId){
-    $store.state.player.characters = $store.state.player.characters.filter(c => c.id !== characterId)
-  }
+  // deleteCharacter(characterId){
+  //   $store.state.player.characters = $store.state.player.characters.filter(c => c.id !== characterId)
+  // }
 }
 export const characterService = new CharacterService()

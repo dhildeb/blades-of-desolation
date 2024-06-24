@@ -7,8 +7,8 @@
   <div class="row mh-100">
     <div class="col-md-6 col-12">
       <ul>
-        <li :class="item.price ? getRarityFullName(item.rarity) : 'd-none'" v-for="item in filteredItems" :key="item.id" @click="sell(item)">{{item.name}} - {{item.price/10}} <i class="fad fa-coins"></i><span v-if="playerItems.filter(i => i.name == item.name).length > 1">&nbsp; ({{playerItems.filter(i => i.name == item.name).length}})</span>&nbsp;
-        <button class="btn btn-outline-warning" v-if="playerItems.filter(i => i.name == item.name).length > 1" @click="sellAll(item)">sell all</button>
+        <li :class="item.price ? getRarityFullName(item.rarity) : 'd-none'" v-for="item in filteredItems" :key="item.id" @click.stop="sell(item)">{{item.name}} - {{item.price/10}} <i class="fad fa-coins"></i><span v-if="playerItems.filter(i => i.name == item.name).length > 1">&nbsp; ({{playerItems.filter(i => i.name == item.name).length}})</span>&nbsp;
+        <button class="btn btn-outline-warning" v-if="playerItems.filter(i => i.name == item.name).length > 1" @click.stop="sellAll(item)">sell all</button>
         </li>
       </ul>
     </div>

@@ -80,7 +80,9 @@ export default {
       toast.success(charData.name+' has joined your party!')
       this.name = ''
       this.classType = ''
-      this.race = ''
+      this.selectedRace = ''
+      this.selectedCharacter = ''
+      this.selectedClassType = ''
       this.selectedImg = ''
     },
     selectImg(img){
