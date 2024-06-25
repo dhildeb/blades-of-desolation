@@ -32,7 +32,13 @@ const routes = [
   {
     path: '/map',
     name: 'MapLocation',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Map.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Map.vue'),
+    beforeEnter: function(){
+      if($store.state.player.characters.length == 0){
+        toast.warning('You cannot adventure without a party.', {timeout: 3000})
+        router.push({name: 'CharacterForm'})
+      }
+    }
   },
   {
     path: '/location',
@@ -40,7 +46,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../components/AreaLocation.vue'),
     beforeEnter: function(){
       if($store.state.player.characters.length == 0){
-        toast.warning('You cannot shop without a party.', {timeout: 3000})
+        toast.warning('You cannot adventure without a party.', {timeout: 3000})
         router.push({name: 'CharacterForm'})
       }
     }

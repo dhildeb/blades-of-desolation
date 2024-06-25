@@ -42,6 +42,7 @@
     <button class="btn btn-success float-bottom" :class="player.characters.length < 1 ? '' : 'd-none'" @click="loadGame">Load Game</button>
     <button v-if="this.$route.name !== 'battleField' && this.$route.name !== 'MainShop'" class="btn btn-primary float-bottom" :class="player.characters.length > 0 ? '' : 'd-none'" @click="rest">Rest (unsafe)</button>
     <BattleOptions v-if="$route.name == 'battleField' && monstersWithHp > 0" />
+    <MapOptions v-if="$route.name == 'MapLocation'" />
   </div>
 </template>
 
@@ -56,12 +57,13 @@ import { Item } from "@/models/Item"
 import { characterService } from "@/services/CharacterService"
 import { Spell } from "@/models/Spell"
 import BattleOptions from '@/components/BattleOptions'
+import MapOptions from '@/components/MapOptions'
 import router from "@/router"
 import { Ability } from "@/models/Ability"
 import { useToast } from "vue-toastification"
 
 export default {
-  components: { ItemPouchModal, QuestModal, BattleOptions },
+  components: { ItemPouchModal, QuestModal, BattleOptions, MapOptions },
   inheritAttrs: false,
   setup(){
     const state = reactive({

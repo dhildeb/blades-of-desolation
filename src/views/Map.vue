@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid map">
+  <div class="container-fluid map scroll">
     <img class="" :src="mapImg" width="1000" height="840" usemap="#world-map" />
     <map name="world-map" id="world-map">
       <area id="area-1" shape="circle" coords="708,238,10" alt="1" title="Area 1" @click="locationChange(0)" />
@@ -75,6 +75,10 @@ methods: {
 <style scope>
 #app{
   overflow-x: auto;
+}
+
+.scroll{
+  overflow: auto;
 }
 
 area{

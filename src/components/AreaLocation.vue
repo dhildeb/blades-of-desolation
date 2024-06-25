@@ -84,15 +84,21 @@ export default {
                 $('#'+id).removeClass('bg-shadow')
             }
             $store.state.player.currentLocation = id
-            if(explored.length >= 59 && !this.hasKey && !this.areaCompleted){
-                // TODO can't just add 2 when higher lvl
-                $store.state.player.items.push(new Item({name: 'key', type: 'key'}))
-                toast.success('You found a key!')
-                router.push({name: 'battleField', params: {monsterLvl: $store.state.location+2, numMonsters: 1, boss: true}})
-            }
             if(explored.length == 60 && !this.areaCompleted && rowCol[1] == 10 && rowCol[2] == 6 && this.hasKey){
                await this.completeArea()
                return
+            }
+            if(explored.length >= 59){
+                let bossFight = 10 > Math.ceil(Math.random()*100)
+                if((!this.hasKey && !this.areaCompleted) || bossFight){
+                    // TODO can't just add 2 when higher lvl
+                    $store.state.player.items.push(new Item({name: 'key', type: 'key'}))
+                    toast.success('You found a key!')
+                    bossFight = true
+                }
+                if(bossFight){
+                    router.push({name: 'battleField', params: {monsterLvl: $store.state.location+2, numMonsters: 1, boss: true}})
+                }
             }
             // Tavern
             if(rowCol[1] == 5 && rowCol[2] == 3){
