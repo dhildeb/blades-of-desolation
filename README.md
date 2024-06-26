@@ -14,7 +14,7 @@ npm run serve
 ```
 npm run build
 git add dist
-git commit -m 'updating dist'
+git commit -m "updating dist"
 git subtree push --prefix dist origin gh-pages-new
 ```
 

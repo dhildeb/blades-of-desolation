@@ -1,7 +1,7 @@
 <template>
 <div class="container-fluid bg-img" :style="'background-image: url('+bgImg+')'">
   <i class="fal fa-alicorn position-absolute left text-dark" @click="cheat" v-if="!cheated"></i>
-  <h5 class="font-weight-bold text-black label w-title-auto m-auto">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
+  <h5 class="font-weight-bold label w-title-auto m-auto">{{ characterCount < 6 ? "Create Your Character" : "Your Party"}}</h5>
   <div class="row justify-content-center">
     <div class="col-10 col-md-8">
       <form @submit.prevent="createCharacter" v-if="characterCount < 6">
@@ -10,14 +10,30 @@
         </div>
          <label class="label px-2">Choose a Class</label>
         <div id="classType" class="scrollable row">
-          <span class="col click d-flex justify-content-center p-3" :class="selectedClassType == classType.name ? 'border border-warning ' : ''" :value="classType.name" v-for="classType in classList" :key="classType.name" @click="selectClassType(classType.name)" :title="classType.name" v-html="classType.icon"></span>
+          <span class="col click d-flex justify-content-center p-3" :class="selectedClassType == classType.name ? 'border border-warning ' : ''" :value="classType.name" v-for="classType in classList" :key="classType.name" @click="selectClassType(classType.name)" :title="classType.name" v-html="selectedClassType === classType.name ? classType.name : classType.icon"></span>
         </div>
          <label class="label px-2 mt-2">Choose a Race</label>
         <div id="race" class="scrollable row">
-          <span class="col click d-flex justify-content-center p-3" :class="selectedRace == race.name ? 'border border-warning ' : ''" :value="race.name" v-for="race in raceList" :key="race.name" @click="selectRace(race.name)" :title="race.name" v-html="race.icon"></span>
+          <span class="col click d-flex justify-content-center p-3" :class="selectedRace == race.name ? 'border border-warning ' : ''" :value="race.name" v-for="race in raceList" :key="race.name" @click="selectRace(race.name)" :title="race.name" v-html="selectedRace === race.name ? race.name : race.icon"></span>
         </div>
-        <div id="imgSelect" class="scrollable row mt-3">
-          <img class="img-fluid col-lg-3 col-md-6 col-12 click " :class="selectedImg == img ? 'border border-warning ' : ''" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
+        <p class="btn btn-primary float-bottom label click px-2 mt-2" id="imgModalToggle" data-toggle="modal" data-target="#imgSelectModal" title="img">
+          Select Character image
+        </p>
+        <div class="modal fade text-dark" id="imgSelectModal" tabindex="-1" role="dialog" aria-labelledby="imgSelectModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="modal-title container">
+                  <h5>Choose Wisely</h5>
+                </div>
+              </div>
+              <div class="modal-body container">
+                <div class="scrollable row mt-3">
+                  <img class="img-fluid col-lg-3 col-md-6 col-12 click " :class="selectedImg == img ? 'border border-warning ' : ''" :value="img" v-for="img in imgs" :key="img" @click="selectImg(img)" :src="img" :alt="img" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <button class="btn btn-warning btn-block mt-2" type="submit" title="create"><i class="fas fa-torah"></i></button>
       </form>
@@ -86,16 +102,28 @@ export default {
       this.selectedImg = ''
     },
     selectImg(img){
+      if(this.selectedImg === img) {
+        this.selectedImg = ''
+      }else {
         this.selectedImg = img
+      }
     },
     selectClassType(classType){
-      this.selectedClassType = classType
+      if(this.selectedClassType === classType) {
+        this.selectedClassType = ''
+      }else {
+        this.selectedClassType = classType
+      }
     },
     selectCharacter(character){
       this.selectedCharacter = character
     },
     selectRace(race){
-      this.selectedRace = race
+      if(this.selectedRace === race) {
+        this.selectedRace = ''
+      }else {
+        this.selectedRace = race
+      }
     },
     async cheat(){
       let cheat = await Notify.cheat()
@@ -119,7 +147,7 @@ export default {
 <style>
 .scrollable{
   max-height: 56vh;
-  overflow-y: auto;
+  overflow-y: none;
   backdrop-filter: brightness(0.5);
 }
 .text-black{

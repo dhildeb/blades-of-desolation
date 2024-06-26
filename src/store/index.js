@@ -355,7 +355,7 @@ const store = createStore({
         {name: 'inflict wounds', strength: 15, dmgType: 'necrotic', reqs: {classType: 'warlock'}, level: 1},
         {name: 'guided bolt', strength: 12, dmgType: 'radiant', level: 1},
         {name: 'magic missile', areaEffect: true, strength: 4, dmgType: 'melee', level: 1},
-        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, temp: true, level: 1, reqs: {classType: 'cleric'}, description: 'Heal Party +2'},
+        {name: 'cure wounds', effect: 'hp', value: 5, buff: true, level: 1, reqs: {classType: 'cleric'}, description: 'Heal Party +2'},
         {name: 'weaken', effect: 'strength', value: -3, buff: true, temp: true, level: 1, description: 'Reduces targets strength by -3'},
         {name: 'power up', effect: 'strength', value: 3, buff: true, level: 1, description: 'Increases strength of target by +3'},
       ],
